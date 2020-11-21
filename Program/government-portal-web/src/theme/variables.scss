@@ -1,10 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Roboto&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Quattrocento&family=Quattrocento+Sans&family=Roboto&display=swap');
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
-
+*:not(ion-icon) {
+  font-family: 'Roboto', sans-serif!important;
+  // font-family: 'Quattrocento Sans', sans-serif!important;
+}
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
-  --ion-color-primary: #3880ff;
+  // --ion-color-primary: #000c20;
+  --ion-color-primary: #000000;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
