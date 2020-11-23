@@ -21,10 +21,10 @@
       <img src="assets/splash/Page-4.png" />
     </ion-slide>
     <ion-slide>
-      <img src="assets/splash/Page-5.png"/>
+      <img src="assets/splash/Page-5.png" />
     </ion-slide>
   </ion-slides>
-  <ion-button style="height: 10%;"(click)="goHome()" expand="block" size="large" color="danger">Start Now</ion-button>
+  <ion-button style="height: 10%;" (click)="goHome()" expand="block" size="large" color="danger">Start Now</ion-button>
 </div>
 <!-- WELCOME MODAL ENDS -->
 <!-- PAGE HEADER STARTS -->
@@ -42,18 +42,22 @@
 
 
   <!-- PAGE SEARCH AND LINKED CONTENT -->
-  <ion-searchbar placeholder="Search..." animated="true"></ion-searchbar>
-  <ion-list>
-    <ion-item *ngFor="let data of searchFilter | filter:availablePages">
-      <ion-label>{{data.id}}</ion-label>
-      <ion-label>{{data.name}}</ion-label>
-      <ion-label>{{data.link}}</ion-label>
-    </ion-item>
-  </ion-list>
+    <ion-searchbar animated="true" [(ngModel)]="searchQuery" (click)="click_in()"
+      (clickOutside)="onClickedOutside($event)" (ionCancel)="onCancel($event)" (ngModelChange)="change_query($event)"
+      showCancelButton="focus" placeholder="Search..."></ion-searchbar>
+    <ion-list *ngIf="show_list" style="position: absolute;z-index:1000;width: 100%;">
+      <ion-item *ngFor="let item of list_to_show| slice:0:3;; let i = index">
+        <ion-label (click)="click_item(i)">{{ item }}</ion-label>
+      </ion-item>
+    </ion-list>
   <!-- PAGE SEARCH AND LINKED CONTENT -->
   <!-- PAGE LINKS AND INFORMATION -->
-  <h2>One portal for all goverment services</h2>
-  <h5>Use the links below to access services</h5>
+  <ion-content>
+    <h1>One portal for all goverment services</h1>
+    Links to pages would be added...
+    <ion-button>Request NIC</ion-button>
+  </ion-content>
+
   <!-- PAGE LINKS AND INFORMATION -->
 
   <!-- PAGE CONTENT ENDS -->
