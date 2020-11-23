@@ -6,45 +6,25 @@
 <!-- PAGE SPLASH SCREEN ENDS -->
 <!-- WELCOME MODAL STARTS -->
 <!-- https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage -->
-<div name="Welcome" *ngIf="Welcome" 
-style="margin: 5px;">
-  <ion-slides pager="false" [options]="slideOpts" class="slides">
+<div name="Welcome" *ngIf="Welcome" style="margin: 5px;height: 100%;background-color: #C92D39;">
+  <ion-slides pager="false" [options]="slideOpts" style="height: 90%;">
     <ion-slide>
-      <p>1Keep close to Nature's heart... and break clear away, once in awhile,
-        and climb a mountain or spend a week in the woods. Wash your spirit clean.</p>
-        <ion-button>Default</ion-button>
+      <img src="assets/splash/Page-1.png" />
     </ion-slide>
     <ion-slide>
-      <p>2Keep close to Nature's heart... and break clear away, once in awhile,
-        and climb a mountain or spend a week in the woods. Wash your spirit clean.</p>
+      <img src="assets/splash/Page-2.png" />
     </ion-slide>
     <ion-slide>
-      <p>3Keep close to Nature's heart... and break clear away, once in awhile,
-        and climb a mountain or spend a week in the woods. Wash your spirit clean.</p>
+      <img src="assets/splash/Page-3.png" />
     </ion-slide>
     <ion-slide>
-      
-      <h1>TEST</h1>
-      <p>4</p>
+      <img src="assets/splash/Page-4.png" />
     </ion-slide>
     <ion-slide>
-      <h1>TEST</h1>
-      <p>
-        5
-      </p>
-      <ion-button (click)="goHome()" expand="block" color="light">Continue to Government Portal</ion-button>
+      <img src="assets/splash/Page-5.png"/>
     </ion-slide>
   </ion-slides>
-  <!-- <ion-card style="position: absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);">
-    <ion-card-header>
-      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-      <ion-card-title>Card Title</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      Keep close to Nature's heart... and break clear away, once in awhile,
-      and climb a mountain or spend a week in the woods. Wash your spirit clean.
-    </ion-card-content>
-  </ion-card> -->
+  <ion-button style="height: 10%;"(click)="goHome()" expand="block" size="large" color="danger">Start Now</ion-button>
 </div>
 <!-- WELCOME MODAL ENDS -->
 <!-- PAGE HEADER STARTS -->
@@ -62,8 +42,20 @@ style="margin: 5px;">
 
 
   <!-- PAGE SEARCH AND LINKED CONTENT -->
-
+  <ion-searchbar placeholder="Search..." animated="true"></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let data of searchFilter | filter:availablePages">
+      <ion-label>{{data.id}}</ion-label>
+      <ion-label>{{data.name}}</ion-label>
+      <ion-label>{{data.link}}</ion-label>
+    </ion-item>
+  </ion-list>
   <!-- PAGE SEARCH AND LINKED CONTENT -->
+  <!-- PAGE LINKS AND INFORMATION -->
+  <h2>One portal for all goverment services</h2>
+  <h5>Use the links below to access services</h5>
+  <!-- PAGE LINKS AND INFORMATION -->
+
   <!-- PAGE CONTENT ENDS -->
 
   <!-- PAGE FOOTER STARTS -->
