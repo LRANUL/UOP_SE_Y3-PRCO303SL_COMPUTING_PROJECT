@@ -20,11 +20,11 @@
     <ion-slide>
       <img src="assets/splash/Page-4.png" />
     </ion-slide>
-    <ion-slide>
+    <ion-slide (click)="goHome()" >
       <img src="assets/splash/Page-5.png" />
     </ion-slide>
   </ion-slides>
-  <ion-button style="height: 10%;" (click)="goHome()" expand="block" size="large" color="danger">Start Now</ion-button>
+  <!-- <ion-button style="height: 10%;" (click)="goHome()" expand="block" size="large" color="danger">Start Now</ion-button> -->
 </div>
 <!-- WELCOME MODAL ENDS -->
 <!-- PAGE HEADER STARTS -->
@@ -55,7 +55,7 @@
   <ion-content>
     <h1>One portal for all goverment services</h1>
     Links to pages would be added...
-    <ion-button>Request NIC</ion-button>
+    
   </ion-content>
 
   <!-- PAGE LINKS AND INFORMATION -->

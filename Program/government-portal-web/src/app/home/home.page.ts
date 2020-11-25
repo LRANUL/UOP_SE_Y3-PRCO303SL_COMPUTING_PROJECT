@@ -18,7 +18,7 @@ export class HomePage {
   };
   constructor() { }
   ngOnInit() {
-    this.loading = true; // loading disabled during development set this.loading to true
+    this.loading = false; // loading disabled during development set this.loading to true
     setTimeout(() => {
       this.loading = false;
       if (localStorage.getItem('Visitor') == null) {
