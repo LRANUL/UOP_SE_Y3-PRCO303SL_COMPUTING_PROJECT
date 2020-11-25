@@ -1,35 +1,34 @@
 import { Component, OnInit } from '@angular/core';
+
 import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
 import { NavController } from '@ionic/angular';
 import { GoogleAuthService } from '../service/google-auth.service';
-@Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
-})
 
-export class LoginPage implements OnInit {
+@Component({
+  selector: 'app-create-account',
+  templateUrl: './create-account.page.html',
+  styleUrls: ['./create-account.page.scss'],
+})
+export class CreateAccountPage implements OnInit {
+
   validations_form: FormGroup;
   errorMessage: string;
   constructor(public formBuilder: FormBuilder, private navCtrl: NavController, private authService: GoogleAuthService,) { }
 
   ngOnInit() {
     this.validations_form = this.formBuilder.group({
-      userID: new FormControl("", Validators.compose([Validators.required, Validators.minLength(12), Validators.maxLength(12)])),
+      email: new FormControl("", Validators.compose([Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')])),
       password: new FormControl("", Validators.compose([Validators.minLength(15), Validators.maxLength(30), Validators.required]))
     });
   }
   validation_messages = {
-    userID: [
+    email: [
       {
         type: "required",
-        message: "Your Government Portal ID is required."
+        message: "Your Government Portal registered email is required."
       }, {
-        type: "minlength",
-        message: "Invalid ID."
-      }, {
-        type: "maxlength",
-        message: "Invalid ID."
+        type: "pattern",
+        message: "Invalid email."
       }
     ],
     password: [
@@ -45,13 +44,13 @@ export class LoginPage implements OnInit {
       }
     ]
   };
-  loginCitizen(value) {
-    this.authService.loginCitizen(value)
+  registerECitizen(value) {
+    this.authService.registerECitizen(value)
       .then(res => {
         console.log(res);
         this.errorMessage = "";
-        this.navCtrl.navigateForward('/dashboard');
       }, err => {
+        console.log(err);
         this.errorMessage = err.message;
       })
   }

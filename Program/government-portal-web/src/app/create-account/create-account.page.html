@@ -1,0 +1,86 @@
+<!-- PAGE HEADER STARTS -->
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      <strong>GOVERNMENT PORTAL</strong>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<!-- PAGE HEADER ENDS -->
+<ion-content [fullscreen]="true">
+
+  <!-- PAGE CONTENT STARTS -->
+
+
+  <!-- PAGE SEARCH AND LINKED CONTENT -->
+
+  <!-- PAGE SEARCH AND LINKED CONTENT -->
+  <!-- PAGE LINKS AND INFORMATION -->
+  <ion-content>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="sign-in" text="Back"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+    <ion-list style="margin-left: 5%;">
+      <h1 style="font-size: xx-large;"><strong>Register with Government Portal</strong></h1>
+      <br>
+      <h5>Email address</h5>
+      <form class="form" [formGroup]="validations_form" (ngSubmit)="registerECitizen(validations_form.value)">
+        <ion-item>
+          <ion-input required="true" type="email" placeholder="INSERT YOUR EMAIL" formControlName="email" type="email"
+            required style="text-transform: uppercase;"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.email">
+            <div class="error-message"
+              *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <h5>Password</h5>
+        <ion-item>
+          <ion-input required="true" inputmode="text" type="password" clear-on-edit=true placeholder="PASSWORD"
+            formControlName="password" type="password" required></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.password">
+            <div class="error-message"
+              *ngIf="validations_form.get('password').hasError(validation.type) && (validations_form.get('password').dirty || validations_form.get('password').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+          <br>
+          <ion-button type="submit" color="signin" [disabled]="!validations_form.valid">Register information<ion-icon
+              name="key-outline"></ion-icon>
+          </ion-button>
+          <label class="error-message">{{errorMessage}}</label>
+        </div>
+        <br>
+      </form>
+    </ion-list>
+    <br>
+    <ion-grid style="margin-left: 5%;">
+      <ion-row>
+        <ion-router-link href="#" class="underline">Get help</ion-router-link>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+
+  <!-- PAGE LINKS AND INFORMATION -->
+
+  <!-- PAGE CONTENT ENDS -->
+
+
+</ion-content>
+<!-- PAGE FOOTER STARTS -->
+<ion-footer class="ion-no-border" align="center">
+  <ion-toolbar color="light">
+    <ion-text>
+      Government Portal<br>
+      Ministry of Home Affairs
+    </ion-text>
+  </ion-toolbar>
+</ion-footer>
+<!-- PAGE FOOTER ENDS -->

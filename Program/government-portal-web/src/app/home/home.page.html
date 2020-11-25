@@ -20,7 +20,7 @@
     <ion-slide>
       <img src="assets/splash/Page-4.png" />
     </ion-slide>
-    <ion-slide (click)="goHome()" >
+    <ion-slide (click)="goHome()">
       <img src="assets/splash/Page-5.png" />
     </ion-slide>
   </ion-slides>
@@ -42,20 +42,20 @@
 
 
   <!-- PAGE SEARCH AND LINKED CONTENT -->
-    <ion-searchbar animated="true" [(ngModel)]="searchQuery" (click)="click_in()"
-      (clickOutside)="onClickedOutside($event)" (ionCancel)="onCancel($event)" (ngModelChange)="change_query($event)"
-      showCancelButton="focus" placeholder="Search..."></ion-searchbar>
-    <ion-list *ngIf="show_list" style="position: absolute;z-index:1000;width: 100%;">
-      <ion-item *ngFor="let item of list_to_show| slice:0:3;; let i = index">
-        <ion-label (click)="click_item(i)">{{ item }}</ion-label>
-      </ion-item>
-    </ion-list>
+  <ion-searchbar animated="true" [(ngModel)]="searchQuery" (click)="click_in()"
+    (clickOutside)="onClickedOutside($event)" (ionCancel)="onCancel($event)" (ngModelChange)="change_query($event)"
+    showCancelButton="focus" placeholder="Search..."></ion-searchbar>
+  <ion-list *ngIf="show_list" style="position: absolute;z-index:1000;width: 100%;">
+    <ion-item *ngFor="let item of list_to_show| slice:0:3;; let i = index">
+      <ion-label (click)="click_item(i)">{{ item }}</ion-label>
+    </ion-item>
+  </ion-list>
   <!-- PAGE SEARCH AND LINKED CONTENT -->
   <!-- PAGE LINKS AND INFORMATION -->
   <ion-content>
     <h1>One portal for all goverment services</h1>
     Links to pages would be added...
-    
+
   </ion-content>
 
   <!-- PAGE LINKS AND INFORMATION -->
@@ -63,13 +63,13 @@
   <!-- PAGE CONTENT ENDS -->
 
   <!-- PAGE FOOTER STARTS -->
+  <ion-footer class="ion-no-border" align="center">
+    <ion-toolbar color="light">
+      <ion-text>
+        Government Portal<br>
+        Ministry of Home Affairs
+      </ion-text>
+    </ion-toolbar>
+  </ion-footer>
+  <!-- PAGE FOOTER ENDS -->
 </ion-content>
-<ion-footer class="ion-no-border" align="center">
-  <ion-toolbar color="light">
-    <ion-text>
-      Government Portal<br>
-      Ministry of Home Affairs
-    </ion-text>
-  </ion-toolbar>
-</ion-footer>
-<!-- PAGE FOOTER ENDS -->

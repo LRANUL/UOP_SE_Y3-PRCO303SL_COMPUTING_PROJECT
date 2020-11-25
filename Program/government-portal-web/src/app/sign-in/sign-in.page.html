@@ -1,13 +1,13 @@
 <!-- PAGE HEADER STARTS -->
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      <strong>GOVERNMENT PORTAL</strong>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<!-- PAGE HEADER ENDS -->
 <ion-content [fullscreen]="true">
-  <ion-header>
-    <ion-toolbar color="primary">
-      <ion-title>
-        <strong>GOVERNMENT PORTAL</strong>
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <!-- PAGE HEADER ENDS -->
 
   <!-- PAGE CONTENT STARTS -->
 
@@ -20,16 +20,16 @@
     <ion-list style="margin-left: 5%;">
       <h1 style="font-size: xx-large;"><strong>Sign in using Government Portal</strong></h1>
       <br>
-      <h5>Goverment Portal user ID</h5>
-      <form class="form" [formGroup]="validations_form" (ngSubmit)="loginUser(validations_form.value)">
+      <h5>Goverment Portal email address</h5>
+      <form class="form" [formGroup]="validations_form" (ngSubmit)="loginCitizen(validations_form.value)">
         <ion-item>
-          <ion-input required="true" type="text" maxlength=12 placeholder="Insert your 12 character ID"
-            formControlName="userID" type="text" required style="text-transform: uppercase;"></ion-input>
+          <ion-input required="true" type="email" placeholder="INSERT YOUR REGISTERED EMAIL" formControlName="email"
+            type="email" required style="text-transform: uppercase;"></ion-input>
         </ion-item>
         <div class="validation-errors">
-          <ng-container *ngFor="let validation of validation_messages.userID">
+          <ng-container *ngFor="let validation of validation_messages.email">
             <div class="error-message"
-              *ngIf="validations_form.get('userID').hasError(validation.type) && (validations_form.get('userID').dirty || validations_form.get('userID').touched)">
+              *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
               {{ validation.message }}
             </div>
           </ng-container>
@@ -54,7 +54,7 @@
         </div>
         <br>
       </form>
-      <ion-router-link href="#" class="underline">Register sign in information</ion-router-link>
+      <ion-router-link href="create-account" class="underline">Register sign in information</ion-router-link>
     </ion-list>
     <br>
     <ion-grid style="margin-left: 5%;">
@@ -76,8 +76,9 @@
 
   <!-- PAGE CONTENT ENDS -->
 
-  <!-- PAGE FOOTER STARTS -->
+
 </ion-content>
+<!-- PAGE FOOTER STARTS -->
 <ion-footer class="ion-no-border" align="center">
   <ion-toolbar color="light">
     <ion-text>
