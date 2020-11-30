@@ -1,0 +1,56 @@
+import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore/';
+import { LoadingController, NavController} from '@ionic/angular';
+import { GoogleAuthService } from '../../service/google-auth.service';
+@Component({
+  selector: 'app-account',
+  templateUrl: './account.page.html',
+  styleUrls: ['./account.page.scss'],
+})
+export class AccountPage implements OnInit {
+
+  constructor(private navCtrl: NavController, private gAuth: AngularFireAuth, private authService: GoogleAuthService, private loadingController: LoadingController) { }
+
+  ngOnInit() {
+    this.gAuth.authState.subscribe(async user => {
+      if (user) {
+        // User is signed in, auto login intiated.
+        console.log('User is signed in');
+        const loading = await this.loadingController.create({
+          message: 'Please wait...',
+          duration: 200,
+          translucent: true,
+          backdropDismiss: true
+        });
+        await loading.present();
+
+        console.log('Loading dismissed!');
+
+        this.navCtrl.navigateForward('account');
+
+      }
+      else {
+        // No user is signed in.
+        console.log('User is NOT signed in');
+        this.logout();
+      }
+    });
+  }
+  async logout() {
+    this.authService
+        .logoutCitizen()
+        .then(async res => {
+            const loading = await this.loadingController.create({
+                message: 'Logging out...',
+                duration: 2000
+            });
+            await loading.present();
+
+            const { role, data } = await loading.onDidDismiss();
+            this.navCtrl.navigateBack("");
+        })
+        .catch(error => {
+        });
+}
+}

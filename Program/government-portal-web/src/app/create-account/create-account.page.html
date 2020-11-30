@@ -1,0 +1,199 @@
+<!-- PAGE HEADER STARTS -->
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      <strong>GOVERNMENT PORTAL</strong>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<!-- PAGE HEADER ENDS -->
+<ion-content [fullscreen]="true">
+
+  <!-- PAGE CONTENT STARTS -->
+
+
+  <!-- PAGE SEARCH AND LINKED CONTENT -->
+
+  <!-- PAGE SEARCH AND LINKED CONTENT -->
+  <!-- PAGE LINKS AND INFORMATION -->
+  <ion-content>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="sign-in" text="Back"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+    <ion-list style="margin-left: 5%;">
+      <h1 style="font-size: xx-large;"><strong>Register with Government Portal</strong></h1>
+      <br>
+      <h5>Full Name of Applicant</h5>
+      <form class="form" [formGroup]="validations_form" (ngSubmit)="registerECitizen(validations_form.value)">
+        <ion-item>
+          <ion-input required="true" type="text" placeholder="INSERT YOUR FULL NAME" formControlName="fullName"
+            type="text" required style="text-transform: uppercase;"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.fullName">
+            <div class="error-message"
+              *ngIf="validations_form.get('fullName').hasError(validation.type) && (validations_form.get('fullName').dirty || validations_form.get('fullName').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <h5>Gender</h5>
+        <ion-item>
+          <ion-select placeholder="SELECT YOUR GENDER" formControlName="gender">
+            <ion-select-option value="Female">FEMALE</ion-select-option>
+            <ion-select-option value="Male">MALE</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.gender">
+            <div class="error-message"
+              *ngIf="validations_form.get('gender').hasError(validation.type) && (validations_form.get('gender').dirty || validations_form.get('gender').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <h5>Date of Birth</h5>
+        <ion-item>
+          <ion-datetime displayFormat="MM DD YYYY" placeholder="SELECT DATE OF BIRTH" formControlName="dateOfBirth"
+            type="text"></ion-datetime>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.dateOfBirth">
+            <div class="error-message"
+              *ngIf="validations_form.get('dateOfBirth').hasError(validation.type) && (validations_form.get('dateOfBirth').dirty || validations_form.get('dateOfBirth').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <h5>Place of Birth (Hospital, House No. and Street, Town or Village or name of Estate)</h5>
+        <ion-item>
+          <ion-input required="true" type="text" placeholder="INSERT YOUR PLACE OF BIRTH" formControlName="placeOfBirth"
+            type="text" required style="text-transform: uppercase;"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.placeOfBirth">
+            <div class="error-message"
+              *ngIf="validations_form.get('placeOfBirth').hasError(validation.type) && (validations_form.get('placeOfBirth').dirty || validations_form.get('placeOfBirth').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <h5>Registar's Division</h5>
+        <ion-item>
+          <ion-input required="true" type="text" placeholder="INSERT YOUR REGISTAR'S DIVISION" formControlName="registarDivision"
+            type="text" required style="text-transform: uppercase;"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.registarDivision">
+            <div class="error-message"
+              *ngIf="validations_form.get('registarDivision').hasError(validation.type) && (validations_form.get('registarDivision').dirty || validations_form.get('registarDivision').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <h5>No. of Birth Registration Entry</h5>
+        <ion-item>
+          <ion-input type="number" placeholder="INSERT YOUR BRITH REGISTRATION ENTRY NO." formControlName="birthRegNo"
+            type="text" required style="text-transform: uppercase;"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.birthRegNo">
+            <div class="error-message"
+              *ngIf="validations_form.get('birthRegNo').hasError(validation.type) && (validations_form.get('birthRegNo').dirty || validations_form.get('birthRegNo').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <h5>Father's Name</h5>
+        <ion-item>
+          <ion-input required="true" type="text" placeholder="INSERT YOUR FATHER'S FULL NAME"
+            formControlName="fatherName" type="text" required style="text-transform: uppercase;"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.fatherName">
+            <div class="error-message"
+              *ngIf="validations_form.get('fatherName').hasError(validation.type) && (validations_form.get('fatherName').dirty || validations_form.get('fatherName').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <h5>Mother's Name</h5>
+        <ion-item>
+          <ion-input required="true" type="text" placeholder="INSERT YOUR MOTHER'S FULL NAME"
+            formControlName="motherName" type="text" required style="text-transform: uppercase;"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.motherName">
+            <div class="error-message"
+              *ngIf="validations_form.get('motherName').hasError(validation.type) && (validations_form.get('motherName').dirty || validations_form.get('motherName').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <h5>Email address</h5>
+        <ion-text style="font-style: italic;color: gray;">This would be your Government Portal access email address
+        </ion-text>
+        <ion-item>
+          <ion-input required="true" type="email" placeholder="INSERT YOUR EMAIL" formControlName="email" type="email"
+            required style="text-transform: uppercase;"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.email">
+            <div class="error-message"
+              *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <h5>Password</h5>
+        <ion-text style="font-style: italic;color: gray;">This would be your Government Portal access password
+        </ion-text>
+        <ion-item>
+          <ion-input required="true" inputmode="text" type="password" clear-on-edit=true placeholder="PASSWORD"
+            formControlName="password" type="password" required></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.password">
+            <div class="error-message"
+              *ngIf="validations_form.get('password').hasError(validation.type) && (validations_form.get('password').dirty || validations_form.get('password').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+          <br>
+          <ion-text style="font-size: x-small;color: gray;">By clicking Register information, you agree to our Terms,
+            Data Policy and Cookies Policy. Please note that only if your data matches our records, the registration would be approved.</ion-text>
+          <br>
+          <ion-button type="submit" color="signin" [disabled]="!validations_form.valid">Register information<ion-icon
+              name="key-outline"></ion-icon>
+          </ion-button>
+          <label class="error-message">{{errorMessage}}</label>
+        </div>
+        <br>
+      </form>
+    </ion-list>
+    <br>
+    <ion-grid style="margin-left: 5%;">
+      <ion-row>
+        <ion-router-link href="#" class="underline">Get help</ion-router-link>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+
+  <!-- PAGE LINKS AND INFORMATION -->
+
+  <!-- PAGE CONTENT ENDS -->
+
+
+</ion-content>
+<!-- PAGE FOOTER STARTS -->
+<ion-footer class="ion-no-border" align="center">
+  <ion-toolbar color="light">
+    <ion-text>
+      Government Portal<br>
+      Ministry of Home Affairs
+    </ion-text>
+  </ion-toolbar>
+</ion-footer>
+<!-- PAGE FOOTER ENDS -->

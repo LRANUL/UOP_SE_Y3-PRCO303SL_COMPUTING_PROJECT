@@ -11,6 +11,29 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'sign-in',
+    loadChildren: () => import('./sign-in/sign-in.module').then( m => m.SignInPageModule)
+  },
+  {
+    path: 'create-account',
+    loadChildren: () => import('./create-account/create-account.module').then( m => m.CreateAccountPageModule)
+  },
+  {
+    path: 'account',
+    loadChildren: () => import('./portal/account/account.module').then( m => m.AccountPageModule)
+  },
+  {
+    path: '**',
+    loadChildren: () => import('./maintainance/page-not-found/page-not-found.module').then( m => m.PageNotFoundPageModule)
+  },
+  {
+    path: 'page-not-found',
+    loadChildren: () => import('./maintainance/page-not-found/page-not-found.module').then( m => m.PageNotFoundPageModule)
+  },
+
+
+
 ];
 
 @NgModule({

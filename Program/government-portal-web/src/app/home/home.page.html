@@ -6,45 +6,25 @@
 <!-- PAGE SPLASH SCREEN ENDS -->
 <!-- WELCOME MODAL STARTS -->
 <!-- https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage -->
-<div name="Welcome" *ngIf="Welcome" 
-style="margin: 5px;">
-  <ion-slides pager="false" [options]="slideOpts" class="slides">
+<div name="Welcome" *ngIf="Welcome" style="margin: 5px;height: 100%;background-color: #C92D39;">
+  <ion-slides pager="false" [options]="slideOpts" style="height: 90%;">
     <ion-slide>
-      <p>1Keep close to Nature's heart... and break clear away, once in awhile,
-        and climb a mountain or spend a week in the woods. Wash your spirit clean.</p>
-        <ion-button>Default</ion-button>
+      <img src="assets/splash/Page-1.png" />
     </ion-slide>
     <ion-slide>
-      <p>2Keep close to Nature's heart... and break clear away, once in awhile,
-        and climb a mountain or spend a week in the woods. Wash your spirit clean.</p>
+      <img src="assets/splash/Page-2.png" />
     </ion-slide>
     <ion-slide>
-      <p>3Keep close to Nature's heart... and break clear away, once in awhile,
-        and climb a mountain or spend a week in the woods. Wash your spirit clean.</p>
+      <img src="assets/splash/Page-3.png" />
     </ion-slide>
     <ion-slide>
-      
-      <h1>TEST</h1>
-      <p>4</p>
+      <img src="assets/splash/Page-4.png" />
     </ion-slide>
-    <ion-slide>
-      <h1>TEST</h1>
-      <p>
-        5
-      </p>
-      <ion-button (click)="goHome()" expand="block" color="light">Continue to Government Portal</ion-button>
+    <ion-slide (click)="goHome()">
+      <img src="assets/splash/Page-5.png" />
     </ion-slide>
   </ion-slides>
-  <!-- <ion-card style="position: absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);">
-    <ion-card-header>
-      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-      <ion-card-title>Card Title</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      Keep close to Nature's heart... and break clear away, once in awhile,
-      and climb a mountain or spend a week in the woods. Wash your spirit clean.
-    </ion-card-content>
-  </ion-card> -->
+  <!-- <ion-button style="height: 10%;" (click)="goHome()" expand="block" size="large" color="danger">Start Now</ion-button> -->
 </div>
 <!-- WELCOME MODAL ENDS -->
 <!-- PAGE HEADER STARTS -->
@@ -52,7 +32,7 @@ style="margin: 5px;">
   <ion-header>
     <ion-toolbar color="primary">
       <ion-title>
-        <strong>GOVERNMENT PORTAL</strong>
+        <strong>GOVERNMENT PORTAL </strong>
       </ion-title>
     </ion-toolbar>
   </ion-header>
@@ -62,18 +42,122 @@ style="margin: 5px;">
 
 
   <!-- PAGE SEARCH AND LINKED CONTENT -->
-
+  <!-- <ion-searchbar animated="true" placeholder="Search..." 
+    (clickOutside)="onClickedOutside($event)" (keyup)="onkeyup($event)"></ion-searchbar>
+  <ion-list *ngIf="show_list" style="position: absolute;z-index:1000;width: 100%;">
+    <ion-item *ngFor="let result of results | async">
+      <ion-label (click)="clickResult(i)">{{ result.Name }}</ion-label>
+    </ion-item>
+  </ion-list> -->
+  <!-- <ion-searchbar animated="true" [(ngModel)]="searchQuery" (click)="click_in()"
+    (clickOutside)="onClickedOutside($event)" (ngModelChange)="change_query($event)"
+    placeholder="Search..."></ion-searchbar>
+  <ion-list *ngIf="pagesList" style="position: absolute;z-index:1000;width: 100%;">
+    <ion-item *ngFor="let item of pageList | slice:0:3;; let i = index" [(ngModel)]="SiteName" (click)="clickResult(i)">
+      <ion-label>{{ item }}</ion-label>
+    </ion-item>
+  </ion-list> -->
   <!-- PAGE SEARCH AND LINKED CONTENT -->
+  <!-- PAGE LINKS AND INFORMATION -->
+  <ion-content>
+    <h1>One portal for all goverment services</h1>
+    <ion-grid>
+      <ion-row>
+        <ion-col class="start">
+          <ion-router-link href="sign-in">
+            <ion-card>
+              <ion-card-title>Department of Registration of Persons</ion-card-title>
+              <ion-img src="assets/animations/11067-registration-animation.gif/" style="width: 300px;height: 300px;">
+              </ion-img>
+              <h3>Citizens Registrations</h3>
+            </ion-card>
+          </ion-router-link>
+        </ion-col>
+        <ion-col class="center">
+          <ion-card center>
+            <ion-card-title>Department of Registration of Persons</ion-card-title>
+            <ion-img src="assets/animations/11067-registration-animation.gif/" style="width: 300px;height: 300px;">
+            </ion-img>
+            <h3>Citizens Registrations</h3>
+          </ion-card>
+        </ion-col>
+        <ion-col class="end">
+          <ion-card>
+            <ion-card-title>Department of Registration of Persons</ion-card-title>
+            <ion-img src="assets/animations/11067-registration-animation.gif/" style="width: 300px;height: 300px;">
+            </ion-img>
+            <h3>Citizens Registrations</h3>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="start">
+          <ion-card>
+            <ion-card-title>Department of Registration of Persons</ion-card-title>
+            <ion-img src="assets/animations/11067-registration-animation.gif/" style="width: 300px;height: 300px;">
+            </ion-img>
+            <h3>Citizens Registrations</h3>
+          </ion-card>
+        </ion-col>
+        <ion-col class="center">
+          <ion-card center>
+            <ion-card-title>Department of Registration of Persons</ion-card-title>
+            <ion-img src="assets/animations/11067-registration-animation.gif/" style="width: 300px;height: 300px;">
+            </ion-img>
+            <h3>Citizens Registrations</h3>
+          </ion-card>
+        </ion-col>
+        <ion-col class="end">
+          <ion-card>
+            <ion-card-title>Department of Registration of Persons</ion-card-title>
+            <ion-img src="assets/animations/11067-registration-animation.gif/" style="width: 300px;height: 300px;">
+            </ion-img>
+            <h3>Citizens Registrations</h3>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="start">
+          <ion-card>
+            <ion-card-title>Department of Registration of Persons</ion-card-title>
+            <ion-img src="assets/animations/11067-registration-animation.gif/" style="width: 300px;height: 300px;">
+            </ion-img>
+            <h3>Citizens Registrations</h3>
+          </ion-card>
+        </ion-col>
+        <ion-col class="center">
+          <ion-card center>
+            <ion-card-header>Department of Registration of Persons</ion-card-header>
+            <ion-img src="assets/animations/11067-registration-animation.gif/" style="width: 300px;height: 300px;">
+            </ion-img>
+            <h3>Citizens Registrations</h3>
+            <ion-card-content></ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col class="end">
+          <ion-card>
+            <ion-card-title>Department of Registration of Persons</ion-card-title>
+            <ion-img src="assets/animations/11067-registration-animation.gif/" style="width: 300px;height: 300px;">
+            </ion-img>
+            <h3>Citizens Registrations</h3>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+
+  <!-- PAGE LINKS AND INFORMATION -->
+
   <!-- PAGE CONTENT ENDS -->
 
   <!-- PAGE FOOTER STARTS -->
+  <ion-footer class="ion-no-border" align="center">
+    <ion-toolbar color="light">
+      <ion-text>
+        Government Portal<br>
+        Ministry of Home Affairs
+      </ion-text>
+    </ion-toolbar>
+  </ion-footer>
+  <!-- PAGE FOOTER ENDS -->
 </ion-content>
-<ion-footer class="ion-no-border" align="center">
-  <ion-toolbar color="light">
-    <ion-text>
-      Government Portal<br>
-      Ministry of Home Affairs
-    </ion-text>
-  </ion-toolbar>
-</ion-footer>
-<!-- PAGE FOOTER ENDS -->
