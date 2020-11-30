@@ -32,7 +32,7 @@
   <ion-header>
     <ion-toolbar color="primary">
       <ion-title>
-        <strong>GOVERNMENT PORTAL</strong>
+        <strong>GOVERNMENT PORTAL </strong>
       </ion-title>
     </ion-toolbar>
   </ion-header>
@@ -42,20 +42,108 @@
 
 
   <!-- PAGE SEARCH AND LINKED CONTENT -->
-  <ion-searchbar animated="true" [(ngModel)]="searchQuery" (click)="click_in()"
-    (clickOutside)="onClickedOutside($event)" (ionCancel)="onCancel($event)" (ngModelChange)="change_query($event)"
-    showCancelButton="focus" placeholder="Search..."></ion-searchbar>
+  <!-- <ion-searchbar animated="true" placeholder="Search..." 
+    (clickOutside)="onClickedOutside($event)" (keyup)="onkeyup($event)"></ion-searchbar>
   <ion-list *ngIf="show_list" style="position: absolute;z-index:1000;width: 100%;">
-    <ion-item *ngFor="let item of list_to_show| slice:0:3;; let i = index">
-      <ion-label (click)="click_item(i)">{{ item }}</ion-label>
+    <ion-item *ngFor="let result of results | async">
+      <ion-label (click)="clickResult(i)">{{ result.Name }}</ion-label>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
+  <!-- <ion-searchbar animated="true" [(ngModel)]="searchQuery" (click)="click_in()"
+    (clickOutside)="onClickedOutside($event)" (ngModelChange)="change_query($event)"
+    placeholder="Search..."></ion-searchbar>
+  <ion-list *ngIf="pagesList" style="position: absolute;z-index:1000;width: 100%;">
+    <ion-item *ngFor="let item of pageList | slice:0:3;; let i = index" [(ngModel)]="SiteName" (click)="clickResult(i)">
+      <ion-label>{{ item }}</ion-label>
+    </ion-item>
+  </ion-list> -->
   <!-- PAGE SEARCH AND LINKED CONTENT -->
   <!-- PAGE LINKS AND INFORMATION -->
   <ion-content>
     <h1>One portal for all goverment services</h1>
-    Links to pages would be added...
-
+    <ion-grid>
+      <ion-row>
+        <ion-col class="start">
+          <ion-router-link href="sign-in">
+            <ion-card>
+              <ion-card-title>Department of Registration of Persons</ion-card-title>
+              <ion-img src="assets/animations/11067-registration-animation.gif/" style="width: 300px;height: 300px;">
+              </ion-img>
+              <h3>Citizens Registrations</h3>
+            </ion-card>
+          </ion-router-link>
+        </ion-col>
+        <ion-col class="center">
+          <ion-card center>
+            <ion-card-title>Department of Registration of Persons</ion-card-title>
+            <ion-img src="assets/animations/11067-registration-animation.gif/" style="width: 300px;height: 300px;">
+            </ion-img>
+            <h3>Citizens Registrations</h3>
+          </ion-card>
+        </ion-col>
+        <ion-col class="end">
+          <ion-card>
+            <ion-card-title>Department of Registration of Persons</ion-card-title>
+            <ion-img src="assets/animations/11067-registration-animation.gif/" style="width: 300px;height: 300px;">
+            </ion-img>
+            <h3>Citizens Registrations</h3>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="start">
+          <ion-card>
+            <ion-card-title>Department of Registration of Persons</ion-card-title>
+            <ion-img src="assets/animations/11067-registration-animation.gif/" style="width: 300px;height: 300px;">
+            </ion-img>
+            <h3>Citizens Registrations</h3>
+          </ion-card>
+        </ion-col>
+        <ion-col class="center">
+          <ion-card center>
+            <ion-card-title>Department of Registration of Persons</ion-card-title>
+            <ion-img src="assets/animations/11067-registration-animation.gif/" style="width: 300px;height: 300px;">
+            </ion-img>
+            <h3>Citizens Registrations</h3>
+          </ion-card>
+        </ion-col>
+        <ion-col class="end">
+          <ion-card>
+            <ion-card-title>Department of Registration of Persons</ion-card-title>
+            <ion-img src="assets/animations/11067-registration-animation.gif/" style="width: 300px;height: 300px;">
+            </ion-img>
+            <h3>Citizens Registrations</h3>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="start">
+          <ion-card>
+            <ion-card-title>Department of Registration of Persons</ion-card-title>
+            <ion-img src="assets/animations/11067-registration-animation.gif/" style="width: 300px;height: 300px;">
+            </ion-img>
+            <h3>Citizens Registrations</h3>
+          </ion-card>
+        </ion-col>
+        <ion-col class="center">
+          <ion-card center>
+            <ion-card-header>Department of Registration of Persons</ion-card-header>
+            <ion-img src="assets/animations/11067-registration-animation.gif/" style="width: 300px;height: 300px;">
+            </ion-img>
+            <h3>Citizens Registrations</h3>
+            <ion-card-content></ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col class="end">
+          <ion-card>
+            <ion-card-title>Department of Registration of Persons</ion-card-title>
+            <ion-img src="assets/animations/11067-registration-animation.gif/" style="width: 300px;height: 300px;">
+            </ion-img>
+            <h3>Citizens Registrations</h3>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-content>
 
   <!-- PAGE LINKS AND INFORMATION -->
