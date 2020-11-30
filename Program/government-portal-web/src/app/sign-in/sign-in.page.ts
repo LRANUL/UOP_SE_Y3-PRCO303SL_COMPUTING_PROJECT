@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
-import { NavController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 import { GoogleAuthService } from '../service/google-auth.service';
 @Component({
   selector: 'app-sign-in',
@@ -12,9 +13,30 @@ export class SignInPage implements OnInit {
 
   validations_form: FormGroup;
   errorMessage: string;
-  constructor(public formBuilder: FormBuilder, private navCtrl: NavController, private authService: GoogleAuthService,) { }
+  constructor(public formBuilder: FormBuilder, private gAuth: AngularFireAuth, private navCtrl: NavController, private authService: GoogleAuthService, private loadingController: LoadingController) { }
 
   ngOnInit() {
+    this.gAuth.authState.subscribe(async user => {
+      if (user) {
+        // User is signed in, auto login intiated.
+        console.log('User is signed in');
+        const loading = await this.loadingController.create({
+          message: 'Logging in...',
+          duration: 400
+        });
+        await loading.present();
+
+        console.log('Loading dismissed!');
+
+        this.navCtrl.navigateForward('account');
+
+      }
+      else {
+        // No user is signed in.
+        console.log('User is NOT signed in');
+      }
+    });
+
     this.validations_form = this.formBuilder.group({
       email: new FormControl("", Validators.compose([Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')])),
       password: new FormControl("", Validators.compose([Validators.minLength(15), Validators.maxLength(30), Validators.required]))
