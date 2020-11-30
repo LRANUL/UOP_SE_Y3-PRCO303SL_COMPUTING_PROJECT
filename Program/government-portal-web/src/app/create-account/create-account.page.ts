@@ -18,7 +18,15 @@ export class CreateAccountPage implements OnInit {
   ngOnInit() {
     this.validations_form = this.formBuilder.group({
       email: new FormControl("", Validators.compose([Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')])),
-      password: new FormControl("", Validators.compose([Validators.minLength(15), Validators.maxLength(30), Validators.required]))
+      password: new FormControl("", Validators.compose([Validators.minLength(15), Validators.maxLength(30), Validators.required])),
+      fullName: new FormControl("", Validators.compose([Validators.minLength(1), Validators.required])),
+      gender: new FormControl("", Validators.compose([Validators.minLength(1), Validators.required])),
+      dateOfBirth: new FormControl("", Validators.compose([Validators.minLength(1), Validators.required])),
+      placeOfBirth: new FormControl("", Validators.compose([Validators.minLength(1), Validators.required])),
+      registarDivision: new FormControl("", Validators.compose([Validators.minLength(1), Validators.required])),
+      birthRegNo: new FormControl("", Validators.compose([Validators.minLength(1), Validators.required])),
+      fatherName: new FormControl("", Validators.compose([Validators.minLength(1), Validators.required])),
+      motherName: new FormControl("", Validators.compose([Validators.minLength(1), Validators.required])),
     });
   }
   validation_messages = {
