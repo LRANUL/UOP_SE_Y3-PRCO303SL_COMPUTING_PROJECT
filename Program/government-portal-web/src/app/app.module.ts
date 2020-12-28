@@ -13,12 +13,15 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
+import { NgAisModule } from 'angular-instantsearch';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
+    NgAisModule,
     AngularFireModule.initializeApp(environment.config)],
   providers: [
     StatusBar,

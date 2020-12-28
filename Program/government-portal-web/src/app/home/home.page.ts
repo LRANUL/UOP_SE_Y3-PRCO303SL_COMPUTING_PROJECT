@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import * as algoliasearch from 'algoliasearch';
 
 @Component({
   selector: 'app-home',
@@ -6,6 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  client: any;
+  index: any;
+  ALGOLIA_APP_ID: string = "MGBODS63FP";
+  ALGOLIA_APP_KEY: string = "01c0dc6bd76e601f053adefc271763ed";
+  searchQuery: string = "";
+  algoliaResults = [];
   loading: boolean;
   home: boolean;
   visitor: string;
@@ -16,63 +23,52 @@ export class HomePage {
     autoplay: true,
     speed: 3000
   };
-  SiteName: string;
-
   constructor() { }
   ngOnInit() {
-    this.loading = true; // loading disabled during development set this.loading to true
-    setTimeout(() => {
-      this.loading = false;
-      if (localStorage.getItem('Visitor') == null) {
-        localStorage.setItem('Visitor', 'false');
-        this.home = false;
-        this.Welcome = true;
-        console.log('New user');
-      }
-      else if (localStorage.getItem('Visitor') === 'false') {
-        this.Welcome = false;
+//  Search Function Init Start
+    this.client = algoliasearch(this.ALGOLIA_APP_ID, this.ALGOLIA_APP_KEY,
+      { protocol: 'https' });
+    this.index = this.client.initIndex("pages");
+//  Search Function Init End
+
+// LOADING DISABLED DURING DEVELOPMENT | UNCOMMENT AFTER DEVELOPMENT !
+    // this.loading = true; 
+    
+    // setTimeout(() => {
+    //   this.loading = false;
+    //   if (localStorage.getItem('Visitor') == null) {
+    //     localStorage.setItem('Visitor', 'false');
+    //     this.home = false;
+        // this.Welcome = true;
+    //     console.log('New user');
+    //   }
+    //   else if (localStorage.getItem('Visitor') === 'false') {
+    //     this.Welcome = false;
         this.home = true;
-        console.log('Old user' + localStorage.getItem('Visitor'));
-      }
-    }, 5000);
+    //     console.log('Old user' + localStorage.getItem('Visitor'));
+    //   }
+    // }, 5000);
 
   }
+  //  Search Function Starts 
+  pagesList = false;
+  click_in() {
+    this.pagesList = true;
+  }
+  onClickedOutside(e: Event) {
+    this.pagesList = false;
+  }
+  search(event) {
+    this.index.search({
+      query: this.searchQuery
+    }).then((data) => {
+      this.algoliaResults = data.hits;
+    })
+  }
+  //  Search Function Ends
   goHome() {
     this.Welcome = false;
     this.home = true;
   }
-  // Pages = ['Loans', 'Taxes', 'Passports', 'Educational', 'Security', 'Lands', 'Law'];
-  // pageList = this.Pages;
-  // selected_index = -1;
-  // pagesList = false;
 
-  // click_in() {
-  //   this.pagesList = true;
-  // }
-  // onClickedOutside(e: Event) {
-  //   this.pagesList = false;
-  // }
-  // clickResult() {
-  //   this.SiteName
-  //   console.log(this.SiteName);
-  //   // for (let i = 0; i < this.Pages.length; i++) {
-  //   //   if (this.pageList[val].toUpperCase() === this.Pages[i].toUpperCase()) {
-  //   //     this.selected_index = i;
-  //   // console.log(this.selected_index);
-
-  //   //     break;
-  //   //   }
-  //   // }
-  // }
-
-  // change_query(query) {
-  //   let k = 0;
-  //   this.pageList = [];
-  //   for (let i = 0; i < this.Pages.length; i++) {
-  //     if (this.Pages[i].toUpperCase().includes(query.toUpperCase())) {
-  //       this.pageList[k] = this.Pages[i];
-  //       k += 1;
-  //     }
-  //   }
-  // }
 }

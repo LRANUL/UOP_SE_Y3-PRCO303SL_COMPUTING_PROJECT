@@ -1,0 +1,50 @@
+<!-- PAGE HEADER STARTS -->
+
+<ion-content [fullscreen]="true">
+  <!-- #3082c9 Royal Blue | #c92d39 Government Red -->
+  <div style="background-color:#c92d39;color: white;">
+    <ion-header>
+      <ion-toolbar color="dark">
+        <ion-title>
+          <strong>GOVERNMENT PORTAL </strong>
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <!-- PAGE HEADER ENDS -->
+
+    <!-- PAGE CONTENT STARTS -->
+
+    <!-- PAGE SEARCH AND LINKED CONTENT -->
+    <h1 style="margin-left: 2%;"><strong>WELCOME TO GOVERNMENT PORTAL</strong></h1>
+    <h5 style="margin-left: 2%;">One portal for all government service at one place.</h5>
+    <ion-searchbar style="width: 40%;" animated="true" [(ngModel)]="searchQuery" (click)="click_in()"
+      (clickOutside)="onClickedOutside($event)" (ionInput)="search($event)" placeholder="Search..."></ion-searchbar>
+    <ion-list *ngIf="pagesList" style="position: absolute;z-index:1000;width: 40%;">
+      <ion-item *ngFor="let algoliaResult of algoliaResults | slice:0:3;; let i = index">
+        <ion-router-link href={{algoliaResult.url}} class="underline-search">{{ algoliaResult.name }}
+        </ion-router-link>
+      </ion-item>
+    </ion-list>
+  </div>
+  <!-- PAGE SEARCH AND LINKED CONTENT -->
+
+  <!-- PAGE LINKS AND INFORMATION -->
+  <ion-content>
+    <h1>Trading</h1>
+  </ion-content>
+
+  <!-- PAGE LINKS AND INFORMATION -->
+
+  <!-- PAGE CONTENT ENDS -->
+
+  <!-- PAGE FOOTER STARTS -->
+  <ion-footer class="ion-no-border" align="center">
+    <ion-toolbar color="light">
+      <ion-text>
+        Government Portal<br>
+        Ministry of Home Affairs
+      </ion-text>
+    </ion-toolbar>
+  </ion-footer>
+  <!-- PAGE FOOTER ENDS -->
+</ion-content>

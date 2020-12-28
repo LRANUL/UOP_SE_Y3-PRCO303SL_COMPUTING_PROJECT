@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore/';
 import { LoadingController, MenuController, NavController } from '@ionic/angular';
 import { GoogleAuthService } from '../../service/google-auth.service';
+
 @Component({
   selector: 'app-account',
   templateUrl: './account.page.html',

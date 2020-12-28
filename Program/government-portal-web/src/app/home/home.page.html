@@ -24,108 +24,106 @@
       <img src="assets/splash/Page-5.png" />
     </ion-slide>
   </ion-slides>
-  <!-- <ion-button style="height: 10%;" (click)="goHome()" expand="block" size="large" color="danger">Start Now</ion-button> -->
+  <ion-button style="height: 10%;" (click)="goHome()" expand="block" size="large" color="danger">Start Now</ion-button>
 </div>
 <!-- WELCOME MODAL ENDS -->
 <!-- PAGE HEADER STARTS -->
+
 <ion-content [fullscreen]="true" [hidden]="!home">
-  <ion-header>
-    <ion-toolbar color="dark">
-      <ion-title>
-        <strong>GOVERNMENT PORTAL </strong>
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <!-- PAGE HEADER ENDS -->
+  <!-- #3082c9 Royal Blue | #c92d39 Government Red -->
+  <div style="background-color:#c92d39;color: white;">
+    <ion-header>
+      <ion-toolbar color="dark">
+        <ion-title>
+          <strong>GOVERNMENT PORTAL </strong>
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <!-- PAGE HEADER ENDS -->
 
-  <!-- PAGE CONTENT STARTS -->
+    <!-- PAGE CONTENT STARTS -->
 
-
+    <!-- PAGE SEARCH AND LINKED CONTENT -->
+    <h1 style="margin-left: 2%;"><strong>WELCOME TO GOVERNMENT PORTAL</strong></h1>
+    <h5 style="margin-left: 2%;">One portal for all government service at one place.</h5>
+    <ion-searchbar style="width: 40%;" animated="true" [(ngModel)]="searchQuery" (click)="click_in()"
+      (clickOutside)="onClickedOutside($event)" (ionInput)="search($event)" placeholder="Search..."></ion-searchbar>
+    <ion-list *ngIf="pagesList" style="position: absolute;z-index:1000;width: 40%;">
+      <ion-item *ngFor="let algoliaResult of algoliaResults | slice:0:3;; let i = index">
+        <ion-router-link href={{algoliaResult.url}} class="underline-search">{{ algoliaResult.name }}
+        </ion-router-link>
+      </ion-item>
+    </ion-list>
+  </div>
   <!-- PAGE SEARCH AND LINKED CONTENT -->
-  <!-- <ion-searchbar animated="true" placeholder="Search..." 
-    (clickOutside)="onClickedOutside($event)" (keyup)="onkeyup($event)"></ion-searchbar>
-  <ion-list *ngIf="show_list" style="position: absolute;z-index:1000;width: 100%;">
-    <ion-item *ngFor="let result of results | async">
-      <ion-label (click)="clickResult(i)">{{ result.Name }}</ion-label>
-    </ion-item>
-  </ion-list> -->
-  <!-- <ion-searchbar animated="true" [(ngModel)]="searchQuery" (click)="click_in()"
-    (clickOutside)="onClickedOutside($event)" (ngModelChange)="change_query($event)"
-    placeholder="Search..."></ion-searchbar>
-  <ion-list *ngIf="pagesList" style="position: absolute;z-index:1000;width: 100%;">
-    <ion-item *ngFor="let item of pageList | slice:0:3;; let i = index" [(ngModel)]="SiteName" (click)="clickResult(i)">
-      <ion-label>{{ item }}</ion-label>
-    </ion-item>
-  </ion-list> -->
-  <!-- PAGE SEARCH AND LINKED CONTENT -->
+
   <!-- PAGE LINKS AND INFORMATION -->
   <ion-content>
-    <h1 style="margin-left: 5%;">One portal for all goverment services</h1>
-    <ion-grid>
+    <ion-grid style="margin-top: 2%;">
       <ion-row>
         <ion-col class="start">
-          <ion-router-link href="sign-in"class="underline">Registration of Persons
+          <ion-router-link href="registrations" class="underline">Registration of Persons
           </ion-router-link>
           <p>Includes applications for Identity cards, renewals and lost</p>
         </ion-col>
         <ion-col class="center">
-          <ion-router-link href="page-under-construction"class="underline">Agriculture, Livestock and Fisheries
+          <ion-router-link href="agriculture" class="underline">Agriculture, Livestock and Fisheries
           </ion-router-link>
           <p>Includes importing natural resources, pesticides and certifications</p>
         </ion-col>
         <ion-col class="end">
-          <ion-router-link href="page-under-construction"class="underline">Communication and Media
+          <ion-router-link href="media" class="underline">Communication and Media
           </ion-router-link>
           <p>Includes news casting, media loans and broadcasting</p>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col class="start">
-          <ion-router-link href="page-under-construction"class="underline">Banking, Tax and Insurance
+          <ion-router-link href="banking" class="underline">Banking, Tax and Insurance
           </ion-router-link>
           <p>Includes employee funds, registrations, exchange and management</p>
         </ion-col>
         <ion-col class="center">
-          <ion-router-link href="page-under-construction"class="underline">Education and Training
+          <ion-router-link href="education" class="underline">Education and Training
           </ion-router-link>
-          <p>Includes hiher education, examinations and vocational training</p>
+          <p>Includes higher education, examinations and vocational training</p>
         </ion-col>
         <ion-col class="end">
-          <ion-router-link href="page-under-construction"class="underline">Healthcare, Wellbeing and Social Service
+          <ion-router-link href="healthcare" class="underline">Healthcare, Wellbeing and Social Service
           </ion-router-link>
           <p>Includes Hospital care, public services and Indigenous medicine</p>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col class="start">
-          <ion-router-link href="page-under-construction"class="underline">Employment Information
+          <ion-router-link href="employeement" class="underline">Employment Information
           </ion-router-link>
           <p>Includes public employement, job designing, labour and career guidance</p>
         </ion-col>
         <ion-col class="center">
-          <ion-router-link href="page-under-construction"class="underline">Housing, Property and Utilities
+          <ion-router-link href="housing" class="underline">Housing, Property and Utilities
           </ion-router-link>
           <p>Includes constructions, hoousing, machinery and materials</p>
         </ion-col>
         <ion-col class="end">
-          <ion-router-link href="page-under-construction"class="underline">Environment
+          <ion-router-link href="environment" class="underline">Environment
           </ion-router-link>
           <p>Includes industrial licensing, pollution control and inspection reports</p>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col class="start">
-          <ion-router-link href="page-under-construction"class="underline">Justice, Law and Rights
+          <ion-router-link href="justice" class="underline">Justice, Law and Rights
           </ion-router-link>
           <p>Includes oaths, death inquiries, peace and foreign summons</p>
         </ion-col>
         <ion-col class="center">
-          <ion-router-link href="page-under-construction"class="underline">Travel, Tourism and Leisure
+          <ion-router-link href="travel" class="underline">Travel, Tourism and Leisure
           </ion-router-link>
           <p>Includes applications for certifications, guidance and operations</p>
         </ion-col>
         <ion-col class="end">
-          <ion-router-link href="page-under-construction"class="underline">Trade, Business and Industry
+          <ion-router-link href="trading" class="underline">Trade, Business and Industry
           </ion-router-link>
           <p>Includes foreign trade, marketing and guidance for import and exports</p>
         </ion-col>

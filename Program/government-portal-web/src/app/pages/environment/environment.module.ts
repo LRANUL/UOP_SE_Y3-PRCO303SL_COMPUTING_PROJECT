@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AccountPageRoutingModule } from './account-routing.module';
+import { EnvironmentPageRoutingModule } from './environment-routing.module';
 
-import { AccountPage } from './account.page';
+import { EnvironmentPage } from './environment.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AccountPageRoutingModule,
+    EnvironmentPageRoutingModule
   ],
-  declarations: [AccountPage]
+  declarations: [EnvironmentPage]
 })
-export class AccountPageModule {}
+export class EnvironmentPageModule {}

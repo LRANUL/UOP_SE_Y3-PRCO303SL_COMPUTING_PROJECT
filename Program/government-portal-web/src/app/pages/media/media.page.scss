@@ -1,0 +1,40 @@
+#container {
+    text-align: center;
+  
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  #container strong {
+    font-size: 20px;
+    line-height: 26px;
+  }
+  
+  #container p {
+    font-size: 16px;
+    line-height: 22px;
+  
+    color: #8c8c8c;
+  
+    margin: 0;
+  }
+  
+  #container a {
+    text-decoration: none;
+  }
+  
+  .underline {
+    text-decoration: underline;
+    color: blue;
+    font-size: large;
+    font-weight: bold;
+  }
+  .underline-search {
+    text-decoration: underline;
+    color: #0000ff;
+    font-size: medium;
+    font-weight: bold;
+  }

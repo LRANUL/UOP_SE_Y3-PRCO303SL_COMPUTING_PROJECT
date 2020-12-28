@@ -37,6 +37,9 @@
               },
               {
                 "input": "src/global.scss"
+              },
+              {
+                "input": "node_modules/instantsearch.css/themes/algolia.css"
               }
             ],
             "scripts": []

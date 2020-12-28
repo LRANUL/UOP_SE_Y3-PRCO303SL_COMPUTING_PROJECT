@@ -28,16 +28,61 @@ const routes: Routes = [
     loadChildren: () => import('./maintainance/page-under-construction/page-under-construction.module').then(m => m.PageUnderConstructionPageModule)
   },
   {
-    path: '**',
-    loadChildren: () => import('./maintainance/page-not-found/page-not-found.module').then(m => m.PageNotFoundPageModule)
-  },
-  {
     path: 'page-not-found',
     loadChildren: () => import('./maintainance/page-not-found/page-not-found.module').then(m => m.PageNotFoundPageModule)
   },
-
-
-
+  {
+    path: 'registrations',
+    loadChildren: () => import('./pages/registrations/registrations.module').then( m => m.RegistrationsPageModule)
+  },
+  {
+    path: 'education',
+    loadChildren: () => import('./pages/education/education.module').then( m => m.EducationPageModule)
+  },
+  {
+    path: 'agriculture',
+    loadChildren: () => import('./pages/agriculture/agriculture.module').then( m => m.AgriculturePageModule)
+  },
+  {
+    path: 'trading',
+    loadChildren: () => import('./pages/trading/trading.module').then( m => m.TradingPageModule)
+  },
+  {
+    path: 'banking',
+    loadChildren: () => import('./pages/banking/banking.module').then( m => m.BankingPageModule)
+  },
+  {
+    path: 'travel',
+    loadChildren: () => import('./pages/travel/travel.module').then( m => m.TravelPageModule)
+  },
+  {
+    path: 'justice',
+    loadChildren: () => import('./pages/justice/justice.module').then( m => m.JusticePageModule)
+  },
+  {
+    path: 'environment',
+    loadChildren: () => import('./pages/environment/environment.module').then( m => m.EnvironmentPageModule)
+  },
+  {
+    path: 'housing',
+    loadChildren: () => import('./pages/housing/housing.module').then( m => m.HousingPageModule)
+  },
+  {
+    path: 'healthcare',
+    loadChildren: () => import('./pages/healthcare/healthcare.module').then( m => m.HealthcarePageModule)
+  },
+  {
+    path: 'media',
+    loadChildren: () => import('./pages/media/media.module').then( m => m.MediaPageModule)
+  },
+  {
+    path: 'employment',
+    loadChildren: () => import('./pages/employment/employment.module').then( m => m.EmploymentPageModule)
+  },
+  {
+    path: '**',
+    loadChildren: () => import('./maintainance/page-not-found/page-not-found.module').then(m => m.PageNotFoundPageModule)
+  },
 
 ];
 

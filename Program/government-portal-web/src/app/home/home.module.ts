@@ -7,6 +7,7 @@ import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
 import { ClickOutsideModule } from 'ng-click-outside';
 
+
 @NgModule({
   imports: [
     CommonModule,
