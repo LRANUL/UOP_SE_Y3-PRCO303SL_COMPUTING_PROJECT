@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   {
     path: '',
@@ -13,24 +13,29 @@ const routes: Routes = [
   },
   {
     path: 'sign-in',
-    loadChildren: () => import('./sign-in/sign-in.module').then( m => m.SignInPageModule)
+    loadChildren: () => import('./sign-in/sign-in.module').then(m => m.SignInPageModule)
   },
   {
     path: 'create-account',
-    loadChildren: () => import('./create-account/create-account.module').then( m => m.CreateAccountPageModule)
+    loadChildren: () => import('./create-account/create-account.module').then(m => m.CreateAccountPageModule)
   },
   {
     path: 'account',
-    loadChildren: () => import('./portal/account/account.module').then( m => m.AccountPageModule)
+    loadChildren: () => import('./portal/account/account.module').then(m => m.AccountPageModule)
+  },
+  {
+    path: 'page-under-construction',
+    loadChildren: () => import('./maintainance/page-under-construction/page-under-construction.module').then(m => m.PageUnderConstructionPageModule)
   },
   {
     path: '**',
-    loadChildren: () => import('./maintainance/page-not-found/page-not-found.module').then( m => m.PageNotFoundPageModule)
+    loadChildren: () => import('./maintainance/page-not-found/page-not-found.module').then(m => m.PageNotFoundPageModule)
   },
   {
     path: 'page-not-found',
-    loadChildren: () => import('./maintainance/page-not-found/page-not-found.module').then( m => m.PageNotFoundPageModule)
+    loadChildren: () => import('./maintainance/page-not-found/page-not-found.module').then(m => m.PageNotFoundPageModule)
   },
+
 
 
 
