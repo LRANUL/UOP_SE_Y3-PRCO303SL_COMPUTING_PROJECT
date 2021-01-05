@@ -2,11 +2,13 @@
 
 <ion-content [fullscreen]="true">
   <!-- #3082c9 Royal Blue | #c92d39 Government Red -->
-  <div style="background-color:#c92d39;color: white;">
+  <div style="background-color:#3082c9;color: white;">
     <ion-header>
       <ion-toolbar color="dark">
         <ion-title>
-          <strong>GOVERNMENT PORTAL </strong>
+          <ion-router-link href="home" color="light">
+            <strong>GOVERNMENT PORTAL</strong>
+          </ion-router-link>
         </ion-title>
       </ion-toolbar>
     </ion-header>
@@ -16,7 +18,7 @@
 
     <!-- PAGE SEARCH AND LINKED CONTENT -->
     <h1 style="margin-left: 2%;"><strong>WELCOME TO GOVERNMENT PORTAL</strong></h1>
-    <h5 style="margin-left: 2%;">One portal for all government service at one place.</h5>
+    <h5 style="margin-left: 2%;">All government services at one place.</h5>
     <ion-searchbar style="width: 40%;" animated="true" [(ngModel)]="searchQuery" (click)="click_in()"
       (clickOutside)="onClickedOutside($event)" (ionInput)="search($event)" placeholder="Search..."></ion-searchbar>
     <ion-list *ngIf="pagesList" style="position: absolute;z-index:1000;width: 40%;">
@@ -29,10 +31,43 @@
   <!-- PAGE SEARCH AND LINKED CONTENT -->
 
   <!-- PAGE LINKS AND INFORMATION -->
-  <ion-content>
-    <h1>Employment</h1>
-  </ion-content>
-
+  <div style="margin: 2%;">
+    <ion-content>
+      <h1>Employment</h1>
+    </ion-content>
+    <h3>Background of Ministry of Labour</h3>
+    <p>Protection and welfare of the labour community in liaison with the international agencies in relation to the
+      labour enactments and standards and promotion of industrial peace and cooperation.</p>
+    <h4>Major Thrust Areas</h4>
+    <ul>
+      <strong>Peace and Harmony</strong>
+      <li>Tripartite Relationship</li>
+      <li>International Labour Relations</li>
+      <li>Education, Training, Research and Development</li>
+      <strong>Social Protection</strong>
+      <strong>Rights at work</strong>
+      <li>Labour Standards and Enforcement</li>
+      <li>Protection of Working Women and Elimination of Child Labour</li>
+      <li>Occupational, Safety and Health</li>
+    </ul>
+    <h4>Duties and Functions</h4>
+    <ul>
+      <li>To empower and strengthen tripartite relationship</li>
+      <li>To ensure globally accepted rights and conditions at work</li>
+      <li>To eliminate child labour</li>
+      <li>To protect and empower employed women and promote gender equity and equality</li>
+      <li>To expedite relevant labour law reforms</li>
+      <li>To initiate action to develop a comprehensive social protection strategy</li>
+    </ul>
+    <h4>Vision</h4>
+    <p>“A Satisfied Productive Sri Lankan Labour force”</p>
+    <h4>Mission</h4>
+    <p>“Contribute towards the Socio-Economic Development through the Promotion of Industrial Peace and Harmony, Social
+      Protection, Rights at Work and Productivity.”</p>
+    <ion-router-link href="page-under-construction" class="underline">
+      Apply for your Employment services through Government Portal
+    </ion-router-link>
+  </div>
   <!-- PAGE LINKS AND INFORMATION -->
 
   <!-- PAGE CONTENT ENDS -->

@@ -1,6 +1,6 @@
 {
   "name": "government-portal-web",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "Mr. Ranul Ladduwahetty",
   "homepage": "",
   "scripts": {
@@ -9,7 +9,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "compodoc": "compodoc -p tsconfig.json"
   },
   "private": true,
   "dependencies": {
@@ -30,6 +31,7 @@
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "algoliasearch": "^3.35.1",
     "angular-instantsearch": "^3.0.0-beta.5",
+    "dateformat": "^4.4.1",
     "firebase": "^8.1.1",
     "instantsearch.css": "^7.4.5",
     "instantsearch.js": "^3.7.0",
@@ -44,6 +46,7 @@
     "@angular/compiler": "~10.0.0",
     "@angular/compiler-cli": "~10.0.0",
     "@angular/language-service": "~10.0.0",
+    "@compodoc/compodoc": "^1.1.11",
     "@ionic/angular-toolkit": "^2.3.0",
     "@types/algoliasearch": "^3.34.11",
     "@types/jasmine": "~3.5.0",
