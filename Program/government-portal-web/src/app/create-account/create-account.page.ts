@@ -57,9 +57,6 @@ export class CreateAccountPage implements OnInit {
       .then(res => {
         console.log(res);
         this.errorMessage = "";
-      }, err => {
-        console.log(err);
-        this.errorMessage = err.message;
       })
   }
 }

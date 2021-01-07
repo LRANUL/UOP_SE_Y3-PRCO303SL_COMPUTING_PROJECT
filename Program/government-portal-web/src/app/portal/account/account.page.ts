@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore/';
-import { AlertController, LoadingController, MenuController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, MenuController, NavController, ToastController } from '@ionic/angular';
 import { GoogleAuthService } from '../../service/google-auth.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
+import * as dateFormat from 'dateformat';
+import firebase from 'firebase/app';
 
 @Component({
   selector: 'app-account',
@@ -21,15 +23,21 @@ export class AccountPage implements OnInit {
 
   NICType: string;
   NICApplicantStatus: boolean;
+  userEmail: any;
+  requestType: any;
+  assigneeName: any;
+  applicationDescription: any;
+  applicationStatus: any;
+  receivedTime: any;
 
-
-  constructor(public alertController: AlertController, public formBuilder: FormBuilder, private menu: MenuController, private navCtrl: NavController, private gAuth: AngularFireAuth, private authService: GoogleAuthService, private loadingController: LoadingController) { }
+  constructor(private firestore: AngularFirestore, public toastController: ToastController, public alertController: AlertController, public formBuilder: FormBuilder, private menu: MenuController, private navCtrl: NavController, private gAuth: AngularFireAuth, private authService: GoogleAuthService, private loadingController: LoadingController) { }
   validations_form: FormGroup;
   errorMessage: string;
   ngOnInit() {
     // AUTHENTICATION MANAGER
     this.gAuth.authState.subscribe(async user => {
       if (user) {
+        this.userEmail = user.email;
         // User is signed in, auto login intiated.
         console.log('SIGNED IN');
         const loading = await this.loadingController.create({
@@ -118,7 +126,7 @@ export class AccountPage implements OnInit {
       }
     ]
   };
-// LOAD CONTROLLERS
+  // LOAD CONTROLLERS
   async logout() {
     this.authService
       .logoutCitizen()
@@ -135,7 +143,7 @@ export class AccountPage implements OnInit {
       .catch(error => {
       });
   }
-// TAB MENU START
+  // TAB MENU START
 
   openService() {
     this.servicesPanel = true;
@@ -152,9 +160,9 @@ export class AccountPage implements OnInit {
     this.supportPanel = false;
     this.settingsPanel = true;
   }
-//  TAB MENU END
+  //  TAB MENU END
 
-// SERVICE PAGE START
+  // SERVICE PAGE START
 
   firstNICApp() {
     this.NICApplicant = true;
@@ -178,15 +186,6 @@ export class AccountPage implements OnInit {
   exitApp() {
     this.NICApplicant = false;
   }
-// SERVICE PAGE END
-
-//  SUPPORT PAGE START
-  NICStatus(){
-    this.NICApplicantStatus = true;
-  }
-  exitStatus() {
-    this.NICApplicantStatus = false;
-  }
   ForeignYes() {
     this.foreignCitizen = true;
   }
@@ -196,11 +195,11 @@ export class AccountPage implements OnInit {
   sendApplication(value) {
     this.authService.sendNICApplication(value)
       .then(
-        res => { 
+        res => {
           console.log(res);
           this.passAlertNICApp()
         },
-        err => { 
+        err => {
           console.log(err);
           this.failAlertNICApp()
         })
@@ -226,5 +225,130 @@ export class AccountPage implements OnInit {
 
     await alert.present();
   }
+  // SERVICE PAGE END
+
+  //  SUPPORT PAGE START
+  async NICStatus() {
+    this.NICApplicantStatus = true;
+    await this.firestore.collection('eCitizens/' + this.userEmail + '/eApplications/').doc('NICApplication').ref.get().then((doc) => {
+      if (doc.exists) {
+        this.requestType = doc.data()['requestType'];
+        this.assigneeName = doc.data()['division'];
+        this.applicationDescription = doc.data()['description'];
+        this.applicationStatus = doc.data()['status'];
+        this.receivedTime = doc.data()['TimeStamp'].toDate();
+      }
+    })
+  }
+  exitStatus() {
+    this.NICApplicantStatus = false;
+  }
+  //  SUPPORT PAGE END
+
+  //  SETTINGS PAGE START
+  async changePassword() {
+    const alert = await this.alertController.create({
+      header: 'Change Password',
+      inputs: [
+        {
+          name: 'password',
+          type: 'password',
+          placeholder: 'New Password'
+
+        },
+      ],
+      message: this.userEmail,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            // console.log('Confirm Cancel');
+          }
+        },
+        {
+          text: 'Change',
+          handler: async (alertData) => {
+            var user = firebase.auth().currentUser;
+            user.updatePassword(alertData.password).then(async function () {
+              // console.log('Password Updated')
+            }
+            ).catch(function (error) {
+              // An error happened.
+              if (error) {
+                const toast = this.toastController.create({
+                  message: 'Your password has not changed, Try again.',
+                  duration: 2000
+                });
+                toast.present();
+              }
+            });
+            const toast = await this.toastController.create({
+              message: 'Your password has been updated.',
+              duration: 2000
+            });
+            toast.present();
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async changeEmail() {
+    const alert = await this.alertController.create({
+      header: 'Change Email',
+      inputs: [
+        {
+          name: 'email',
+          type: 'email',
+          placeholder: 'New Email'
+
+        },
+      ],
+      message: this.userEmail,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            // console.log('Confirm Cancel');
+          }
+        },
+        {
+          text: 'Change',
+          handler: async (alertData) => {
+            var user = firebase.auth().currentUser;
+            user.updateEmail(alertData.email).then(async function () {
+              // console.log('Email Updated')
+            }).
+              catch(async function (error) {
+                // An error happened.
+                console.log(error);
+                if (error) {
+                  const toast = await this.toastController.create({
+                    message: 'Your Email has not changed, Try again.',
+                    duration: 2000
+                  });
+                  toast.present();
+                }
+              }
+
+              );
+            const toast = await this.toastController.create({
+              message: 'Your Email has been updated.',
+              duration: 2000
+            });
+            toast.present();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+  //  SETTINGS PAGE END
 }
 

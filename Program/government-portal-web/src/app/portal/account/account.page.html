@@ -247,8 +247,9 @@
               </div>
               <h6>Details of Birth | උපත පිළිබඳ විස්තර | பிறப்பு விவரங்கள்</h6>
               <ion-item>
-                <ion-datetime displayFormat="MM DD YYYY" pickerFormat="MM DD YYYY" placeholder="Date of Birth|උපන්දිනය|பிறந்த தேதி"
-                  formControlName="dateOfBirth" type="text"></ion-datetime>
+                <ion-datetime displayFormat="MM DD YYYY" pickerFormat="MM DD YYYY"
+                  placeholder="Date of Birth|උපන්දිනය|பிறந்த தேதி" formControlName="dateOfBirth" type="text">
+                </ion-datetime>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of validation_messages.dateOfBirth">
@@ -590,9 +591,9 @@
                 <h6>E-mail | විද්යුත් තැපෑල | மின்னஞ்சல்</h6>
                 <ion-text style="font-style: italic;color: gray;">
                 </ion-text>
-                <ion-item>
-                  <ion-input required="true" type="email" placeholder="E-mail|විද්යුත් තැපෑල|மின்னஞ்சல்"
-                    formControlName="email" type="email"></ion-input>
+                <ion-item [disabled]="true">
+                  <ion-input required="true" type="email" placeholder="" formControlName="email" type="email">
+                    {{userEmail}}</ion-input>
                 </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of validation_messages.email">
@@ -624,34 +625,40 @@
     <ion-grid style="margin-left: 5%;">
       <h2 style="font-size: x-large;"><strong>Support Services</strong></h2>
       <ion-row>
-          <ion-row class="underline">
-            <ion-router-link (click)=NICStatus() class="underline">
-              Check NIC Application Status
-            </ion-router-link>
-          </ion-row>
-          <br>
-          <ion-row class="underline">
-            <ion-router-link (click)=renewNICApp() class="underline">
-              Contact Support
-            </ion-router-link>
-          </ion-row>
-          <br>
-          <ion-row class="underline">
-            <ion-router-link (click)=correctionNICApp() class="underline">
-              Apply for Corrections of NIC Application
-            </ion-router-link>
-          </ion-row>
-          <br>
-          <ion-row class="underline">
-            <ion-router-link (click)=lostNICApp() class="underline">
-              Apply for Lost of NIC Application
-            </ion-router-link>
-          </ion-row>
-        </ion-col>
-        <ion-col *ngIf="NICApplicantStatus" class="end" style="background: var(--ion-color-form);padding-left: 5%;">
-          <div style="position: relative;
-          float: right;color: darkgray;font-weight: bold;cursor:pointer;" (click)=exitStatus()>Exit</div>
-
+        <ion-row class="underline">
+          <ion-router-link (click)=NICStatus() class="underline">
+            Check NIC Application Status
+          </ion-router-link>
+        </ion-row>
+      </ion-row>
+      <ion-row style="padding-right: 5%;">
+        <ion-col *ngIf="NICApplicantStatus" class="end" style="background: var(--ion-color-form);">
+          <div style="position: relative; float: right;color: rgb(126, 125, 125);font-weight: bold;cursor:pointer;"
+            (click)=exitStatus()>Exit</div>
+          <ion-list>
+            <ion-item>
+              <ion-grid>
+                <ion-row style="font-weight: bolder;">
+                  <ion-col>Request</ion-col>
+                  <ion-col>Assigned</ion-col>
+                  <ion-col>Description</ion-col>
+                  <ion-col>Status</ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+            <ion-item>
+              <ion-grid>
+                <ion-row style="font-size: small;">
+                  <ion-col>{{requestType}}</ion-col>
+                  <ion-col>{{assigneeName}}</ion-col>
+                  <ion-col>{{applicationDescription}}</ion-col>
+                  <ion-col>{{applicationStatus}}
+                    <div style="font-size: xx-small;margin-top: 5%;">Received Time: {{receivedTime}}</div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+          </ion-list>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -660,12 +667,19 @@
     <ion-grid style="margin-left: 5%;">
       <h2 style="font-size: x-large;"><strong>Settings Services</strong></h2>
       <ion-row>
-      </ion-row>
-      <ion-row>
-      </ion-row>
-      <ion-row>
-      </ion-row>
-      <ion-row>
+        <ion-col>
+          <ion-row class="underline">
+            <ion-router-link (click)=changePassword() class="underline">
+              Change account password
+            </ion-router-link>
+          </ion-row>
+          <br>
+          <ion-row class="underline">
+            <ion-router-link (click)=changeEmail() class="underline">
+              Change account email
+            </ion-router-link>
+          </ion-row>
+        </ion-col>
       </ion-row>
     </ion-grid>
   </div>
