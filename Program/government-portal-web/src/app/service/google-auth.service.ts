@@ -3,15 +3,16 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import * as dateFormat from 'dateformat';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoogleAuthService {
 
-  constructor(private gAuth: AngularFireAuth, private firestore: AngularFirestore, public alertController: AlertController) {
+  constructor(private route: Router, public toastController: ToastController, private gAuth: AngularFireAuth, private firestore: AngularFirestore, public alertController: AlertController) {
     // TESTED AUTH SYSTEMS
     // this.gAuth.authState.subscribe(user => {
     //   if (user) {
@@ -27,13 +28,19 @@ export class GoogleAuthService {
 
   registerECitizen(value) {
     return new Promise<any>(async (_resolve, _reject) => {
-      this.firestore.collection('BirthRegistrations').doc("" + value.birthRegNo + "").ref.get().then((doc) => {
+      this.firestore.collection('BirthRegistrations').doc("" + value.birthRegNo + "").ref.get().then(async (doc) => {
         if (doc.exists) {
           var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
-          if (doc.data()['birthRegNo'] == value.birthRegNo) {
-            return new Promise<any>((resolve, reject) => {
+          if (doc.data()['birthRegNo'] == value.birthRegNo && doc.data()['dateOfBirth'] == dateBirth && doc.data()['Full_Name'] == value.fullName.toUpperCase()) {
+            return new Promise<any>(async (resolve, reject) => {
               console.log('eCitizen Registered')
-              this.firestore.collection('eCitizens' + value.email + '/Account').doc('Profile').set({
+              const toast = await this.toastController.create({
+                message: 'Registration successful ✅',
+                duration: 2000
+              });
+              toast.present();
+              this.route.navigate(['sign-in']);
+              this.firestore.collection('eCitizens/' + value.email + '/Account').doc('Profile').set({
                 Full_Name: value.fullName.toUpperCase(),
                 Gender: value.gender.toUpperCase(),
                 Date_Of_Birth: dateBirth,
@@ -44,7 +51,7 @@ export class GoogleAuthService {
                 Mother_Name: value.motherName.toUpperCase(),
                 Email: value.email.toUpperCase(),
                 createdDateTime: new Date(),
-                status: "Active"
+                status: "Active",
               })
                 .then(
                   (res) => {
@@ -59,11 +66,25 @@ export class GoogleAuthService {
             })
 
           } else {
-            console.log('INVALID BIRTH REGISTRATION NO.');
+            console.log('BIRTH REGISTRATION NOT MATCH!');
+            const alert = await this.alertController.create({
+              header: 'Registration Failed',
+              subHeader: 'BIRTH REGISTRATION DATA MISMATCH',
+              message: 'Your registration has failed, as the entered details does not your match records.',
+              buttons: ['Retry']
+            });
+            await alert.present();
           }
         }
         else {
-          console.log('BIRTH REGISTRATION NUMBER NOT FOUND!');
+          console.log('INVALID BIRTH REGISTRATION NO.');
+          const alert = await this.alertController.create({
+            header: '⚠ Registration Failed',
+            subHeader: 'INVALID BIRTH REGISTRATION NO.',
+            message: 'Your registration has failed, as the entered details are not valid.',
+            buttons: ['Retry']
+          });
+          await alert.present();
         }
       })
     })
