@@ -3,8 +3,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
-<<<<<<< Updated upstream
-=======
 import { AlertController, ToastController } from '@ionic/angular';
 import * as dateFormat from 'dateformat';
 import { Router } from '@angular/router';
@@ -14,7 +12,6 @@ import { Router } from '@angular/router';
  * 
  * Firebase Authentication, Firestore Management is controlled here.
  */
->>>>>>> Stashed changes
 @Injectable({
   providedIn: 'root'
 })
@@ -23,33 +20,32 @@ export class GoogleAuthService {
   constructor(private route: Router, public toastController: ToastController, private gAuth: AngularFireAuth, private firestore: AngularFirestore, public alertController: AlertController) {
     // TESTED AUTH SYSTEMS
     /**
-     * @example
-     *  this.gAuth.authState.subscribe(user => {
-     *  if (user) {
-     *    // User is signed in.
-     *    console.log('User is signed in');
-     *    }
-     *  else {
-     *    // No user is signed in.
-     *    console.log('User is NOT signed in');
-     *    }
-     *  });
-     *
-     */
-    
+      * @example
+      *  this.gAuth.authState.subscribe(user => {
+      *  if (user) {
+      *    // User is signed in.
+      *    console.log('User is signed in');
+      *    }
+      *  else {
+      *    // No user is signed in.
+      *    console.log('User is NOT signed in');
+      *    }
+      *  });
+      *
+      */
   }
-/**
- * Method for Registering user with the System
- * @param value Takes all inputs from Registration form
- * @param value.birthRegNo Holds the applicants Birth Certificate Registration Number
- * @param value.dateBirth Holds the applicants Date of Birth 
- * @param value.fullName Holds the applicants Full Name
- * These 3 parameters are verfied before proceeding with the registration
- * 
- * @example
- *  doc.data()['birthRegNo'] == value.birthRegNo && doc.data()['dateOfBirth'] == dateBirth && doc.data()['Full_Name'] == value.fullName.toUpperCase()
- *  
- */
+  /**
+   * Method for Registering user with the System
+   * @param value Takes all inputs from Registration form
+   * @param value.birthRegNo Holds the applicants Birth Certificate Registration Number
+   * @param value.dateBirth Holds the applicants Date of Birth 
+   * @param value.fullName Holds the applicants Full Name
+   * These 3 parameters are verfied before proceeding with the registration
+   * 
+   * @example
+   *  doc.data()['birthRegNo'] == value.birthRegNo && doc.data()['dateOfBirth'] == dateBirth && doc.data()['Full_Name'] == value.fullName.toUpperCase()
+   *  
+   */
   registerECitizen(value) {
     return new Promise<any>(async (_resolve, _reject) => {
       this.firestore.collection('BirthRegistrations').doc("" + value.birthRegNo + "").ref.get().then(async (doc) => {
@@ -58,20 +54,20 @@ export class GoogleAuthService {
           if (doc.data()['birthRegNo'] == value.birthRegNo && doc.data()['dateOfBirth'] == dateBirth && doc.data()['Full_Name'] == value.fullName.toUpperCase()) {
             return new Promise<any>(async (resolve, reject) => {
               console.log('eCitizen Registered')
-<<<<<<< Updated upstream
-              this.firestore.collection('eCitizens').doc(value.email).set({
-=======
-              // Once verifed registration takes place and informs applicant about the process by toast messages
-              // If registration is successful user will be redirect to login page 
+              /**
+               * Once verifed registration takes place and informs applicant about the process by toast messages 
+               * If registration is successful user will be redirect to login page 
+                */
               const toast = await this.toastController.create({
                 message: 'Registration successful ✅',
                 duration: 2000
               });
               toast.present();
               this.route.navigate(['sign-in']);
-              //  Data gets stored on Firebase for references
+              /**
+               * Data gets stored on Firebase for references 
+               * */
               this.firestore.collection('eCitizens/' + value.email + '/Account').doc('Profile').set({
->>>>>>> Stashed changes
                 Full_Name: value.fullName.toUpperCase(),
                 Gender: value.gender.toUpperCase(),
                 Date_Of_Birth: dateBirth,
@@ -96,13 +92,11 @@ export class GoogleAuthService {
                 )
             })
 
-          } else {
-<<<<<<< Updated upstream
-            console.log('INVALID BIRTH REGISTRATION NO.');
-=======
-            /**
-             * Informs applicant that the details dont't match with record
-             */
+          }
+          /**
+            * Informs applicant that the details dont't match with record
+            */
+          else {
             console.log('BIRTH REGISTRATION NOT MATCH!');
             const alert = await this.alertController.create({
               header: 'Registration Failed',
@@ -113,11 +107,11 @@ export class GoogleAuthService {
             await alert.present();
           }
         }
+        /**
+         * Informs applicant that the Birth Registration number is invalid to proceed further
+         * This logic condition is set to prevent malicous access to system and it's resources
+         */
         else {
-          /**
-           * Informs applicant that the Birth Registration number is invalid to proceed further
-           * This logic condition is set to prevent malicous access to system and it's resources
-           */
           console.log('INVALID BIRTH REGISTRATION NO.');
           const alert = await this.alertController.create({
             header: '⚠ Registration Failed',
@@ -130,14 +124,14 @@ export class GoogleAuthService {
       })
     })
   }
-/**
- * Method reponsible for sending NIC applications via Government Portal
- * To prevent third party usage of Government Resources secondary validation takes place to validate entered data before submitting application
- * This restricts that only the personal account holder to apply / Any form of Joint/Enterprise/Partner accounts are available at this time
- * 
- * @param value This holds NIC application data send by registered user via forms available on the Account Portal
- * 
- */
+  /**
+  * Method reponsible for sending NIC applications via Government Portal
+  * To prevent third party usage of Government Resources secondary validation takes place to validate entered data before submitting application
+  * This restricts that only the personal account holder to apply / Any form of Joint/Enterprise/Partner accounts are available at this time
+  * 
+  * @param value This holds NIC application data send by registered user via forms available on the Account Portal
+  * 
+  */
   sendNICApplication(value) {
     return new Promise<any>(async (_resolve, _reject) => {
       this.firestore.collection('BirthRegistrations').doc("" + value.birthCertNo + "").ref.get().then(async (doc) => {
@@ -145,9 +139,11 @@ export class GoogleAuthService {
           var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
           console.log(doc.data())
           if (doc.data()['birthRegNo'] == value.birthCertNo && doc.data()['dateofBirth'] == dateBirth) {
+            /** 
+             * Once verifed registration takes place and informs applicant about the process by an alert messages
+             * if the process fails users would be informed
+             * */
             const alert = await this.alertController.create({
-              // Once verifed registration takes place and informs applicant about the process by an alert messages
-              // if the process fails users would be informed
               header: '✅ Application Requested',
               subHeader: 'Application Sent',
               message: 'Your application has been sent, check Services page for process tracking.',
@@ -155,7 +151,9 @@ export class GoogleAuthService {
             });
             await alert.present();
             return new Promise<any>((resolve, reject) => {
-              // Data gets stored on firebase, used for application tracking and references
+              /**
+               * Data gets stored on firebase, used for application tracking and references
+               */
               this.firestore.collection('eCitizens/' + value.email + '/eApplications/').doc('NICApplication').set({
                 status: "Active New",
                 email: value.email,
@@ -201,10 +199,10 @@ export class GoogleAuthService {
               }).then(response => resolve(response),
                 error => reject(error))
             })
-          } else {
+          }
             /**
              * Informs applicant that the details dont't match with records to proceed further
-             */
+             */else {
             console.log('INVALID BIRTH REGISTRATION NO. OR DATE OF BIRTH' + dateBirth + "  " + value.birthCertNo);
             const alert = await this.alertController.create({
               header: '⚠ Application Not Sent',
@@ -213,14 +211,13 @@ export class GoogleAuthService {
               buttons: ['Retry']
             });
             await alert.present();
->>>>>>> Stashed changes
           }
         }
+        /**
+         * Informs applicant that the Birth Registration number is invalid to proceed further
+         * This logic condition is set to prevent malicous use of system for unauthorised businesses
+         */
         else {
-          /**
-           * Informs applicant that the Birth Registration number is invalid to proceed further
-           * This logic condition is set to prevent malicous use of system for unauthorised businesses
-           */
           console.log('BIRTH REGISTRATION NUMBER NOT FOUND!');
           const alert = await this.alertController.create({
             header: '⚠ Application Not Sent !',
@@ -234,13 +231,11 @@ export class GoogleAuthService {
     })
   }
 
-<<<<<<< Updated upstream
-=======
-/**
- * 
- * @param value Holds data coming from Login form and invokes for verfication before allowing access
- */
->>>>>>> Stashed changes
+
+  /**
+  * Method for logging in user to system
+  * @param value Holds data coming from Login form and invokes for verfication before allowing access
+  */
   loginCitizen(value) {
     return new Promise<any>((resolve, reject) => {
       this.gAuth.signInWithEmailAndPassword(value.email, value.password)
@@ -249,9 +244,10 @@ export class GoogleAuthService {
           err => reject(err))
     })
   }
-/**
- * On user command initiates Firebase signout, this method is accessible by all accounts for users, officers and administrators
- */
+
+  /**
+  * On user command initiates Firebase signout, this method is accessible by all accounts for users, officers and administrators
+  */
   logoutCitizen() {
     return new Promise<void>((resolve, reject) => {
       if (this.gAuth.currentUser) {
@@ -265,10 +261,11 @@ export class GoogleAuthService {
       }
     })
   }
-/**
- * Method used for fetching current active user data from firebase these include email, photo, name of the authenticated user
- * Used for displaying data at required functions
- */
+
+  /**
+  * Method used for fetching current active user data from firebase these include email, photo, name of the authenticated user
+  * Used for displaying data at required functions
+  */
   eCitizenData() {
     return this.gAuth.user
   }

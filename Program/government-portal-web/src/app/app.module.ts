@@ -13,13 +13,10 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
-<<<<<<< Updated upstream
-=======
 import { NgAisModule } from 'angular-instantsearch';
 /**
  * All required modules are declared here do not remove existing modules as they drive major functionalities of the application
  */
->>>>>>> Stashed changes
 @NgModule({
   declarations: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
