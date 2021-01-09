@@ -6,6 +6,11 @@ import * as algoliasearch from 'algoliasearch';
   templateUrl: './environment.page.html',
   styleUrls: ['./environment.page.scss'],
 })
+/**
+* Environment Page of Government Portal, this is an intial prebuild for egovernance coverage.
+* Currenlty only information is available with search functionality enabled.
+* Only Search Function Setup
+*/
 export class EnvironmentPage implements OnInit {
   client: any;
   index: any;

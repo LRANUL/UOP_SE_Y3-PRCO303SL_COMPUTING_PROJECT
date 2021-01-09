@@ -6,6 +6,12 @@ import * as algoliasearch from 'algoliasearch';
   templateUrl: './registrations.page.html',
   styleUrls: ['./registrations.page.scss'],
 })
+/**
+* Registration Page of Government Portal, this is a complete build for Government Portal.
+* All information is available with search functionality enabled.
+* Signing and registration is allowed, mentioned functions could be used on account page
+* once logged in
+*/
 export class RegistrationsPage implements OnInit {
   client: any;
   index: any;

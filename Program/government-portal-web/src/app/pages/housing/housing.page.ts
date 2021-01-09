@@ -6,6 +6,11 @@ import * as algoliasearch from 'algoliasearch';
   templateUrl: './housing.page.html',
   styleUrls: ['./housing.page.scss'],
 })
+/**
+* Housing Page of Government Portal, this is an intial prebuild for egovernance coverage.
+* Currenlty only information is available with search functionality enabled.
+* Only Search Function Setup
+*/
 export class HousingPage implements OnInit {
   client: any;
   index: any;

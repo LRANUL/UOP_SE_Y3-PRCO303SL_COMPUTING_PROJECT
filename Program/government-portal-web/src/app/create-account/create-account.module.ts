@@ -7,7 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { CreateAccountPageRoutingModule } from './create-account-routing.module';
 
 import { CreateAccountPage } from './create-account.page';
-
+/**
+ * Contains Modules for Create Account Page, Forms Module is Mandatory for functioning. 
+ * DO NOT REMOVE during application optimisation
+ */
 @NgModule({
   imports: [
     CommonModule,

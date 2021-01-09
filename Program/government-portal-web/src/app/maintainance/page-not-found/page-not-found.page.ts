@@ -6,6 +6,10 @@ import { NavController, LoadingController } from '@ionic/angular';
   templateUrl: './page-not-found.page.html',
   styleUrls: ['./page-not-found.page.scss'],
 })
+/**
+* Component Responsible for handling wrong routing or deleted pages
+*
+*/
 export class PageNotFoundPage implements OnInit {
 
   constructor(private navCtrl: NavController, private loadingController: LoadingController) { }

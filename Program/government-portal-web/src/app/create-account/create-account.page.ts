@@ -3,7 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
 import { NavController } from '@ionic/angular';
 import { GoogleAuthService } from '../service/google-auth.service';
-
+/**
+ * Create Account Page Responsible for handling backend logic of Client Account Registration, 
+ * Validation for forms are set as per requirements of Government regulations, data available on the users birth certificate would be
+ * required for registration
+ */
 @Component({
   selector: 'app-create-account',
   templateUrl: './create-account.page.html',

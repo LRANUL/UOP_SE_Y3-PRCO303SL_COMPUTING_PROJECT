@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AccountPage } from './account.page';
-
+/**
+ * Sub pages to Account page could be configure here for proper routing
+ */
 const routes: Routes = [
   {
     path: '',

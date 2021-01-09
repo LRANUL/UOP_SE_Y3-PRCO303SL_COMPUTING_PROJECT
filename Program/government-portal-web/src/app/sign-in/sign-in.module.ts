@@ -7,7 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { SignInPageRoutingModule } from './sign-in-routing.module';
 
 import { SignInPage } from './sign-in.page';
-
+/**
+ * Contains Modules for Create Account Page, Forms Module is Mandatory for functioning. 
+ * DO NOT REMOVE during application optimisation
+ */
 @NgModule({
   imports: [
     CommonModule,
