@@ -36,57 +36,60 @@ const routes: Routes = [
   },
   {
     path: 'registrations',
-    loadChildren: () => import('./pages/registrations/registrations.module').then( m => m.RegistrationsPageModule)
+    loadChildren: () => import('./pages/registrations/registrations.module').then(m => m.RegistrationsPageModule)
   },
   {
     path: 'education',
-    loadChildren: () => import('./pages/education/education.module').then( m => m.EducationPageModule)
+    loadChildren: () => import('./pages/education/education.module').then(m => m.EducationPageModule)
   },
   {
     path: 'agriculture',
-    loadChildren: () => import('./pages/agriculture/agriculture.module').then( m => m.AgriculturePageModule)
+    loadChildren: () => import('./pages/agriculture/agriculture.module').then(m => m.AgriculturePageModule)
   },
   {
     path: 'trading',
-    loadChildren: () => import('./pages/trading/trading.module').then( m => m.TradingPageModule)
+    loadChildren: () => import('./pages/trading/trading.module').then(m => m.TradingPageModule)
   },
   {
     path: 'banking',
-    loadChildren: () => import('./pages/banking/banking.module').then( m => m.BankingPageModule)
+    loadChildren: () => import('./pages/banking/banking.module').then(m => m.BankingPageModule)
   },
   {
     path: 'travel',
-    loadChildren: () => import('./pages/travel/travel.module').then( m => m.TravelPageModule)
+    loadChildren: () => import('./pages/travel/travel.module').then(m => m.TravelPageModule)
   },
   {
     path: 'justice',
-    loadChildren: () => import('./pages/justice/justice.module').then( m => m.JusticePageModule)
+    loadChildren: () => import('./pages/justice/justice.module').then(m => m.JusticePageModule)
   },
   {
     path: 'environment',
-    loadChildren: () => import('./pages/environment/environment.module').then( m => m.EnvironmentPageModule)
+    loadChildren: () => import('./pages/environment/environment.module').then(m => m.EnvironmentPageModule)
   },
   {
     path: 'housing',
-    loadChildren: () => import('./pages/housing/housing.module').then( m => m.HousingPageModule)
+    loadChildren: () => import('./pages/housing/housing.module').then(m => m.HousingPageModule)
   },
   {
     path: 'healthcare',
-    loadChildren: () => import('./pages/healthcare/healthcare.module').then( m => m.HealthcarePageModule)
+    loadChildren: () => import('./pages/healthcare/healthcare.module').then(m => m.HealthcarePageModule)
   },
   {
     path: 'media',
-    loadChildren: () => import('./pages/media/media.module').then( m => m.MediaPageModule)
+    loadChildren: () => import('./pages/media/media.module').then(m => m.MediaPageModule)
   },
   {
     path: 'employment',
-    loadChildren: () => import('./pages/employment/employment.module').then( m => m.EmploymentPageModule)
+    loadChildren: () => import('./pages/employment/employment.module').then(m => m.EmploymentPageModule)
+  },
+  {
+    path: 'office/home-affairs',
+    loadChildren: () => import('./office/home-affairs/home-affairs.module').then(m => m.HomeAffairsPageModule)
   },
   {
     path: '**',
     loadChildren: () => import('./maintainance/page-not-found/page-not-found.module').then(m => m.PageNotFoundPageModule)
   },
-
 ];
 
 @NgModule({

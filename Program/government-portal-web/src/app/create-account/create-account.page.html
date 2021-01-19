@@ -63,8 +63,8 @@
         </div>
         <h5>Date of Birth</h5>
         <ion-item>
-          <ion-datetime displayFormat="MM DD YYYY"  pickerFormat="MM DD YYYY" placeholder="SELECT DATE OF BIRTH" formControlName="dateOfBirth"
-            type="text"></ion-datetime>
+          <ion-datetime min='1910-01-01' max='2000-12-31' displayFormat="MM DD YYYY" pickerFormat="MM DD YYYY"
+            placeholder="SELECT DATE OF BIRTH" formControlName="dateOfBirth" type="text"></ion-datetime>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_messages.dateOfBirth">
@@ -89,8 +89,8 @@
         </div>
         <h5>Registar's Division</h5>
         <ion-item>
-          <ion-input required="true" type="text" placeholder="INSERT YOUR REGISTAR'S DIVISION" formControlName="registarDivision"
-            type="text" required style="text-transform: uppercase;"></ion-input>
+          <ion-input required="true" type="text" placeholder="INSERT YOUR REGISTAR'S DIVISION"
+            formControlName="registarDivision" type="text" required style="text-transform: uppercase;"></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_messages.registarDivision">
@@ -102,7 +102,7 @@
         </div>
         <h5>No. of Birth Registration Entry</h5>
         <ion-item>
-          <ion-input type="number" placeholder="INSERT YOUR BRITH REGISTRATION ENTRY NO." formControlName="birthRegNo"
+          <ion-input type="tel" placeholder="INSERT YOUR BRITH REGISTRATION ENTRY NO." formControlName="birthRegNo"
             type="text" required style="text-transform: uppercase;"></ion-input>
         </ion-item>
         <div class="validation-errors">
@@ -139,6 +139,65 @@
             </div>
           </ng-container>
         </div>
+        <h5>ID Photo</h5>
+        <ion-item>
+          <div *ngIf="percentage | async as value">Progress: {{ value | number }}%
+            <ion-progress-bar color="primary" value="{{ value / 100 }}"></ion-progress-bar>
+          </div>
+          <ion-input required="true" type="file" (input)="userPhoto($event)" accept=".jpeg,.jpg,.png"></ion-input>
+        </ion-item>
+        <h5>Home Address (Current)</h5>
+        <ion-item>
+          <ion-input required="true" type="text" placeholder="INSERT YOUR HOME ADDRESS IN FULL"
+            formControlName="homeAddress" type="text" required style="text-transform: uppercase;"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.homeAddress">
+            <div class="error-message"
+              *ngIf="validations_form.get('homeAddress').hasError(validation.type) && (validations_form.get('homeAddress').dirty || validations_form.get('homeAddress').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <h5>Office Address</h5>
+        <ion-item>
+          <ion-input required="true" type="text" placeholder="INSERT YOUR OFFICE ADDRESS IN FULL"
+            formControlName="officeAddress" type="text" style="text-transform: uppercase;"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.officeAddress">
+            <div class="error-message"
+              *ngIf="validations_form.get('officeAddress').hasError(validation.type) && (validations_form.get('officeAddress').dirty || validations_form.get('officeAddress').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <h5>Mobile Number</h5>
+        <ion-item>
+          <ion-input required="true" type="tel" placeholder="INSERT YOUR MOBILE NUMBER" formControlName="mobile"
+            type="tel" required style="text-transform: uppercase;"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.mobile">
+            <div class="error-message"
+              *ngIf="validations_form.get('mobile').hasError(validation.type) && (validations_form.get('mobile').dirty || validations_form.get('mobile').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <h5>Landline Number</h5>
+        <ion-item>
+          <ion-input required="true" type="tel" placeholder="INSERT YOUR LANDLINE NUMBER" formControlName="landLine"
+            type="tel" required style="text-transform: uppercase;"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.landLine">
+            <div class="error-message"
+              *ngIf="validations_form.get('landLine').hasError(validation.type) && (validations_form.get('landLine').dirty || validations_form.get('landLine').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
         <h5>Email address</h5>
         <ion-text style="font-style: italic;color: gray;">This would be your Government Portal access email address
         </ion-text>
@@ -170,7 +229,8 @@
           </ng-container>
           <br>
           <ion-text style="font-size: x-small;color: gray;">By clicking Register information, you agree to our Terms,
-            Data Policy and Cookies Policy. Please note that only if your data matches our records, the registration would be approved.</ion-text>
+            Data Policy and Cookies Policy. Please note that only if your data matches our records, the registration
+            would be approved.</ion-text>
           <br>
           <ion-button type="submit" color="signin" [disabled]="!validations_form.valid">Register information<ion-icon
               name="key-outline"></ion-icon>

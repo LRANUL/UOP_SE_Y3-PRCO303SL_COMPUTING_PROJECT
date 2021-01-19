@@ -51,48 +51,65 @@ export class GoogleAuthService {
       this.firestore.collection('BirthRegistrations').doc("" + value.birthRegNo + "").ref.get().then(async (doc) => {
         if (doc.exists) {
           var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
-          if (doc.data()['birthRegNo'] == value.birthRegNo && doc.data()['dateOfBirth'] == dateBirth && doc.data()['Full_Name'] == value.fullName.toUpperCase()) {
+          if (doc.data()['birthRegNo'] == value.birthRegNo && (doc.data()['gender'] == value.gender.toUpperCase() &&doc.data()['dateOfBirth'] == dateBirth && doc.data()['Full_Name'] == value.fullName.toUpperCase()))
+          {
             return new Promise<any>(async (resolve, reject) => {
+              this.gAuth.createUserWithEmailAndPassword(value.email, value.password)
+                .then(
+                  res => resolve(res),
+                  err => reject(err))
               console.log('eCitizen Registered')
               /**
-               * Once verifed registration takes place and informs applicant about the process by toast messages 
-               * If registration is successful user will be redirect to login page 
-                */
+             * Once verifed registration takes place and informs applicant about the process by toast messages 
+             * If registration is successful user will be redirect to login page 
+              */
               const toast = await this.toastController.create({
                 message: 'Registration successful ✅',
                 duration: 2000
               });
               toast.present();
-              this.route.navigate(['sign-in']);
-              /**
+              this.gAuth.authState.subscribe(async user => {
+                if (user) {
+                  user.updateProfile({
+                    displayName: value.GovernmentID,
+                    photoURL: value.downloadURL,
+                  })
+                  /**
                * Data gets stored on Firebase for references 
                * */
-              this.firestore.collection('eCitizens/' + value.email + '/Account').doc('Profile').set({
-                Full_Name: value.fullName.toUpperCase(),
-                Gender: value.gender.toUpperCase(),
-                Date_Of_Birth: dateBirth,
-                Place_Of_Birth: value.placeOfBirth.toUpperCase(),
-                Registar_Division: value.registarDivision.toUpperCase(),
-                Birth_Reg_No: value.birthRegNo,
-                Father_Name: value.fatherName.toUpperCase(),
-                Mother_Name: value.motherName.toUpperCase(),
-                Email: value.email.toUpperCase(),
-                createdDateTime: new Date(),
-                status: "Active",
-              })
-                .then(
-                  (res) => {
-                    resolve(res)
-                    this.gAuth.createUserWithEmailAndPassword(value.email, value.password)
-                      .then(
-                        res => resolve(res),
-                        err => reject(err))
-                  },
-                  err => reject(err)
-                )
-            })
+                  this.firestore.collection('eCitizens').doc(value.GovernmentID).set({
+                    Full_Name: value.fullName.toUpperCase(),
+                    Gender: value.gender.toUpperCase(),
+                    Date_Of_Birth: dateBirth,
+                    Place_Of_Birth: value.placeOfBirth.toUpperCase(),
+                    Registar_Division: value.registarDivision.toUpperCase(),
+                    Birth_Reg_No: value.birthRegNo,
+                    GovernmentID: value.GovernmentID,
+                    downloadURL: value.downloadURL,
+                    Father_Name: value.fatherName.toUpperCase(),
+                    Mother_Name: value.motherName.toUpperCase(),
+                    Prefix: value.prefix,
+                    homeAddress: value.homeAddress,
+                    workAddress: value.workAddress,
+                    mobile: value.mobile,
+                    landLine: value.landLine,
+                    Email: value.email.toUpperCase(),
+                    createdDateTime: new Date(),
+                    status: "Active",
+                  })
+                    .then(
+                      (res) => {
+                        resolve(res)
 
+                      },
+                      err => reject(err)
+                    )
+                }
+              })
+              this.route.navigate(['sign-in']);
+            })
           }
+
           /**
             * Informs applicant that the details dont't match with record
             */
@@ -135,10 +152,12 @@ export class GoogleAuthService {
   sendNICApplication(value) {
     return new Promise<any>(async (_resolve, _reject) => {
       this.firestore.collection('BirthRegistrations').doc("" + value.birthCertNo + "").ref.get().then(async (doc) => {
+        console.log(doc.data())
         if (doc.exists) {
           var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
           console.log(doc.data())
-          if (doc.data()['birthRegNo'] == value.birthCertNo && doc.data()['dateofBirth'] == dateBirth) {
+          console.log(value)
+          if (doc.data()['birthRegNo'] == value.birthCertNo || doc.data()['dateofBirth'] == dateBirth) {
             /** 
              * Once verifed registration takes place and informs applicant about the process by an alert messages
              * if the process fails users would be informed
@@ -154,8 +173,11 @@ export class GoogleAuthService {
               /**
                * Data gets stored on firebase, used for application tracking and references
                */
-              this.firestore.collection('eCitizens/' + value.email + '/eApplications/').doc('NICApplication').set({
-                status: "Active New",
+              var user = firebase.default.auth().currentUser;
+              this.firestore.collection('/eApplications/').doc(user.displayName).set({
+                type: "NIC-Application",
+                status: "Active",
+                description: "Application sent for Department",
                 email: value.email,
                 familyName: value.familyName,
                 name: value.name,

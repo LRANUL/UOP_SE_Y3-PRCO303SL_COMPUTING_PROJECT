@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-
+import { AngularFirestore } from '@angular/fire/firestore';
 import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
-import { LoadingController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { GoogleAuthService } from '../service/google-auth.service';
+import firebase from 'firebase/app';
+
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.page.html',
@@ -13,7 +15,8 @@ export class SignInPage implements OnInit {
 
   validations_form: FormGroup;
   errorMessage: string;
-  constructor(public formBuilder: FormBuilder, private gAuth: AngularFireAuth, private navCtrl: NavController, private authService: GoogleAuthService, private loadingController: LoadingController) { }
+  userEmail: string;
+  constructor(private firestore: AngularFirestore, public toastController: ToastController, public alertController: AlertController,public formBuilder: FormBuilder, private gAuth: AngularFireAuth, private navCtrl: NavController, private authService: GoogleAuthService, private loadingController: LoadingController) { }
 
   ngOnInit() {
     this.gAuth.authState.subscribe(async user => {
@@ -65,6 +68,53 @@ export class SignInPage implements OnInit {
       }
     ]
   };
+  async forgotPassword() {
+    const alert = await this.alertController.create({
+      header: 'Enter your Government Portal Email',
+      inputs: [
+        {
+          name: 'email',
+          type: 'email',
+          placeholder: 'Email'
+
+        },
+      ],
+      message: this.userEmail,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            // console.log('Confirm Cancel');
+          }
+        },
+        {
+          text: 'Change',
+          handler: async (alertData) => {
+            var auth = firebase.auth();
+            auth.sendPasswordResetEmail(alertData.email).then(async (res) => {
+              const toast = await this.toastController.create({
+                message: 'Your password reset email sent.',
+                duration: 2000
+              });
+              toast.present();
+            }).catch()
+             {
+              const toast = this.toastController.create({
+                message: 'Your request not approved, Email not registered.',
+                duration: 2000
+              });
+               (await toast).present();
+               
+              }
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+  
   loginCitizen(value) {
     this.authService.loginCitizen(value)
       .then(res => {

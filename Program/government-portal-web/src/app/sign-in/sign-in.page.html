@@ -10,8 +10,8 @@
   <ion-toolbar color="dark">
     <ion-title>
       <ion-router-link href="home" color="light">
-      <strong>GOVERNMENT PORTAL</strong>
-    </ion-router-link>
+        <strong>GOVERNMENT PORTAL</strong>
+      </ion-router-link>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -59,23 +59,24 @@
           <ion-button type="submit" color="signin" [disabled]="!validations_form.valid">Sign in<ion-icon
               name="log-in-outline"></ion-icon>
           </ion-button>
-          <label class="error-message">{{errorMessage}}</label>
         </div>
         <br>
+        <label style="color: darkgray;" class="error-message">{{errorMessage}}</label>
       </form>
+      <br>
       <ion-router-link href="create-account" class="underline">Register sign in information</ion-router-link>
     </ion-list>
     <br>
     <ion-grid style="margin-left: 5%;">
       <h2 style="font-size: x-large;"><strong>Problems signing in</strong></h2>
       <ion-row>
-        <ion-router-link href="#" class="underline">I have forgotten my password</ion-router-link>
+        <ion-router-link (click)="forgotPassword()" class="underline">I have forgotten my password</ion-router-link>
       </ion-row>
       <ion-row>
-        <ion-router-link href="#" class="underline">I have forgotten my user ID</ion-router-link>
+        <ion-router-link class="underline">I have forgotten my user ID</ion-router-link>
       </ion-row>
       <ion-row>
-        <ion-router-link href="#" class="underline">I have forgotten my Government Portal user ID and password
+        <ion-router-link class="underline">I have forgotten my Government Portal user ID and password
         </ion-router-link>
       </ion-row>
     </ion-grid>

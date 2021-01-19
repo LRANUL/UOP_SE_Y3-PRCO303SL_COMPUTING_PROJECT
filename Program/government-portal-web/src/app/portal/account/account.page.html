@@ -5,13 +5,16 @@
   for functionality.
 
 -->
+<div *ngIf="Unauthorised">
+  Forbidden
+</div>
 <!-- PAGE HEADER STARTS -->
-<ion-header>
+<ion-header *ngIf="Authorised">
   <ion-toolbar color="light">
     <ion-title>
       <strong>GOVERNMENT PORTAL</strong>
     </ion-title>
-    <ion-button class="log-out" slot="icon-only" slot="end" color="light" (click)="logout()">
+    <ion-button class="log-out" slot="icon-only" slot="end" color="signin" (click)="logout()">
       <ion-icon name="log-out"></ion-icon>
       <!-- <ion-label class="log-out-tiptext">Sign Out</ion-label> -->
     </ion-button>
@@ -19,7 +22,7 @@
 </ion-header>
 
 <!-- PAGE HEADER ENDS -->
-<ion-content [fullscreen]="true" style="background: var(--ion-color-light)">
+<ion-content [fullscreen]="true" style="background: var(--ion-color-light)" *ngIf="Authorised">
   <!-- PAGE CONTENT STARTS -->
 
 
@@ -598,9 +601,9 @@
                 <h6>E-mail | විද්යුත් තැපෑල | மின்னஞ்சல்</h6>
                 <ion-text style="font-style: italic;color: gray;">
                 </ion-text>
-                <ion-item [disabled]="true">
-                  <ion-input required="true" type="email" placeholder="" formControlName="email" type="email">
-                    {{userEmail}}</ion-input>
+                <ion-item>
+                  <ion-input disabled required="true" type="email" placeholder="" formControlName="email" type="email"
+                    [(ngModel)]="userEmail"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of validation_messages.email">
@@ -687,6 +690,31 @@
             </ion-router-link>
           </ion-row>
         </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  Government Portal ID: {{Displayname}}
+                  <br>
+                  Name: {{Prefix}}. {{fullName}}
+                  <br>
+                  Address: {{homeAddress}}
+                  <br>
+                  Mobile: {{mobile}}
+                  <br>
+                  Landline: {{landLine}}
+                  <br>
+                  Email:{{email}}
+                  <br>
+                  Goverment Photo ID
+                  <br>
+                  <img src="{{photoUrl}}">
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </ion-col>
       </ion-row>
     </ion-grid>
   </div>
@@ -696,8 +724,9 @@
 
 
 </ion-content>
+
 <!-- PAGE FOOTER STARTS -->
-<ion-footer class="ion-border" align="center">
+<ion-footer class="ion-border" align="center" *ngIf="Authorised">
   <ion-toolbar color="light">
     <ion-text>
       Government Portal<br>

@@ -17,6 +17,9 @@
             <strong>GOVERNMENT PORTAL</strong>
           </ion-router-link>
         </ion-title>
+        <ion-button class="log-in" slot="icon-only" slot="end" href="sign-in" color="signin">
+          <ion-icon name="log-in"></ion-icon>
+        </ion-button>
       </ion-toolbar>
     </ion-header>
     <!-- PAGE HEADER ENDS -->
@@ -26,7 +29,7 @@
     <!-- PAGE SEARCH AND LINKED CONTENT -->
     <h1 style="margin-left: 2%;"><strong>WELCOME TO GOVERNMENT PORTAL</strong></h1>
     <h5 style="margin-left: 2%;">All government services at one place.</h5>
-    <ion-searchbar style="width: 40%;" animated="true" [(ngModel)]="searchQuery" (click)="click_in()"
+    <ion-searchbar color="light" style="width: 40%;" animated="true" [(ngModel)]="searchQuery" (click)="click_in()"
       (clickOutside)="onClickedOutside($event)" (ionInput)="search($event)" placeholder="Search..."></ion-searchbar>
     <ion-list *ngIf="pagesList" style="position: absolute;z-index:1000;width: 40%;">
       <ion-item *ngFor="let algoliaResult of algoliaResults | slice:0:3;; let i = index">
