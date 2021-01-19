@@ -1,0 +1,7 @@
+{
+  "name": "government-portal-desktop-office",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

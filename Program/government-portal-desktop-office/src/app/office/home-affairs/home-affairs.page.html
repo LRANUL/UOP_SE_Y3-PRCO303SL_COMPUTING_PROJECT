@@ -1,0 +1,105 @@
+<!-- 
+  
+  Contains frontend structure and design for Office page for Home Affair Ministry
+  Variables intialised here are related to the typescript page and used
+  for functionality.
+
+-->
+<!-- PAGE HEADER STARTS -->
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-title>
+      <strong>GOVERNMENT PORTAL</strong>
+    </ion-title>
+    <ion-button class="log-out" slot="icon-only" slot="end" color="signin" (click)="logoutOfficer()">
+      <ion-icon name="log-out"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+<!-- PAGE HEADER ENDS -->
+
+<ion-content [fullscreen]="true" style="background: var(--ion-color-medium)">
+  <!-- PAGE CONTENT STARTS -->
+  <ion-header>
+    <ion-toolbar>
+      <!-- PAGE TAB BAR STARTS -->
+      <ion-tabs>
+        <ion-tab-bar slot="start " slot="top" color="light">
+          <ion-tab-button (click)=openService() class="ion-border">
+            <ion-icon name="briefcase"></ion-icon>
+            <ion-label>Services</ion-label>
+          </ion-tab-button>
+          <ion-tab-button (click)=openSupport()>
+            <ion-icon name="chatbubbles"></ion-icon>
+            <ion-label>Support</ion-label>
+          </ion-tab-button>
+          <ion-tab-button (click)=openSettings()>
+            <ion-icon name="people"></ion-icon>
+            <ion-label>Accounts</ion-label>
+          </ion-tab-button>
+          <ion-tab-button (click)=openSettings()>
+            <ion-icon name="book"></ion-icon>
+            <ion-label>Guide</ion-label>
+          </ion-tab-button>
+          <ion-tab-button (click)=openSettings()>
+            <ion-icon name="logo-chrome"></ion-icon>
+            <ion-label>Internet</ion-label>
+          </ion-tab-button>
+          <ion-tab-button (click)=openSettings()>
+            <ion-icon name="settings"></ion-icon>
+            <ion-label>Settings</ion-label>
+          </ion-tab-button>
+        </ion-tab-bar>
+      </ion-tabs>
+      <!-- PAGE TAB BAR ENDS -->
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- PAGE LINKS AND INFORMATION -->
+  <div *ngIf="servicesPanel" style="width: 100%;">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="start" style="padding-left: 5%;">
+          <h2 style="font-size: x-large;"><strong>NIC Services</strong></h2>
+          <ion-row class="underline">
+            <ion-router-link (click)=NICServices() class="underline">
+              NIC Applicantions
+            </ion-router-link>
+          </ion-row>
+        </ion-col>
+        <ion-col *ngIf="NICServices" class="end" style="background: var(--ion-color-form);padding-left: 5%;">
+          <div style="position: relative;
+        float: right;color: darkgray;font-weight: bold;cursor:pointer;" (click)=exitApp()>Exit Application</div>
+          <ion-row>
+            <h3><strong>NIC Applicantion</strong></h3>
+            <br>
+            <ion-card *ngFor="let NIC of NICApplications | slice:0:3;; let i = index">
+              <ion-card-subtitle>{{ NIC.GovernmentID }}</ion-card-subtitle>
+              <ion-card-title>{{ NIC.name }}</ion-card-title>
+              <ion-card-content>
+                <ion-label>{{ NIC.name }}</ion-label>
+                {{requestType}}
+                {{assigneeName}}
+                {{applicationDescription}}
+                {{applicationStatus}}
+              </ion-card-content>
+            </ion-card>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <!-- PAGE CONTENT ENDS -->
+  <!-- PAGE LINKS AND INFORMATION -->
+</ion-content>
+
+<!-- PAGE FOOTER STARTS -->
+<ion-footer class="ion-border" align="center">
+  <ion-toolbar color="medium">
+    <ion-text>
+      Government Portal<br>
+      Ministry of Home Affairs
+    </ion-text>
+  </ion-toolbar>
+</ion-footer>
+<!-- PAGE FOOTER ENDS -->
