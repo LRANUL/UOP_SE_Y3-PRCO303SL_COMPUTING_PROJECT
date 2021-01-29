@@ -29,7 +29,6 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
-
     this.networkListener = Network.addListener('networkStatusChange', async (status) => {
       this.networkStatus = status;
       let alertOffline;

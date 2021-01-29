@@ -36,7 +36,7 @@
       <form class="form" [formGroup]="validations_form" (ngSubmit)="registerECitizen(validations_form.value)">
         <ion-item>
           <ion-input required="true" type="text" placeholder="INSERT YOUR FULL NAME" formControlName="fullName"
-            type="text" required style="text-transform: uppercase;"></ion-input>
+            type="text" required style="text-transform: uppercase;" maxlength="512"></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_messages.fullName">
@@ -103,7 +103,7 @@
         <h5>No. of Birth Registration Entry</h5>
         <ion-item>
           <ion-input type="tel" placeholder="INSERT YOUR BRITH REGISTRATION ENTRY NO." formControlName="birthRegNo"
-            type="text" required style="text-transform: uppercase;"></ion-input>
+            type="text" required style="text-transform: uppercase;" maxlength="10"></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_messages.birthRegNo">
@@ -140,12 +140,21 @@
           </ng-container>
         </div>
         <h5>ID Photo</h5>
+        <p>Insert a valid photograph that is clearly showing your facial characteristics</p>
         <ion-item>
           <div *ngIf="percentage | async as value">Progress: {{ value | number }}%
             <ion-progress-bar color="primary" value="{{ value / 100 }}"></ion-progress-bar>
           </div>
-          <ion-input required="true" type="file" (input)="userPhoto($event)" accept=".jpeg,.jpg,.png"></ion-input>
+          <ion-input required="true" formControlName="file" id="file" type="file" (change)="onFileChange($event)" accept=".jpeg,.jpg,.png"></ion-input>
         </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.file">
+            <div class="error-message"
+              *ngIf="validations_form.get('file').hasError(validation.type) &&(validations_form.get('file').dirty && validations_form.get('file').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
         <h5>Home Address (Current)</h5>
         <ion-item>
           <ion-input required="true" type="text" placeholder="INSERT YOUR HOME ADDRESS IN FULL"
@@ -175,7 +184,7 @@
         <h5>Mobile Number</h5>
         <ion-item>
           <ion-input required="true" type="tel" placeholder="INSERT YOUR MOBILE NUMBER" formControlName="mobile"
-            type="tel" required style="text-transform: uppercase;"></ion-input>
+            type="tel" required style="text-transform: uppercase;" maxlength="10"></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_messages.mobile">
@@ -188,7 +197,7 @@
         <h5>Landline Number</h5>
         <ion-item>
           <ion-input required="true" type="tel" placeholder="INSERT YOUR LANDLINE NUMBER" formControlName="landLine"
-            type="tel" required style="text-transform: uppercase;"></ion-input>
+            type="tel" required style="text-transform: uppercase;" maxlength="10"></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_messages.landLine">
@@ -203,7 +212,7 @@
         </ion-text>
         <ion-item>
           <ion-input required="true" type="email" placeholder="INSERT YOUR EMAIL" formControlName="email" type="email"
-            required style="text-transform: uppercase;"></ion-input>
+            required></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_messages.email">

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ToastController, AlertController, NavController, LoadingController } from '@ionic/angular';
+import { ToastController, AlertController, NavController } from '@ionic/angular';
 import { AccessService } from '../service/access.service';
 
 @Component({
@@ -14,12 +12,12 @@ export class AccessPage implements OnInit {
   validations_form: FormGroup;
   errorMessage: string;
   userEmail: string;
-  constructor(private firestore: AngularFirestore, public toastController: ToastController, public alertController: AlertController, public formBuilder: FormBuilder, private gAuth: AngularFireAuth, private navCtrl: NavController, private accessService: AccessService, private loadingController: LoadingController) { }
+  constructor(public toastController: ToastController, public alertController: AlertController, public formBuilder: FormBuilder, private navCtrl: NavController, private accessService: AccessService) { }
 
   ngOnInit() {
     this.validations_form = this.formBuilder.group({
       email: new FormControl("", Validators.compose([Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')])),
-      password: new FormControl("", Validators.compose([Validators.minLength(15), Validators.maxLength(30), Validators.required]))
+      password: new FormControl("", Validators.compose([Validators.minLength(5), Validators.maxLength(30), Validators.required]))
     });
   }
   validation_messages = {
@@ -38,7 +36,7 @@ export class AccessPage implements OnInit {
         message: "Password is required."
       }, {
         type: "minlength",
-        message: "Password must be at least 15 characters long."
+        message: "Password must be at meet mininum characters."
       }, {
         type: "maxlength",
         message: "Password cannot be longer than 30 characters long."

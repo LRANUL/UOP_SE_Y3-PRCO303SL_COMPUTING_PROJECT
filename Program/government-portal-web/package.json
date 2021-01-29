@@ -2,7 +2,7 @@
   "name": "government-portal-web",
   "version": "1.0.0",
   "author": "Mr. Ranul Ladduwahetty",
-  "homepage": "",
+  "homepage": "https://github.com/LRANUL/UOP_SE_Y3-PRCO303SL_COMPUTING_PROJECT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -29,6 +29,7 @@
     "@ionic/angular": "^5.0.0",
     "@ionic/cli": "^6.12.3",
     "@lottiefiles/lottie-player": "^0.5.1",
+    "@techiediaries/ngx-qrcode": "^9.1.0",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "algoliasearch": "^3.35.1",
     "dateformat": "^4.4.1",

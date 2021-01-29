@@ -36,8 +36,8 @@
             <h5>Goverment Portal email address</h5>
             <form class="form" [formGroup]="validations_form" (ngSubmit)="loginOfficer(validations_form.value)">
               <ion-item>
-                <ion-input required="true" type="email" placeholder="INSERT YOUR REGISTERED EMAIL"
-                  formControlName="email" type="email" required style="text-transform: uppercase;"></ion-input>
+                <ion-input required="true" type="email" placeholder="OFFICER EMAIL"
+                  formControlName="email" type="email"></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of validation_messages.email">
@@ -50,7 +50,7 @@
               <h5>Password</h5>
               <ion-item>
                 <ion-input required="true" inputmode="text" type="password" clear-on-edit=true
-                  placeholder="INSERT YOUR PORTAL PASSWORD" formControlName="password" type="password" required>
+                  placeholder="PORTAL ACCESS PASSWORD" formControlName="password" type="password" required>
                 </ion-input>
               </ion-item>
               <div class="validation-errors">

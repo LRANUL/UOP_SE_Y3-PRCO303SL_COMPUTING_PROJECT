@@ -691,29 +691,31 @@
           </ion-row>
         </ion-col>
         <ion-col>
-          <ion-item>
-            <ion-grid>
-              <ion-row>
-                <ion-col>
-                  Government Portal ID: {{Displayname}}
-                  <br>
-                  Name: {{Prefix}}. {{fullName}}
-                  <br>
-                  Address: {{homeAddress}}
-                  <br>
-                  Mobile: {{mobile}}
-                  <br>
-                  Landline: {{landLine}}
-                  <br>
-                  Email:{{email}}
-                  <br>
-                  Goverment Photo ID
-                  <br>
-                  <img src="{{photoUrl}}">
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-item>
+            <b>Government Portal ID</b>
+            <div class="portalID">
+              <ngx-qrcode [qrc-element-type]="elementType" [qrc-value]="value" errorCorrectionLevel="Q"
+                style="float: right;width: 70px;">
+              </ngx-qrcode>
+              <h1><b>GOVERNMENT PORTAL</b></h1>
+              <img
+                src="https://firebasestorage.googleapis.com/v0/b/prco303sl-3f1b2.appspot.com/o/Users%2FeCitizens%2FA8726253202%2FProfilePhoto?alt=media&token=cae68ace-e037-4e76-a9f2-d9578e48bb22"
+                style="width: 130px;height: 150px;float: left;border-radius: 5px;">
+              <span style="float: right;margin: 15px;">
+                <h4>{{fullName}}</h4>
+                <h5><i>{{Displayname}}</i></h5>
+              </span>
+            </div>
+            <br>
+            Name: {{Prefix}}. {{fullName}}
+            <br>
+            Address: {{homeAddress}}
+            <br>
+            Mobile: {{mobile}}
+            <br>
+            Landline: {{landLine}}
+            <br>
+            Email:{{email}}
+            <br>
         </ion-col>
       </ion-row>
     </ion-grid>

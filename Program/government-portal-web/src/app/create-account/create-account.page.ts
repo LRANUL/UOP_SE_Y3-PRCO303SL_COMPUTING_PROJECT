@@ -32,28 +32,36 @@ export class CreateAccountPage implements OnInit {
      * birth certificate
      */
     this.validations_form = this.formBuilder.group({
-      email: new FormControl("", Validators.compose([Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')])),
+      email: new FormControl("", Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$')])),
       password: new FormControl("", Validators.compose([Validators.minLength(15), Validators.maxLength(30), Validators.required])),
-      fullName: new FormControl("", Validators.compose([Validators.minLength(1), Validators.required])),
-      gender: new FormControl("", Validators.compose([Validators.minLength(1), Validators.required])),
-      dateOfBirth: new FormControl("", Validators.compose([])),
-      placeOfBirth: new FormControl("", Validators.compose([Validators.minLength(1), Validators.required])),
+      fullName: new FormControl("", Validators.compose([Validators.minLength(15), Validators.required])),
+      gender: new FormControl("", Validators.compose([Validators.required])),
+      dateOfBirth: new FormControl("",Validators.compose([Validators.required])),
+      placeOfBirth: new FormControl("", Validators.compose([Validators.minLength(5), Validators.required])),
       registarDivision: new FormControl("", Validators.compose([Validators.minLength(1), Validators.required])),
-      birthRegNo: new FormControl("", Validators.compose([Validators.minLength(1), Validators.required])),
+      birthRegNo: new FormControl("", Validators.compose([Validators.pattern('^[0-9]{4}$'), Validators.required])),
       fatherName: new FormControl("", Validators.compose([Validators.minLength(1), Validators.required])),
       motherName: new FormControl("", Validators.compose([Validators.minLength(1), Validators.required])),
       GovernmentID: new FormControl("", Validators.compose([])),
       downloadURL: new FormControl("", Validators.compose([])),
-      landLine: new FormControl("", Validators.compose([])),
-      mobile: new FormControl("", Validators.compose([])),
-      homeAddress: new FormControl("", Validators.compose([])),
+      landLine: new FormControl("", Validators.compose([Validators.pattern('^[0-9]{10}$'),Validators.minLength(10), Validators.required]),),
+      mobile: new FormControl("", Validators.compose([Validators.pattern('^[0-9]{10}$'),Validators.minLength(10), Validators.required])),
+      homeAddress: new FormControl("", Validators.compose([Validators.minLength(20), Validators.required])),
       officeAddress: new FormControl("", Validators.compose([])),
+      file: new FormControl('', [Validators.required]),
+      fileName: new FormControl('', [Validators.required])
     });
   }
   /**
    * Validation messages to user
    */
   validation_messages = {
+    file: [
+      {
+        type: "required",
+        message: "Your Passport/ID Photograph is mandatory for registration"
+      }
+    ],
     email: [
       {
         type: "required",
@@ -78,26 +86,15 @@ export class CreateAccountPage implements OnInit {
   };
   /**
    * Method reposible for fetching data from login form and sending to google-auth services page for registration after verification
+   * and for uploading applicants Photograph to cloud and generating a Government Portal ID, captures image upload event and uploads image to firebase storage
+   * (This method was recently updated to improve scalability from Email Key to Portal ID)
    * @param value hold validated values from login form
    */
   registerECitizen(value) {
-    this.authService.registerECitizen(value)
-      .then(res => {
-        console.log(res);
-        console.log(this.imageURL)
-      })
-  }
-  /**
-   * Method responsible for uploading applicants Photograph to cloud and generating a Government Portal ID 
-   * (This method was recently updated to improve scalability from Email Key to Portal ID)
-   * @param event Captures image upload event and uploads image to firebase storage
-   */
-  async userPhoto(event) {
     var GovernmentID;
-    var downloadURL;
+    var file = this.validations_form.get('fileName').value;
     GovernmentID = "A" + Math.floor((Math.random() * 9000000000) + 1000000000);
     this.validations_form.patchValue({ GovernmentID: GovernmentID });
-    const file = event.target.files[0];
     if (file) {
       const filePath = `${this.CollectionPath}/${GovernmentID}/ProfilePhoto`;
       const fileRef: AngularFireStorageReference = this.storage.ref(filePath);
@@ -107,7 +104,7 @@ export class CreateAccountPage implements OnInit {
       this.task.snapshotChanges().pipe(
         finalize(() => {
           fileRef.getDownloadURL().subscribe(downloadURL => {
-            downloadURL = ""+ downloadURL;
+            downloadURL = "" + downloadURL;
             console.log(downloadURL);
             this.validations_form.patchValue({ downloadURL: downloadURL });
           });
@@ -115,5 +112,41 @@ export class CreateAccountPage implements OnInit {
       )
         .subscribe();
     }
+    // this.authService.registerECitizen(value)
+    //   .then(res => {
+    //     console.log(res);
+    //   })
   }
+  
+  onFileChange(event) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.validations_form.patchValue({
+        fileName: file
+      });
+    }
+  }
+  // async userPhoto(event) {
+  //   var GovernmentID;
+  //   GovernmentID = "A" + Math.floor((Math.random() * 9000000000) + 1000000000);
+  //   this.validations_form.patchValue({ GovernmentID: GovernmentID });
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const filePath = `${this.CollectionPath}/${GovernmentID}/ProfilePhoto`;
+  //     const fileRef: AngularFireStorageReference = this.storage.ref(filePath);
+  //     this.task = this.storage.upload(filePath, file);
+  //     this.progress = this.task.percentageChanges();
+
+  //     this.task.snapshotChanges().pipe(
+  //       finalize(() => {
+  //         fileRef.getDownloadURL().subscribe(downloadURL => {
+  //           downloadURL = "" + downloadURL;
+  //           console.log(downloadURL);
+  //           this.validations_form.patchValue({ downloadURL: downloadURL });
+  //         });
+  //       })
+  //     )
+  //       .subscribe();
+  //   }
+  // }
 }

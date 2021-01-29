@@ -31,23 +31,23 @@ export class HomePage {
     this.index = this.client.initIndex("pages");
 //  Search Function Init End
 
-// LOADING DISABLED DURING DEVELOPMENT | UNCOMMENT AFTER DEVELOPMENT !
-    // this.loading = true; 
+// LOADING DISABLED DURING DEVELOPMENT | UNCOMMENT Line 35 to 50 (Exclude L46) AFTER DEVELOPMENT !
+    this.loading = true; 
     
-    // setTimeout(() => {
-    //   this.loading = false;
-    //   if (localStorage.getItem('Visitor') == null) {
-    //     localStorage.setItem('Visitor', 'false');
-    //     this.home = false;
-    //     this.Welcome = true;
-    //     console.log('New user');
-    //   }
-    //   else if (localStorage.getItem('Visitor') === 'false') {
-    //     this.Welcome = false;
+    setTimeout(() => {
+      this.loading = false;
+      if (localStorage.getItem('Visitor') == null) {
+        localStorage.setItem('Visitor', 'false');
+        this.home = false;
+        this.Welcome = true;
+        console.log('New user');
+      }
+      else if (localStorage.getItem('Visitor') === 'false') {
+        this.Welcome = false;
         this.home = true;
-    //     console.log('Old user' + localStorage.getItem('Visitor'));
-    //   }
-    // }, 5000);
+        console.log('Old user' + localStorage.getItem('Visitor'));
+      }
+    }, 5000);
 
   }
   //  Search Function Starts 
