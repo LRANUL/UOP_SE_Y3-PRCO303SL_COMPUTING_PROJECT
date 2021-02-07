@@ -1,0 +1,26 @@
+<ion-content>
+  <ion-tabs >
+    <ion-tab-bar slot="top" color="danger">
+      <ion-tab-button tab="home">
+        <ion-icon name="home"></ion-icon>
+        <ion-label>Home</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button (click)="Back()">
+        <ion-icon name="arrow-back"></ion-icon>
+        <ion-label>Back</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button (click)="Forward()">
+        <ion-icon name="arrow-forward"></ion-icon>
+        <ion-label>Next</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="Refresh()">
+        <ion-icon name="refresh"></ion-icon>
+        <ion-label>Refresh</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  
+  </ion-tabs>
+</ion-content>

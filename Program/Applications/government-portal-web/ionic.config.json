@@ -1,0 +1,8 @@
+{
+  "name": "Government Portal - Web",
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
+  "type": "angular"
+}

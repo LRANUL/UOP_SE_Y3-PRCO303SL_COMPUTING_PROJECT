@@ -1,0 +1,233 @@
+<!-- 
+  
+  Contains frontend structure and design for Office page for Home Affair Ministry
+  Variables intialised here are related to the typescript page and used
+  for functionality.
+
+-->
+<!-- PAGE HEADER STARTS -->
+<ion-header style="background-color: darkgray;color: white;opacity: 0.97;">
+  <ion-title>
+    <strong>GOVERNMENT PORTAL</strong>
+  </ion-title>
+  <ion-toolbar>
+    <ion-button class="log-out" slot="icon-only" slot="end" color="signin" (click)="logoutOfficer()">
+      <ion-icon name="log-out"></ion-icon>
+    </ion-button>
+    <ion-tabs style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25pxs;">
+      <ion-tab-bar slot="start " slot="top" color="light">
+        <ion-tab-button (click)=openService() class="ion-border">
+          <ion-icon name="briefcase"></ion-icon>
+          <ion-label>Services</ion-label>
+        </ion-tab-button>
+        <ion-tab-button (click)=openSupport()>
+          <ion-icon name="chatbubbles"></ion-icon>
+          <ion-badge color="danger" *ngIf="newMessage"></ion-badge>
+          <ion-label>Support</ion-label>
+        </ion-tab-button>
+        <ion-tab-button (click)=openAccounts()>
+          <ion-icon name="people"></ion-icon>
+          <ion-label>Accounts</ion-label>
+        </ion-tab-button>
+        <ion-tab-button (click)=openGuide()>
+          <ion-icon name="book"></ion-icon>
+          <ion-label>Guide</ion-label>
+        </ion-tab-button>
+        <ion-tab-button (click)=openSettings()>
+          <ion-icon name="settings"></ion-icon>
+          <ion-label>Settings</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-header>
+
+<!-- PAGE HEADER ENDS -->
+
+<ion-content [fullscreen]="true" style="background: var(--ion-color-medium)">
+  <!-- PAGE CONTENT STARTS -->
+
+  <!-- PAGE LINKS AND INFORMATION -->
+  <div *ngIf="servicesPanel" style="width: 100%;">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="start" style="padding-left: 5%;">
+          <h2 style="font-size: x-large;"><strong>NIC Services</strong></h2>
+          <ion-row class="underline">
+            <ion-router-link (click)=getNICApplications() class="underline">
+              NIC Applications
+            </ion-router-link>
+          </ion-row>
+        </ion-col>
+        <ion-col *ngIf="NICApplication">
+          <div style="position: relative;
+          float: right;color: darkgray;font-weight: bold;cursor:pointer;" (click)=exitApp()>Exit</div>
+          <br>
+          <div *ngIf="loadingData">
+            <ion-skeleton-text animated></ion-skeleton-text>
+            <ion-skeleton-text animated></ion-skeleton-text>
+            <ion-skeleton-text animated style="height: 300px;"></ion-skeleton-text>
+          </div>
+          <ion-card *ngFor="let NIC of NICApplications | slice:0:10;; let i = index">
+            <ion-card-header>
+              <ion-card-title>{{ NIC.GovernmentID }}</ion-card-title>
+              <ion-card-subtitle>{{ NIC.fullName }}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-label>{{ NIC.requestType }}</ion-label>
+              <ion-label>{{ NIC.birthCertNo }}</ion-label>
+              <ion-label>{{ NIC.applicationDescription }}</ion-label>
+              <ion-label>{{ NIC.applicationStatus }}</ion-label>
+              <br>
+              <ion-button [hidden]="NIC.applicationStatus == 'Processing'" (click)="processRequest()" shape="round"
+                color="light">Process
+                <ion-icon slot="icon-only" name="sync">
+                </ion-icon>
+              </ion-button>
+              <ion-button (click)="approveRequest()" shape="round" color="signin" slot="end">Approve<ion-icon
+                  slot="icon-only" name="checkmark-done-circle">
+                </ion-icon>
+              </ion-button>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div *ngIf="supportPanel" style="width: 100%;">
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngIf="supportServices" class="start" style="padding-left: 5%;">
+          <h2 style="font-size: x-large;"><strong>Support Services</strong></h2>
+          <div *ngIf="loadingData">
+            <ion-skeleton-text animated></ion-skeleton-text>
+            <ion-skeleton-text animated></ion-skeleton-text>
+            <ion-skeleton-text animated style="height: 300px;"></ion-skeleton-text>
+          </div>
+          <form class="form" [formGroup]="message_form" (ngSubmit)="supportCitizen(message_form.value)" novalidate>
+            <ion-card *ngFor="let message of ESupportMessages | slice:0:10;; let i = index">
+              <ion-card-header>
+                <ion-card-title>Government ID: {{ message.GovernmentID }}</ion-card-title>
+                <ion-card-subtitle>Name: {{ message.FullName }}</ion-card-subtitle>
+                <ion-card-subtitle>Subject: {{ message.Subject }}</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-label>Message: {{ message.Description }}</ion-label>
+                <br>
+                <input formControlName="messageID">
+                <ion-item>
+                  <ion-textarea formControlName="messageBody" placeholder="Service response to customer">
+                  </ion-textarea>
+                </ion-item>
+                <ion-button type="submit" shape="round" color="primary" slot="end">Send<ion-icon slot="icon-only"
+                    name="checkmark-done-circle">
+                  </ion-icon>
+                </ion-button>
+              </ion-card-content>
+            </ion-card>
+          </form>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div *ngIf="accountPanel" style="width: 100%;">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="start" style="padding-left: 5%;">
+          <h2 style="font-size: x-large;"><strong>Account Services</strong></h2>
+          <ion-row class="underline">
+            <ion-router-link (click)=manageAccount() class="underline">
+              Manage Accounts
+            </ion-router-link>
+          </ion-row>
+          <ion-row class="underline">
+            <ion-router-link (click)=applyforCustomer() class="underline">
+              Apply for Customer
+            </ion-router-link>
+          </ion-row>
+          <ion-row class="underline">
+            <ion-router-link (click)=getNICApplications() class="underline">
+              NIC Applications
+            </ion-router-link>
+          </ion-row>
+        </ion-col>
+        <!-- <ion-col> -->
+        <!-- <ion-card *ngFor="let message of ESupportMessages | slice:0:10;; let i = index">
+            <form class="form" [formGroup]="message_form" (ngSubmit)="supportCitizen(message_form.value)">
+            <ion-card-header>
+              <ion-card-title type="text" formControlName="GovernmentID"value="{{ message.GovernmentID }}">{{ message.GovernmentID }}</ion-card-title>
+              <ion-card-subtitle>{{ message.Subject }}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-label>{{ message.Description }}</ion-label>
+              <br>
+                <ion-item>
+                  <ion-textarea type="text" formControlName="response" placeholder="Service response to customer">
+                  </ion-textarea>
+                </ion-item>
+                <ion-button type="submit" shape="round" color="primary" slot="end">Send<ion-icon
+                    slot="icon-only" name="checkmark-done-circle">
+                  </ion-icon>
+                </ion-button>
+            </ion-card-content>
+          </form>
+          </ion-card>
+        </ion-col> -->
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div *ngIf="settingsPanel" style="width: 100%;">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="start" style="padding-left: 5%;">
+          <h2 style="font-size: x-large;"><strong>Settings</strong></h2>
+          <ion-row class="underline">
+            <ion-router-link (click)=getWorkLogs() class="underline">
+              Activity History
+            </ion-router-link>
+          </ion-row>
+        </ion-col>
+        <ion-col *ngIf="activityLog">
+          <ion-list *ngFor="let log of EWorkLogs | slice:0:15;; let i = index">
+            <ion-item>
+              <ion-grid>
+                <ion-row style="font-weight: bolder;">
+                  <ion-col>SignIn Time</ion-col>
+                  <ion-col>SignOut Time</ion-col>
+                  <ion-col>Documents Handled</ion-col>
+                  <ion-col>Supported Provided</ion-col>
+                  <ion-col>Date</ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+            <ion-item>
+              <ion-grid>
+                <ion-row style="font-size: small;">
+                  <ion-col>{{log.signIn}}</ion-col>
+                  <ion-col>{{log.signOut}}</ion-col>
+                  <ion-col>{{log.documentsHandled}}</ion-col>
+                  <ion-col>{{log.messagesHandled}}</ion-col>
+                  <ion-col>{{log.date}}</ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- PAGE CONTENT ENDS -->
+  <!-- PAGE LINKS AND INFORMATION -->
+</ion-content>
+
+<!-- PAGE FOOTER STARTS -->
+<ion-footer class="ion-border" align="center" style="opacity: 0.97;">
+  <ion-toolbar color="medium">
+    <ion-text>
+      Government Portal<br>
+      Ministry of Home Affairs
+    </ion-text>
+  </ion-toolbar>
+</ion-footer>
+<!-- PAGE FOOTER ENDS -->

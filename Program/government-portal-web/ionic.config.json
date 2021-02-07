@@ -1,7 +1,0 @@
-{
-  "name": "Government Portal - Web",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
-}
