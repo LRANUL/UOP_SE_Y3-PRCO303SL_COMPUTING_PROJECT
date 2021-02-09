@@ -137,12 +137,14 @@ export class AccountPage implements OnInit {
         // this.logout();
       }
     });
+
     /** Payment Validator */
-    var id;
-    id = this.route.snapshot.queryParams.id;
-    if (id) {
-      this.validate(id);
+    var sessionID;
+    sessionID = this.route.snapshot.queryParams.id;
+    if (sessionID) {
+      this.validate(sessionID);
     }
+
     //  FORM VALIDATORS
     /**
      * Validation Form receives input data sent by the user to Support service
@@ -360,12 +362,17 @@ export class AccountPage implements OnInit {
       },
     ],
   };
-
+  /**
+   * Method reposible for validating the payment status connected to server and uses token for validation
+   * Complete paymetn process and validation don on secured server
+   * @param sessionID contains server send token ID used for validation on pending payments
+   */
   validate(sessionID) {
+    var user = firebase.auth().currentUser;
     this.http.get("http://localhost:4242/validate?id=" + sessionID).subscribe(
       async (data) => {
         console.log(data);
-        if ((data = "paid")) {
+        if (data == "paid") {
           const alert = await this.alertController.create({
             header: "✅ Application Requested",
             subHeader: "Application Sent",
@@ -374,7 +381,13 @@ export class AccountPage implements OnInit {
             buttons: ["OK"],
           });
           await alert.present();
-        } else if ((data = "unpaid")) {
+          this.firestore
+            .collection("eApplications", (ref) =>
+              ref.where("GovernmentID", "==", user.displayName)
+            )
+            .doc()
+            .set({ payment_status: "paid" }, { merge: true });
+        } else if (data == "unpaid") {
           const alert = await this.alertController.create({
             header: "🚫 Application Rejected",
             subHeader: "Application Payment",
@@ -385,8 +398,8 @@ export class AccountPage implements OnInit {
           await alert.present();
         }
         this.firestore
-          .collection("eSupport", (ref) =>
-            ref.where("GovernmentID", "==", this.Displayname)
+          .collection("eApplications", (ref) =>
+            ref.where("GovernmentID", "==", user.displayName)
           )
           .doc()
           .delete();
@@ -478,6 +491,7 @@ export class AccountPage implements OnInit {
    */
   firstNICApp() {
     this.NICApplicant = true;
+    this.nonFirstTimer = false;
     this.validations_form.patchValue({
       NICType: "First NIC | පළමු ජාතික හැඳුනුම්පත | முதல் என்.ஐ.சி.",
     });
@@ -544,45 +558,50 @@ export class AccountPage implements OnInit {
    * @param value contains validated data from NIC application form
    * Depending the data sent, verification would inform user of the process whther whether thier data was accepts and sent or rejected.
    */
-  sendApplication(value) {
+  async sendApplication(value) {
     this.authService.sendNICApplication(value).then(
       (res) => {
         console.log(res);
-        this.passAlertNICApp();
       },
       (err) => {
         console.log(err);
-        this.failAlertNICApp();
       }
     );
-  }
+    const stripe = await loadStripe(
+      "pk_test_51IHSuEA5rKg2mqjLa3Gh3JeEVlSE01Ty1uuLmUAwzSSEISREulbOx3FCTLhLtMcxo5QO3Nno4wPoAPUC7vchjnN500co3fV7M0"
+    );
 
+    fetch("http://localhost:4242/pay-nic", {
+      method: "POST",
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (session) {
+        return stripe.redirectToCheckout({ sessionId: session.id });
+      })
+      .then(function (result) {
+        if (result.error) {
+          alert(result.error.message);
+        }
+      })
+      .catch(function (error) {
+        console.error("Error:", error);
+      });
+  }
   supportCitizen(value) {
     this.authService.sendSupportMessage(value).then(
       (res) => {
         console.log(res);
-        this.passAlertNICApp();
+        this.passAlertMessage();
       },
       (err) => {
         console.log(err);
-        this.failAlertNICApp();
+        this.failAlertMessage();
       }
     );
   }
 
-  /**
-   * Method for displaying successful validated and verified form data
-   */
-  async passAlertNICApp() {
-    const alert = await this.alertController.create({
-      header: "✅ Application Requested",
-      subHeader: "Application Sent",
-      message:
-        "Your application has been sent, check Services page for tracking the process.",
-      buttons: ["OK"],
-    });
-    await alert.present();
-  }
   /**
    * This method would excute if the data sent isn't valid such as information mismatch so the automated process had failed.
    */
@@ -592,6 +611,32 @@ export class AccountPage implements OnInit {
       subHeader: "Application Not Sent !",
       message:
         "Your application has not been sent, Try again later or contact support.",
+      buttons: ["OK"],
+    });
+
+    await alert.present();
+  }
+  /**
+   * Method for displaying successful validated and verified message requests
+   */
+  async passAlertMessage() {
+    const alert = await this.alertController.create({
+      header: "✅ Support Requested",
+      subHeader: "Message Sent",
+      message: "Your reponse was sent to customer support",
+      buttons: ["OK"],
+    });
+    await alert.present();
+  }
+  /**
+   * This method would excute if the data sent isn't valid such as information mismatch so the automated process had failed.
+   */
+  async failAlertMessage() {
+    const alert = await this.alertController.create({
+      header: "⚠ Message Not Send",
+      subHeader: "Network Error",
+      message:
+        "Your message has not been sent, Try again later or contact support.",
       buttons: ["OK"],
     });
 

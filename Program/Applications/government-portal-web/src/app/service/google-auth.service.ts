@@ -84,10 +84,7 @@ export class GoogleAuthService {
                       photoURL: value.downloadURL,
                     });
                   }
-                  var accessKey = sha256(value.fullName + user.displayName);
-                  // crypto
-                  //   .randomBytes(34)
-                  //   .toString(user.displayName);
+                  var accessKey = sha256(value.fullName + user.displayName).toString();
                   /**
                    * Data gets stored on Firebase for references
                    * */
@@ -167,6 +164,7 @@ export class GoogleAuthService {
         });
     });
   }
+
   /**
    * Method reponsible for sending NIC applications via Government Portal
    * To prevent third party usage of Government Resources secondary validation takes place to validate entered data before submitting application
@@ -175,7 +173,7 @@ export class GoogleAuthService {
    * @param value This holds NIC application data send by registered user via forms available on the Account Portal
    *
    */
-  sendNICApplication(value) {
+  async sendNICApplication(value) {
     return new Promise<any>(async (_resolve, _reject) => {
       this.firestore
         .collection("BirthRegistrations")
@@ -191,31 +189,6 @@ export class GoogleAuthService {
               doc.data()["birthRegNo"] == value.birthCertNo ||
               doc.data()["dateofBirth"] == dateBirth
             ) {
-              const stripe = await loadStripe(
-                "pk_test_51IHSuEA5rKg2mqjLa3Gh3JeEVlSE01Ty1uuLmUAwzSSEISREulbOx3FCTLhLtMcxo5QO3Nno4wPoAPUC7vchjnN500co3fV7M0"
-              );
-          
-              fetch("http://localhost:4242/create-checkout-session", {
-                method: "POST",
-              })
-                .then(function (response) {
-                  return response.json();
-                })
-                .then(function (session) {
-                  console.log(session.id);
-                  return stripe.redirectToCheckout({ sessionId: session.id });
-                })
-                .then(function (result) {
-                  // If redirectToCheckout fails due to a browser or network
-                  // error, you should display the localized error message to your
-                  // customer using error.message.
-                  if (result.error) {
-                    alert(result.error.message);
-                  }
-                })
-                .catch(function (error) {
-                  console.error("Error:", error);
-                });
               return new Promise<any>((resolve, reject) => {
                 /**
                  * Data gets stored on firebase, used for application tracking and references
@@ -226,7 +199,8 @@ export class GoogleAuthService {
                   .doc()
                   .set({
                     type: "NIC-Application",
-                    status: "Active",
+                    status: "New",
+                    payment_status: "unpaid",
                     description: "Application sent for Department",
                     email: value.email,
                     familyName: value.familyName,

@@ -98,9 +98,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/employment/employment.module').then(m => m.EmploymentPageModule)
   },
   {
+    path: 'payment-not-made',
+    loadChildren: () => import('./maintainance/payment-not-made/payment-not-made.module').then( m => m.PaymentNotMadePageModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./maintainance/page-not-found/page-not-found.module').then(m => m.PageNotFoundPageModule)
   },
+
 ];
 
 @NgModule({
