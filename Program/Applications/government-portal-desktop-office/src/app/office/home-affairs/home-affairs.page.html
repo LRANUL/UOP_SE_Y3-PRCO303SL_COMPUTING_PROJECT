@@ -71,47 +71,48 @@
           <ion-card *ngFor="let NIC of NICApplications | slice:0:10;; let i = index">
             <ion-card-header>
               <ion-card-title>{{ NIC.GovernmentID }}</ion-card-title>
-              <ion-card-subtitle>Name: {{ NIC.fullName }}</ion-card-subtitle>
+              <h5>Application Status: {{ NIC.status }}</h5>
+              <ion-card-subtitle>Name: {{ NIC.name }} {{ NIC.familyName }}</ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>
-              <ion-label>Request Type :{{ NIC.requestType }}</ion-label>
-              <ion-label>Family Name:{{ NIC.familyName }}</ion-label>
-              <ion-label>Name:{{ NIC.name }}</ion-label>
-              <ion-label>Surname:{{ NIC.surname }}</ion-label>
-              <ion-label>Gender:{{ NIC.gender }}</ion-label>
-              <ion-label>Civil Status:{{ NIC.civilStatus }}</ion-label>
-              <ion-label>Profession:{{ NIC.profession }}</ion-label>
-              <ion-label>Date Of Birth:{{ NIC.dateOfBirth }}</ion-label>
-              <ion-label>Birth Certificate No:{{ NIC.birthCertNo }}</ion-label>
-              <ion-label>Place Of Birth:{{ NIC.placeOfBirth }}</ion-label>
-              <ion-label>Division:{{ NIC.division }}</ion-label>
-              <ion-label>District:{{ NIC.district }}</ion-label>
-              <ion-label>Country Of Birth:{{ NIC.countryOfBirth }}</ion-label>
-              <ion-label>Foreign Certificate No:{{ NIC.foreignCertNo }}</ion-label>
-              <ion-label>City:{{ NIC.city }}</ion-label>
-              <ion-label>House No:{{ NIC.houseNo }}</ion-label>
-              <ion-label>House Name:{{ NIC.houseName }}</ion-label>
-              <ion-label>Street Name:{{ NIC.streetName }}</ion-label>
-              <ion-label>Postal Code:{{ NIC.postalcode }}</ion-label>
-              <ion-label>Post City:{{ NIC.postcity }}</ion-label>
-              <ion-label>Post House No:{{ NIC.posthouseNo }}</ion-label>
-              <ion-label>Post House Name:{{ NIC.posthouseName }}</ion-label>
-              <ion-label>Post Street Name:{{ NIC.poststreetName }}</ion-label>
-              <ion-label>Post Postal Code:{{ NIC.postpostalcode }}</ion-label>
-              <ion-label>Police Report No:{{ NIC.certDate }}</ion-label>
-              <ion-label>Police Name:{{ NIC.policeName }}</ion-label>
-              <ion-label>Police Report Date:{{ NIC.policeReportDate }}</ion-label>
-              <ion-label>Home Phone:{{ NIC.homePhone }}</ion-label>
-              <ion-label>Mobile Phone:{{ NIC.mobilePhone }}</ion-label>
-              <ion-label>Email:{{ NIC.email }}</ion-label>
+              <ion-label>Request Type :{{ NIC.requestType }}</ion-label><br>
+              <ion-label>Family Name:{{ NIC.familyName }}</ion-label><br>
+              <ion-label>Name:{{ NIC.name }}</ion-label><br>
+              <ion-label>Surname:{{ NIC.surname }}</ion-label><br>
+              <ion-label>Gender:{{ NIC.gender }}</ion-label><br>
+              <ion-label>Civil Status:{{ NIC.civilStatus }}</ion-label><br>
+              <ion-label>Profession:{{ NIC.profession }}</ion-label><br>
+              <ion-label>Date Of Birth:{{ NIC.dateOfBirth }}</ion-label><br>
+              <ion-label>Birth Certificate No:{{ NIC.birthCertNo }}</ion-label><br>
+              <ion-label>Place Of Birth:{{ NIC.placeOfBirth }}</ion-label><br>
+              <ion-label>Division:{{ NIC.division }}</ion-label><br>
+              <ion-label>District:{{ NIC.district }}</ion-label><br>
+              <ion-label>Country Of Birth:{{ NIC.countryOfBirth }}</ion-label><br>
+              <ion-label>Foreign Certificate No:{{ NIC.foreignCertNo }}</ion-label><br>
+              <ion-label>City:{{ NIC.city }}</ion-label><br>
+              <ion-label>House No:{{ NIC.houseNo }}</ion-label><br>
+              <ion-label>House Name:{{ NIC.houseName }}</ion-label><br>
+              <ion-label>Street Name:{{ NIC.streetName }}</ion-label><br>
+              <ion-label>Postal Code:{{ NIC.postalcode }}</ion-label><br>
+              <ion-label>Post City:{{ NIC.postcity }}</ion-label><br>
+              <ion-label>Post House No:{{ NIC.posthouseNo }}</ion-label><br>
+              <ion-label>Post House Name:{{ NIC.posthouseName }}</ion-label><br>
+              <ion-label>Post Street Name:{{ NIC.poststreetName }}</ion-label><br>
+              <ion-label>Post Postal Code:{{ NIC.postpostalcode }}</ion-label><br>
+              <ion-label>Police Report No:{{ NIC.certDate }}</ion-label><br>
+              <ion-label>Police Name:{{ NIC.policeName }}</ion-label><br>
+              <ion-label>Police Report Date:{{ NIC.policeReportDate }}</ion-label><br>
+              <ion-label>Home Phone:{{ NIC.homePhone }}</ion-label><br>
+              <ion-label>Mobile Phone:{{ NIC.mobilePhone }}</ion-label><br>
+              <ion-label>Email:{{ NIC.email }}</ion-label><br>
               <br>
-              <ion-button [hidden]="NIC.applicationStatus == 'Processing'" (click)="processRequest(NIC.GovernmentID)" shape="round"
-                color="light">Process
+              <ion-button *ngIf="NIC.status == 'New'" (click)="processRequest(NIC.id)" shape="round" color="light">
+                Process
                 <ion-icon slot="icon-only" name="sync">
                 </ion-icon>
               </ion-button>
-              <ion-button (click)="approveRequest(NIC.GovernmentID)" shape="round" color="signin" slot="end">Approve<ion-icon
-                  slot="icon-only" name="checkmark-done-circle">
+              <ion-button (click)="approveRequest(NIC.id)" shape="round" color="signin" slot="end">Approve
+                <ion-icon slot="icon-only" name="checkmark-done-circle">
                 </ion-icon>
               </ion-button>
             </ion-card-content>
@@ -130,8 +131,9 @@
             <ion-skeleton-text animated></ion-skeleton-text>
             <ion-skeleton-text animated style="height: 300px;"></ion-skeleton-text>
           </div>
-          <form class="form" [formGroup]="message_form" (ngSubmit)="supportCitizen(message_form.value)" novalidate>
-            <ion-card *ngFor="let message of ESupportMessages | slice:0:10;; let i = index">
+          <ion-card *ngFor="let message of ESupportMessages | slice:0:10;; let i = index">
+            <form class="form" [formGroup]="message_form"
+              (ngSubmit)="supportCitizen(message_form.value,message.id)">
               <ion-card-header>
                 <ion-card-title>Government ID: {{ message.GovernmentID }}</ion-card-title>
                 <ion-card-subtitle>Name: {{ message.FullName }}</ion-card-subtitle>
@@ -140,7 +142,6 @@
               <ion-card-content>
                 <ion-label>Message: {{ message.Description }}</ion-label>
                 <br>
-                <input formControlName="messageID">
                 <ion-item>
                   <ion-textarea formControlName="messageBody" placeholder="Service response to customer">
                   </ion-textarea>
@@ -150,8 +151,8 @@
                   </ion-icon>
                 </ion-button>
               </ion-card-content>
-            </ion-card>
-          </form>
+            </form>
+          </ion-card>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -194,7 +195,8 @@
         <ion-col>
           <ion-col *ngIf="NICApplicant" class="end" style="background: var(--ion-color-form);padding-left: 5%;">
             <div style="position: relative;
-            float: right;color: darkgray;font-weight: bold;cursor:pointer;" (click)=exitApplicant()>Exit Application</div>
+            float: right;color: darkgray;font-weight: bold;cursor:pointer;" (click)=exitApplicant()>Exit Application
+            </div>
             <ion-row>
               <h3><strong>NIC Application</strong></h3>
               <br>
@@ -255,8 +257,8 @@
                   </ng-container>
                 </div>
                 <ion-item>
-                  <ion-input required="true" type="text" placeholder="Name|නම|பெயர்" formControlName="engName" type="text"
-                    required></ion-input>
+                  <ion-input required="true" type="text" placeholder="Name|නම|பெயர்" formControlName="engName"
+                    type="text" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of validation_messages.engName">
@@ -279,7 +281,8 @@
                   </ng-container>
                 </div>
                 <h6>Name to be appeared in the Identity Card (If the name is different to the name in cage 1) |
-                  හැඳුනුම්පතේ දිස්විය යුතු නම (1 වන කූඩුවේ නමට වෙනස් නම්) | அடையாள அட்டையில் தோன்றும் பெயர் (கூண்டு 1 இல்
+                  හැඳුනුම්පතේ දිස්විය යුතු නම (1 වන කූඩුවේ නමට වෙනස් නම්) | அடையாள அட்டையில் தோன்றும் பெயர் (கூண்டு 1
+                  இல்
                   உள்ள பெயருக்கு பெயர் வேறுபட்டால்)</h6>
                 <ion-item>
                   <ion-input required="true" type="text" placeholder="Family Name|පවුලේ නම|குடும்ப பெயர்"
@@ -441,7 +444,8 @@
                 <div *ngIf="foreignCitizen">
                   <h6>If the applicant is born outside of Sri Lanka, details of Citizenship Certificate issued under
                     Section
-                    5(2) of the Citizenship Act, No.18 of 1948 | අයදුම්කරු ශ්‍රී ලංකාවෙන් පිටත උපත ලැබුවහොත්, වගන්තිය යටතේ
+                    5(2) of the Citizenship Act, No.18 of 1948 | අයදුම්කරු ශ්‍රී ලංකාවෙන් පිටත උපත ලැබුවහොත්, වගන්තිය
+                    යටතේ
                     නිකුත් කරන ලද පුරවැසි සහතිකයේ විස්තර
                     1948 අංක 18 පුරවැසි පනතේ 5 (2) | விண்ணப்பதாரர் இலங்கைக்கு வெளியே பிறந்திருந்தால், பிரிவின் கீழ்
                     வழங்கப்பட்ட குடியுரிமை சான்றிதழ் விவரங்கள்
@@ -472,8 +476,9 @@
                     </ng-container>
                   </div>
                   <ion-item>
-                    <ion-input required="true" type="text" placeholder="Certificate No| සහතිකය අංක|பிறப்பு சான்றிதழ் எண்"
-                      formControlName="foreignCertNo" type="number"></ion-input>
+                    <ion-input required="true" type="text"
+                      placeholder="Certificate No| සහතිකය අංක|பிறப்பு சான்றிதழ் எண்" formControlName="foreignCertNo"
+                      type="number"></ion-input>
                   </ion-item>
                   <div class="validation-errors">
                     <ng-container *ngFor="let validation of validation_messages.foreignCertNo">
@@ -568,8 +573,8 @@
                 <h6>Postal Address | තැපැල් ලිපිනය | அஞ்சல் முகவரி</h6>
                 <ion-item>
                   <ion-input required="true" type="text"
-                    placeholder="Name/number of House|නිවසේ නම / අංකය|வீட்டின் பெயர் / எண்" formControlName="posthouseNo"
-                    type="text" required></ion-input>
+                    placeholder="Name/number of House|නිවසේ නම / අංකය|வீட்டின் பெயர் / எண்"
+                    formControlName="posthouseNo" type="text" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of validation_messages.posthouseNo">
@@ -710,8 +715,9 @@
                   <ion-text style="font-style: italic;color: gray;">
                   </ion-text>
                   <ion-item>
-                    <ion-input required="true" type="text" placeholder="" formControlName="GovernmentID"
-                      [(ngModel)]="GovernmentID"></ion-input>
+                    <ion-input required="true" type="text"
+                      placeholder="Government ID | රජයේ ගේට්වේ හැඳුනුම්පත | அரசு நுழைவாயில் ஐடியை"
+                      formControlName="GovernmentID" [(ngModel)]="GovernmentID"></ion-input>
                   </ion-item>
                   <div class="validation-errors">
                     <ng-container *ngFor="let validation of validation_messages.GovernmentID">
@@ -721,28 +727,29 @@
                       </div>
                     </ng-container>
                   </div>
-                  <h6>E-mail | විද්යුත් තැපෑල | மின்னஞ்சல்</h6>
-                  <ion-text style="font-style: italic;color: gray;">
-                  </ion-text>
-                  <ion-item>
-                    <ion-input required="true" type="email" placeholder="" formControlName="email" type="email"
-                      [(ngModel)]="userEmail"></ion-input>
-                  </ion-item>
-                  <div class="validation-errors">
-                    <ng-container *ngFor="let validation of validation_messages.email">
-                      <div class="error-message"
-                        *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
-                        {{ validation.message }}
-                      </div>
-                    </ng-container>
-                  </div>
                   <br>
-                  <ion-text style="font-size: x-small;color: gray;">By clicking Apply, you agree to our
-                    Terms,
-                    Data Policy and Cookies Policy. Please note that only if your data matches our records, the
-                    registration would be approved.</ion-text>
+                  <h3>Payment Gate</h3>
+                  <h6 style="font-style: bold;color: gray;">Customer E-mail | පාරිභෝගික විද්‍යුත් තැපෑල | வாடிக்கையாளர்
+                    மின்னஞ்சல்</h6>
+                  <ngx-stripe-card-group [formGroup]="stripe_form" [elementsOptions]="elementsOptions">
+                    <ion-item>
+                      <ion-input required="true" type="email" placeholder="E-mail | විද්යුත් තැපෑල | மின்னஞ்சல்"
+                        formControlName="email" type="email"></ion-input>
+                    </ion-item>
+                    <div class="validation-errors">
+                      <ng-container *ngFor="let validation of validation_messages.email">
+                        <div class="error-message"
+                          *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
+                          {{ validation.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+                    Card Number: <ngx-stripe-card-number [options]="cardOptions"></ngx-stripe-card-number>
+                    Card Expiry: <ngx-stripe-card-expiry [options]="cardOptions"></ngx-stripe-card-expiry>
+                    Card CVC: <ngx-stripe-card-cvc [options]="cardOptions"></ngx-stripe-card-cvc>
+                  </ngx-stripe-card-group>
                   <br>
-                  <ion-button type="submit" color="signin" [disabled]="validations_form.valid">Apply
+                  <ion-button type="submit" color="signin" [disabled]="validations_form.valid" size="full">Apply
                     <ion-icon name="paper-plane"></ion-icon>
                   </ion-button>
                   <label class="error-message">{{errorMessage}}</label>
@@ -752,31 +759,6 @@
             </ion-row>
           </ion-col>
         </ion-col>
-        <ion-col>
-
-        </ion-col>
-        <!-- <ion-col> -->
-        <!-- <ion-card *ngFor="let message of ESupportMessages | slice:0:10;; let i = index">
-            <form class="form" [formGroup]="message_form" (ngSubmit)="supportCitizen(message_form.value)">
-            <ion-card-header>
-              <ion-card-title type="text" formControlName="GovernmentID"value="{{ message.GovernmentID }}">{{ message.GovernmentID }}</ion-card-title>
-              <ion-card-subtitle>{{ message.Subject }}</ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content>
-              <ion-label>{{ message.Description }}</ion-label>
-              <br>
-                <ion-item>
-                  <ion-textarea type="text" formControlName="response" placeholder="Service response to customer">
-                  </ion-textarea>
-                </ion-item>
-                <ion-button type="submit" shape="round" color="primary" slot="end">Send<ion-icon
-                    slot="icon-only" name="checkmark-done-circle">
-                  </ion-icon>
-                </ion-button>
-            </ion-card-content>
-          </form>
-          </ion-card>
-        </ion-col> -->
       </ion-row>
     </ion-grid>
   </div>

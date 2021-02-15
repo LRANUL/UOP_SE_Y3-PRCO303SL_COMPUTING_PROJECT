@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ɵConsole } from "@angular/core";
+import { switchMap } from "rxjs/operators";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore } from "@angular/fire/firestore";
 import {
@@ -17,13 +18,42 @@ import { AccessService } from "src/app/service/access.service";
 import { HttpClient } from "@angular/common/http";
 import { ActivatedRoute } from "@angular/router";
 import { loadStripe } from "@stripe/stripe-js";
-
+import { StripeService, StripeCardNumberComponent } from "ngx-stripe";
+import {
+  StripeCardElementOptions,
+  StripeElementsOptions,
+  PaymentIntent,
+} from "@stripe/stripe-js";
+import { Observable } from "rxjs";
 @Component({
   selector: "app-home-affairs",
   templateUrl: "./home-affairs.page.html",
   styleUrls: ["./home-affairs.page.scss"],
 })
 export class HomeAffairsPage implements OnInit {
+  @ViewChild(StripeCardNumberComponent) card: StripeCardNumberComponent;
+
+  cardOptions: StripeCardElementOptions = {
+    style: {
+      base: {
+        iconColor: "#666EE8",
+        color: "#31325F",
+        fontWeight: "300",
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSize: "20px",
+        "::placeholder": {
+          color: "#CFD7E0",
+        },
+      },
+    },
+  };
+
+  elementsOptions: StripeElementsOptions = {
+    locale: "auto",
+  };
+
+  stripe_form: FormGroup;
+
   NICApplications: {
     id: string;
     GovernmentID: any;
@@ -65,6 +95,7 @@ export class HomeAffairsPage implements OnInit {
   NICApplicant: boolean;
   nonFirstTimer: boolean;
   foreignCitizen: boolean;
+  handler: any;
   constructor(
     private firestore: AngularFirestore,
     private gAuth: AngularFireAuth,
@@ -74,10 +105,15 @@ export class HomeAffairsPage implements OnInit {
     public toastController: ToastController,
     public http: HttpClient,
     private route: ActivatedRoute,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private fb: FormBuilder,
+    private stripeService: StripeService
   ) {}
 
   async ngOnInit() {
+    this.stripe_form = this.fb.group({
+      email: ["", [Validators.required]],
+    });
     this.servicesPanel = true;
     this.accessService.getESupportMessages().subscribe((data) => {
       data.map((e) => {
@@ -88,22 +124,12 @@ export class HomeAffairsPage implements OnInit {
         }
       });
     });
-
-    /** Payment Validator */
-    var sessionID, GovernmentID;
-    sessionID = this.route.snapshot.queryParams.id;
-    GovernmentID = this.route.snapshot.queryParams.user;
-    if (sessionID) {
-      this.validate(sessionID, GovernmentID);
-    }
-
     //  FORM VALIDATORS
     /**
      * Validation Form receives input data sent by the user to Support service
      */
     this.message_form = this.formBuilder.group({
       messageBody: new FormControl("", Validators.compose([])),
-      messageID: new FormControl("", Validators.compose([])),
     });
 
     //  FORM VALIDATORS
@@ -325,55 +351,9 @@ export class HomeAffairsPage implements OnInit {
     ],
   };
 
-  /**
-   * Method reposible for validating the payment status connected to server and uses token for validation
-   * Complete paymetn process and validation don on secured server
-   * @param sessionID contains server send token ID used for validation on pending payments
-   */
-  validate(sessionID, GovernmentID) {
-    this.http.get("http://localhost:4242/validate?id=" + sessionID).subscribe(
-      async (data) => {
-        console.log(data);
-        if (data == "paid") {
-          const alert = await this.alertController.create({
-            header: "✅ Application Requested",
-            subHeader: "Application Sent",
-            message:
-              "Your application has been sent, check Services page for process tracking.",
-            buttons: ["OK"],
-          });
-          await alert.present();
-          this.firestore
-            .collection("eApplications", (ref) =>
-              ref.where("GovernmentID", "==", GovernmentID)
-            )
-            .doc()
-            .set({ payment_status: "paid" }, { merge: true });
-        } else if (data == "unpaid") {
-          const alert = await this.alertController.create({
-            header: "🚫 Application Rejected",
-            subHeader: "Application Payment",
-            message:
-              "Your application has not been sent, try again and make the payment process.",
-            buttons: ["OK"],
-          });
-          await alert.present();
-        }
-        this.firestore
-          .collection("eApplications", (ref) =>
-            ref.where("GovernmentID", "==", GovernmentID)
-          )
-          .doc()
-          .delete();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-  supportCitizen(value) {
-    console.log(value);
-    this.accessService.sendMessage(value.messageID, value.messageBody).then(
+  supportCitizen(value, ID) {
+    console.log(value, ID);
+    this.accessService.sendMessage(ID, value.messageBody).then(
       async (res) => {
         console.log(res);
         const toast = await this.toastController.create({
@@ -434,6 +414,7 @@ export class HomeAffairsPage implements OnInit {
           return {
             id: e.payload.doc.id,
             GovernmentID: e.payload.doc.data()["GovernmentID"],
+            status: e.payload.doc.data()["status"],
             fullName: e.payload.doc.data()["fullName"],
             requestType: e.payload.doc.data()["requestType"],
             applicationDescription: e.payload.doc.data()["Description"],
@@ -547,78 +528,80 @@ export class HomeAffairsPage implements OnInit {
   exitApplicant() {
     this.NICApplicant = false;
   }
+  async pay(): Promise<void> {
+    console.log(this.stripe_form);
+  }
   /**
    * Method reposible for sending validated data to google-auth service page for further verfication and uploading to firebase
    * @param value contains validated data from NIC application form
-   * Depending the data sent, verification would inform user of the process whther whether thier data was accepts and sent or rejected.
+   * Depending the data sent and payment verification process finalises then the system would inform user of the process whether
+   * their data was accepts and sent or rejected.
    */
   async sendApplication(value) {
-    // this.accessService.sendNICApplication(value).then(
-    //   (res) => {
-    //     console.log(res);
-    //     this.passAlertNICApp();
-    //   },
-    //   (err) => {
-    //     console.log(err);
-    //     this.failAlertNICApp();
-    //   }
-    // );
-    const stripe = await loadStripe(
-      "pk_test_51IHSuEA5rKg2mqjLa3Gh3JeEVlSE01Ty1uuLmUAwzSSEISREulbOx3FCTLhLtMcxo5QO3Nno4wPoAPUC7vchjnN500co3fV7M0"
+    if (this.stripe_form.valid) {
+      this.createPaymentIntent(100)
+        .pipe(
+          switchMap((pi) =>
+            this.stripeService.confirmCardPayment(pi.client_secret, {
+              payment_method: {
+                card: this.card.element,
+                billing_details: {
+                  name: this.stripe_form.get("email").value,
+                },
+              },
+            })
+          )
+        )
+        .subscribe(async (result) => {
+          if (result.error) {
+            // Show error to your customer (e.g., insufficient funds)
+            const alert = await this.alertController.create({
+              header: "🚫 Application Rejected",
+              subHeader: "Application Payment",
+              message:
+                "Your application has not been sent, try again and make the payment process using card that has credit.",
+              buttons: ["OK"],
+            });
+            await alert.present();
+            this.validations_form.reset();
+            this.stripe_form.reset();
+            console.log(result.error.message);
+          } else {
+            // The payment has been processed!
+            if (result.paymentIntent.status === "succeeded") {
+              const alert = await this.alertController.create({
+                header: "✅ Application Requested",
+                subHeader: "Application Sent",
+                message:
+                  "Your application has been sent, check Services page for process tracking.",
+                buttons: ["OK"],
+              });
+              await alert.present();
+              this.stripe_form.reset();
+              this.accessService.sendNICApplication(value).then(
+                async (res) => {
+                  console.log(res);
+                  this.validations_form.reset();
+                },
+                async (err) => {
+                  console.log(err);
+                }
+              );
+            }
+          }
+        });
+    } else {
+      console.log(this.stripe_form);
+    }
+  }
+
+  createPaymentIntent(amount: number): Observable<PaymentIntent> {
+    return this.http.post<PaymentIntent>(
+      `http://localhost:4242/officer-pay-nic`,
+      { amount }
     );
+  }
 
-    fetch("http://localhost:4242/officer-pay-nic", {
-      method: "POST",
-      body: JSON.stringify({
-        GovernmentID: value.GovernmentID,
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (session) {
-        console.log(session.id);
-        return stripe.redirectToCheckout({ sessionId: session.id });
-      })
-      .then(function (result) {
-        if (result.error) {
-          alert(result.error.message);
-        }
-      })
-      .catch(function (error) {
-        console.error("Error:", error);
-      });
-  }
-  /**
-   * Method for displaying successful validated and verified form data
-   */
-  async passAlertNICApp() {
-    const alert = await this.alertController.create({
-      header: "✅ Application Requested",
-      subHeader: "Application Sent",
-      message:
-        "Your application has been sent, check Services page for tracking the process.",
-      buttons: ["OK"],
-    });
-    await alert.present();
-  }
-  /**
-   * This method would excute if the data sent isn't valid such as information mismatch so the automated process had failed.
-   */
-  async failAlertNICApp() {
-    const alert = await this.alertController.create({
-      header: "⚠ Application Requested",
-      subHeader: "Application Not Sent !",
-      message:
-        "Your application has not been sent, Try again later or contact support.",
-      buttons: ["OK"],
-    });
-
-    await alert.present();
-  }
   /**
    * Method for displaying successful validated and verified message requests
    */
@@ -639,7 +622,7 @@ export class HomeAffairsPage implements OnInit {
       header: "⚠ Message Not Send",
       subHeader: "Network Error",
       message:
-        "Your message has not been sent, Try again later or contact support.",
+        "Your message has not been sent, Try again later or contact administrator.",
       buttons: ["OK"],
     });
 

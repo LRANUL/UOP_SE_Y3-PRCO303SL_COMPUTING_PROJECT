@@ -10,7 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "compodoc": "compodoc -p tsconfig.json"
+    "compodoc": "npx compodoc -p tsconfig.json src -w -s"
   },
   "private": true,
   "dependencies": {
@@ -38,7 +38,6 @@
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "algoliasearch": "^3.35.1",
     "cordova-plugin-stripe": "^1.5.3",
-    "crypto-js": "^4.0.0",
     "dateformat": "^4.4.1",
     "firebase": "^8.2.1",
     "html2canvas": "^1.0.0-rc.7",

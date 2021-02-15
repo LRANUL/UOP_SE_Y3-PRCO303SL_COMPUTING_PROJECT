@@ -39,30 +39,22 @@ app.post("/pay-nic", async (req, res) => {
 });
 
 
-
 app.post("/officer-pay-nic", async (req, res) => {
-  var GovernmendPortal = req.body.GovernmentID || "";
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    line_items: [
-      {
-        price_data: {
-          currency: "lkr",
-          product_data: {
-            name: "Application Fee",
-          },
-          unit_amount: 100 * 100,
-        },
-        quantity: 1,
-      },
-    ],
-    mode: "payment",
-    success_url: `${APP_DOMAIN}/office/home-affairs?user=${GovernmendPortal}&id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${APP_DOMAIN}/office/home-affairs?user=${GovernmendPortal}&id={CHECKOUT_SESSION_ID}`,
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: 100 *100,
+    currency: 'lkr',
+    payment_method_types: ['card'],
   });
+  res.json({client_secret: paymentIntent.client_secret});
+});
 
-  res.json({ id: session.id });
-  // res.send(JSON.stringify(session.id));
+app.post("/kiosk-pay-nic", async (req, res) => {
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: 100 *100,
+    currency: 'lkr',
+    payment_method_types: ['card'],
+  });
+  res.json({client_secret: paymentIntent.client_secret});
 });
 
 app.get("/validate", async (req, res) => {

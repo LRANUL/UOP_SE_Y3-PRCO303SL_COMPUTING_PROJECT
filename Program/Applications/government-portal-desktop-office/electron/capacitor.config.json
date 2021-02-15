@@ -1,5 +1,5 @@
 {
-  "appId": "io.ionic.starter",
+  "appId": "lk.governmentportal.office",
   "appName": "government-portal-desktop-office",
   "bundledWebRuntime": false,
   "npmClient": "npm",

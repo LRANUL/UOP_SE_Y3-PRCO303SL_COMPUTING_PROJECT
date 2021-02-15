@@ -45,11 +45,6 @@ export class AccountPage implements OnInit {
   NICApplicantStatus: boolean;
   messageStatus: boolean;
   userEmail: any;
-  requestType: any;
-  assigneeName: any;
-  applicationDescription: any;
-  applicationStatus: any;
-  receivedTime: any;
   Displayname: string;
   photoUrl: string;
   email: string;
@@ -63,6 +58,7 @@ export class AccountPage implements OnInit {
   elementType: "img";
   ESupportMessages: any;
   messageForm: boolean;
+  EApplications: any;
   constructor(
     private firestore: AngularFirestore,
     public toastController: ToastController,
@@ -153,22 +149,21 @@ export class AccountPage implements OnInit {
       fullName: new FormControl(
         "",
         Validators.compose([
-          Validators.minLength(1),
+          Validators.minLength(10),
           Validators.pattern("^^[a-z A-Z\\.\\s]+$"),
         ])
       ),
       subject: new FormControl(
         "",
         Validators.compose([
-          Validators.minLength(1),
+          Validators.minLength(5),
           Validators.pattern("^^[a-z A-Z\\.\\s]+$"),
         ])
       ),
       message: new FormControl(
         "",
         Validators.compose([
-          Validators.minLength(1),
-          Validators.pattern("^^[a-z A-Z\\.\\s]+$"),
+          Validators.minLength(10),
         ])
       ),
     });
@@ -381,6 +376,7 @@ export class AccountPage implements OnInit {
             buttons: ["OK"],
           });
           await alert.present();
+          
           this.firestore
             .collection("eApplications", (ref) =>
               ref.where("GovernmentID", "==", user.displayName)
@@ -447,7 +443,7 @@ export class AccountPage implements OnInit {
    * Support tab contains functions for contacting support and for application tracking all applications send would be tracable from this
    * tab, currently limit to NIC application tracking
    */
-  openSupport() {
+  async openSupport() {
     this.servicesPanel = false;
     this.supportPanel = true;
     this.settingsPanel = false;
@@ -590,7 +586,7 @@ export class AccountPage implements OnInit {
       });
   }
   supportCitizen(value) {
-    this.authService.sendSupportMessage(value).then(
+    this.authService.sendSupportMessage(value,this.prefix+" "+this.fullName).then(
       (res) => {
         console.log(res);
         this.passAlertMessage();
@@ -653,19 +649,18 @@ export class AccountPage implements OnInit {
   async NICStatus() {
     this.NICApplicantStatus = true;
     this.messageStatus = false;
-    await this.firestore
-      .collection("/eApplications/")
-      .doc(this.Displayname)
-      .ref.get()
-      .then((doc) => {
-        if (doc.exists) {
-          this.requestType = doc.data()["requestType"];
-          this.assigneeName = doc.data()["division"];
-          this.applicationDescription = doc.data()["description"];
-          this.applicationStatus = doc.data()["status"];
-          this.receivedTime = doc.data()["TimeStamp"].toDate();
-        }
+    this.authService.getEApplications().subscribe((data) => {
+      this.EApplications = data.map((e) => {
+        console.log(e.payload.doc.data()["requestType"])
+        return {
+          requestType: e.payload.doc.data()["requestType"],
+          assigneeName: e.payload.doc.data()["division"],
+          applicationDescription: e.payload.doc.data()["description"],
+          applicationStatus: e.payload.doc.data()["status"],
+          receivedTime: e.payload.doc.data()["TimeStamp"].toDate(),
+        };
       });
+    });
   }
   /**
    * This method closes the Application status windows

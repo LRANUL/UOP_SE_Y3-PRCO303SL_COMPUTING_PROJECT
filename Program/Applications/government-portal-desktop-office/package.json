@@ -12,7 +12,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "electron": "electron .",
-    "electron-serve": "ng build --prod && electron ."
+    "electron-serve": "ng build --prod && electron .",
+    "compodoc": "npx compodoc -p tsconfig.app.json src"
   },
   "private": true,
   "dependencies": {
@@ -37,6 +38,7 @@
     "electron": "^11.2.0",
     "firebase": "^8.2.4",
     "ngx-electron": "^2.2.0",
+    "ngx-stripe": "^10.1.2",
     "rxjs": "~6.5.5",
     "stripe": "^8.134.0",
     "tslib": "^2.0.0",

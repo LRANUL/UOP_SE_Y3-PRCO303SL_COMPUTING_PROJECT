@@ -659,14 +659,14 @@
                 </ion-row>
               </ion-grid>
             </ion-item>
-            <ion-item>
+            <ion-item  *ngFor="let application of EApplications | slice:0:10;; let i = index">
               <ion-grid>
                 <ion-row style="font-size: small;">
-                  <ion-col>{{requestType}}</ion-col>
-                  <ion-col>{{assigneeName}}</ion-col>
-                  <ion-col>{{applicationDescription}}</ion-col>
-                  <ion-col>{{applicationStatus}}
-                    <div style="font-size: xx-small;margin-top: 5%;">Received Time: {{receivedTime}}</div>
+                  <ion-col>{{application.requestType}}</ion-col>
+                  <ion-col>{{application.assigneeName}}</ion-col>
+                  <ion-col>{{application.applicationDescription}}</ion-col>
+                  <ion-col>{{application.applicationStatus}}
+                    <div style="font-size: xx-small;margin-top: 5%;">Received Time: {{application.receivedTime}}</div>
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -676,10 +676,10 @@
         <ion-col *ngIf="messageForm" class="end" style="background: var(--ion-color-form);">
           <div style="position: relative; float: right;color: rgb(126, 125, 125);font-weight: bold;cursor:pointer;"
             (click)=closeMessageForm()>Close</div>
-          <form class="form" [formGroup]="message_form" (ngSubmit)="supportCitizen(message_form.value)">
+          <form class="form" [formGroup]="message_form" (ngSubmit)="supportCitizen(message_form.value,prefix+fullName)">
             <h5>Full Name</h5>
             <ion-item>
-              <ion-input disabled type="text" formControlName="fullName" value="{{prefix}} {{fullName}}" type="text">
+              <ion-input disabled type="text" formControlName="fullName" value="" type="text">
                 {{prefix}} {{fullName}}</ion-input>
             </ion-item>
             <h5>Subject</h5>
@@ -755,12 +755,12 @@
         <ion-col>
           <b>Government Portal ID</b>
           <div class="portalID">
+            <img src="assets/icon/emblem.png" style="height:70px;">
             <ngx-qrcode [element-type]="elementType" [value]="QRCode" errorCorrectionLevel="H"
               style="float: right;width: 90px;">
             </ngx-qrcode>
-            <h1><b>GOVERNMENT PORTAL</b></h1>
-            <img src="{{photoUrl}}" style="width: 130px;height: 150px;float: left;border-radius: 5px;">
-            <span style="float: right;margin: 15px;">
+            <img src="{{photoUrl}}" style="width: 130px;height: 150px;float: left;border-radius: 5px;margin-left: 10px;">
+            <span style="float: right;margin: 10px;">
               <h4>{{fullName}}</h4>
               <h5><i>{{Displayname}}</i></h5>
             </span>

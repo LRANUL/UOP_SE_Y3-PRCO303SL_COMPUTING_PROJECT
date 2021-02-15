@@ -12,7 +12,7 @@ import {
   AngularFireUploadTask,
   AngularFireStorageReference,
 } from "@angular/fire/storage";
-import { Observable } from "rxjs";
+import { Observable, ReplaySubject } from "rxjs";
 import { finalize } from "rxjs/operators";
 
 /**
@@ -37,7 +37,7 @@ export class CreateAccountPage implements OnInit {
     public formBuilder: FormBuilder,
     private authService: GoogleAuthService,
     private storage: AngularFireStorage
-  ) { }
+  ) {}
 
   ngOnInit() {
     /**
@@ -118,6 +118,7 @@ export class CreateAccountPage implements OnInit {
       officeAddress: new FormControl("", Validators.compose([])),
       GovernmentID: new FormControl("", Validators.compose([])),
       downloadURL: new FormControl("", Validators.compose([])),
+      bioData: new FormControl("", Validators.compose([])),
     });
   }
   /**
@@ -153,6 +154,7 @@ export class CreateAccountPage implements OnInit {
    * Method reposible for fetching data from login form and sending to google-auth services page for registration after verification
    * and for uploading applicants Photograph to cloud and generating a Government Portal ID, captures image upload event and uploads image to firebase storage
    * (This method was recently updated to improve scalability from Email Key to Portal ID)
+   * This method is encodeing data for biometrics usage
    * @param value hold validated values from login form
    */
   registerECitizen(value) {
@@ -164,7 +166,7 @@ export class CreateAccountPage implements OnInit {
   onFileChange(event) {
     var GovernmentID;
     var downloadURL;
-    GovernmentID = "A" + Math.floor((Math.random() * 9000000000) + 1000000000);
+    GovernmentID = "A" + Math.floor(Math.random() * 9000000000 + 1000000000);
     this.validations_form.patchValue({ GovernmentID: GovernmentID });
     const file = event.target.files[0];
     if (file) {
@@ -173,16 +175,26 @@ export class CreateAccountPage implements OnInit {
       this.task = this.storage.upload(filePath, file);
       this.progress = this.task.percentageChanges();
 
-      this.task.snapshotChanges().pipe(
-        finalize(() => {
-          fileRef.getDownloadURL().subscribe(downloadURL => {
-            downloadURL = "" + downloadURL;
-            console.log(downloadURL);
-            this.validations_form.patchValue({ downloadURL: downloadURL });
-          });
-        })
-      )
+      this.task
+        .snapshotChanges()
+        .pipe(
+          finalize(() => {
+            fileRef.getDownloadURL().subscribe((downloadURL) => {
+              downloadURL = "" + downloadURL;
+              console.log(downloadURL);
+              this.validations_form.patchValue({ downloadURL: downloadURL });
+            });
+          })
+        )
         .subscribe();
     }
+    const photoData = new ReplaySubject<string>(1);
+    const reader = new FileReader();
+    reader.readAsBinaryString(file);
+    reader.onload = (event) =>
+      photoData.next(btoa(event.target.result.toString()));
+    photoData.subscribe((encodedBioData) => {
+      this.validations_form.patchValue({ bioData: encodedBioData });
+    });
   }
 }

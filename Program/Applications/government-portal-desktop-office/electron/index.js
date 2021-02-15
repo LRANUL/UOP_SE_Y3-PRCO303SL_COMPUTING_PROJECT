@@ -27,7 +27,7 @@ const menuTemplateDev = [
     ],
   },
 ];
-
+Menu.setApplicationMenu(false)
 async function createWindow() {
   // Define our main window size
   mainWindow = new BrowserWindow({

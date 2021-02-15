@@ -2,12 +2,10 @@ import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
 import * as firebase from "firebase/app";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { AngularFireDatabaseModule } from "@angular/fire/database";
 import { AlertController, ToastController } from "@ionic/angular";
 import * as dateFormat from "dateformat";
 import { Router } from "@angular/router";
-import * as sha256 from "crypto-js/sha256";
-import { loadStripe } from "@stripe/stripe-js";
+import * as CryptoJS from 'crypto-js'
 
 /**
  * Service Page contains mandatory methods for application running which are directly called by other components when required
@@ -84,7 +82,8 @@ export class GoogleAuthService {
                       photoURL: value.downloadURL,
                     });
                   }
-                  var accessKey = sha256(value.fullName + user.displayName).toString();
+                  // https://code.google.com/archive/p/crypto-js/
+                  var accessKey = CryptoJS.AES.encrypt(value.GovernmentID, value.bioData);
                   /**
                    * Data gets stored on Firebase for references
                    * */
@@ -100,6 +99,7 @@ export class GoogleAuthService {
                       Place_Of_Birth: value.placeOfBirth.toUpperCase(),
                       Registar_Division: value.registarDivision.toUpperCase(),
                       Birth_Reg_No: value.birthRegNo,
+                      Biometric_Data: value.bioData,
                       GovernmentID: value.GovernmentID,
                       downloadURL: value.downloadURL,
                       Father_Name: value.fatherName.toUpperCase(),
@@ -190,10 +190,6 @@ export class GoogleAuthService {
               doc.data()["dateofBirth"] == dateBirth
             ) {
               return new Promise<any>((resolve, reject) => {
-                /**
-                 * Data gets stored on firebase, used for application tracking and references
-                 */
-                var user = firebase.default.auth().currentUser;
                 this.firestore
                   .collection("/eApplications/")
                   .doc()
@@ -294,7 +290,7 @@ export class GoogleAuthService {
    * @param value This holds Support message data send by registered user via forms available on the Account Portal
    *
    */
-  sendSupportMessage(value) {
+  sendSupportMessage(value,name) {
     return new Promise<any>(async (_resolve, _reject) => {
       return new Promise<any>(async (resolve, reject) => {
         /**
@@ -314,7 +310,7 @@ export class GoogleAuthService {
           .doc()
           .set({
             Description: value.message,
-            FullName: value.fullName,
+            FullName: name,
             GovernmentID: user.displayName,
             Status: "New",
             Subject: value.subject,
@@ -332,6 +328,15 @@ export class GoogleAuthService {
 
     return this.firestore
       .collection("eSupport", (ref) =>
+        ref.where("GovernmentID", "==", user.displayName)
+      )
+      .snapshotChanges();
+  }
+
+  getEApplications() {
+    var user = firebase.default.auth().currentUser;
+    return this.firestore
+      .collection("eApplications", (ref) =>
         ref.where("GovernmentID", "==", user.displayName)
       )
       .snapshotChanges();

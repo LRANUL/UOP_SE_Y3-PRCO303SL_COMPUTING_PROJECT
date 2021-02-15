@@ -21,7 +21,7 @@ export class AccessService {
     return this.firestore
       .collection("eApplications", (ref) =>
         ref
-          .where("Status", "in", ["New", "Processing"])
+          .where("status", "in", ["New", "Processing"])
           .where("payment_status", "==", "paid")
       )
       .snapshotChanges();
@@ -38,35 +38,33 @@ export class AccessService {
       .collection("WorkLogs")
       .snapshotChanges();
   }
-  setApplicationToProcessing(GovernmentID) {
-    this.firestore
-      .collection("eApplications", (ref) =>
-        ref.where("GovernmentID", "==", GovernmentID)
-      )
-      .doc()
-      .set(
-        {
-          status: "Processing",
-          description:
-            "Your application is being processed and will be approved soon.",
-        },
-        { merge: true }
-      );
+  async setApplicationToProcessing(DocumentID) {
+    console.log(DocumentID);
+    const eApplication = this.firestore
+      .collection("eApplications")
+      .doc(DocumentID);
+    const res = await eApplication.set(
+      {
+        status: "Processing",
+        description:
+          "Your application is being processed and will be approved soon.",
+      },
+      { merge: true }
+    );
   }
-  setApplicationToApproved(GovernmentID) {
-    this.firestore
-      .collection("eApplications", (ref) =>
-        ref.where("GovernmentID", "==", GovernmentID)
-      )
-      .doc()
-      .set(
-        {
-          status: "Processed",
-          description:
-            "Your application is processed, we have mailed your ID card.",
-        },
-        { merge: true }
-      );
+  async setApplicationToApproved(DocumentID) {
+    console.log(DocumentID);
+    const eApplication = this.firestore
+      .collection("eApplications")
+      .doc(DocumentID);
+    const res = await eApplication.set(
+      {
+        status: "Processed",
+        description:
+          "Your application is processed, we have mailed your ID card.",
+      },
+      { merge: true }
+    );
   }
 
   /**
@@ -105,7 +103,7 @@ export class AccessService {
                     type: "NIC-Application",
                     status: "New",
                     GovernmentID: value.GovernmentID,
-                    payment_status: "unpaid",
+                    payment_status: "paid",
                     description: "Application sent for Department",
                     email: value.email,
                     familyName: value.familyName,
@@ -193,15 +191,15 @@ export class AccessService {
         });
     });
   }
-  sendMessage(messageID, messageBody) {
+  sendMessage(ID, messageBody) {
     return new Promise<any>(async (resolve, reject) => {
       /**
        * Data gets stored on firebase, used for message tracking and references
        */
-      console.log(messageID + "\n" + messageBody);
-      this.firestore
-        .collection("eSupport/")
-        .doc(messageID)
+      console.log(ID + "\n" + messageBody);
+      console.log(ID);
+      const eSupport = this.firestore.collection("eSupport").doc(ID);
+      const res = await eSupport
         .set(
           {
             Status: "Completed",

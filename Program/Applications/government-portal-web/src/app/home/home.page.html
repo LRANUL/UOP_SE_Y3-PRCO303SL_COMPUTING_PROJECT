@@ -1,12 +1,11 @@
 <!-- PAGE SPLASH SCREEN STARTS -->
-<div name="loading" *ngIf="loading" style="height: 100%;" style="background-color:#c92d39;">
+<div name="loading" *ngIf="loading" style="height: 100%;" style="background-color:#ffffff;">
   <ion-img src="assets/splash/splash.png" style="height: 15%;"></ion-img>
   <ion-img src="assets/splash/animation.gif" style="height:500px;"></ion-img>
 </div>
 <!-- PAGE SPLASH SCREEN ENDS -->
 <!-- WELCOME MODAL STARTS -->
-<!-- https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage -->
-<div name="Welcome" *ngIf="Welcome" style="margin: 5px;height: 100%;background-color: #C92D39;">
+<div name="Welcome" *ngIf="Welcome" style="margin: 5px;height: 100%;background-color: #ffffff;">
   <ion-slides pager="false" [options]="slideOpts" style="height: 90%;">
     <ion-slide>
       <img src="assets/splash/Page-1.png" />
@@ -24,7 +23,6 @@
       <img src="assets/splash/Page-5.png" />
     </ion-slide>
   </ion-slides>
-  <!-- <ion-button style="height: 10%;" (click)="goHome()" expand="block" size="large" color="danger">Start Now</ion-button> -->
 </div>
 <!-- WELCOME MODAL ENDS -->
 <!-- PAGE HEADER STARTS -->
