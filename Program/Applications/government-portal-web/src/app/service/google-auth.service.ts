@@ -377,7 +377,7 @@ export class GoogleAuthService {
    * Method used for fetching current active user data from firebase these include email, photo, name of the authenticated user
    * Used for displaying data at required functions
    */
-  eCitizenData() {
+  private eCitizenData() {
     return this.gAuth.user;
   }
 }

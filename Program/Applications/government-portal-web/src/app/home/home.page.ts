@@ -7,24 +7,24 @@ import * as algoliasearch from 'algoliasearch';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  client: any;
-  index: any;
-  ALGOLIA_APP_ID: string = "MGBODS63FP";
-  ALGOLIA_APP_KEY: string = "01c0dc6bd76e601f053adefc271763ed";
-  searchQuery: string = "";
-  algoliaResults = [];
-  loading: boolean;
-  home: boolean;
-  visitor: string;
-  Welcome: any;
-  slideOpts = {
+  private client: any;
+  private index: any;
+  private ALGOLIA_APP_ID: string = "MGBODS63FP";
+  private ALGOLIA_APP_KEY: string = "01c0dc6bd76e601f053adefc271763ed";
+  private searchQuery: string = "";
+  private algoliaResults = [];
+  private loading: boolean;
+  private home: boolean;
+  private visitor: string;
+  private Welcome: any;
+  private slideOpts = {
     initialSlide: 0,
     slidesPerView: 1,
     autoplay: true,
     speed: 3000
   };
   constructor() { }
-  ngOnInit() {
+  private ngOnInit() {
 //  Search Function Init Start
     this.client = algoliasearch(this.ALGOLIA_APP_ID, this.ALGOLIA_APP_KEY,
       { protocol: 'https' });
@@ -51,14 +51,14 @@ export class HomePage {
 
   }
   //  Search Function Starts 
-  pagesList = false;
-  click_in() {
+  private pagesList = false;
+  private click_in() {
     this.pagesList = true;
   }
-  onClickedOutside(e: Event) {
+  private onClickedOutside(e: Event) {
     this.pagesList = false;
   }
-  search(event) {
+  private search(event) {
     this.index.search({
       query: this.searchQuery
     }).then((data) => {
@@ -66,7 +66,7 @@ export class HomePage {
     })
   }
   //  Search Function Ends
-  goHome() {
+  private goHome() {
     this.Welcome = false;
     this.home = true;
   }

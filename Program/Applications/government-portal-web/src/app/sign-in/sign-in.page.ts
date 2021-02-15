@@ -22,9 +22,9 @@ import firebase from "firebase/app";
   styleUrls: ["./sign-in.page.scss"],
 })
 export class SignInPage implements OnInit {
-  validations_form: FormGroup;
-  errorMessage: string;
-  userEmail: string;
+  private validations_form: FormGroup;
+  private errorMessage: string;
+  private userEmail: string;
   constructor(
     private firestore: AngularFirestore,
     public toastController: ToastController,
@@ -74,7 +74,7 @@ export class SignInPage implements OnInit {
       ),
     });
   }
-  validation_messages = {
+  private validation_messages = {
     email: [
       {
         type: "required",
@@ -147,7 +147,7 @@ export class SignInPage implements OnInit {
     await alert.present();
   }
 
-  loginCitizen(value) {
+  private loginCitizen(value) {
     this.authService.loginCitizen(value).then(
       (res) => {
         console.log(res);

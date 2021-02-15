@@ -26,13 +26,13 @@ import { finalize } from "rxjs/operators";
   styleUrls: ["./create-account.page.scss"],
 })
 export class CreateAccountPage implements OnInit {
-  imageURL = "";
-  CollectionPath = "/Users/eCitizens";
-  downloadURL: Observable<string>;
-  task: AngularFireUploadTask;
-  progress: Observable<number>;
-  validations_form: FormGroup;
-  errorMessage: string;
+  private imageURL = "";
+  private CollectionPath = "/Users/eCitizens";
+  private downloadURL: Observable<string>;
+  private task: AngularFireUploadTask;
+  private progress: Observable<number>;
+  private validations_form: FormGroup;
+  private errorMessage: string;
   constructor(
     public formBuilder: FormBuilder,
     private authService: GoogleAuthService,
@@ -124,7 +124,7 @@ export class CreateAccountPage implements OnInit {
   /**
    * Validation messages to user
    */
-  validation_messages = {
+  private validation_messages = {
     email: [
       {
         type: "required",
@@ -157,13 +157,13 @@ export class CreateAccountPage implements OnInit {
    * This method is encodeing data for biometrics usage
    * @param value hold validated values from login form
    */
-  registerECitizen(value) {
+  private registerECitizen(value) {
     this.authService.registerECitizen(value).then((res) => {
       console.log(res);
     });
   }
 
-  onFileChange(event) {
+  private onFileChange(event) {
     var GovernmentID;
     var downloadURL;
     GovernmentID = "A" + Math.floor(Math.random() * 9000000000 + 1000000000);

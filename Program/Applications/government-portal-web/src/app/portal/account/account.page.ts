@@ -34,31 +34,31 @@ import { HttpClient } from "@angular/common/http";
   styleUrls: ["./account.page.scss"],
 })
 export class AccountPage implements OnInit {
-  servicesPanel = true;
-  supportPanel = false;
-  settingsPanel = false;
-  NICApplicant = false;
-  foreignCitizen = false;
-  nonFirstTimer = false;
+  private servicesPanel = true;
+  private supportPanel = false;
+  private settingsPanel = false;
+  private NICApplicant = false;
+  private foreignCitizen = false;
+  private nonFirstTimer = false;
 
-  NICType: string;
-  NICApplicantStatus: boolean;
-  messageStatus: boolean;
-  userEmail: any;
-  Displayname: string;
-  photoUrl: string;
-  email: string;
-  prefix: any;
-  homeAddress: any;
-  officeAddress: any;
-  mobile: any;
-  landLine: any;
-  fullName: any;
-  QRCode = "https://www.gov.lk";
-  elementType: "img";
-  ESupportMessages: any;
-  messageForm: boolean;
-  EApplications: any;
+  private NICType: string;
+  private NICApplicantStatus: boolean;
+  private messageStatus: boolean;
+  private userEmail: any;
+  private Displayname: string;
+  private photoUrl: string;
+  private email: string;
+  private prefix: any;
+  private homeAddress: any;
+  private officeAddress: any;
+  private mobile: any;
+  private landLine: any;
+  private fullName: any;
+  private QRCode = "https://www.gov.lk";
+  private elementType: "img";
+  private ESupportMessages: any;
+  private messageForm: boolean;
+  private EApplications: any;
   constructor(
     private firestore: AngularFirestore,
     public toastController: ToastController,
@@ -72,9 +72,9 @@ export class AccountPage implements OnInit {
     public http: HttpClient,
     private route: ActivatedRoute
   ) {}
-  validations_form: FormGroup;
-  message_form: FormGroup;
-  errorMessage: string;
+  private validations_form: FormGroup;
+  private message_form: FormGroup;
+  private errorMessage: string;
   ngOnInit() {
     /**
      * At the initiation of page user authenticity is checked and allowed access to account portal
@@ -345,7 +345,7 @@ export class AccountPage implements OnInit {
   }
 
   //  Validation Messages
-  validation_messages = {
+  private validation_messages = {
     email: [
       {
         type: "required",
@@ -362,7 +362,7 @@ export class AccountPage implements OnInit {
    * Complete paymetn process and validation don on secured server
    * @param sessionID contains server send token ID used for validation on pending payments
    */
-  validate(sessionID) {
+  private validate(sessionID) {
     var user = firebase.auth().currentUser;
     this.http.get("http://localhost:4242/validate?id=" + sessionID).subscribe(
       async (data) => {
@@ -434,7 +434,7 @@ export class AccountPage implements OnInit {
    *
    *  Currently service tab contains application forms for NIC applicants, user could apply for an NIC from the same tab.
    */
-  openService() {
+  private openService() {
     this.servicesPanel = true;
     this.supportPanel = false;
     this.settingsPanel = false;
@@ -460,7 +460,7 @@ export class AccountPage implements OnInit {
       });
     });
   }
-  Support() {
+  private Support() {
     this.messageStatus = true;
     this.messageForm = true;
   }
@@ -485,7 +485,7 @@ export class AccountPage implements OnInit {
   /**
    * Changes forms for a first time NIC applicant
    */
-  firstNICApp() {
+  private firstNICApp() {
     this.NICApplicant = true;
     this.nonFirstTimer = false;
     this.validations_form.patchValue({
@@ -495,7 +495,7 @@ export class AccountPage implements OnInit {
   /**
    * Changes forms for NIC renewals
    */
-  renewNICApp() {
+  private renewNICApp() {
     this.NICApplicant = true;
     this.nonFirstTimer = true;
     this.validations_form.patchValue({
@@ -506,7 +506,7 @@ export class AccountPage implements OnInit {
   /**
    * Changes forms for applicants that require correction of NIC
    */
-  correctionNICApp() {
+  private correctionNICApp() {
     this.NICApplicant = true;
     this.nonFirstTimer = true;
     this.validations_form.patchValue({
@@ -517,7 +517,7 @@ export class AccountPage implements OnInit {
   /**
    * Changes forms for a lost NIC applicant
    */
-  lostNICApp() {
+  private lostNICApp() {
     this.NICApplicant = true;
     this.nonFirstTimer = true;
     this.validations_form.patchValue({
@@ -528,25 +528,25 @@ export class AccountPage implements OnInit {
    * Closes form from user, designed to hold data during an accidental closure. This was done as large community of users
    * would be using the platform including non IT experts. Recommends simplicity for all future updates.
    */
-  exitApp() {
+  private exitApp() {
     this.NICApplicant = false;
   }
-  closeMessages() {
+  private closeMessages() {
     this.messageStatus = false;
   }
-  closeMessageForm() {
+  private closeMessageForm() {
     this.messageForm = false;
   }
   /**
    * Enables certain sections of form for different applicants such as dual citizens
    */
-  ForeignYes() {
+  private ForeignYes() {
     this.foreignCitizen = true;
   }
   /**
    * Disables certain sections of form for different applicants such as dual citizens
    */
-  ForeignNo() {
+  private ForeignNo() {
     this.foreignCitizen = false;
   }
   /**
@@ -585,7 +585,7 @@ export class AccountPage implements OnInit {
         console.error("Error:", error);
       });
   }
-  supportCitizen(value) {
+  private supportCitizen(value) {
     this.authService.sendSupportMessage(value,this.prefix+" "+this.fullName).then(
       (res) => {
         console.log(res);
@@ -665,7 +665,7 @@ export class AccountPage implements OnInit {
   /**
    * This method closes the Application status windows
    */
-  exitStatus() {
+  private exitStatus() {
     this.NICApplicantStatus = false;
   }
   //  SUPPORT PAGE END

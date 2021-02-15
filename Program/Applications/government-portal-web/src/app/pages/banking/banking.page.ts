@@ -12,12 +12,12 @@ import * as algoliasearch from 'algoliasearch';
 * Only Search Function Setup
 */
 export class BankingPage implements OnInit {
-  client: any;
-  index: any;
-  ALGOLIA_APP_ID: string = "MGBODS63FP";
-  ALGOLIA_APP_KEY: string = "01c0dc6bd76e601f053adefc271763ed";
-  searchQuery: string = "";
-  algoliaResults = [];
+  private client: any;
+  private index: any;
+  private ALGOLIA_APP_ID: string = "MGBODS63FP";
+  private ALGOLIA_APP_KEY: string = "01c0dc6bd76e601f053adefc271763ed";
+  private searchQuery: string = "";
+  private algoliaResults = [];
   constructor() { }
 
   ngOnInit() {
@@ -28,14 +28,14 @@ export class BankingPage implements OnInit {
     //  Search Function Init End
   }
   //  Search Function Starts 
-  pagesList = false;
-  click_in() {
+  private pagesList = false;
+  private click_in() {
     this.pagesList = true;
   }
-  onClickedOutside(e: Event) {
+  private onClickedOutside(e: Event) {
     this.pagesList = false;
   }
-  search(event) {
+  private search(event) {
     this.index.search({
       query: this.searchQuery
     }).then((data) => {
