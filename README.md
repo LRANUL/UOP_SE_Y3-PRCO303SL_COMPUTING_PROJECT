@@ -103,10 +103,11 @@ Coursework feedback will be issued to students within 20 working days. Please no
 
 Licensed under the [MIT](LICENSE.txt) license.
 
-All files and information are copyright by Ranul Ladduwahetty, 
-and may not be duplicated, copied, modified or adapted, 
-in any way without our written permission. 
-Our product may contain our service marks or trademarks as well as those of our affiliates or other companies, 
+This work is copyrighted and owned by Ranul Ladduwahetty, 
+and is not be available for selling, reproduction, duplication, copying to different location,and modified or adapted, 
+in any way without the written permission of Ranul Ladduwahetty. 
+The product may contain our service marks or trademarks as well as those of any affiliates or other companies, 
 in the form of words, graphics, and logos.
 This product is solely an property of Ranul Ladduwahetty and holds all rights to it, any copying, redistribution, use or publication by you of any such Content, is strictly prohibited. 
-Your use of our Product and Services does not grant you any ownership rights to our Product.
+Your use of our Product and Services does not grant you any ownership rights to our Product. 
+Any form misuse of the project idea, material, logics, intellectual property will result for the maximum penalty applicable by the governing law.
