@@ -12,8 +12,8 @@ const { Network } = Plugins;
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  networkStatus: any;
-  networkListener: PluginListenerHandle;
+  private networkStatus: any;
+  private networkListener: PluginListenerHandle;
 
   constructor(
     private platform: Platform,
@@ -24,7 +24,7 @@ export class AppComponent {
     this.initializeApp();
   }
 
-  initializeApp() {
+  private initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();

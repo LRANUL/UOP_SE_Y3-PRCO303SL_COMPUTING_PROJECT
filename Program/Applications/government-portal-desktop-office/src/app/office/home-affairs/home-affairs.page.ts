@@ -1,7 +1,5 @@
-import { Component, OnInit, ViewChild, ɵConsole } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { switchMap } from "rxjs/operators";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { AngularFirestore } from "@angular/fire/firestore";
 import {
   FormGroup,
   FormBuilder,
@@ -9,15 +7,12 @@ import {
   FormControl,
 } from "@angular/forms";
 import {
-  NavController,
   ToastController,
   AlertController,
 } from "@ionic/angular";
 
 import { AccessService } from "src/app/service/access.service";
 import { HttpClient } from "@angular/common/http";
-import { ActivatedRoute } from "@angular/router";
-import { loadStripe } from "@stripe/stripe-js";
 import { StripeService, StripeCardNumberComponent } from "ngx-stripe";
 import {
   StripeCardElementOptions,
@@ -51,8 +46,6 @@ export class HomeAffairsPage implements OnInit {
   elementsOptions: StripeElementsOptions = {
     locale: "auto",
   };
-
-  stripe_form: FormGroup;
 
   NICApplications: {
     id: string;
@@ -97,23 +90,15 @@ export class HomeAffairsPage implements OnInit {
   foreignCitizen: boolean;
   handler: any;
   constructor(
-    private firestore: AngularFirestore,
-    private gAuth: AngularFireAuth,
-    private navCtrl: NavController,
     public formBuilder: FormBuilder,
     private accessService: AccessService,
     public toastController: ToastController,
     public http: HttpClient,
-    private route: ActivatedRoute,
     public alertController: AlertController,
-    private fb: FormBuilder,
     private stripeService: StripeService
   ) {}
 
   async ngOnInit() {
-    this.stripe_form = this.fb.group({
-      email: ["", [Validators.required]],
-    });
     this.servicesPanel = true;
     this.accessService.getESupportMessages().subscribe((data) => {
       data.map((e) => {
@@ -529,7 +514,7 @@ export class HomeAffairsPage implements OnInit {
     this.NICApplicant = false;
   }
   async pay(): Promise<void> {
-    console.log(this.stripe_form);
+    console.log(this.validations_form);
   }
   /**
    * Method reposible for sending validated data to google-auth service page for further verfication and uploading to firebase
@@ -538,7 +523,7 @@ export class HomeAffairsPage implements OnInit {
    * their data was accepts and sent or rejected.
    */
   async sendApplication(value) {
-    if (this.stripe_form.valid) {
+    if (this.validations_form.valid) {
       this.createPaymentIntent(100)
         .pipe(
           switchMap((pi) =>
@@ -546,7 +531,7 @@ export class HomeAffairsPage implements OnInit {
               payment_method: {
                 card: this.card.element,
                 billing_details: {
-                  name: this.stripe_form.get("email").value,
+                  name: this.validations_form.get("email").value,
                 },
               },
             })
@@ -564,7 +549,7 @@ export class HomeAffairsPage implements OnInit {
             });
             await alert.present();
             this.validations_form.reset();
-            this.stripe_form.reset();
+            this.card.element.clear();
             console.log(result.error.message);
           } else {
             // The payment has been processed!
@@ -577,11 +562,11 @@ export class HomeAffairsPage implements OnInit {
                 buttons: ["OK"],
               });
               await alert.present();
-              this.stripe_form.reset();
               this.accessService.sendNICApplication(value).then(
                 async (res) => {
                   console.log(res);
                   this.validations_form.reset();
+                  this.card.element.clear();
                 },
                 async (err) => {
                   console.log(err);
@@ -591,11 +576,11 @@ export class HomeAffairsPage implements OnInit {
           }
         });
     } else {
-      console.log(this.stripe_form);
+      console.log("Server Error");
     }
   }
 
-  createPaymentIntent(amount: number): Observable<PaymentIntent> {
+  private createPaymentIntent(amount: number): Observable<PaymentIntent> {
     return this.http.post<PaymentIntent>(
       `http://localhost:4242/officer-pay-nic`,
       { amount }

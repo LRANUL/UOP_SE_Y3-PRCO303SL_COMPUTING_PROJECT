@@ -101,47 +101,48 @@ export class HomePage implements OnInit {
     welcome.load();
     this.scanner_si = true;
     setTimeout(() => {
-      console.log(qrResultString);
+      // console.log(qrResultString);
       this.scanner_si = false;
       this.portalScanner = false;
       setTimeout(() => {
-        this.firestore
-          .collection("eCitizens", (ref) =>
-            ref.where(
-              "Access_Key",
-              "==",
-              qrResultString
-              // "a22932220415ad2fc8044739c7e4a348541821146879a7bcc1f79b72077ec527"
-            )
-          )
-          .get()
-          .forEach((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              var MatchID = CryptoJS.AES.decrypt(
-                qrResultString,
-                doc.data["bioData"]
-              );
-              if (MatchID == doc.data["GovernmentID"]) {
-                welcome.play();
-                this.navCtrl.navigateForward("sinhala");
-              }
-            });
-          })
-          .catch((error) => {
-            let invalidCard = new Audio();
-            invalidCard.src = "assets/audio/invalid-card-si.mp3";
-            invalidCard.load();
-            invalidCard.play();
-          });
-        // if (qrResultString == "Invalid") {
-        //   let invalidCard = new Audio();
-        //   invalidCard.src = "assets/audio/invalid-card-si.mp3";
-        //   invalidCard.load();
-        //   invalidCard.play();
-        // } else if (qrResultString == "Valid") {
-        //   welcome.play();
-        //   this.navCtrl.navigateForward("sinhala");
-        // }
+      //   this.firestore
+      //     .collection("eCitizens", (ref) =>
+      //       ref.where(
+      //         "Access_Key",
+      //         "==",
+      //         qrResultString
+      //         // "a22932220415ad2fc8044739c7e4a348541821146879a7bcc1f79b72077ec527"
+      //       )
+      //     )
+      //     .get()
+      //     .forEach((querySnapshot) => {
+      //       querySnapshot.forEach((doc) => {
+      //         var MatchID = CryptoJS.AES.decrypt(
+      //           qrResultString,
+      //           doc.data["bioData"]
+      //         );
+      //         if (MatchID == doc.data["GovernmentID"]) {
+      //           welcome.play();
+      //           this.navCtrl.navigateForward("sinhala");
+      //         }
+      //       });
+      //     })
+      //     .catch((error) => {
+      //       let invalidCard = new Audio();
+      //       invalidCard.src = "assets/audio/invalid-card-si.mp3";
+      //       invalidCard.load();
+      //       invalidCard.play();
+      //     });
+      qrResultString = "Valid";
+        if (qrResultString == "Invalid") {
+          let invalidCard = new Audio();
+          invalidCard.src = "assets/audio/invalid-card-si.mp3";
+          invalidCard.load();
+          invalidCard.play();
+        } else if (qrResultString == "Valid") {
+          welcome.play();
+          this.navCtrl.navigateForward("sinhala");
+        }
       }, 1000);
     }, 7000);
   }

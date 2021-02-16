@@ -731,7 +731,7 @@
                   <h3>Payment Gate</h3>
                   <h6 style="font-style: bold;color: gray;">Customer E-mail | පාරිභෝගික විද්‍යුත් තැපෑල | வாடிக்கையாளர்
                     மின்னஞ்சல்</h6>
-                  <ngx-stripe-card-group [formGroup]="stripe_form" [elementsOptions]="elementsOptions">
+                  <ngx-stripe-card-group [elementsOptions]="elementsOptions">
                     <ion-item>
                       <ion-input required="true" type="email" placeholder="E-mail | විද්යුත් තැපෑල | மின்னஞ்சல்"
                         formControlName="email" type="email"></ion-input>
@@ -749,7 +749,7 @@
                     Card CVC: <ngx-stripe-card-cvc [options]="cardOptions"></ngx-stripe-card-cvc>
                   </ngx-stripe-card-group>
                   <br>
-                  <ion-button type="submit" color="signin" [disabled]="validations_form.valid" size="full">Apply
+                  <ion-button type="submit" color="signin" [disabled]="!validations_form.valid" size="full">Apply
                     <ion-icon name="paper-plane"></ion-icon>
                   </ion-button>
                   <label class="error-message">{{errorMessage}}</label>

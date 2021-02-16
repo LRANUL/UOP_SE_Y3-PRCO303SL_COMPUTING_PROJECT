@@ -9,9 +9,9 @@ import { AccessService } from '../service/access.service';
   styleUrls: ['./access.page.scss'],
 })
 export class AccessPage implements OnInit {
-  validations_form: FormGroup;
-  errorMessage: string;
-  userEmail: string;
+  private validations_form: FormGroup;
+  private errorMessage: string;
+  private userEmail: string;
   constructor(public toastController: ToastController, public alertController: AlertController, public formBuilder: FormBuilder, private navCtrl: NavController, private accessService: AccessService) { }
 
   ngOnInit() {
@@ -20,7 +20,7 @@ export class AccessPage implements OnInit {
       password: new FormControl("", Validators.compose([Validators.minLength(5), Validators.maxLength(30), Validators.required]))
     });
   }
-  validation_messages = {
+  private validation_messages = {
     email: [
       {
         type: "required",
@@ -44,7 +44,7 @@ export class AccessPage implements OnInit {
     ]
   };
 
-  loginOfficer(value) {
+  private loginOfficer(value) {
     this.accessService.loginOfficer(value)
       .then(res => {
         console.log(res);
