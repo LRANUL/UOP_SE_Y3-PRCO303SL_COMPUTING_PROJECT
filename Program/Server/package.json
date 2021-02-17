@@ -1,0 +1,15 @@
+{
+  "name": "government-portal-payment-gateway",
+  "version": "1.0.0",
+  "description": "Government Portal Portal Payment Server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Mr. Ranul Ladduwahetty",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "stripe": "^7.1.0"
+  }
+}

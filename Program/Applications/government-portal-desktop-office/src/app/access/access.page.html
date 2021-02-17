@@ -1,0 +1,94 @@
+<!-- 
+  
+  Contains frontend structure and design for Sign-in page
+  Variables intialised here are related to the typescript page and used
+  for functionality.
+
+-->
+<!-- PAGE HEADER STARTS -->
+<ion-header>
+  <ion-toolbar color="medium">
+    <ion-title>
+      <ion-router-link href="home" color="light">
+        <strong>GOVERNMENT PORTAL</strong>
+      </ion-router-link>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<!-- PAGE HEADER ENDS -->
+<ion-content [fullscreen]="true">
+
+  <!-- PAGE CONTENT STARTS -->
+
+
+  <!-- PAGE SEARCH AND LINKED CONTENT -->
+
+  <!-- PAGE SEARCH AND LINKED CONTENT -->
+  <!-- PAGE LINKS AND INFORMATION -->
+  <ion-content class="access">
+    <ion-grid>
+      <ion-row>
+        <ion-col></ion-col>
+        <ion-col align="middle" style="padding-top: 5%;">
+          <ion-list style="opacity: 0.95;padding: 25px;border-radius: 25px;text-align: center;">
+            <h1 style="font-size: xx-large;"><strong>Sign in to Government Portal</strong></h1>
+            <br>
+            <h5>Goverment Portal email address</h5>
+            <form class="form" [formGroup]="validations_form" (ngSubmit)="loginOfficer(validations_form.value)">
+              <ion-item>
+                <ion-input required="true" type="email" placeholder="OFFICER EMAIL"
+                  formControlName="email" type="email"></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.email">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <h5>Password</h5>
+              <ion-item>
+                <ion-input required="true" inputmode="text" type="password" clear-on-edit=true
+                  placeholder="PORTAL ACCESS PASSWORD" formControlName="password" type="password" required>
+                </ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.password">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('password').hasError(validation.type) && (validations_form.get('password').dirty || validations_form.get('password').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+                <br>
+                <ion-button type="submit" color="signin" [disabled]="!validations_form.valid">Sign in<ion-icon
+                    name="log-in-outline"></ion-icon>
+                </ion-button>
+              </div>
+              <br>
+              <label style="color: rgb(151, 3, 3);" class="error-message">{{errorMessage}}</label>
+            </form>
+          </ion-list>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ion-content>
+
+  <!-- PAGE LINKS AND INFORMATION -->
+
+  <!-- PAGE CONTENT ENDS -->
+
+
+</ion-content>
+<!-- PAGE FOOTER STARTS -->
+<ion-footer class="ion-no-border" align="center">
+  <ion-toolbar color="medium">
+    <ion-text>
+      Government Portal<br>
+      Ministry of Home Affairs
+    </ion-text>
+  </ion-toolbar>
+</ion-footer>
+<!-- PAGE FOOTER ENDS -->

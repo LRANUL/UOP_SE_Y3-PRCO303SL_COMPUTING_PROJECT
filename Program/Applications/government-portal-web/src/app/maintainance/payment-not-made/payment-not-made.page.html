@@ -1,0 +1,28 @@
+<!-- 
+  
+  Contains frontend structure and design for construction or payment cancelled page
+
+-->
+<!-- PAGE HEADER STARTS -->
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>
+      <strong>GOVERNMENT PORTAL</strong>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<!-- PAGE HEADER ENDS -->
+  <ion-content  [fullscreen]="true" style="text-align: center;">
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button  defaultHref="account" text="Back"></ion-back-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-text color="medium">
+      <h1>Payment Cancelled</h1>
+      <h4>We noticed that your payment was cancelled.</h4>
+    </ion-text>
+    <ion-img src="assets/animations/16305-payment-failed.gif/" style="height: 70%;"></ion-img>
+  </ion-content>

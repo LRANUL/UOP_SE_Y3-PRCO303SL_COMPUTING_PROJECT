@@ -1,0 +1,26 @@
+/*
+*Style sheet for accounts page
+*/
+.underline {
+  text-decoration: underline;
+  color: blue;
+  cursor:pointer;
+  font-weight: 700;
+}
+ion-content{
+  --ion-background-color: light;
+}
+.portalID{
+  background-color:#0f0b5a;
+  color: white;
+  width: 450px;
+  height: 230px;
+  border-radius: 25px;
+  width: 450px;
+  height: 250px;
+  border-color: black;
+  border-width: 5px;
+  padding: 10px;
+}
+
+

@@ -1,0 +1,7 @@
+{
+  "name": "government-portal-admin",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

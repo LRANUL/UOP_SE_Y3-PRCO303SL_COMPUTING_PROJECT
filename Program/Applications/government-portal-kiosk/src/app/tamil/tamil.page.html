@@ -1,0 +1,26 @@
+<ion-content>
+  <ion-tabs >
+    <ion-tab-bar slot="top" color="danger">
+      <ion-tab-button tab="home">
+        <ion-icon name="home"></ion-icon>
+        <ion-label>முகப்பு பக்கம்</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button (click)="Back()">
+        <ion-icon name="arrow-back"></ion-icon>
+        <ion-label>பின் பக்கம்</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button (click)="Forward()">
+        <ion-icon name="arrow-forward"></ion-icon>
+        <ion-label>முன்னோக்கி</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="Refresh()">
+        <ion-icon name="refresh"></ion-icon>
+        <ion-label>புதுப்பிப்பு</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  
+  </ion-tabs>
+</ion-content>

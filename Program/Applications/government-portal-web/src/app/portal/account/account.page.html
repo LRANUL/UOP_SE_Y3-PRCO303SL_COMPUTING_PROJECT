@@ -1,0 +1,802 @@
+<!-- 
+  
+  Contains frontend structure and design for Account page
+  Variables intialised here are related to the typescript page and used
+  for functionality.
+
+-->
+<!-- PAGE HEADER STARTS -->
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-title>
+      <strong>GOVERNMENT PORTAL</strong>
+    </ion-title>
+    <ion-button class="log-out" slot="icon-only" slot="end" color="signin" (click)="logout()">
+      <ion-icon name="log-out"></ion-icon>
+      <!-- <ion-label class="log-out-tiptext">Sign Out</ion-label> -->
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<!-- PAGE HEADER ENDS -->
+<ion-content [fullscreen]="true" style="background: var(--ion-color-light)">
+  <!-- PAGE CONTENT STARTS -->
+
+
+  <!-- PAGE SEARCH AND LINKED CONTENT -->
+
+  <!-- PAGE SEARCH AND LINKED CONTENT -->
+  <!-- PAGE LINKS AND INFORMATION -->
+  <ion-header>
+    <ion-toolbar>
+      <!-- PAGE TAB BAR STARTS -->
+      <ion-tabs>
+        <ion-tab-bar slot="start " slot="top" color="light">
+          <ion-tab-button (click)=openService()>
+            <ion-icon name="layers"></ion-icon>
+            <ion-label>Online Services</ion-label>
+          </ion-tab-button>
+          <ion-tab-button (click)=openSupport()>
+            <ion-icon name="person"></ion-icon>
+            <ion-label>Support</ion-label>
+          </ion-tab-button>
+          <ion-tab-button (click)=openSettings()>
+            <ion-icon name="settings"></ion-icon>
+            <ion-label>Settings</ion-label>
+          </ion-tab-button>
+        </ion-tab-bar>
+      </ion-tabs>
+      <!-- PAGE TAB BAR ENDS -->
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- PAGE LINKS AND INFORMATION -->
+
+  <div *ngIf="servicesPanel" style="width: 100%;">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="start" style="padding-left: 5%;">
+          <h2 style="font-size: x-large;"><strong>Available Services</strong></h2>
+          <ion-row class="underline">
+            <ion-router-link (click)=firstNICApp() class="underline">
+              Apply for First Timer NIC Applicant
+            </ion-router-link>
+          </ion-row>
+          <br>
+          <ion-row class="underline">
+            <ion-router-link (click)=renewNICApp() class="underline">
+              Apply for Renewals of NIC Application
+            </ion-router-link>
+          </ion-row>
+          <br>
+          <ion-row class="underline">
+            <ion-router-link (click)=correctionNICApp() class="underline">
+              Apply for Corrections of NIC Application
+            </ion-router-link>
+          </ion-row>
+          <br>
+          <ion-row class="underline">
+            <ion-router-link (click)=lostNICApp() class="underline">
+              Apply for Lost of NIC Application
+            </ion-router-link>
+          </ion-row>
+        </ion-col>
+        <ion-col *ngIf="NICApplicant" class="end" style="background: var(--ion-color-form);padding-left: 5%;">
+          <div style="position: relative;
+          float: right;color: darkgray;font-weight: bold;cursor:pointer;" (click)=exitApp()>Exit Application</div>
+          <ion-row>
+            <h3><strong>NIC Application</strong></h3>
+            <br>
+            <form class="form" [formGroup]="validations_form" (ngSubmit)="sendApplication(validations_form.value)">
+              <p>Application for an Identity card under sections 9,16 and 17 of the Registration of Persons Act, No 32
+                of 1968
+              </p>
+              <h6>Name in Full (in Sinhala or Tamil) | නම සම්පූර්ණයෙන් (සිංහල හෝ දෙමළ භාෂාවෙන්) | பெயர் முழுமையாக
+                (சிங்கள அல்லது தமிழில்)</h6>
+              <ion-item>
+                <ion-input required="true" type="text" placeholder="Family Name|පවුලේ නම|குடும்ப பெயர்"
+                  formControlName="familyName" type="text" required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.familyName">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('familyName').hasError(validation.type) && (validations_form.get('familyName').dirty || validations_form.get('familyName').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <ion-item>
+                <ion-input required="true" type="text" placeholder="Name|නම|பெயர்" formControlName="name" type="text"
+                  required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.name">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('name').hasError(validation.type) && (validations_form.get('name').dirty || validations_form.get('name').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <ion-item>
+                <ion-input required="true" type="text" placeholder="Surname|වාසගම|குடும்ப பெயர்"
+                  formControlName="surname" type="text" required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.surname">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('surname').hasError(validation.type) && (validations_form.get('surname').dirty || validations_form.get('surname').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <h6>Name in Full (English Block Letters) | නම සම්පූර්ණයෙන් (ඉංග්‍රීසි ලොකු අකුරු) | பெயர் முழுமையாக
+                (ஆங்கில மூலதன எழுத்துக்கள்)</h6>
+              <ion-item>
+                <ion-input required="true" type="text" placeholder="Family Name|පවුලේ නම|குடும்ப பெயர்"
+                  formControlName="engFamilyName" type="text" required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.engFamilyName">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('engFamilyName').hasError(validation.type) && (validations_form.get('engFamilyName').dirty || validations_form.get('engFamilyName').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <ion-item>
+                <ion-input required="true" type="text" placeholder="Name|නම|பெயர்" formControlName="engName" type="text"
+                  required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.engName">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('engName').hasError(validation.type) && (validations_form.get('engName').dirty || validations_form.get('engName').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <ion-item>
+                <ion-input required="true" type="text" placeholder="Surname|වාසගම|குடும்ப பெயர்"
+                  formControlName="engSurname" type="text" required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.engSurname">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('engSurname').hasError(validation.type) && (validations_form.get('engSurname').dirty || validations_form.get('engSurname').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <h6>Name to be appeared in the Identity Card (If the name is different to the name in cage 1) |
+                හැඳුනුම්පතේ දිස්විය යුතු නම (1 වන කූඩුවේ නමට වෙනස් නම්) | அடையாள அட்டையில் தோன்றும் பெயர் (கூண்டு 1 இல்
+                உள்ள பெயருக்கு பெயர் வேறுபட்டால்)</h6>
+              <ion-item>
+                <ion-input required="true" type="text" placeholder="Family Name|පවුලේ නම|குடும்ப பெயர்"
+                  formControlName="nicFamilyName" type="text"></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.nicFamilyName">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('nicFamilyName').hasError(validation.type) && (validations_form.get('nicFamilyName').dirty || validations_form.get('nicFamilyName').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <ion-item>
+                <ion-input required="true" type="text" placeholder="Name|නම|பெயர்" formControlName="nicName"
+                  type="text"></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.nicName">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('nicName').hasError(validation.type) && (validations_form.get('nicName').dirty || validations_form.get('nicName').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <ion-item>
+                <ion-input required="true" type="text" placeholder="Surname|වාසගම|குடும்ப பெயர்"
+                  formControlName="nicSurname" type="text"></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.nicSurname">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('nicSurname').hasError(validation.type) && (validations_form.get('nicSurname').dirty || validations_form.get('nicSurname').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <h6>Gender | ස්ත්රී පුරුෂ භාවය | பாலினம்</h6>
+              <ion-item>
+                <ion-select placeholder="Gender|ස්ත්රී පුරුෂ භාවය|பாலினம்" formControlName="gender">
+                  <ion-select-option value="Male">Male|පිරිමි|ஆண்</ion-select-option>
+                  <ion-select-option value="Female">Female|ගැහැණු|பெண்</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.gender">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('gender').hasError(validation.type) && (validations_form.get('gender').dirty || validations_form.get('gender').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <h6>Civil Status | සිවිල් තත්වය | சிவில் நிலை</h6>
+              <ion-item>
+                <ion-select placeholder="Civil Status|සිවිල් තත්වය|சிவில் நிலை" formControlName="civilStatus">
+                  <ion-select-option value="Married">Married|විවාහක|திருமணமானவர்</ion-select-option>
+                  <ion-select-option value="Single">Single|තනි|ஒற்றை</ion-select-option>
+                  <ion-select-option value="Widowed">Widowed|වැන්දඹුව|விதவை</ion-select-option>
+                  <ion-select-option value="Divorced">Divorced|දික්කසාද විය|விவாகரத்து</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.civilStatus">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('civilStatus').hasError(validation.type) && (validations_form.get('civilStatus').dirty || validations_form.get('civilStatus').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <h6>Profession / Occupation / Designation | වෘත්තිය / රැකියාව / තනතුර | தொழில் / தொழில் / பதவி</h6>
+              <ion-item>
+                <ion-input required="true" type="text"
+                  placeholder="Profession/Occupation/Designation|වෘත්තිය/රැකියාව/තනතුර|தொழில்/தொழில்/பதவி"
+                  formControlName="profession" type="text" required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.profession">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('profession').hasError(validation.type) && (validations_form.get('profession').dirty || validations_form.get('profession').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <h6>Details of Birth | උපත පිළිබඳ විස්තර | பிறப்பு விவரங்கள்</h6>
+              <ion-item>
+                <ion-datetime displayFormat="MM DD YYYY" pickerFormat="MM DD YYYY"
+                  placeholder="Date of Birth|උපන්දිනය|பிறந்த தேதி" formControlName="dateOfBirth" type="text">
+                </ion-datetime>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.dateOfBirth">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('dateOfBirth').hasError(validation.type) && (validations_form.get('dateOfBirth').dirty || validations_form.get('dateOfBirth').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <ion-item>
+                <ion-input required="true" type="text"
+                  placeholder="Birth Certificate No|උප්පැන්න සහතිකය අංක|பிறப்பு சான்றிதழ் எண்"
+                  formControlName="birthCertNo" type="tel" required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.birthCertNo">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('birthCertNo').hasError(validation.type) && (validations_form.get('birthCertNo').dirty || validations_form.get('birthCertNo').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <h6>Place of Birth| උපන් ස්ථානය | பிறந்த இடம்</h6>
+              <ion-item>
+                <ion-input required="true" type="text" placeholder="Place of Birth|උපන් ස්ථානය|பிறந்த இடம்"
+                  formControlName="placeOfBirth" type="text" required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.placeOfBirth">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('placeOfBirth').hasError(validation.type) && (validations_form.get('placeOfBirth').dirty || validations_form.get('placeOfBirth').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <h6>Division | අංශයේ | பிரிவு</h6>
+              <ion-item>
+                <ion-input required="true" type="text" placeholder="Division|අංශයේ|பிரிவு" formControlName="division"
+                  type="text" required>
+                </ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.division">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('division').hasError(validation.type) && (validations_form.get('division').dirty || validations_form.get('division').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <h6>District | දිසා | மாவட்டம்</h6>
+              <ion-item>
+                <ion-input required="true" type="text" placeholder="District|දිසා|மாவட்டம்" formControlName="district"
+                  type="text" required>
+                </ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.district">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('district').hasError(validation.type) && (validations_form.get('district').dirty || validations_form.get('district').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <div>
+                <h5>
+                  <ion-icon name="help-circle"></ion-icon><strong>Do you have Foreign Citizenship ?</strong>
+                </h5>
+                <ion-button (click)="ForeignYes()" color="medium" size="small">Yes</ion-button>
+                <ion-button (click)="ForeignNo()" color="medium" size="small">No</ion-button>
+              </div>
+              <div *ngIf="foreignCitizen">
+                <h6>If the applicant is born outside of Sri Lanka, details of Citizenship Certificate issued under
+                  Section
+                  5(2) of the Citizenship Act, No.18 of 1948 | අයදුම්කරු ශ්‍රී ලංකාවෙන් පිටත උපත ලැබුවහොත්, වගන්තිය යටතේ
+                  නිකුත් කරන ලද පුරවැසි සහතිකයේ විස්තර
+                  1948 අංක 18 පුරවැසි පනතේ 5 (2) | விண்ணப்பதாரர் இலங்கைக்கு வெளியே பிறந்திருந்தால், பிரிவின் கீழ்
+                  வழங்கப்பட்ட குடியுரிமை சான்றிதழ் விவரங்கள்
+                  1948 ஆம் ஆண்டு எண் 18 குடியுரிமைச் சட்டத்தின் 5 (2)</h6>
+                <h6>Country of Birth | උපන් රට | பிறந்த நாடு</h6>
+                <ion-item>
+                  <ion-input required="true" type="text" placeholder="Country of Birth|උපන් රට|பிறந்த நாடு"
+                    formControlName="countryOfBirth" type="text"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.countryOfBirth">
+                    <div class="error-message"
+                      *ngIf="validations_form.get('countryOfBirth').hasError(validation.type) && (validations_form.get('countryOfBirth').dirty || validations_form.get('countryOfBirth').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item>
+                  <ion-input required="true" type="text" placeholder="City|නගරය|நகரம்" formControlName="city"
+                    type="text"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.city">
+                    <div class="error-message"
+                      *ngIf="validations_form.get('city').hasError(validation.type) && (validations_form.get('city').dirty || validations_form.get('city').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item>
+                  <ion-input required="true" type="text" placeholder="Certificate No| සහතිකය අංක|பிறப்பு சான்றிதழ் எண்"
+                    formControlName="foreignCertNo" type="number"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.foreignCertNo">
+                    <div class="error-message"
+                      *ngIf="validations_form.get('foreignCertNo').hasError(validation.type) && (validations_form.get('foreignCertNo').dirty || validations_form.get('foreignCertNo').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <h6>Details of Citizenship Certificate /Dual Citizenship Certificate (strike off which ever is
+                  inapplicable) | පුරවැසි සහතිකය / ද්විත්ව පුරවැසිභාවය පිළිබඳ සහතිකය පිළිබඳ විස්තර (කිසි විටෙකත් අදාළ
+                  නොවන වැඩ වර්ජනය) | குடியுரிமை சான்றிதழ் / இரட்டை குடியுரிமை சான்றிதழ் விவரங்கள் (எப்போதும் பொருந்தாத
+                  வேலைநிறுத்தம்)</h6>
+                <p>Date of issue of Certificate | සහතිකය නිකුත් කළ දිනය | சான்றிதழ் வழங்கிய தேதி</p>
+                <ion-item>
+                  <ion-input required="true" type="text"
+                    placeholder="Date of issue of Certificate | සහතිකය නිකුත් කළ දිනය | சான்றிதழ் வழங்கிய தேதி"
+                    formControlName="certDate" type="text" required></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.certDate">
+                    <div class="error-message"
+                      *ngIf="validations_form.get('certDate').hasError(validation.type) && (validations_form.get('certDate').dirty || validations_form.get('certDate').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+              <h6>Details of Residence | පදිංචිය පිළිබඳ විස්තර | குடியிருப்பு விவரங்கள்</h6>
+              <h6>Permanent Address | ස්ථිර ලිපිනය | நிரந்தர முகவரி</h6>
+              <ion-item>
+                <ion-input required="true" type="text"
+                  placeholder="Name/number of House|නිවසේ නම / අංකය|வீட்டின் பெயர் / எண்" formControlName="houseNo"
+                  type="text" required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.houseNo">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('houseNo').hasError(validation.type) && (validations_form.get('houseNo').dirty || validations_form.get('houseNo').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <ion-item>
+                <ion-input required="true" type="text" placeholder="Name building|නම ගොඩනැගීම|பெயர் கட்டிடம்"
+                  formControlName="houseName" type="text" required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.houseName">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('houseName').hasError(validation.type) && (validations_form.get('houseName').dirty || validations_form.get('houseName').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <ion-item>
+                <ion-input required="true" type="text" placeholder="Road|පාර|சாலை" formControlName="streetName"
+                  type="text" required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.streetName">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('streetName').hasError(validation.type) && (validations_form.get('streetName').dirty || validations_form.get('streetName').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <ion-item>
+                <ion-input required="true" type="text" placeholder="Village/City|ගම / නගරය|கிராமம் / நகரம்"
+                  formControlName="city" type="text" required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.city">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('city').hasError(validation.type) && (validations_form.get('city').dirty || validations_form.get('city').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <ion-item>
+                <ion-input required="true" type="text" placeholder="Postal Code|තැපැල් කේතය|அஞ்சல் குறியீடு"
+                  formControlName="postalcode" type="text" required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.postalcode">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('postalcode').hasError(validation.type) && (validations_form.get('postalcode').dirty || validations_form.get('postalcode').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <h6>Postal Address | තැපැල් ලිපිනය | அஞ்சல் முகவரி</h6>
+              <ion-item>
+                <ion-input required="true" type="text"
+                  placeholder="Name/number of House|නිවසේ නම / අංකය|வீட்டின் பெயர் / எண்" formControlName="posthouseNo"
+                  type="text" required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.posthouseNo">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('posthouseNo').hasError(validation.type) && (validations_form.get('posthouseNo').dirty || validations_form.get('posthouseNo').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <ion-item>
+                <ion-input required="true" type="text" placeholder="Name building|නම ගොඩනැගීම|பெயர் கட்டிடம்"
+                  formControlName="posthouseName" type="text" required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.houseName">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('posthouseName').hasError(validation.type) && (validations_form.get('posthouseName').dirty || validations_form.get('posthouseName').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <ion-item>
+                <ion-input required="true" type="text" placeholder="Road|පාර|சாலை" formControlName="poststreetName"
+                  type="text" required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.poststreetName">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('poststreetName').hasError(validation.type) && (validations_form.get('poststreetName').dirty || validations_form.get('poststreetName').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <ion-item>
+                <ion-input required="true" type="text" placeholder="Village/City|ගම / නගරය|கிராமம் / நகரம்"
+                  formControlName="postcity" type="text" required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.postcity">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('postcity').hasError(validation.type) && (validations_form.get('postcity').dirty || validations_form.get('postcity').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+              <div *ngIf="nonFirstTimer">
+                <h5>If the duplicate of the Identity Card is applied for, please complete cage No.10 | හැඳුනුම්පතේ
+                  අනුපිටපත ඉල්ලුම් කරන්නේ නම් කරුණාකර අංක 10 කූඩුව සම්පූර්ණ කරන්න | அடையாள அட்டையின் நகல்
+                  விண்ணப்பிக்கப்பட்டால், தயவுசெய்து கூண்டு எண் 10 ஐ பூர்த்தி செய்யுங்கள்</h5>
+                <br>
+                <h6>Lost or last obtained Identity Card Number | නැතිවූ හෝ අවසන් වරට ලබාගත් හැඳුනුම්පත් අංකය | இழந்த
+                  அல்லது கடைசியாக பெறப்பட்ட அடையாள அட்டை எண்</h6>
+                <ion-item>
+                  <ion-input required="true" type="text" placeholder="Card Number|කාඩ්පත් අංකය|அட்டை எண்"
+                    formControlName="cardNo" type="text"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.cardNo">
+                    <div class="error-message"
+                      *ngIf="validations_form.get('cardNo').hasError(validation.type) && (validations_form.get('cardNo').dirty || validations_form.get('cardNo').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <h6>Date of the issue of the Identity Card | හැඳුනුම්පත නිකුත් කළ දිනය | அடையாள அட்டை வழங்கப்பட்ட தேதி
+                </h6>
+                <ion-item>
+                  <ion-datetime required="true" type="text"
+                    placeholder="Date of issue | නිකුත් කරන දිනය | வெளியீட்டு தேதி" formControlName="nicDate"
+                    type="text"></ion-datetime>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.nicDate">
+                    <div class="error-message"
+                      *ngIf="validations_form.get('nicDate').hasError(validation.type) && (validations_form.get('nicDate').dirty || validations_form.get('nicDate').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <h6>Details of the police report or other document pertaining to the lost Identity Card | නැතිවූ
+                  හැඳුනුම්පතට අදාළ පොලිස් වාර්තාවේ හෝ වෙනත් ලේඛනයේ විස්තර | பொலிஸ் அறிக்கை அல்லது இழந்த அடையாள அட்டை
+                  தொடர்பான பிற ஆவணங்களின் விவரங்கள்</h6>
+                <p>Name of the Police Station |පොලිස් ස්ථානයේ නම | காவல் நிலையத்தின் பெயர்</p>
+                <ion-item>
+                  <ion-input required="true" type="text" placeholder="Name|නම|பெயர்" formControlName="policeName"
+                    type="text"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.policeName">
+                    <div class="error-message"
+                      *ngIf="validations_form.get('policeName').hasError(validation.type) && (validations_form.get('policeName').dirty || validations_form.get('policeName').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <h6>Date of the issue of the Police report | පොලිස් වාර්තාව නිකුත් කළ දිනය | அபொலிஸ் அறிக்கை
+                  வெளியிடப்பட்ட தேதி </h6>
+                <ion-item>
+                  <ion-datetime required="true" type="text"
+                    placeholder="Date of issue | නිකුත් කරන දිනය | வெளியீட்டு தேதி" formControlName="policeReportDate"
+                    type="text"></ion-datetime>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.policeReportDate">
+                    <div class="error-message"
+                      *ngIf="validations_form.get('policeReportDate').hasError(validation.type) && (validations_form.get('policeReportDate').dirty || validations_form.get('policeReportDate').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+              <h5>Details required for inquiries | විමසීම් සඳහා අවශ්‍ය තොරතුරු | விசாரணைகளுக்கு தேவையான விவரங்கள்</h5>
+              <h6>Telephone No | දුරකථන අංකය | தொலைபேசி எண்</h6>
+              <ion-item>
+                <ion-input required="true" type="number" placeholder="Residence|නිවසේ|குடியிருப்பு"
+                  formControlName="homePhone" type="tel" maxlength="10"></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.homePhone">
+                  <div class="error-message"
+                    *ngIf="validations_form.get('homePhone').hasError(validation.type) && (validations_form.get('homePhone').dirty || validations_form.get('homePhone').touched)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+                <ion-item>
+                  <ion-input required="true" type="number" placeholder="Mobile|ජංගම|கைபேசி"
+                    formControlName="mobilePhone" type="tel" maxlength="10"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.mobilePhone">
+                    <div class="error-message"
+                      *ngIf="validations_form.get('mobilePhone').hasError(validation.type) && (validations_form.get('mobilePhone').dirty || validations_form.get('mobilePhone').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <h6>E-mail | විද්යුත් තැපෑල | மின்னஞ்சல்</h6>
+                <ion-text style="font-style: italic;color: gray;">
+                </ion-text>
+                <ion-item>
+                  <ion-input disabled required="true" type="email" placeholder="" formControlName="email" type="email"
+                    [(ngModel)]="userEmail"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.email">
+                    <div class="error-message"
+                      *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <br>
+                <ion-text style="font-size: x-small;color: gray;">By clicking Apply, you agree to our
+                  Terms,
+                  Data Policy and Cookies Policy. Please note that only if your data matches our records, the
+                  registration would be approved.</ion-text>
+                <br>
+                <ion-button type="submit" color="signin" [disabled]="!validations_form.valid">Apply
+                  <ion-icon name="paper-plane"></ion-icon>
+                </ion-button>
+                <label class="error-message">{{errorMessage}}</label>
+              </div>
+              <br>
+            </form>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div *ngIf="supportPanel">
+    <ion-grid style="margin-left: 5%;">
+      <h2 style="font-size: x-large;"><strong>Support Services</strong></h2>
+      <ion-col>
+        <ion-row class="underline">
+          <ion-router-link (click)=NICStatus() class="underline">
+            Check NIC Application Status
+          </ion-router-link>
+        </ion-row>
+        <br>
+        <ion-row class="underline">
+          <ion-router-link (click)=Support() class="underline">
+            Ask for Support
+          </ion-router-link>
+        </ion-row>
+      </ion-col>
+      <ion-row style="padding-right: 5%;">
+        <ion-col *ngIf="NICApplicantStatus" class="end" style="background: var(--ion-color-form);">
+          <div style="position: relative; float: right;color: rgb(126, 125, 125);font-weight: bold;cursor:pointer;"
+            (click)=exitStatus()>Exit</div>
+          <ion-list>
+            <ion-item>
+              <ion-grid>
+                <ion-row style="font-weight: bolder;">
+                  <ion-col>Request</ion-col>
+                  <ion-col>Assigned</ion-col>
+                  <ion-col>Description</ion-col>
+                  <ion-col>Status</ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+            <ion-item  *ngFor="let application of EApplications | slice:0:10;; let i = index">
+              <ion-grid>
+                <ion-row style="font-size: small;">
+                  <ion-col>{{application.requestType}}</ion-col>
+                  <ion-col>{{application.assigneeName}}</ion-col>
+                  <ion-col>{{application.applicationDescription}}</ion-col>
+                  <ion-col>{{application.applicationStatus}}
+                    <div style="font-size: xx-small;margin-top: 5%;">Received Time: {{application.receivedTime}}</div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+        <ion-col *ngIf="messageForm" class="end" style="background: var(--ion-color-form);">
+          <div style="position: relative; float: right;color: rgb(126, 125, 125);font-weight: bold;cursor:pointer;"
+            (click)=closeMessageForm()>Close</div>
+          <form class="form" [formGroup]="message_form" (ngSubmit)="supportCitizen(message_form.value,prefix+fullName)">
+            <h5>Full Name</h5>
+            <ion-item>
+              <ion-input disabled type="text" formControlName="fullName" value="" type="text">
+                {{prefix}} {{fullName}}</ion-input>
+            </ion-item>
+            <h5>Subject</h5>
+            <ion-item>
+              <ion-input required="true" type="text" placeholder="Subject" formControlName="subject" type="text"
+                required></ion-input>
+            </ion-item>
+            <div class="validation-errors">
+              <ng-container *ngFor="let validation of validation_messages.subject">
+                <div class="error-message"
+                  *ngIf="message_form.get('subject').hasError(validation.type) && (message_form.get('subject').dirty || message_form.get('subject').touched)">
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div>
+            <h5>Message</h5>
+            <ion-item>
+              <ion-textarea placeholder="Message" required="true" inputmode="text" type="text" formControlName="message"
+                required></ion-textarea>
+            </ion-item>
+            <div class="validation-errors">
+              <ng-container *ngFor="let validation of validation_messages.message">
+                <div class="error-message"
+                  *ngIf="message_form.get('message').hasError(validation.type) && (message_form.get('message').dirty || message_form.get('message').touched)">
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+              <br>
+              <ion-button type="submit" color="primary" [disabled]="!message_form.valid">Send<ion-icon
+                  name="log-in-outline"></ion-icon>
+              </ion-button>
+            </div>
+            <br>
+            <label style="color: darkgray;" class="error-message">{{errorMessage}}</label>
+          </form>
+        </ion-col>
+        <ion-col *ngIf="messageStatus">
+          <div style="position: relative; float: right;color: rgb(126, 125, 125);font-weight: bold;cursor:pointer;"
+            (click)=closeMessages()>Close</div>
+          <h4>Messages</h4>
+          <ion-card *ngFor="let message of ESupportMessages | slice:0:10;; let i = index">
+            <ion-card-header>
+              <ion-card-title>{{ message.FullName }}</ion-card-title>
+              <ion-card-subtitle>{{ message.Subject }}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-label>{{ message.Description }}</ion-label>
+              <br>
+              <ion-label style="color: black;">{{ message.Response }}</ion-label>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div *ngIf="settingsPanel">
+    <ion-grid style="margin-left: 5%;">
+      <h2 style="font-size: x-large;"><strong>Settings Services</strong></h2>
+      <ion-row>
+        <ion-col>
+          <ion-row class="underline">
+            <ion-router-link (click)=changePassword() class="underline">
+              Change account password
+            </ion-router-link>
+          </ion-row>
+          <br>
+          <ion-row class="underline">
+            <ion-router-link (click)=changeEmail() class="underline">
+              Change account email
+            </ion-router-link>
+          </ion-row>
+        </ion-col>
+        <ion-col>
+          <b>Government Portal ID</b>
+          <div class="portalID">
+            <img src="assets/icon/emblem.png" style="height:70px;">
+            <ngx-qrcode [element-type]="elementType" [value]="QRCode" errorCorrectionLevel="H"
+              style="float: right;width: 90px;">
+            </ngx-qrcode>
+            <img src="{{photoUrl}}" style="width: 130px;height: 150px;float: left;border-radius: 5px;margin-left: 10px;">
+            <span style="float: right;margin: 10px;">
+              <h4>{{fullName}}</h4>
+              <h5><i>{{Displayname}}</i></h5>
+            </span>
+          </div>
+          <!-- <ion-button (click)=downloadID() shape="round" size="small" color="medium">Download ID</ion-button>
+          <br>
+          <i>Store your ID safely once downloaded, we recommend you to use the Portal ID we shipped to you.</i> -->
+          <br><br>
+          Name: {{prefix}} {{fullName}}
+          <br>
+          Address: {{homeAddress}}
+          <br>
+          Mobile: {{mobile}}
+          <br>
+          Landline: {{landLine}}
+          <br>
+          Email:{{email}}
+          <br>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+
+  <!-- PAGE CONTENT ENDS -->
+
+
+</ion-content>
+
+<!-- PAGE FOOTER STARTS -->
+<ion-footer class="ion-border" align="center">
+  <ion-toolbar color="light">
+    <ion-text>
+      Government Portal<br>
+      Ministry of Home Affairs
+    </ion-text>
+  </ion-toolbar>
+</ion-footer>
+<!-- PAGE FOOTER ENDS -->

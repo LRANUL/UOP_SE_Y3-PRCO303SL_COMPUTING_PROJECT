@@ -1,0 +1,110 @@
+<!-- 
+  
+  Contains frontend structure and design for Travel page
+  Variables intialised here are related to the typescript page and used
+  for functionality.
+
+-->
+<!-- PAGE HEADER STARTS -->
+
+<ion-content [fullscreen]="true">
+  <!-- #3082c9 Royal Blue | #c92d39 Government Red -->
+  <div style="background-color:#3082c9;color: white;">
+    <ion-header>
+      <ion-toolbar color="dark">
+        <ion-title>
+          <ion-router-link href="home" color="light">
+            <strong>GOVERNMENT PORTAL</strong>
+          </ion-router-link>
+        </ion-title>
+        <ion-button class="log-in" slot="icon-only" slot="end" href="sign-in" color="signin">
+          <ion-icon name="log-in"></ion-icon>
+        </ion-button>
+      </ion-toolbar>
+    </ion-header>
+    <!-- PAGE HEADER ENDS -->
+
+    <!-- PAGE CONTENT STARTS -->
+
+    <!-- PAGE SEARCH AND LINKED CONTENT -->
+    <h1 style="margin-left: 2%;"><strong>WELCOME TO GOVERNMENT PORTAL</strong></h1>
+    <h5 style="margin-left: 2%;">All government services at one place.</h5>
+    <ion-searchbar color="light" style="width: 40%;" animated="true" [(ngModel)]="searchQuery" (click)="click_in()"
+      (clickOutside)="onClickedOutside($event)" (ionInput)="search($event)" placeholder="Search..."></ion-searchbar>
+    <ion-list *ngIf="pagesList" style="position: absolute;z-index:1000;width: 40%;">
+      <ion-item *ngFor="let algoliaResult of algoliaResults | slice:0:3;; let i = index">
+        <ion-router-link href={{algoliaResult.url}} class="underline-search">{{ algoliaResult.name }}
+        </ion-router-link>
+      </ion-item>
+    </ion-list>
+  </div>
+  <!-- PAGE SEARCH AND LINKED CONTENT -->
+
+  <!-- PAGE LINKS AND INFORMATION -->
+  <div style="margin: 2%;">
+    <ion-content>
+      <h1>Travel</h1>
+    </ion-content>
+    <h3>Background of Ministry of Tourism and Aviation </h3>
+    <p>The Ministry of Tourism and Aviation was established on 10thDecember 2019 under the extraordinary gazette No.
+      2153/12. Among the main objectives of the establishment of a dedicated Ministry in charge of the tourism and
+      Aviation
+      sectors are making available an appropriate policy and regulatory framework, ensure robust infrastructure
+      development
+      and Aviation, promotion of destination Sri Lanka and exercise administrative and financial overview over
+      institutions
+      Gazetted under the Ministry.
+    </p>
+    <h4>Duties and Functions</h4>
+    <ul>
+      <li>Formulation, implementation, monitoring and evaluation of policies, programmes and projects; in relation to
+        the
+        subject of tourism and civil aviation and the subjects of the departments and statutory institutions.</li>
+      <li>Develop tourism industry and high standards in line with the national policy of promoting Sri Lanka’s image.
+      </li>
+      <li>Registration and regulation of tourist agencies</li>
+      <li>Promote internationally recognized hotel facilities, aviation and sea travel facilities to provide tourist
+        resorts
+        and entertainment facilities as a unique tourist island, highlighting Sri Lanka’s biodiversity, heritage,
+        environment, climate diversity and oceanic resources.</li>
+      <li>Developing and regulating International & Domestic Airports</li>
+      <li>Regulating progress, levy of charges and quality of delivery of services by airports</li>
+      <li>Conclusion of agreements with other countries for expansion of international air services and adoption of
+        other
+        requisite measures.</li>
+      <li>Promotion and execution of regulatory functions in relation to use of airports in Sri Lanka by foreign
+        countries.
+      </li>
+      <li>Promoting domestic air travel</li>
+      <li>Supervising and regulating private air services</li>
+      <li>Registration of Aircraft</li>
+      <li>Supervising all Institutions referred to in Column II and matters relating to all subjects assigned to such
+        Institutions.</li>
+    </ul>
+    <h4>Vision</h4>
+    <p>“To be recognized as the world’s finest island for memorable, authentic and diverse experiences.”</p>
+    <h4>Mission</h4>
+    <p>“To be a high- value destination offering extraordinary experiences that reflect Sri Lanka’s natural and
+      cultural
+      heritage are socially inclusive and environmentally responsible and provide economic benefits to Communities and
+      the
+      country.”</p>
+    <ion-router-link href="page-under-construction" class="underline">
+      Apply for your Travel and Tourism services through Government Portal
+    </ion-router-link>
+  </div>
+  <!-- PAGE LINKS AND INFORMATION -->
+
+  <!-- PAGE CONTENT ENDS -->
+
+  <!-- PAGE FOOTER STARTS -->
+  <ion-footer class="ion-no-border" align="center">
+    <ion-toolbar color="light">
+      <ion-text>
+        Government Portal<br>
+        Ministry of Home Affairs
+      </ion-text>
+    </ion-toolbar>
+  </ion-footer>
+  <!-- PAGE FOOTER ENDS -->
+</ion-content>

@@ -1,0 +1,97 @@
+<!-- 
+  
+  Contains frontend structure and design for Education page
+  Variables intialised here are related to the typescript page and used
+  for functionality.
+
+-->
+<!-- PAGE HEADER STARTS -->
+
+<ion-content [fullscreen]="true">
+  <!-- #3082c9 Royal Blue | #c92d39 Government Red -->
+  <div style="background-color:#3082c9;color: white;">
+    <ion-header>
+      <ion-toolbar color="dark">
+        <ion-title>
+          <ion-router-link href="home" color="light">
+            <strong>GOVERNMENT PORTAL</strong>
+          </ion-router-link>
+        </ion-title>
+        <ion-button class="log-in" slot="icon-only" slot="end" href="sign-in" color="signin">
+          <ion-icon name="log-in"></ion-icon>
+        </ion-button>
+      </ion-toolbar>
+    </ion-header>
+    <!-- PAGE HEADER ENDS -->
+
+    <!-- PAGE CONTENT STARTS -->
+
+    <!-- PAGE SEARCH AND LINKED CONTENT -->
+    <h1 style="margin-left: 2%;"><strong>WELCOME TO GOVERNMENT PORTAL</strong></h1>
+    <h5 style="margin-left: 2%;">All government services at one place.</h5>
+    <ion-searchbar color="light" style="width: 40%;" animated="true" [(ngModel)]="searchQuery" (click)="click_in()"
+      (clickOutside)="onClickedOutside($event)" (ionInput)="search($event)" placeholder="Search..."></ion-searchbar>
+    <ion-list *ngIf="pagesList" style="position: absolute;z-index:1000;width: 40%;">
+      <ion-item *ngFor="let algoliaResult of algoliaResults | slice:0:3;; let i = index">
+        <ion-router-link href={{algoliaResult.url}} class="underline-search">{{ algoliaResult.name }}
+        </ion-router-link>
+      </ion-item>
+    </ion-list>
+  </div>
+  <!-- PAGE SEARCH AND LINKED CONTENT -->
+
+  <!-- PAGE LINKS AND INFORMATION -->
+  <div style="margin: 2%;">
+    <ion-content>
+      <h1>Education</h1>
+    </ion-content>
+    <h3>Background of Ministry of Education</h3>
+    <p>Since independence, the government has given the highest priority to education. Within a period of less than 60
+      years, the number of schools increased by over 50%, the number of students increased by more than 300%, and the
+      number of teachers increased by more than 400%. The literacy rate has grown correspondingly and by mid-1980s, over
+      90% of the population was literate.
+
+      The difficulties of educational planning in the past caused by the system of dual control and lack of coordination
+      were finally removed by the nationalization of schools in 1960. The National Education Commission (NEC), in 1961,
+      recommended a system of school zones, and the establishment of regional education departments and district
+      education offices.
+
+      In 1970, there were 2.7 million students in 9928 government schools. Due to the increasing demand, government of
+      Sri Lanka (GoSL) faced the problem of improving the quality of education and the mismatch between education and
+      the labor market. Therefore, GoSL implemented a range of reforms in 1972, and the 1981 White Paper on education
+      recommended a new subject (life skills) in place of the two pre-vocational subjects; a dual system of evaluation;
+      and a school cluster system. The 1997 education reforms covered major policy areas such as extending educational
+      opportunities; improving the quality of education; developing practical and technical skills; education and
+      training of teachers; and management and resource provision.</p>
+    <h4>Functions</h4>
+    <ul>
+      <li>Training Certificates</li>
+      <li>School Affairs</li>
+      <li>Education, Training, Research and Development</li>
+      <strong>Vocational Training</strong>
+      <strong>Higher Education</strong>
+    </ul>
+    <h4>Vision</h4>
+    <p>“To reach excellence in global society through competent citizens who share the Sri Lankan identity”</p>
+    <h4>Mission</h4>
+    <p>“Develop competent citizens keeping with the global trends through innovative and modern approaches to education
+      leading to efficiency, equity and high quality performance ensuring stakeholder satisfaction”</p>
+    <ion-router-link href="page-under-construction" class="underline">
+      Apply for your Educational services through Government Portal
+    </ion-router-link>
+  </div>
+  <!-- PAGE LINKS AND INFORMATION -->
+
+  <!-- PAGE CONTENT ENDS -->
+
+  <!-- PAGE FOOTER STARTS -->
+  <ion-footer class="ion-no-border" align="center">
+    <ion-toolbar color="light">
+      <ion-text>
+        Government Portal<br>
+        Ministry of Home Affairs
+      </ion-text>
+    </ion-toolbar>
+  </ion-footer>
+  <!-- PAGE FOOTER ENDS -->
+</ion-content>
