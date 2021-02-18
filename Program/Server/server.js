@@ -15,6 +15,7 @@ app.use(function (req, res, next) {
 });
 
 app.post("/pay-nic", async (req, res) => {
+  token = req.body.token
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: [
@@ -30,8 +31,8 @@ app.post("/pay-nic", async (req, res) => {
       },
     ],
     mode: "payment",
-    success_url: `${APP_DOMAIN}/account?id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${APP_DOMAIN}/account?id={CHECKOUT_SESSION_ID}`,
+    success_url: `${APP_DOMAIN}/account?id={CHECKOUT_SESSION_ID}&token=${token}`,
+    cancel_url: `${APP_DOMAIN}/account?id={CHECKOUT_SESSION_ID}&token=${token}`,
   });
 
   res.json({ id: session.id });

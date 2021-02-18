@@ -5,7 +5,7 @@ import { AngularFirestore } from "@angular/fire/firestore";
 import { AlertController, ToastController } from "@ionic/angular";
 import * as dateFormat from "dateformat";
 import { Router } from "@angular/router";
-import * as CryptoJS from 'crypto-js'
+import * as CryptoJS from "crypto-js";
 
 /**
  * Service Page contains mandatory methods for application running which are directly called by other components when required
@@ -83,7 +83,10 @@ export class GoogleAuthService {
                     });
                   }
                   // https://code.google.com/archive/p/crypto-js/
-                  var accessKey = CryptoJS.AES.encrypt(value.GovernmentID, value.bioData);
+                  var accessKey = CryptoJS.AES.encrypt(
+                    value.GovernmentID,
+                    value.bioData
+                  );
                   /**
                    * Data gets stored on Firebase for references
                    * */
@@ -173,7 +176,7 @@ export class GoogleAuthService {
    * @param value This holds NIC application data send by registered user via forms available on the Account Portal
    *
    */
-  async sendNICApplication(value) {
+  async sendNICApplication(value, token) {
     return new Promise<any>(async (_resolve, _reject) => {
       this.firestore
         .collection("BirthRegistrations")
@@ -190,10 +193,13 @@ export class GoogleAuthService {
               doc.data()["dateofBirth"] == dateBirth
             ) {
               return new Promise<any>((resolve, reject) => {
+                var user = firebase.default.auth().currentUser;
                 this.firestore
                   .collection("/eApplications/")
-                  .doc()
+                  .doc(token)
                   .set({
+                    GovernmentID: user.displayName,
+                    token: token,
                     type: "NIC-Application",
                     status: "New",
                     payment_status: "unpaid",
@@ -240,7 +246,9 @@ export class GoogleAuthService {
                     homePhone: value.homePhone,
                     mobilePhone: value.mobilePhone,
                     requestType: value.NICType,
-                    TimeStamp: new Date(),
+                    sentTimeStamp: "" + new Date(),
+                    processedTimeStamp: "",
+                    approvedTimeStamp: "",
                   })
                   .then(
                     (response) => resolve(response),
@@ -290,7 +298,7 @@ export class GoogleAuthService {
    * @param value This holds Support message data send by registered user via forms available on the Account Portal
    *
    */
-  sendSupportMessage(value,name) {
+  sendSupportMessage(value, name) {
     return new Promise<any>(async (_resolve, _reject) => {
       return new Promise<any>(async (resolve, reject) => {
         /**

@@ -136,9 +136,12 @@ export class AccountPage implements OnInit {
 
     /** Payment Validator */
     var sessionID;
+    var token;
     sessionID = this.route.snapshot.queryParams.id;
+    token = this.route.snapshot.queryParams.token;
+
     if (sessionID) {
-      this.validate(sessionID);
+      this.validate(sessionID, token);
     }
 
     //  FORM VALIDATORS
@@ -162,9 +165,7 @@ export class AccountPage implements OnInit {
       ),
       message: new FormControl(
         "",
-        Validators.compose([
-          Validators.minLength(10),
-        ])
+        Validators.compose([Validators.minLength(10)])
       ),
     });
 
@@ -359,10 +360,10 @@ export class AccountPage implements OnInit {
   };
   /**
    * Method reposible for validating the payment status connected to server and uses token for validation
-   * Complete paymetn process and validation don on secured server
+   * Complete payment process and validation done on secured server
    * @param sessionID contains server send token ID used for validation on pending payments
    */
-  private validate(sessionID) {
+  private validate(sessionID, token) {
     var user = firebase.auth().currentUser;
     this.http.get("http://localhost:4242/validate?id=" + sessionID).subscribe(
       async (data) => {
@@ -376,13 +377,15 @@ export class AccountPage implements OnInit {
             buttons: ["OK"],
           });
           await alert.present();
-          
-          this.firestore
-            .collection("eApplications", (ref) =>
-              ref.where("GovernmentID", "==", user.displayName)
-            )
-            .doc()
-            .set({ payment_status: "paid" }, { merge: true });
+          const eApplication = this.firestore
+            .collection("eApplications")
+            .doc(token);
+          const res = await eApplication.set(
+            {
+              payment_status: "paid",
+            },
+            { merge: true }
+          );
         } else if (data == "unpaid") {
           const alert = await this.alertController.create({
             header: "🚫 Application Rejected",
@@ -392,13 +395,11 @@ export class AccountPage implements OnInit {
             buttons: ["OK"],
           });
           await alert.present();
+          const eApplication = this.firestore
+            .collection("eApplications")
+            .doc(token);
+          const res = await eApplication.delete();
         }
-        this.firestore
-          .collection("eApplications", (ref) =>
-            ref.where("GovernmentID", "==", user.displayName)
-          )
-          .doc()
-          .delete();
       },
       (error) => {
         console.log(error);
@@ -555,7 +556,10 @@ export class AccountPage implements OnInit {
    * Depending the data sent, verification would inform user of the process whther whether thier data was accepts and sent or rejected.
    */
   async sendApplication(value) {
-    this.authService.sendNICApplication(value).then(
+    var token = `${Math.floor(
+      Math.random() * 100000000000000 + 100000000000000
+    )}`;
+    this.authService.sendNICApplication(value, token).then(
       (res) => {
         console.log(res);
       },
@@ -566,9 +570,14 @@ export class AccountPage implements OnInit {
     const stripe = await loadStripe(
       "pk_test_51IHSuEA5rKg2mqjLa3Gh3JeEVlSE01Ty1uuLmUAwzSSEISREulbOx3FCTLhLtMcxo5QO3Nno4wPoAPUC7vchjnN500co3fV7M0"
     );
-
     fetch("http://localhost:4242/pay-nic", {
       method: "POST",
+      body: JSON.stringify({
+        token: token,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
     })
       .then(function (response) {
         return response.json();
@@ -586,16 +595,18 @@ export class AccountPage implements OnInit {
       });
   }
   private supportCitizen(value) {
-    this.authService.sendSupportMessage(value,this.prefix+" "+this.fullName).then(
-      (res) => {
-        console.log(res);
-        this.passAlertMessage();
-      },
-      (err) => {
-        console.log(err);
-        this.failAlertMessage();
-      }
-    );
+    this.authService
+      .sendSupportMessage(value, this.prefix + " " + this.fullName)
+      .then(
+        (res) => {
+          console.log(res);
+          this.passAlertMessage();
+        },
+        (err) => {
+          console.log(err);
+          this.failAlertMessage();
+        }
+      );
   }
 
   /**
@@ -651,13 +662,15 @@ export class AccountPage implements OnInit {
     this.messageStatus = false;
     this.authService.getEApplications().subscribe((data) => {
       this.EApplications = data.map((e) => {
-        console.log(e.payload.doc.data()["requestType"])
+        console.log(e.payload.doc.data()["requestType"]);
         return {
           requestType: e.payload.doc.data()["requestType"],
           assigneeName: e.payload.doc.data()["division"],
           applicationDescription: e.payload.doc.data()["description"],
           applicationStatus: e.payload.doc.data()["status"],
-          receivedTime: e.payload.doc.data()["TimeStamp"].toDate(),
+          receivedTime: e.payload.doc.data()["sentTimeStamp"],
+          processedTime: e.payload.doc.data()["processedTimeStamp"],
+          approvedTime: e.payload.doc.data()["approvedTimeStamp"],
         };
       });
     });

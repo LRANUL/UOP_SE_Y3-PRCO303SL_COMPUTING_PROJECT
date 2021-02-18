@@ -526,8 +526,8 @@ export class HomeAffairsPage implements OnInit {
     if (this.validations_form.valid) {
       this.createPaymentIntent(100)
         .pipe(
-          switchMap((pi) =>
-            this.stripeService.confirmCardPayment(pi.client_secret, {
+          switchMap((payment) =>
+            this.stripeService.confirmCardPayment(payment.client_secret, {
               payment_method: {
                 card: this.card.element,
                 billing_details: {
