@@ -18,12 +18,14 @@ app.use(function (req, res, next) {
   );
   next();
 });
-
+/**
+ * Get all Government Portal Users (First 1000 Users from Firebase)
+ */
 app.get("/get-all-users", async (req, res) => {
   const listAllUsers = (nextPageToken) => {
     admin
       .auth()
-      .listUsers(100, nextPageToken)
+      .listUsers(1000, nextPageToken)
       .then((listUsersResult) => {
         res.send(listUsersResult.users);
         if (listUsersResult.pageToken) {
@@ -37,7 +39,25 @@ app.get("/get-all-users", async (req, res) => {
   };
   listAllUsers();
 });
-
+/**
+ * Get selected Government Portal User (Find by email Firebase)
+ */
+app.get("/get-user", async (req, res) => {
+  var email = req.query.email || "";
+  admin
+    .auth()
+    .getUserByEmail(email)
+    .then((userRecord) => {
+      res.send(userRecord.toJSON());
+      console.log(`Successfully fetched user data:  ${userRecord.toJSON()}`);
+    })
+    .catch((error) => {
+      console.log("Error fetching user data:", error);
+    });
+});
+/**
+ * Delete selected Government Portal User (Find by uid Firebase)
+ */
 app.get("/delete-user", async (req, res) => {
   var uid = req.query.uid || "";
   admin
@@ -52,7 +72,9 @@ app.get("/delete-user", async (req, res) => {
       console.log("Error deleting user:", error);
     });
 });
-
+/**
+ * Disable selected Government Portal User (Find by uid Firebase)
+ */
 app.get("/disable-user", async (req, res) => {
   var uid = req.query.uid || "";
   admin
@@ -69,7 +91,9 @@ app.get("/disable-user", async (req, res) => {
       console.log("Error updating user:", error);
     });
 });
-
+/**
+ * Activate selected Government Portal User (Find by uid Firebase)
+ */
 app.get("/activate-user", async (req, res) => {
   var uid = req.query.uid || "";
   admin

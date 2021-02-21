@@ -789,12 +789,4 @@ export class HomeAffairsPage implements OnInit {
     this.accessService.logoutOfficer();
   }
 
-  getallUsers() {
-    this.http
-      .get(`http://localhost:4242/get-all-users`)
-      .subscribe((response) => {
-        this.userFilter = JSON.stringify(response);
-        this.userRecords = JSON.parse(this.userFilter);
-      });
-  }
 }

@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { AccessPageRoutingModule } from './access-routing.module';
-
 import { AccessPage } from './access.page';
 
 @NgModule({
@@ -14,7 +13,7 @@ import { AccessPage } from './access.page';
     FormsModule,
     IonicModule,
     AccessPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   declarations: [AccessPage]
 })

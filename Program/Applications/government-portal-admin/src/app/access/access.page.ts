@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ToastController, AlertController, NavController } from '@ionic/angular';
-import { AccessService } from '../Service/access.service';
+import { AccessService } from '../service/access.service';
 
 @Component({
   selector: 'app-access',

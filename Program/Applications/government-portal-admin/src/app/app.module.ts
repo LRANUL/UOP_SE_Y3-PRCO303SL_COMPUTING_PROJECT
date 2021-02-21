@@ -15,6 +15,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxElectronModule } from 'ngx-electron';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,7 @@ import { NgxElectronModule } from 'ngx-electron';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    HttpClientModule,
     AngularFireModule.initializeApp(environment.config),
     AngularFireAuthModule,
     AngularFirestoreModule,
