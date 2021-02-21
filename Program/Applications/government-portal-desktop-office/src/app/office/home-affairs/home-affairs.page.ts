@@ -6,11 +6,8 @@ import {
   Validators,
   FormControl,
 } from "@angular/forms";
-import {
-  ToastController,
-  AlertController,
-} from "@ionic/angular";
-
+import { ToastController, AlertController } from "@ionic/angular";
+import * as firebase from "firebase";
 import { AccessService } from "src/app/service/access.service";
 import { HttpClient } from "@angular/common/http";
 import { StripeService, StripeCardNumberComponent } from "ngx-stripe";
@@ -55,7 +52,8 @@ export class HomeAffairsPage implements OnInit {
     applicationDescription: any;
     applicationStatus: any;
   }[];
-
+  userFilter: any;
+  userRecords: any;
   ESupportMessages: {
     id: string;
     GovernmentID: any;
@@ -89,6 +87,8 @@ export class HomeAffairsPage implements OnInit {
   nonFirstTimer: boolean;
   foreignCitizen: boolean;
   handler: any;
+  ECitizens: { uid: any; name: any; photo: any; governmentID: any }[];
+  accountManage: boolean;
   constructor(
     public formBuilder: FormBuilder,
     private accessService: AccessService,
@@ -513,9 +513,120 @@ export class HomeAffairsPage implements OnInit {
   exitApplicant() {
     this.NICApplicant = false;
   }
-  async pay(): Promise<void> {
-    console.log(this.validations_form);
+  /**
+   * Manages eCitizens accounts
+   */
+  manageAccount() {
+    this.accountManage = true;
+    this.accessService.getECitizens().subscribe((data) => {
+      this.ECitizens = data.map((e) => {
+        return {
+          uid: e.payload.doc.data()["uid"],
+          name: e.payload.doc.data()["Full_Name"],
+          photo: e.payload.doc.data()["downloadURL"],
+          governmentID: e.payload.doc.data()["GovernmentID"],
+          status: e.payload.doc.data()["status"],
+        };
+      });
+    });
   }
+  /**
+   * Closes eCitizen manager
+   */
+  exitECitizenManager() {
+    this.accountManage = false;
+  }
+  findECitizen(value) {
+    this.accessService.getECitizen(value).subscribe((data) => {
+      this.ECitizens = data.map((e) => {
+        return {
+          uid: e.payload.doc.data()["uid"],
+          name: e.payload.doc.data()["Full_Name"],
+          photo: e.payload.doc.data()["downloadURL"],
+          governmentID: e.payload.doc.data()["GovernmentID"],
+          status: e.payload.doc.data()["status"],
+        };
+      });
+    });
+  }
+  activateAccount(user, governmentID) {
+    this.http.get("http://localhost:4242/activate-user?uid=" + user).subscribe(
+      async (data) => {
+        console.log(data);
+        this.accessService.activateECitizen(governmentID);
+        const alert = await this.alertController.create({
+          header: "Account Activated ✔",
+          message: governmentID + " has been activate",
+          buttons: ["OK"],
+        });
+        await alert.present();
+      },
+      async (error) => {
+        console.log(error);
+        const alert = await this.alertController.create({
+          header: "🚫 Out of Service",
+          subHeader: "Server Access Timeout",
+          message:
+            "Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later or contact administrator",
+          buttons: ["OK"],
+        });
+        await alert.present();
+      }
+    );
+  }
+
+  disableAccount(user, governmentID) {
+    this.http.get("http://localhost:4242/disable-user?uid=" + user).subscribe(
+      async (data) => {
+        console.log(data);
+        this.accessService.disableECitizen(governmentID);
+        const alert = await this.alertController.create({
+          header: "Account Disabled ✔",
+          message: governmentID + " has been disabled",
+          buttons: ["OK"],
+        });
+        await alert.present();
+      },
+      async (error) => {
+        console.log(error);
+        const alert = await this.alertController.create({
+          header: "🚫 Out of Service",
+          subHeader: "Server Access Timeout",
+          message:
+            "Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later or contact administrator",
+          buttons: ["OK"],
+        });
+        await alert.present();
+      }
+    );
+  }
+
+  deleteAccount(user, governmentID) {
+    this.http.get("http://localhost:4242/delete-user?uid=" + user).subscribe(
+      async (data) => {
+        console.log(data);
+        this.accessService.deleteECitizen(governmentID);
+        const alert = await this.alertController.create({
+          header: "Account Deleted ✔",
+          message: governmentID + " has been delete",
+          buttons: ["OK"],
+        });
+        await alert.present();
+      },
+      async (error) => {
+        console.log(error);
+        const alert = await this.alertController.create({
+          header: "🚫 Out of Service",
+          subHeader: "Server Access Timeout",
+          message:
+            "Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later or contact administrator",
+          buttons: ["OK"],
+        });
+        await alert.present();
+      }
+    );
+  }
+
   /**
    * Method reposible for sending validated data to google-auth service page for further verfication and uploading to firebase
    * @param value contains validated data from NIC application form
@@ -651,8 +762,8 @@ export class HomeAffairsPage implements OnInit {
   getWorkLogs() {
     this.activityLog = true;
     setTimeout(() => {
-      //  get email from auth
-      var Email = "william@homeaffairs.gov.lk";
+      var user = firebase.default.auth().currentUser;
+      var Email = user.email;
       this.accessService.getEWorkLogs(Email).subscribe((data) => {
         console.log(data);
         this.EWorkLogs = data.map((e) => {
@@ -676,5 +787,14 @@ export class HomeAffairsPage implements OnInit {
   /**Logs out Officer */
   async logoutOfficer() {
     this.accessService.logoutOfficer();
+  }
+
+  getallUsers() {
+    this.http
+      .get(`http://localhost:4242/get-all-users`)
+      .subscribe((response) => {
+        this.userFilter = JSON.stringify(response);
+        this.userRecords = JSON.parse(this.userFilter);
+      });
   }
 }

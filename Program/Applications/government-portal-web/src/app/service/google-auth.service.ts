@@ -90,11 +90,13 @@ export class GoogleAuthService {
                   /**
                    * Data gets stored on Firebase for references
                    * */
+                  var user = firebase.default.auth().currentUser;
                   console.log(value);
                   this.firestore
                     .collection("eCitizens")
                     .doc(value.GovernmentID)
                     .set({
+                      uid: user.uid,
                       Access_Key: accessKey,
                       Full_Name: value.fullName.toUpperCase(),
                       Gender: value.gender.toUpperCase(),

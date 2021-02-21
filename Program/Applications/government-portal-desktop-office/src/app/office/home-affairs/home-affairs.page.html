@@ -132,8 +132,7 @@
             <ion-skeleton-text animated style="height: 300px;"></ion-skeleton-text>
           </div>
           <ion-card *ngFor="let message of ESupportMessages | slice:0:10;; let i = index">
-            <form class="form" [formGroup]="message_form"
-              (ngSubmit)="supportCitizen(message_form.value,message.id)">
+            <form class="form" [formGroup]="message_form" (ngSubmit)="supportCitizen(message_form.value,message.id)">
               <ion-card-header>
                 <ion-card-title>Government ID: {{ message.GovernmentID }}</ion-card-title>
                 <ion-card-subtitle>Name: {{ message.FullName }}</ion-card-subtitle>
@@ -193,6 +192,26 @@
           </ion-row>
         </ion-col>
         <ion-col>
+          <ion-col *ngIf="accountManage" class="end">
+            <div style="position: relative;
+            float: right;color: darkgray;font-weight: bold;cursor:pointer;" (click)=exitECitizenManager()>Close Manager
+            </div>
+            <ion-row>
+              <ion-searchbar placeholder="Find eCitizens" [(ngModel)]="userFilter" animated="true" autocomplete="true" (search)="findECitizen($event.target.value)">
+              </ion-searchbar>
+              <i>If the eCitizen is not available on the list, search after entering the full Government Portal ID</i>
+              <ion-list style="width: 100%;">
+                <ion-item *ngFor="let user of ECitizens | filter:userFilter" style="font-size:xx-small;">
+                  <ion-img src="{{user.photo}}" style="height: 70px;width: 50px;"></ion-img>
+                  <ion-label>{{user.name}}</ion-label>
+                  <ion-label>{{user.governmentID}}</ion-label>
+                  <ion-button *ngIf="user.status == 'Disabled'" color="success" (click)="activateAccount(user.uid, user.governmentID)">Activate</ion-button>
+                  <ion-button *ngIf="user.status == 'Active'" color="medium" (click)="disableAccount(user.uid, user.governmentID)">Disable</ion-button>
+                  <ion-button color="danger" (click)="deleteAccount(user.uid, user.governmentID)">Delete</ion-button>
+                </ion-item>
+              </ion-list>
+            </ion-row>
+          </ion-col>
           <ion-col *ngIf="NICApplicant" class="end" style="background: var(--ion-color-form);padding-left: 5%;">
             <div style="position: relative;
             float: right;color: darkgray;font-weight: bold;cursor:pointer;" (click)=exitApplicant()>Exit Application

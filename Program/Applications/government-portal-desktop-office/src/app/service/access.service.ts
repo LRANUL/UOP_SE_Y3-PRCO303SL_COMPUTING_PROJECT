@@ -26,6 +26,25 @@ export class AccessService {
       )
       .snapshotChanges();
   }
+
+  getECitizens() {
+    return this.firestore
+      .collection("eCitizens", (ref) =>
+        ref.limit(50).where("status", "!=", "Deleted")
+      )
+      .snapshotChanges();
+  }
+
+  getECitizen(GovernmentID) {
+    return this.firestore
+      .collection("eCitizens", (ref) =>
+        ref
+          .where("GovernmentID", "==", GovernmentID)
+          .where("status", "!=", "Deleted")
+      )
+      .snapshotChanges();
+  }
+
   getESupportMessages() {
     return this.firestore
       .collection("eSupport", (ref) => ref.where("Status", "==", "New"))
@@ -38,6 +57,37 @@ export class AccessService {
       .collection("WorkLogs")
       .snapshotChanges();
   }
+
+  async activateECitizen(governmentID) {
+    const eCitizen = this.firestore.collection("eCitizens").doc(governmentID);
+    const res = await eCitizen.set(
+      {
+        status: "Active",
+      },
+      { merge: true }
+    );
+  }
+  async disableECitizen(governmentID) {
+    const eCitizen = this.firestore.collection("eCitizens").doc(governmentID);
+    const res = await eCitizen.set(
+      {
+        status: "Disabled",
+      },
+      { merge: true }
+    );
+  }
+  async deleteECitizen(uid) {
+    const eCitizen = this.firestore
+      .collection("eCitizens", (ref) => ref.where("uid", "==", uid))
+      .doc();
+    const res = await eCitizen.set(
+      {
+        status: "Deleted",
+      },
+      { merge: true }
+    );
+  }
+
   async setApplicationToProcessing(DocumentID) {
     console.log(DocumentID);
     const eApplication = this.firestore
@@ -52,6 +102,7 @@ export class AccessService {
       { merge: true }
     );
   }
+
   async setApplicationToApproved(DocumentID) {
     console.log(DocumentID);
     const eApplication = this.firestore
