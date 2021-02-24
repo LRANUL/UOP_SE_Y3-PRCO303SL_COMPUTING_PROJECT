@@ -616,7 +616,7 @@
                   Data Policy and Cookies Policy. Please note that only if your data matches our records, the
                   registration would be approved.</ion-text>
                 <br>
-                <ion-button type="submit" color="signin" [disabled]="validations_form.valid">Apply
+                <ion-button type="submit" color="signin" [disabled]="!validations_form.valid">Apply
                   <ion-icon name="paper-plane"></ion-icon>
                 </ion-button>
                 <label class="error-message">{{errorMessage}}</label>
@@ -659,7 +659,7 @@
                 </ion-row>
               </ion-grid>
             </ion-item>
-            <ion-item  *ngFor="let application of EApplications | slice:0:10;; let i = index">
+            <ion-item *ngFor="let application of EApplications | slice:0:10;; let i = index">
               <ion-grid>
                 <ion-row style="font-size: small;">
                   <ion-col>{{application.requestType}}</ion-col>
@@ -668,7 +668,8 @@
                   <ion-col>{{application.applicationStatus}}
                     <div style="font-size: xx-small;margin-top: 5%;">Received Time: {{application.receivedTime}}</div>
                     <div style="font-size: xx-small;margin-top: 5%;">Processed Time: {{application.processedTime}}</div>
-                    <div style="font-size: xx-small;margin-top: 5%;">Approved/Decline Time: {{application.approvedTime}}</div>
+                    <div style="font-size: xx-small;margin-top: 5%;">Approved/Decline Time: {{application.approvedTime}}
+                    </div>
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -761,15 +762,20 @@
             <ngx-qrcode [element-type]="elementType" [value]="QRCode" errorCorrectionLevel="H"
               style="float: right;width: 90px;">
             </ngx-qrcode>
-            <img src="{{photoUrl}}" style="width: 130px;height: 150px;float: left;border-radius: 5px;margin-left: 10px;">
+            <img src="{{photoUrl}}"
+              style="width: 130px;height: 150px;float: left;border-radius: 5px;margin-left: 10px;">
             <span style="float: right;margin: 10px;">
               <h4>{{fullName}}</h4>
               <h5><i>{{Displayname}}</i></h5>
             </span>
           </div>
-          <!-- <ion-button (click)=downloadID() shape="round" size="small" color="medium">Download ID</ion-button>
+          <ion-label class="portalIDPIN">
+            {{portalIDPIN}}
+          </ion-label>
+          <ion-button (click)=getPortalPIN() shape="round" size="small" color="medium">Get Access PIN</ion-button>
           <br>
-          <i>Store your ID safely once downloaded, we recommend you to use the Portal ID we shipped to you.</i> -->
+          <i>Remember your Government Portal ID PIN, we recommend you not to store the PIN and to use only the Portal ID
+            we shipped to you.</i>
           <br><br>
           Name: {{prefix}} {{fullName}}
           <br>

@@ -5,7 +5,8 @@ import {
   Validators,
   FormControl,
 } from "@angular/forms";
-import { NavController } from "@ionic/angular";
+import { LoadingController } from "@ionic/angular";
+
 import { GoogleAuthService } from "../service/google-auth.service";
 import {
   AngularFireStorage,
@@ -36,7 +37,8 @@ export class CreateAccountPage implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     private authService: GoogleAuthService,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    public loadingController: LoadingController
   ) {}
 
   ngOnInit() {
@@ -163,9 +165,8 @@ export class CreateAccountPage implements OnInit {
     });
   }
 
-  private onFileChange(event) {
+  private async onFileChange(event) {
     var GovernmentID;
-    var downloadURL;
     GovernmentID = "A" + Math.floor(Math.random() * 9000000000 + 1000000000);
     this.validations_form.patchValue({ GovernmentID: GovernmentID });
     const file = event.target.files[0];
@@ -174,14 +175,17 @@ export class CreateAccountPage implements OnInit {
       const fileRef: AngularFireStorageReference = this.storage.ref(filePath);
       this.task = this.storage.upload(filePath, file);
       this.progress = this.task.percentageChanges();
-
+      const loading = await this.loadingController.create({
+        message: "Uploading ID Photo",
+      });
+      await loading.present();
       this.task
         .snapshotChanges()
         .pipe(
           finalize(() => {
-            fileRef.getDownloadURL().subscribe((downloadURL) => {
+            fileRef.getDownloadURL().subscribe(async (downloadURL) => {
               downloadURL = "" + downloadURL;
-              console.log(downloadURL);
+              await loading.dismiss();
               this.validations_form.patchValue({ downloadURL: downloadURL });
             });
           })

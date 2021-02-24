@@ -53,6 +53,7 @@ export class AccountPage implements OnInit {
   private officeAddress: any;
   private mobile: any;
   private landLine: any;
+  private portalIDPIN:any;
   private fullName: any;
   private QRCode = "https://www.gov.lk";
   private elementType: "img";
@@ -549,6 +550,18 @@ export class AccountPage implements OnInit {
    */
   private ForeignNo() {
     this.foreignCitizen = false;
+  }
+  async getPortalPIN(){
+    var user = firebase.auth().currentUser;
+    await this.firestore
+    .collection("eCitizens/")
+    .doc(user.displayName)
+    .ref.get()
+    .then((doc) => {
+      if (doc.exists) {
+        this.portalIDPIN = doc.data()["Access_PIN"];
+      }
+    });
   }
   /**
    * Method reposible for sending validated data to google-auth service page for further verfication and uploading to firebase

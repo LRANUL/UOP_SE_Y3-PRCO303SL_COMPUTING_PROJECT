@@ -76,10 +76,8 @@ export class AccessService {
       { merge: true }
     );
   }
-  async deleteECitizen(uid) {
-    const eCitizen = this.firestore
-      .collection("eCitizens", (ref) => ref.where("uid", "==", uid))
-      .doc();
+  async deleteECitizen(governmentID) {
+    const eCitizen = this.firestore.collection("eCitizens").doc(governmentID);
     const res = await eCitizen.set(
       {
         status: "Deleted",

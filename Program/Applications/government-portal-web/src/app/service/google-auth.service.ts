@@ -82,22 +82,25 @@ export class GoogleAuthService {
                       photoURL: value.downloadURL,
                     });
                   }
+                  // Access PIN for Users via Portal Card
+                  var Access_PIN = Math.floor(
+                    Math.random() * 9000000 + 1000000
+                  );
                   // https://code.google.com/archive/p/crypto-js/
-                  var accessKey = CryptoJS.AES.encrypt(
+
+                  var Access_Key = CryptoJS.AES.encrypt(
                     value.GovernmentID,
                     value.bioData
-                  );
+                  ).toString();
                   /**
                    * Data gets stored on Firebase for references
                    * */
-                  var user = firebase.default.auth().currentUser;
-                  console.log(value);
                   this.firestore
                     .collection("eCitizens")
                     .doc(value.GovernmentID)
                     .set({
-                      uid: user.uid,
-                      Access_Key: accessKey,
+                      Access_PIN: Access_PIN,
+                      Access_Key: Access_Key,
                       Full_Name: value.fullName.toUpperCase(),
                       Gender: value.gender.toUpperCase(),
                       Date_Of_Birth: dateBirth,
@@ -110,8 +113,8 @@ export class GoogleAuthService {
                       Father_Name: value.fatherName.toUpperCase(),
                       Mother_Name: value.motherName.toUpperCase(),
                       Prefix: value.prefix,
-                      homeAddress: value.homeAddress,
-                      officeAddress: value.officeAddress,
+                      homeAddress: value.homeAddress.toUpperCase(),
+                      officeAddress: value.officeAddress.toUpperCase(),
                       mobile: value.mobile,
                       landLine: value.landLine,
                       Email: value.email.toUpperCase(),
@@ -119,8 +122,17 @@ export class GoogleAuthService {
                       status: "Active",
                     })
                     .then(
-                      (res) => {
+                      async (res) => {
                         resolve(res);
+                        const eCitizen = this.firestore
+                          .collection("eCitizens")
+                          .doc(value.GovernmentID);
+                        await eCitizen.set(
+                          {
+                            uid: "" + user.uid,
+                          },
+                          { merge: true }
+                        );
                       },
                       (err) => reject(err)
                     );

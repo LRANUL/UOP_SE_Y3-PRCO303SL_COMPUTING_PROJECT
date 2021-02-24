@@ -3,7 +3,8 @@ import { AngularFirestore } from "@angular/fire/firestore";
 import { NavController } from "@ionic/angular";
 var qrResultString: string;
 import { AccessService } from "../Service/access.service";
-import * as CryptoJS from 'crypto-js'
+import * as CryptoJS from "crypto-js";
+import { AlertController } from "@ionic/angular";
 
 @Component({
   selector: "app-home",
@@ -28,7 +29,8 @@ export class HomePage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private service: AccessService,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    public alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -40,162 +42,221 @@ export class HomePage implements OnInit {
 
   English() {
     this.portalScanner = true;
-    console.log("English");
     let welcome = new Audio();
     welcome.src = "assets/audio/welcome-en.mp3";
     welcome.load();
     this.scanner_en = true;
     setTimeout(() => {
-      console.log(qrResultString);
       this.scanner_en = false;
       this.portalScanner = false;
       setTimeout(async () => {
-        this.firestore
-          .collection("eCitizens", (ref) =>
-            ref.where(
-              "Access_Key",
-              "==",
-              qrResultString
-              // "a22932220415ad2fc8044739c7e4a348541821146879a7bcc1f79b72077ec527"
-            )
-          )
-          .get()
-          .forEach((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
+        if (qrResultString) {
+          this.service.getECitizen(qrResultString).subscribe((data) => {
+            data.map(async (e) => {
+              var Access_PIN = e.payload.doc.data()["Access_PIN"];
+              var bioData = e.payload.doc.data()["Biometric_Data"];
+              var GovernmentID = e.payload.doc.data()["GovernmentID"];
               var MatchID = CryptoJS.AES.decrypt(
                 qrResultString,
-                doc.data["bioData"]
-              );
-              if (MatchID == doc.data["GovernmentID"]) {
-                welcome.play();
-                this.navCtrl.navigateForward("english");
+                bioData
+              ).toString(CryptoJS.enc.Utf8);
+              if (MatchID == GovernmentID) {
+                this.portalScanner = false;
+                const alert = await this.alertController.create({
+                  header: "Access PIN Required",
+                  inputs: [
+                    {
+                      name: "Access_PIN",
+                      type: "number",
+                      max: 999999,
+                      placeholder: "6-Digit PIN",
+                    },
+                  ],
+                  buttons: [
+                    {
+                      text: "Cancel",
+                      role: "cancel",
+                    },
+                    {
+                      text: "Ok",
+                      handler: (data) => {
+                        if (Access_PIN == data.Access_PIN) {
+                          welcome.play();
+                          this.navCtrl.navigateForward(
+                            "english?id=" + GovernmentID
+                          );
+                        } else {
+                          let invalidCard = new Audio();
+                          invalidCard.src = "assets/audio/wrong-pin-en.mp3";
+                          invalidCard.load();
+                          invalidCard.play();
+                        }
+                      },
+                    },
+                  ],
+                });
+                await alert.present();
+              } else {
+                let invalidCard = new Audio();
+                invalidCard.src = "assets/audio/invalid-card-en.mp3";
+                invalidCard.load();
+                invalidCard.play();
               }
             });
-          })
-          .catch((error) => {
-            let invalidCard = new Audio();
-            invalidCard.src = "assets/audio/invalid-card-en.mp3";
-            invalidCard.load();
-            invalidCard.play();
           });
-        //  console.log(value)
-        //     //  if(value == false){
-        //   if (value == "Invalid") {
-        //     let invalidCard = new Audio();
-        //     invalidCard.src = "assets/audio/invalid-card-en.mp3";
-        //     invalidCard.load();
-        //     invalidCard.play();
-        //   } else{
-        //   // (qrResultString == "Valid") {
-        //     welcome.play();
-        //     this.navCtrl.navigateForward("english");
-        // }
+        } else {
+          let invalidCard = new Audio();
+          invalidCard.src = "assets/audio/no-card-en.mp3";
+          invalidCard.load();
+          invalidCard.play();
+        }
       }, 1000);
-    }, 7000);
+    }, 10000);
   }
   Sinhala() {
     this.portalScanner = true;
-    console.log("Sinhala");
     let welcome = new Audio();
     welcome.src = "assets/audio/welcome-si.mp3";
     welcome.load();
     this.scanner_si = true;
     setTimeout(() => {
-      // console.log(qrResultString);
       this.scanner_si = false;
       this.portalScanner = false;
-      setTimeout(() => {
-      //   this.firestore
-      //     .collection("eCitizens", (ref) =>
-      //       ref.where(
-      //         "Access_Key",
-      //         "==",
-      //         qrResultString
-      //         // "a22932220415ad2fc8044739c7e4a348541821146879a7bcc1f79b72077ec527"
-      //       )
-      //     )
-      //     .get()
-      //     .forEach((querySnapshot) => {
-      //       querySnapshot.forEach((doc) => {
-      //         var MatchID = CryptoJS.AES.decrypt(
-      //           qrResultString,
-      //           doc.data["bioData"]
-      //         );
-      //         if (MatchID == doc.data["GovernmentID"]) {
-      //           welcome.play();
-      //           this.navCtrl.navigateForward("sinhala");
-      //         }
-      //       });
-      //     })
-      //     .catch((error) => {
-      //       let invalidCard = new Audio();
-      //       invalidCard.src = "assets/audio/invalid-card-si.mp3";
-      //       invalidCard.load();
-      //       invalidCard.play();
-      //     });
-      qrResultString = "Valid";
-        if (qrResultString == "Invalid") {
+      setTimeout(async () => {
+        if (qrResultString) {
+          this.service.getECitizen(qrResultString).subscribe((data) => {
+            data.map(async (e) => {
+              var Access_PIN = e.payload.doc.data()["Access_PIN"];
+              var bioData = e.payload.doc.data()["Biometric_Data"];
+              var GovernmentID = e.payload.doc.data()["GovernmentID"];
+              var MatchID = CryptoJS.AES.decrypt(
+                qrResultString,
+                bioData
+              ).toString(CryptoJS.enc.Utf8);
+              if (MatchID == GovernmentID) {
+                this.portalScanner = false;
+                const alert = await this.alertController.create({
+                  header: "Access PIN Required",
+                  inputs: [
+                    {
+                      name: "Access_PIN",
+                      type: "number",
+                      max: 999999,
+                      placeholder: "6-Digit PIN",
+                    },
+                  ],
+                  buttons: [
+                    {
+                      text: "Cancel",
+                      role: "cancel",
+                    },
+                    {
+                      text: "Ok",
+                      handler: (data) => {
+                        if (Access_PIN == data.Access_PIN) {
+                          welcome.play();
+                          this.navCtrl.navigateForward(
+                            "sinhala?id=" + GovernmentID
+                          );
+                        } else {
+                          let invalidCard = new Audio();
+                          invalidCard.src = "assets/audio/wrong-pin-si.mp3";
+                          invalidCard.load();
+                          invalidCard.play();
+                        }
+                      },
+                    },
+                  ],
+                });
+                await alert.present();
+              } else {
+                let invalidCard = new Audio();
+                invalidCard.src = "assets/audio/invalid-card-si.mp3";
+                invalidCard.load();
+                invalidCard.play();
+              }
+            });
+          });
+        } else {
           let invalidCard = new Audio();
-          invalidCard.src = "assets/audio/invalid-card-si.mp3";
+          invalidCard.src = "assets/audio/no-card-si.mp3";
           invalidCard.load();
           invalidCard.play();
-        } else if (qrResultString == "Valid") {
-          welcome.play();
-          this.navCtrl.navigateForward("sinhala");
         }
       }, 1000);
-    }, 7000);
+    }, 10000);
   }
   Tamil() {
     this.portalScanner = true;
-    console.log("Tamil");
     let welcome = new Audio();
     welcome.src = "assets/audio/welcome-ta.mp3";
     welcome.load();
     this.scanner_ta = true;
     setTimeout(() => {
-      console.log(qrResultString);
       this.scanner_ta = false;
       this.portalScanner = false;
-      setTimeout(() => {
-        this.firestore
-          .collection("eCitizens", (ref) =>
-            ref.where(
-              "Access_Key",
-              "==",
-              qrResultString
-              // "a22932220415ad2fc8044739c7e4a348541821146879a7bcc1f79b72077ec527"
-            )
-          )
-          .get()
-          .forEach((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
+      setTimeout(async () => {
+        if (qrResultString) {
+          this.service.getECitizen(qrResultString).subscribe((data) => {
+            data.map(async (e) => {
+              var Access_PIN = e.payload.doc.data()["Access_PIN"];
+              var bioData = e.payload.doc.data()["Biometric_Data"];
+              var GovernmentID = e.payload.doc.data()["GovernmentID"];
               var MatchID = CryptoJS.AES.decrypt(
                 qrResultString,
-                doc.data["bioData"]
-              );
-              if (MatchID == doc.data["GovernmentID"]) {
-                welcome.play();
-                this.navCtrl.navigateForward("tamil");
+                bioData
+              ).toString(CryptoJS.enc.Utf8);
+              if (MatchID == GovernmentID) {
+                this.portalScanner = false;
+                const alert = await this.alertController.create({
+                  header: "Access PIN Required",
+                  inputs: [
+                    {
+                      name: "Access_PIN",
+                      type: "number",
+                      max: 999999,
+                      placeholder: "6-Digit PIN",
+                    },
+                  ],
+                  buttons: [
+                    {
+                      text: "Cancel",
+                      role: "cancel",
+                    },
+                    {
+                      text: "Ok",
+                      handler: (data) => {
+                        if (Access_PIN == data.Access_PIN) {
+                          welcome.play();
+                          this.navCtrl.navigateForward(
+                            "tamil?id=" + GovernmentID
+                          );
+                        } else {
+                          let invalidCard = new Audio();
+                          invalidCard.src = "assets/audio/wrong-pin-ta.mp3";
+                          invalidCard.load();
+                          invalidCard.play();
+                        }
+                      },
+                    },
+                  ],
+                });
+                await alert.present();
+              } else {
+                let invalidCard = new Audio();
+                invalidCard.src = "assets/audio/invalid-card-ta.mp3";
+                invalidCard.load();
+                invalidCard.play();
               }
             });
-          })
-          .catch((error) => {
-            let invalidCard = new Audio();
-            invalidCard.src = "assets/audio/invalid-card-ta.mp3";
-            invalidCard.load();
-            invalidCard.play();
           });
-        // if (qrResultString == "Invalid") {
-        //   let invalidCard = new Audio();
-        //   invalidCard.src = "assets/audio/invalid-card-ta.mp3";
-        //   invalidCard.load();
-        //   invalidCard.play();
-        // } else if (qrResultString == "Valid") {
-        //   welcome.play();
-        //   this.navCtrl.navigateForward("tamil");
-        // }
+        } else {
+          let invalidCard = new Audio();
+          invalidCard.src = "assets/audio/no-card-si.mp3";
+          invalidCard.load();
+          invalidCard.play();
+        }
       }, 1000);
-    }, 7000);
+    }, 10000);
   }
 }

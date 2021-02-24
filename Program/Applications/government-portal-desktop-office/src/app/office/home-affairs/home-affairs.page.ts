@@ -307,7 +307,7 @@ export class HomeAffairsPage implements OnInit {
         "",
         Validators.compose([
           Validators.pattern("^[0-9]{10}$"),
-          Validators.minLength(9),
+          Validators.minLength(10),
           Validators.required,
         ])
       ),
@@ -315,7 +315,7 @@ export class HomeAffairsPage implements OnInit {
         "",
         Validators.compose([
           Validators.pattern("^[0-9]{10}$"),
-          Validators.minLength(9),
+          Validators.minLength(10),
           Validators.required,
         ])
       ),
