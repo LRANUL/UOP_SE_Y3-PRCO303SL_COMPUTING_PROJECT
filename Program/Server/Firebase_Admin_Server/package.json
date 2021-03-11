@@ -1,0 +1,18 @@
+{
+  "name": "firebase_admin_server",
+  "version": "1.0.0",
+  "description": "Firebase Admin Server for Government Portal",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "firebase-admin": "^9.5.0",
+    "nodemon": "^2.0.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "Ranul Ladduwahetty",
+  "license": "MIT"
+}

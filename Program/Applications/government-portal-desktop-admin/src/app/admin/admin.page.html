@@ -1,0 +1,216 @@
+<!-- 
+  
+  Contains frontend structure and design for Office page for Home Affair Ministry
+  Variables intialised here are related to the typescript page and used
+  for functionality.
+
+-->
+<!-- PAGE HEADER STARTS -->
+<ion-header>
+  <ion-title style="background-color: #222428;color: whitesmoke;">
+    <strong>GOVERNMENT PORTAL</strong>
+  </ion-title>
+  <ion-toolbar>
+    <ion-button class="log-out" slot="icon-only" slot="end" color="signin" (click)="logoutAdmin()">
+      <ion-icon name="log-out"></ion-icon>
+    </ion-button>
+    <ion-tabs style="border-bottom-left-radius: 25px;border-bottom-right-radius: 25px;">
+      <ion-tab-bar slot="top" color="dark">
+        <ion-tab-button (click)=openAccounts() name="Accounts">
+          <ion-icon name="people"></ion-icon>
+          <ion-label>Accounts</ion-label>
+        </ion-tab-button>
+        <ion-tab-button (click)=openSupport()>
+          <ion-icon name="bug"></ion-icon>
+          <ion-badge color="danger" *ngIf="newMessage"></ion-badge>
+          <ion-label>Tech Support</ion-label>
+        </ion-tab-button>
+        <ion-tab-button (click)=openStatistics() name="Statistics">
+          <ion-icon name="stats-chart-outline"></ion-icon>
+          <ion-label>Statistics</ion-label>
+        </ion-tab-button>
+        <ion-tab-button (click)=openSettings() name="Settings">
+          <ion-icon name="settings"></ion-icon>
+          <ion-label>Settings</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-header>
+
+<!-- PAGE HEADER ENDS -->
+
+<ion-content [fullscreen]="true" style="background: var(--ion-color-medium)">
+  <!-- PAGE CONTENT STARTS -->
+
+  <!-- PAGE LINKS AND INFORMATION -->
+  <div *ngIf="accountPanel" style="width: 100%;">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="start" style="padding-left: 5%;">
+          <h2 style="font-size: x-large;"><strong>Account Services</strong></h2>
+          <!-- <ion-row class="underline">
+            <ion-router-link (click)=manageAccount() class="underline">
+              Manage Accounts
+            </ion-router-link>
+            
+          </ion-row> -->
+          <ion-row>
+            <ion-button color="dark" size="small" (click)=manageAccount()>
+              <ion-icon slot="icon-only" name="people-outline"></ion-icon>
+              Manage Accounts
+            </ion-button>
+          </ion-row>
+        </ion-col>
+        <ion-col>
+          <ion-col *ngIf="accountManage" class="end">
+            <div style="position: relative;
+            float: right;color: darkgray;font-weight: bold;cursor:pointer;" (click)=exitECitizenManager()>Close Account
+              Services
+            </div>
+            <ion-row>
+              <ion-searchbar placeholder="Find System Users" [(ngModel)]="filterTerm" animated="true"
+                autocomplete="true" (search)="findUser($event.target.value)">
+              </ion-searchbar>
+              <i style="font-size: xx-small;">If the required user is not available search using email, make sure to
+                enter the complete email address</i>
+              <ion-list style="width: 100%;">
+                <ion-item *ngFor="let user of userRecords | filter:filterTerm" style="font-size:xx-small;">
+                  <ion-img *ngIf="user.photoURL" src="{{user.photoURL}}" style="height: 70px;width: 50px;"></ion-img>
+                  <ion-icon *ngIf="!user.photoURL" name="person-outline" style="height: 70px;width: 50px;"></ion-icon>
+                  <ion-label style="margin-left: 5%;">{{user.displayName}}</ion-label>
+                  <ion-label>{{user.email}}</ion-label>
+                  <ion-button *ngIf="user.disabled" color="success" (click)="activateAccount(user.uid)">Activate
+                  </ion-button>
+                  <ion-button *ngIf="!user.disabled" color="medium" (click)="disableAccount(user.uid)">Disable
+                  </ion-button>
+                  <ion-button color="danger" (click)="deleteAccount(user.uid)">Delete</ion-button>
+                </ion-item>
+              </ion-list>
+            </ion-row>
+          </ion-col>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div *ngIf="supportPanel" style="width: 100%;">
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngIf="supportServices" class="start" style="padding-left: 5%;">
+          <h2 style="font-size: x-large;"><strong>IT Support Services</strong></h2>
+          <div *ngIf="ESupportMessages==''">
+            <i>No messages at time moment.</i>
+          </div>
+          <div *ngIf="loadingData">
+            <ion-skeleton-text animated></ion-skeleton-text>
+            <ion-skeleton-text animated></ion-skeleton-text>
+            <ion-skeleton-text animated style="height: 300px;"></ion-skeleton-text>
+          </div>
+          <ion-card *ngFor="let message of ESupportMessages | slice:0:10;; let i = index">
+            <form class="form" [formGroup]="message_form" (ngSubmit)="supportOfficer(message_form.value,message.id)">
+              <ion-card-header>
+                <ion-card-title>Email: {{ message.email }}</ion-card-title>
+                <ion-card-subtitle>Name: {{ message.FullName }}</ion-card-subtitle>
+                <ion-card-subtitle>Subject: {{ message.Subject }}</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-label>Message: {{ message.Description }}</ion-label>
+                <br>
+                <ion-item>
+                  <ion-textarea formControlName="messageBody" placeholder="Service response to officer">
+                  </ion-textarea>
+                </ion-item>
+                <ion-button type="submit" shape="round" color="dark" slot="start">Send
+                  <!-- <ion-icon slot="icon-only"
+                    name="checkmark-done-circle">
+                  </ion-icon> -->
+                  <ion-icon name="send-sharp" size="small"></ion-icon>
+                </ion-button>
+              </ion-card-content>
+            </form>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div *ngIf="statisticsPanel" style="width: 100%;">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="start" style="padding-left: 5%;">
+          <h2 style="font-size: x-large;"><strong>Statistics</strong></h2>
+          <div>
+            <div style="display: block">
+              <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                [legend]="barChartLegend" [chartType]="barChartType">
+              </canvas>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div *ngIf="settingsPanel" style="width: 100%;">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="start" style="padding-left: 5%;">
+          <h2 style="font-size: x-large;"><strong>Settings and Logging</strong></h2>
+          <ion-row>
+            <ion-button (click)=signtoWork() shape="round" color="dark" size="small">
+              Sign in to Work
+            </ion-button>
+          </ion-row>
+          <ion-row>
+            <ion-button (click)=signOffWork() shape="round" color="dark" size="small">
+              Sign off from Work
+            </ion-button>
+          </ion-row>
+          <ion-row>
+            <ion-button (click)=getWorkLogs() shape="round" color="dark" size="small">
+              Activity History
+            </ion-button>
+          </ion-row>
+        </ion-col>
+        <ion-col *ngIf="activityLog">
+          <ion-list>
+            <ion-item>
+              <ion-grid>
+                <ion-row style="font-weight: bolder;">
+                  <ion-col>Signin Time</ion-col>
+                  <ion-col>Signoff Time</ion-col>
+                  <ion-col>Accounts Handled</ion-col>
+                  <ion-col>Support Provided</ion-col>
+                  <ion-col>Date</ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+            <ion-item *ngFor="let log of EWorkLogs | slice:0:15;; let i = index">
+              <ion-grid>
+                <ion-row style="font-size: small;">
+                  <ion-col>{{log.signIn}}</ion-col>
+                  <ion-col>{{log.signOff}}</ion-col>
+                  <ion-col>{{log.accountsHandled}}</ion-col>
+                  <ion-col>{{log.messagesHandled}}</ion-col>
+                  <ion-col>{{log.date}}</ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- PAGE CONTENT ENDS -->
+  <!-- PAGE LINKS AND INFORMATION -->
+</ion-content>
+
+<!-- PAGE FOOTER STARTS -->
+<ion-footer class="ion-border" align="center" style="opacity: 0.97;">
+  <ion-toolbar color="dark">
+    <ion-text>
+      Government Portal<br>
+      Ministry of Home Affairs
+    </ion-text>
+  </ion-toolbar>
+</ion-footer>
+<!-- PAGE FOOTER ENDS -->

@@ -16,17 +16,40 @@ export class AccessService {
     public alertController: AlertController,
     private navCtrl: NavController
   ) {}
-
+  /** Method for getting eApplications to Officer */
   getEApplications() {
     return this.firestore
       .collection("eApplications", (ref) =>
         ref
+          .limit(10)
           .where("status", "in", ["New", "Processing"])
           .where("payment_status", "==", "paid")
       )
       .snapshotChanges();
   }
-
+  /** Method for getting eApplications Status to Officer on request*/
+  getEApplicationStatus() {
+    return this.firestore
+      .collection("eApplications", (ref) => ref.limit(20))
+      .snapshotChanges();
+  }
+  /** Method for getting eApplications Status to Officer on request*/
+  getEApplicationStatusByID(GovernmentID) {
+    return this.firestore
+      .collection("eApplications", (ref) =>
+        ref.where("GovernmentID", "==", GovernmentID)
+      )
+      .snapshotChanges();
+  }
+  /** Method for fetching eApplicant Data for verification */
+  getECitizensPhoto(GovernmentID) {
+    return this.firestore
+      .collection("eCitizens", (ref) =>
+        ref.where("GovernmentID", "==", GovernmentID)
+      )
+      .snapshotChanges();
+  }
+  /** Method for retrieving active new eCitizen users*/
   getECitizens() {
     return this.firestore
       .collection("eCitizens", (ref) =>
@@ -34,7 +57,23 @@ export class AccessService {
       )
       .snapshotChanges();
   }
-
+  /** Method for retrieving an eCitizen by Card*/
+  getECitizenByCard(Access_Key) {
+    return this.firestore
+      .collection("eCitizens", (ref) =>
+        ref.where("Access_Key", "==", Access_Key)
+      )
+      .snapshotChanges();
+  }
+  /** Method for retrieving an eCitizen by ID*/
+  getECitizenbyID(GovernmentID) {
+    return this.firestore
+      .collection("eCitizens", (ref) =>
+        ref.where("GovernmentID", "==", GovernmentID)
+      )
+      .snapshotChanges();
+  }
+  /** Method for retrieving an active eCitizen*/
   getECitizen(GovernmentID) {
     return this.firestore
       .collection("eCitizens", (ref) =>
@@ -44,20 +83,70 @@ export class AccessService {
       )
       .snapshotChanges();
   }
-
+  /** Method for retrieving eSupport messages */
   getESupportMessages() {
     return this.firestore
-      .collection("eSupport", (ref) => ref.where("Status", "==", "New"))
+      .collection("eSupport", (ref) =>
+        ref.limit(10).where("Status", "==", "New")
+      )
       .snapshotChanges();
   }
-  getEWorkLogs(Email) {
+  /** Method for getting Officer worklogs */
+  async getEWorkLogs(Email) {
     return this.firestore
       .collection("eAdministration")
       .doc(Email)
       .collection("WorkLogs")
       .snapshotChanges();
   }
+  /** Method for officer signin activity */
+  async signIn() {
+    var user = firebase.default.auth().currentUser;
+    var date = dateFormat(new Date(), "mm-dd-yyyy");
+    var time = dateFormat(new Date(), "h:MM:ss TT");
+    const eAdministration = this.firestore
+      .collection("eAdministration")
+      .doc(user.email)
+      .collection("WorkLogs")
+      .doc(date);
+    const res = await eAdministration.set(
+      {
+        signIn: time,
+        date: date,
+      },
+      { merge: true }
+    );
+  }
+  /** Method for officer signoff activity */
+  async signOff() {
+    var user = firebase.default.auth().currentUser;
+    let date = dateFormat(new Date(), "mm-dd-yyyy");
+    var time = dateFormat(new Date(), "h:MM:ss TT");
+    const eAdministration = this.firestore
+      .collection("eAdministration")
+      .doc(user.email)
+      .collection("WorkLogs")
+      .doc(date);
+    const res = await eAdministration.set(
+      {
+        signOff: time,
+        date: date,
+      },
+      { merge: true }
+    );
+  }
+  /** Method for updating eCitizen access key */
 
+  async updateECitizenAccessPIN(Access_Key, governmentID) {
+    const eCitizen = this.firestore.collection("eCitizens").doc(governmentID);
+    const res = await eCitizen.set(
+      {
+        Access_Key: Access_Key,
+      },
+      { merge: true }
+    );
+  }
+  /** Method for activating disabled eCitizen account */
   async activateECitizen(governmentID) {
     const eCitizen = this.firestore.collection("eCitizens").doc(governmentID);
     const res = await eCitizen.set(
@@ -67,6 +156,7 @@ export class AccessService {
       { merge: true }
     );
   }
+  /** Method for disabling active eCitizen account */
   async disableECitizen(governmentID) {
     const eCitizen = this.firestore.collection("eCitizens").doc(governmentID);
     const res = await eCitizen.set(
@@ -76,6 +166,7 @@ export class AccessService {
       { merge: true }
     );
   }
+  /** Method for permanentely locking eCitizen account, do not delete actual profile [HOLD FOR REFERENCES] */
   async deleteECitizen(governmentID) {
     const eCitizen = this.firestore.collection("eCitizens").doc(governmentID);
     const res = await eCitizen.set(
@@ -85,24 +176,39 @@ export class AccessService {
       { merge: true }
     );
   }
-
+  /** Method for setting application to processing */
   async setApplicationToProcessing(DocumentID) {
-    console.log(DocumentID);
+    // console.log(DocumentID);
     const eApplication = this.firestore
       .collection("eApplications")
       .doc(DocumentID);
-    const res = await eApplication.set(
+    await eApplication.set(
       {
         status: "Processing",
         description:
           "Your application is being processed and will be approved soon.",
+        processedTimeStamp: "" + new Date(),
+      },
+      { merge: true }
+    );
+    var user = firebase.default.auth().currentUser;
+    var documentNo = firebase.default.firestore.FieldValue.increment(1);
+    var date = dateFormat(new Date(), "mm-dd-yyyy");
+    const eAdministration = this.firestore
+      .collection("eAdministration")
+      .doc(user.email)
+      .collection("WorkLogs")
+      .doc(date);
+    await eAdministration.set(
+      {
+        documentsHandled: documentNo,
       },
       { merge: true }
     );
   }
-
+  /** Method for setting application to approved */
   async setApplicationToApproved(DocumentID) {
-    console.log(DocumentID);
+    // console.log(DocumentID);
     const eApplication = this.firestore
       .collection("eApplications")
       .doc(DocumentID);
@@ -111,6 +217,49 @@ export class AccessService {
         status: "Processed",
         description:
           "Your application is processed, we have mailed your ID card.",
+        approvedTimeStamp: "" + new Date(),
+      },
+      { merge: true }
+    );
+    var user = firebase.default.auth().currentUser;
+    var documentNo = firebase.default.firestore.FieldValue.increment(1);
+    var date = dateFormat(new Date(), "mm-dd-yyyy");
+    const eAdministration = this.firestore
+      .collection("eAdministration")
+      .doc(user.email)
+      .collection("WorkLogs")
+      .doc(date);
+    await eAdministration.set(
+      {
+        documentsHandled: documentNo,
+      },
+      { merge: true }
+    );
+  }
+  /** Method for declining application*/
+  async setApplicationToDeclined(DocumentID, Reason) {
+    const eApplication = this.firestore
+      .collection("eApplications")
+      .doc(DocumentID);
+    const res = await eApplication.set(
+      {
+        status: "Declined",
+        description: Reason,
+        approvedTimeStamp: "" + new Date(),
+      },
+      { merge: true }
+    );
+    var user = firebase.default.auth().currentUser;
+    var documentNo = firebase.default.firestore.FieldValue.increment(1);
+    var date = dateFormat(new Date(), "mm-dd-yyyy");
+    const eAdministration = this.firestore
+      .collection("eAdministration")
+      .doc(user.email)
+      .collection("WorkLogs")
+      .doc(date);
+    await eAdministration.set(
+      {
+        documentsHandled: documentNo,
       },
       { merge: true }
     );
@@ -124,135 +273,109 @@ export class AccessService {
    * @param value This holds NIC application data send by registered user via forms available on the Account Portal
    *
    */
-  sendNICApplication(value) {
-    return new Promise<any>(async (_resolve, _reject) => {
+  sendNICApplication(value, photoURL) {
+    var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
+    return new Promise<any>(async (resolve, reject) => {
+      /**
+       * Data gets stored on firebase, used for application tracking and references
+       */
       this.firestore
-        .collection("BirthRegistrations")
-        .doc("" + value.birthCertNo + "")
-        .ref.get()
-        .then(async (doc) => {
-          console.log(doc.data());
-          if (doc.exists) {
-            var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
-            console.log(doc.data());
-            console.log(value);
-            if (
-              doc.data()["birthRegNo"] == value.birthCertNo ||
-              doc.data()["dateofBirth"] == dateBirth
-            ) {
-              return new Promise<any>((resolve, reject) => {
-                /**
-                 * Data gets stored on firebase, used for application tracking and references
-                 */
-                var user = firebase.default.auth().currentUser;
-                this.firestore
-                  .collection("/eApplications/")
-                  .doc()
-                  .set({
-                    type: "NIC-Application",
-                    status: "New",
-                    GovernmentID: value.GovernmentID,
-                    payment_status: "paid",
-                    description: "Application sent for Department",
-                    email: value.email,
-                    familyName: value.familyName,
-                    name: value.name,
-                    surname: value.surname,
-                    engFamilyName: value.engFamilyName,
-                    engName: value.engName,
-                    engSurname: value.engSurname,
-                    nicFamilyName: value.nicFamilyName,
-                    nicName: value.nicName,
-                    nicSurname: value.nicSurname,
-                    gender: value.gender,
-                    civilStatus: value.civilStatus,
-                    profession: value.profession,
-                    dateOfBirth: dateBirth,
-                    birthCertNo: value.birthCertNo,
-                    placeOfBirth: value.placeOfBirth,
-                    division: value.division,
-                    district: value.district,
-                    birthRegNo: value.birthRegNo,
-                    countryOfBirth: value.countryOfBirth,
-                    foreignCertNo: value.foreignCertNo,
-                    city: value.city,
-                    houseNo: value.houseNo,
-                    houseName: value.houseName,
-                    streetName: value.streetName,
-                    postalcode: value.postalcode,
-                    postcity: value.postcity,
-                    posthouseNo: value.posthouseNo,
-                    posthouseName: value.posthouseName,
-                    poststreetName: value.poststreetName,
-                    postpostalcode: value.postpostalcode,
-                    certDate: dateFormat(value.certDate, "mm/dd/yyyy"),
-                    cardNo: value.cardNo,
-                    nicDate: dateFormat(value.nicDate, "mm/dd/yyyy"),
-                    policeName: value.policeName,
-                    policeReportDate: dateFormat(
-                      value.policeReportDate,
-                      "mm/dd/yyyy"
-                    ),
-                    homePhone: value.homePhone,
-                    mobilePhone: value.mobilePhone,
-                    requestType: value.NICType,
-                    TimeStamp: new Date(),
-                  })
-                  .then(
-                    (response) => resolve(response),
-                    (error) => reject(error)
-                  );
-              });
-            } else {
-              /**
-               * Informs applicant that the details dont't match with records to proceed further
-               */
-              console.log(
-                "INVALID BIRTH REGISTRATION NO. OR DATE OF BIRTH" +
-                  dateBirth +
-                  "  " +
-                  value.birthCertNo
-              );
-              const alert = await this.alertController.create({
-                header: "⚠ Application Not Sent",
-                subHeader: "Registration Details !",
-                message:
-                  "Your application has not been sent, as the entered details does not your match records.",
-                buttons: ["Retry"],
-              });
-              await alert.present();
-            }
-          } else {
-            /**
-             * Informs applicant that the Birth Registration number is invalid to proceed further
-             * This logic condition is set to prevent malicous use of system for unauthorised businesses
-             */
-            console.log("BIRTH REGISTRATION NUMBER NOT FOUND!");
-            const alert = await this.alertController.create({
-              header: "⚠ Application Not Sent !",
-              subHeader: "Birth Registration",
-              message:
-                "Your application has not been sent, as your details does not match any records.",
-              buttons: ["Close"],
-            });
-            await alert.present();
-          }
-        });
+        .collection("/eApplications/")
+        .doc()
+        .set({
+          type: "NIC-Application",
+          status: "New",
+          GovernmentID: value.GovernmentID,
+          payment_status: "paid",
+          description: "Application sent for Department",
+          email: value.email,
+          familyName: value.familyName,
+          name: value.name,
+          surname: value.surname,
+          engFamilyName: value.engFamilyName,
+          engName: value.engName,
+          engSurname: value.engSurname,
+          nicFamilyName: value.nicFamilyName,
+          nicName: value.nicName,
+          nicSurname: value.nicSurname,
+          gender: value.gender,
+          civilStatus: value.civilStatus,
+          profession: value.profession,
+          dateOfBirth: dateBirth,
+          birthCertNo: value.birthCertNo,
+          placeOfBirth: value.placeOfBirth,
+          division: value.division,
+          district: value.district,
+          birthRegNo: value.birthRegNo,
+          countryOfBirth: value.countryOfBirth,
+          foreignCertNo: value.foreignCertNo,
+          city: value.city,
+          houseNo: value.houseNo,
+          houseName: value.houseName,
+          streetName: value.streetName,
+          postalcode: value.postalcode,
+          postcity: value.postcity,
+          posthouseNo: value.posthouseNo,
+          posthouseName: value.posthouseName,
+          poststreetName: value.poststreetName,
+          postpostalcode: value.postpostalcode,
+          certDate: dateFormat(value.certDate, "mm/dd/yyyy"),
+          cardNo: value.cardNo,
+          nicDate: dateFormat(value.nicDate, "mm/dd/yyyy"),
+          policeName: value.policeName,
+          policeReportDate: dateFormat(value.policeReportDate, "mm/dd/yyyy"),
+          homePhone: value.homePhone,
+          mobilePhone: value.mobilePhone,
+          requestType: value.NICType,
+          TimeStamp: new Date(),
+          photoURL: photoURL,
+          sentTimeStamp: "" + new Date(),
+          processedTimeStamp: "",
+          approvedTimeStamp: "",
+        })
+        .then(
+          (response) => resolve(response),
+          (error) => reject(error)
+        );
+      const alert = await this.alertController.create({
+        header: "✅ Application Requested",
+        subHeader: "Application Sent",
+        message:
+          "Your application has been sent, check Services page for process tracking.",
+        buttons: ["OK"],
+      });
+      await alert.present();
     });
   }
+
+  /** Method for sending officer reponse to ecitizen */
   sendMessage(ID, messageBody) {
     return new Promise<any>(async (resolve, reject) => {
       /**
        * Data gets stored on firebase, used for message tracking and references
        */
-      console.log(ID + "\n" + messageBody);
-      console.log(ID);
+      // console.log(ID + "\n" + messageBody);
+      // console.log(ID);
       const eSupport = this.firestore.collection("eSupport").doc(ID);
-      const res = await eSupport
+      const res = await eSupport.set(
+        {
+          Status: "Completed",
+          Response: messageBody,
+        },
+        { merge: true }
+      );
+      var user = firebase.default.auth().currentUser;
+      var supportNo = firebase.default.firestore.FieldValue.increment(1);
+      var date = dateFormat(new Date(), "mm-dd-yyyy");
+      const eAdministration = this.firestore
+        .collection("eAdministration")
+        .doc(user.email)
+        .collection("WorkLogs")
+        .doc(date);
+      await eAdministration
         .set(
           {
-            Status: "Completed",
-            Response: messageBody,
+            messagesHandled: supportNo,
           },
           { merge: true }
         )
@@ -286,14 +409,13 @@ export class AccessService {
       }
     });
   }
-
   logoutOfficer() {
     return new Promise<void>((resolve, reject) => {
       if (this.auth.currentUser) {
         this.auth
           .signOut()
           .then(() => {
-            console.log("Signing out");
+            // console.log("Signing out");
             this.navCtrl.navigateForward("access");
             resolve();
           })

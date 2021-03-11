@@ -47,7 +47,7 @@ export class AccessPage implements OnInit {
   private loginOfficer(value) {
     this.accessService.loginOfficer(value)
       .then(res => {
-        console.log(res);
+        // console.log(res);
         this.errorMessage = "";
         this.navCtrl.navigateForward("office/home-affairs");
       }, async err => {

@@ -1,0 +1,94 @@
+<!-- 
+  
+  Contains frontend structure and design for Environment page
+  Variables intialised here are related to the typescript page and used
+  for functionality.
+
+-->
+<!-- PAGE HEADER STARTS -->
+
+<ion-content [fullscreen]="true">
+  <!-- #3082c9 Royal Blue | #c92d39 Government Red -->
+  <div style="background-color:#3082c9;color: white;">
+    <ion-header>
+      <ion-toolbar color="dark">
+        <ion-title>
+          <a href="home" color="light" style="color: white;text-decoration: none;">
+            <strong>GOVERNMENT PORTAL</strong>
+          </a>
+        </ion-title>
+        <ion-button class="log-in" slot="icon-only" slot="end" href="sign-in" color="signin">
+          <ion-icon name="log-in"></ion-icon>
+        </ion-button>
+      </ion-toolbar>
+    </ion-header>
+    <!-- PAGE HEADER ENDS -->
+
+    <!-- PAGE CONTENT STARTS -->
+
+    <!-- PAGE SEARCH AND LINKED CONTENT -->
+    <h1 style="margin-left: 2%;"><strong>WELCOME TO GOVERNMENT PORTAL</strong></h1>
+    <h5 style="margin-left: 2%;">All government services at one place.</h5>
+    <ion-searchbar color="light" style="width: 40%;" animated="true" [(ngModel)]="searchQuery" (click)="click_in()"
+      (clickOutside)="onClickedOutside($event)" (ionInput)="search($event)" placeholder="Search..."></ion-searchbar>
+    <ion-list *ngIf="pagesList" style="position: absolute;z-index:1000;width: 40%;">
+      <ion-item *ngFor="let algoliaResult of algoliaResults | slice:0:3;; let i = index">
+        <a href={{algoliaResult.url}} class="underline-search">{{ algoliaResult.name }}
+        </a>
+      </ion-item>
+    </ion-list>
+  </div>
+  <!-- PAGE SEARCH AND LINKED CONTENT -->
+
+  <!-- PAGE LINKS AND INFORMATION -->
+  <div style="margin: 2%;">
+    <ion-content>
+      <h1>Environment</h1>
+    </ion-content>
+    <h3>Background of Ministry of Wildlife and Forest Conservation </h3>
+    <p>Foresting biodiversity by conservation of wildlife and forest and expanding national forest cover though
+      environmental sensitive forest plantation and conservation of natural environment of wildlife.</p>
+    <p>Providing policy guidance to relevant State Ministry, and formulating policies in relation to the subject of
+      Wildlife and Forest Conservation , in conformity with the prescribed laws, acts and ordinances, implementation of
+      projects under the national budget, state investment and national development programme , and formulating
+      implementation , monitoring and evaluating policies, programmes and projects related to subjects and functions
+      under below - mentioned State Corporations and Statutory Institiutions for “ Wildlife Protection and Forest
+      Conservation “ based on the national policies implemented by the government and in accordance with the policy
+      statement “ Vistas of Prosperity and Splendour”
+    </p>
+    <h4>Duties and Functions</h4>
+    <ul>
+      <li>Expansion of national parks, reservoirs and wildlife food crops needed for the protection of wildlife.</li>
+      <li>Implementing modern programmes to minimize damages caused by wild animals to housing, property and cultivation
+        In rural areas.</li>
+      <li>Implementing community based safety measures side by side with safety measures such as construction of
+      electric fence and trenches to address elephant - human conflict in vulnerable areas.</li>
+      <li>Introducing and expending forest cultivations in home gardens , schools, hospitals, offices, work places areas
+        with less roads and in parks so as to increase forest density.</li>
+    </ul>
+    <h4>Vision</h4>
+    <p>“A sustainable country where wildlife and forest resources conserved”</p>
+    <h4>Mission</h4>
+    <p>“Having the objective of nurturing the biodiversity through conservation wildlife and forest resources, to give
+      leadership to make policies on in-situ flora conservation and in-situ and ex-situ conservation of fauna and for
+      the promotion of sustainable timber industry, coordination and steering of leading institutions for the
+      implementation”</p>
+    <a href="page-under-construction" class="underline">
+      Apply for your Environment and Wildlife services through Government Portal
+    </a>
+  </div>
+  <!-- PAGE LINKS AND INFORMATION -->
+
+  <!-- PAGE CONTENT ENDS -->
+
+  <!-- PAGE FOOTER STARTS -->
+  <ion-footer class="ion-no-border" align="center">
+    <ion-toolbar color="light">
+      <ion-text>
+        Government Portal<br>
+        Ministry of Home Affairs
+      </ion-text>
+    </ion-toolbar>
+  </ion-footer>
+  <!-- PAGE FOOTER ENDS -->
+</ion-content>

@@ -1,0 +1,101 @@
+<!-- 
+  
+  Contains frontend structure and design for Agriculture page
+  Variables intialised here are related to the typescript page and used
+  for functionality.
+
+-->
+<!-- PAGE HEADER STARTS -->
+
+<ion-content [fullscreen]="true">
+  <!-- #3082c9 Royal Blue | #c92d39 Government Red -->
+  <div style="background-color:#3082c9;color: white;">
+    <ion-header>
+      <ion-toolbar color="dark">
+        <ion-title>
+          <a href="home" color="light" style="color: white;text-decoration: none;">
+            <strong>GOVERNMENT PORTAL</strong>
+          </a>
+        </ion-title>
+        <ion-button class="log-in" slot="icon-only" slot="end" href="sign-in" color="signin">
+          <ion-icon name="log-in"></ion-icon>
+        </ion-button>
+      </ion-toolbar>
+    </ion-header>
+    <!-- PAGE HEADER ENDS -->
+
+    <!-- PAGE CONTENT STARTS -->
+
+    <!-- PAGE SEARCH AND LINKED CONTENT -->
+    <h1 style="margin-left: 2%;"><strong>WELCOME TO GOVERNMENT PORTAL</strong></h1>
+    <h5 style="margin-left: 2%;">All government services at one place.</h5>
+    <ion-searchbar color="light" style="width: 40%;" animated="true" [(ngModel)]="searchQuery" (click)="click_in()"
+      (clickOutside)="onClickedOutside($event)" (ionInput)="search($event)" placeholder="Search..."></ion-searchbar>
+    <ion-list *ngIf="pagesList" style="position: absolute;z-index:1000;width: 40%;">
+      <ion-item *ngFor="let algoliaResult of algoliaResults | slice:0:3;; let i = index">
+        <a href={{algoliaResult.url}} class="underline-search">{{ algoliaResult.name }}
+        </a>
+      </ion-item>
+    </ion-list>
+  </div>
+  <!-- PAGE SEARCH AND LINKED CONTENT -->
+
+  <!-- PAGE LINKS AND INFORMATION -->
+  <div style="margin: 2%;">
+    <ion-content>
+      <h1>Agriculture</h1>
+    </ion-content>
+    <h3>Background of The Ministry of Agriculture</h3>
+    <p>Ministry of Agriculture has realized this and is committed to make its utmost contribution to achieve its mission
+      of bringing about prosperity through providing necessary guidance and co-ordination activities for sustainable
+      development in Agriculture.
+    </p>
+    <p>Sri Lanka, affectionately called as the pearl of the Indian Ocean, is a tear drop shaped island of 65,000sq KM
+      surrounded by sparkling blue green sea. Moderate climate throughout the year, fertile soil, freely available
+      ground water with fairly distributed river net work in most parts and two monsoons which bring rains for the two
+      main cultivation seasons are the key ecological factors of the country.
+    </p>
+    <p> With these ideal conditions, agriculture sector has always performed as a major economic force in Sri Lanka,
+      making a significant contribution to the national economy, food security and employment. At the same time
+      agriculture is the livelihood of the majority in the rural sector and plays a key role in alleviating rural
+      poverty. This has been well recognized from the time of independence and there has always been a cabinet portfolio
+      set aside for the agriculture sector.</p>
+    <h4>Objectives</h4>
+    <ul>
+      <li>Supportive agricultural policy for food and allied agricultural crops.</li>
+      <li>Established food and nutrition security.</li>
+      <li>Stable prices for agricultural products.</li>
+      <li>Efficiently coordinated paddy purchasing and marketing programme</li>
+      <li>Timely implementation of projects.</li>
+      <li>Increase production in selected crops.</li>
+      <li>Efficient and effective implementation of accelerated food production programme.</li>
+      <li>Efficient and effective use of foreign funds.</li>
+      <li>Customer friendly and result oriented administrative system.</li>
+      <li> Results based management in entire government sector.</li>
+    </ul>
+    <h4>Vision</h4>
+    <p>“A vibrant and dynamic agricultural sector for food security and national prosperity”</p>
+    <h4>Mission</h4>
+    <p>“To achieve globally competitive production, processing and marketing enterprises through socially acceptable,
+      innovative and commercially-oriented agriculture, through sustainable management of natural resources of the
+      country”</p>
+    <a href="page-under-construction" class="underline">
+      Apply for your Agricultural services through Government Portal
+    </a>
+  </div>
+
+  <!-- PAGE LINKS AND INFORMATION -->
+
+  <!-- PAGE CONTENT ENDS -->
+
+  <!-- PAGE FOOTER STARTS -->
+  <ion-footer class="ion-no-border" align="center">
+    <ion-toolbar color="light">
+      <ion-text>
+        Government Portal<br>
+        Ministry of Home Affairs
+      </ion-text>
+    </ion-toolbar>
+  </ion-footer>
+  <!-- PAGE FOOTER ENDS -->
+</ion-content>

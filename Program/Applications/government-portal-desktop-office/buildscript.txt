@@ -1,3 +1,0 @@
-Goto 'electron' folder and execute command
-
-electron-packager . "Government Portal Office" --overwrite --asar=true --platform=win32 --arch=x64 --icon=app/assets/icons/win/icon.ico --prune=true --out=../release-builds --version-string.CompanyName="Robust Pioneer Liable Software (RPLS)" --version-string.FileDescription="Government Portal Office Application" --version-string.ProductName="Government Portal Office" --version-string.Copyright="Government Portal 2021© | RPLS"

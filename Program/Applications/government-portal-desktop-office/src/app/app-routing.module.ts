@@ -30,6 +30,7 @@ const routes: Routes = [
     loadChildren: () => import('./office/home-affairs/home-affairs.module').then( m => m.HomeAffairsPageModule),
     ...canActivate(redirectUnauthorizedToAccess)
   },
+
 ];
 
 @NgModule({

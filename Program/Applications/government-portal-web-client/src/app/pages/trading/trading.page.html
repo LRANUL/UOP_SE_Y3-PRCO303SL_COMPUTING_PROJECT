@@ -1,0 +1,91 @@
+<!-- 
+  
+  Contains frontend structure and design for Trading page
+  Variables intialised here are related to the typescript page and used
+  for functionality.
+
+-->
+<!-- PAGE HEADER STARTS -->
+
+<ion-content [fullscreen]="true">
+  <!-- #3082c9 Royal Blue | #c92d39 Government Red -->
+  <div style="background-color:#3082c9;color: white;">
+    <ion-header>
+      <ion-toolbar color="dark">
+        <ion-title>
+          <a href="home" color="light" style="color: white;text-decoration: none;">
+            <strong>GOVERNMENT PORTAL</strong>
+          </a>
+        </ion-title>
+        <ion-button class="log-in" slot="icon-only" slot="end" href="sign-in" color="signin">
+          <ion-icon name="log-in"></ion-icon>
+        </ion-button>
+      </ion-toolbar>
+    </ion-header>
+    <!-- PAGE HEADER ENDS -->
+
+    <!-- PAGE CONTENT STARTS -->
+
+    <!-- PAGE SEARCH AND LINKED CONTENT -->
+    <h1 style="margin-left: 2%;"><strong>WELCOME TO GOVERNMENT PORTAL</strong></h1>
+    <h5 style="margin-left: 2%;">All government services at one place.</h5>
+    <ion-searchbar color="light" style="width: 40%;" animated="true" [(ngModel)]="searchQuery" (click)="click_in()"
+      (clickOutside)="onClickedOutside($event)" (ionInput)="search($event)" placeholder="Search..."></ion-searchbar>
+    <ion-list *ngIf="pagesList" style="position: absolute;z-index:1000;width: 40%;">
+      <ion-item *ngFor="let algoliaResult of algoliaResults | slice:0:3;; let i = index">
+        <a href={{algoliaResult.url}} class="underline-search">{{ algoliaResult.name }}
+        </a>
+      </ion-item>
+    </ion-list>
+  </div>
+  <!-- PAGE SEARCH AND LINKED CONTENT -->
+
+  <!-- PAGE LINKS AND INFORMATION -->
+  <div style="margin: 2%;">
+    <ion-content>
+      <h1>Trading</h1>
+    </ion-content>
+    <h3>Background of The Foreign Ministry of Sri Lanka</h3>
+    <p>The Foreign Ministry coordinates and carries out the foreign policy of the Government of Sri Lanka. The Ministry
+      of
+      Foreign Relations consists of the Ministry headquarters in Colombo and the missions abroad.
+    </p>
+    <p>
+      The Ministry was formally established in 1948 following the independence of Ceylon as the Ministry of External
+      Affairs and Defence, coming under the direct control of the Prime Minister of Ceylon. In 1977, the government
+      divided the ministry in two, forming the Ministry of Defence and the Ministry of Foreign Affairs. A.C.S Hameed was
+      appointed as the first Minister of Foreign Affairs on 4 February 1978.
+    </p>
+    <p>The Economic Affairs Division is mainly facilitating Promotional Activities in Selected Markets under the
+      Economic
+      Diplomacy Programme, with the active participation of Sri Lanka Missions and the Government economic agencies.As
+      each market has a different set of strengths; this sub-programme is designed to identify the key markets and
+      propose
+      suitable promotional strategies catered to those strengths. Through this programme , the Economic Affairs Division
+      has taken the initiative to engage directly, finance and organize Economic Diplomacy programmes in 2018 and 2019
+      while activities will be organized in 2020 in line with the targets and objectives of the line agencies and the
+      private sector.</p>
+    <p>Investment and Trade Round Table Meeting for the British Sri Lankan Diaspora, 2 September 2019, London, United
+      Kingdom.
+      Introduction to One Village One Products and 2,000 Exporters Development Programme of the Export Development Board
+      (EDB) to Sri Lankan community through Sri Lanka Consulate General in Melbourne with a view to generate interest,
+      and identify investors, 13 October 2019.</p>
+    <a href="page-under-construction" class="underline">
+      Apply for your Trading and Investment services through Government Portal
+    </a>
+  </div>
+  <!-- PAGE LINKS AND INFORMATION -->
+
+  <!-- PAGE CONTENT ENDS -->
+
+  <!-- PAGE FOOTER STARTS -->
+  <ion-footer class="ion-no-border" align="center">
+    <ion-toolbar color="light">
+      <ion-text>
+        Government Portal<br>
+        Ministry of Home Affairs
+      </ion-text>
+    </ion-toolbar>
+  </ion-footer>
+  <!-- PAGE FOOTER ENDS -->
+</ion-content>

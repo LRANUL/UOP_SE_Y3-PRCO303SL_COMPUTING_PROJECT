@@ -29,9 +29,9 @@
           <ion-icon name="people"></ion-icon>
           <ion-label>Accounts</ion-label>
         </ion-tab-button>
-        <ion-tab-button (click)=openGuide()>
-          <ion-icon name="book"></ion-icon>
-          <ion-label>Guide</ion-label>
+        <ion-tab-button (click)=openVerifier()>
+          <ion-icon name="shield-checkmark"></ion-icon>
+          <ion-label>Verify</ion-label>
         </ion-tab-button>
         <ion-tab-button (click)=openSettings()>
           <ion-icon name="settings"></ion-icon>
@@ -46,23 +46,68 @@
 
 <ion-content [fullscreen]="true" style="background: var(--ion-color-medium)">
   <!-- PAGE CONTENT STARTS -->
-
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="medium" (click)=openGuide()>
+      <ion-icon name="book"></ion-icon>
+      <ion-label>Guide</ion-label>
+    </ion-fab-button>
+  </ion-fab>
   <!-- PAGE LINKS AND INFORMATION -->
   <div *ngIf="servicesPanel" style="width: 100%;">
     <ion-grid>
       <ion-row>
         <ion-col class="start" style="padding-left: 5%;">
           <h2 style="font-size: x-large;"><strong>NIC Services</strong></h2>
-          <ion-row class="underline">
+          <ion-row>
+            <ion-button (click)=getNICApplications() shape="round" color="medium" size="small">
+              NIC Applications
+            </ion-button>
+          </ion-row>
+          <ion-row>
+            <ion-button (click)=getNICApplicationStatus() shape="round" color="medium" size="small">
+              NIC Application Status
+            </ion-button>
+          </ion-row>
+          <!-- <ion-row class="underline"> 
             <ion-router-link (click)=getNICApplications() class="underline">
               NIC Applications
             </ion-router-link>
-          </ion-row>
+          </ion-row> -->
+        </ion-col>
+        <ion-col *ngIf="NICApplicantStatus" class="end" style="background: var(--ion-color-form);">
+          <div style="position: relative; float: right;color: rgb(126, 125, 125);font-weight: bold;cursor:pointer;"
+            (click)=exitStatus()>Exit</div>
+            <ion-searchbar placeholder="Find Applications" [(ngModel)]="applicationFilter" animated="true" autocomplete="true"
+                (search)="findEApplication($event.target.value)">
+              </ion-searchbar>
+          <ion-card *ngFor="let application of NICApplicationStatus | filter:applicationFilter">
+            <ion-card-title>Applicant: {{ application.name }} {{ application.familyName }}</ion-card-title>
+            <ion-card-subtitle>GovernmentID: {{application.GovernmentID}}</ion-card-subtitle>
+            <ion-card-content>
+              <ion-img src="{{application.PhotoURL}}" style="height: 100px;width: 100px;"></ion-img>
+              <ion-label>Request: {{application.requestType}}</ion-label>
+              <br>
+              <ion-label>Assigned: {{application.assigneeName}} Divison</ion-label>
+              <br>
+              <ion-label>Description: {{application.applicationDescription}}</ion-label>
+              <br>
+              <ion-label>Status: {{application.applicationStatus}}</ion-label>
+              <br>
+              <ion-label>Received Time: {{application.receivedTime}}</ion-label>
+              <br>
+              <ion-label>Processed Time: {{application.processedTime}}</ion-label>
+              <br>
+              <ion-label>Approved/Decline Time: {{application.approvedTime}}</ion-label>
+            </ion-card-content>
+          </ion-card>
         </ion-col>
         <ion-col *ngIf="NICApplication">
           <div style="position: relative;
           float: right;color: darkgray;font-weight: bold;cursor:pointer;" (click)=exitApp()>Exit</div>
           <br>
+          <div *ngIf="NICApplications==''">
+            <i>No eApplications at time moment.</i>
+          </div>
           <div *ngIf="loadingData">
             <ion-skeleton-text animated></ion-skeleton-text>
             <ion-skeleton-text animated></ion-skeleton-text>
@@ -75,6 +120,7 @@
               <ion-card-subtitle>Name: {{ NIC.name }} {{ NIC.familyName }}</ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>
+              <ion-img src="{{NIC.photoURL}}" style="height: 100px;width: 100px;"></ion-img>
               <ion-label>Request Type :{{ NIC.requestType }}</ion-label><br>
               <ion-label>Family Name:{{ NIC.familyName }}</ion-label><br>
               <ion-label>Name:{{ NIC.name }}</ion-label><br>
@@ -115,6 +161,10 @@
                 <ion-icon slot="icon-only" name="checkmark-done-circle">
                 </ion-icon>
               </ion-button>
+              <ion-button (click)="declineRequest(NIC.id)" shape="round" color="danger" slot="end">Decline
+                <ion-icon slot="icon-only" name="checkmark-done-circle">
+                </ion-icon>
+              </ion-button>
             </ion-card-content>
           </ion-card>
         </ion-col>
@@ -126,6 +176,9 @@
       <ion-row>
         <ion-col *ngIf="supportServices" class="start" style="padding-left: 5%;">
           <h2 style="font-size: x-large;"><strong>Support Services</strong></h2>
+          <div *ngIf="ESupportMessages==''">
+            <i>No messages at time moment.</i>
+          </div>
           <div *ngIf="loadingData">
             <ion-skeleton-text animated></ion-skeleton-text>
             <ion-skeleton-text animated></ion-skeleton-text>
@@ -145,9 +198,11 @@
                   <ion-textarea formControlName="messageBody" placeholder="Service response to customer">
                   </ion-textarea>
                 </ion-item>
-                <ion-button type="submit" shape="round" color="primary" slot="end">Send<ion-icon slot="icon-only"
+                <ion-button type="submit" shape="round" color="primary" slot="start">Send
+                  <!-- <ion-icon slot="icon-only"
                     name="checkmark-done-circle">
-                  </ion-icon>
+                  </ion-icon> -->
+                  <ion-icon name="send-sharp" size="small"></ion-icon>
                 </ion-button>
               </ion-card-content>
             </form>
@@ -161,13 +216,38 @@
       <ion-row>
         <ion-col class="start" style="padding-left: 5%;">
           <h2 style="font-size: x-large;"><strong>Account Services</strong></h2>
-          <ion-row class="underline">
+          <ion-row>
+            <ion-button (click)=manageAccount() shape="round" color="medium" size="small">
+              Manage Accounts
+            </ion-button>
+          </ion-row>
+          <!-- <ion-row class="underline">
             <ion-router-link (click)=manageAccount() class="underline">
               Manage Accounts
             </ion-router-link>
-          </ion-row>
+          </ion-row> -->
           <h2 style="font-size: x-large;"><strong>Apply for Customer</strong></h2>
-          <ion-row class="underline">
+          <ion-row>
+            <ion-button (click)=firstNICApp() shape="round" color="medium" size="small">
+              Apply for First Timer NIC Applicant
+            </ion-button>
+          </ion-row>
+          <ion-row>
+            <ion-button (click)=renewNICApp() shape="round" color="medium" size="small">
+              Apply for Renewals of NIC Application
+            </ion-button>
+          </ion-row>
+          <ion-row>
+            <ion-button (click)=correctionNICApp() shape="round" color="medium" size="small">
+              Apply for Corrections of NIC Application
+            </ion-button>
+          </ion-row>
+          <ion-row>
+            <ion-button (click)=lostNICApp() shape="round" color="medium" size="small">
+              Apply for Lost of NIC Application
+            </ion-button>
+          </ion-row>
+          <!-- <ion-row class="underline">
             <ion-router-link (click)=firstNICApp() class="underline">
               Apply for First Timer NIC Applicant
             </ion-router-link>
@@ -177,8 +257,8 @@
             <ion-router-link (click)=renewNICApp() class="underline">
               Apply for Renewals of NIC Application
             </ion-router-link>
-          </ion-row>
-          <br>
+          </ion-row> -->
+          <!-- <br>
           <ion-row class="underline">
             <ion-router-link (click)=correctionNICApp() class="underline">
               Apply for Corrections of NIC Application
@@ -189,7 +269,7 @@
             <ion-router-link (click)=lostNICApp() class="underline">
               Apply for Lost of NIC Application
             </ion-router-link>
-          </ion-row>
+          </ion-row> -->
         </ion-col>
         <ion-col>
           <ion-col *ngIf="accountManage" class="end">
@@ -197,16 +277,22 @@
             float: right;color: darkgray;font-weight: bold;cursor:pointer;" (click)=exitECitizenManager()>Close Manager
             </div>
             <ion-row>
-              <ion-searchbar placeholder="Find eCitizens" [(ngModel)]="userFilter" animated="true" autocomplete="true" (search)="findECitizen($event.target.value)">
+              <ion-searchbar placeholder="Find eCitizens" [(ngModel)]="userFilter" animated="true" autocomplete="true"
+                (search)="findECitizen($event.target.value)">
               </ion-searchbar>
-              <i  style="font-size: x-small;">If the eCitizen is not available on the list, search after entering the full Government Portal ID</i>
+              <i style="font-size: x-small;">If the eCitizen is not available on the list, search after entering the
+                full Government Portal ID</i>
               <ion-list style="width: 100%;">
                 <ion-item *ngFor="let user of ECitizens | filter:userFilter" style="font-size:xx-small;">
                   <ion-img src="{{user.photo}}" style="height: 70px;width: 50px;"></ion-img>
                   <ion-label>{{user.name}}</ion-label>
                   <ion-label>{{user.governmentID}}</ion-label>
-                  <ion-button *ngIf="user.status == 'Disabled'" color="success" (click)="activateAccount(user.uid, user.governmentID)">Activate</ion-button>
-                  <ion-button *ngIf="user.status == 'Active'" color="medium" (click)="disableAccount(user.uid, user.governmentID)">Disable</ion-button>
+                  <ion-button color="warning"
+                    (click)="updateAccessPIN(user.governmentID)">Access PIN</ion-button>
+                  <ion-button *ngIf="user.status == 'Disabled'" color="success"
+                    (click)="activateAccount(user.uid, user.governmentID)">Activate</ion-button>
+                  <ion-button *ngIf="user.status == 'Active'" color="medium"
+                    (click)="disableAccount(user.uid, user.governmentID)">Disable</ion-button>
                   <ion-button color="danger" (click)="deleteAccount(user.uid, user.governmentID)">Delete</ion-button>
                 </ion-item>
               </ion-list>
@@ -230,7 +316,7 @@
                     formControlName="familyName" type="text" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.familyName">
+                  <ng-container *ngFor="let validation of validation_form.familyName">
                     <div class="error-message"
                       *ngIf="validations_form.get('familyName').hasError(validation.type) && (validations_form.get('familyName').dirty || validations_form.get('familyName').touched)">
                       {{ validation.message }}
@@ -242,7 +328,7 @@
                     required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.name">
+                  <ng-container *ngFor="let validation of validation_form.name">
                     <div class="error-message"
                       *ngIf="validations_form.get('name').hasError(validation.type) && (validations_form.get('name').dirty || validations_form.get('name').touched)">
                       {{ validation.message }}
@@ -254,7 +340,7 @@
                     formControlName="surname" type="text" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.surname">
+                  <ng-container *ngFor="let validation of validation_form.surname">
                     <div class="error-message"
                       *ngIf="validations_form.get('surname').hasError(validation.type) && (validations_form.get('surname').dirty || validations_form.get('surname').touched)">
                       {{ validation.message }}
@@ -268,7 +354,7 @@
                     formControlName="engFamilyName" type="text" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.engFamilyName">
+                  <ng-container *ngFor="let validation of validation_form.engFamilyName">
                     <div class="error-message"
                       *ngIf="validations_form.get('engFamilyName').hasError(validation.type) && (validations_form.get('engFamilyName').dirty || validations_form.get('engFamilyName').touched)">
                       {{ validation.message }}
@@ -280,7 +366,7 @@
                     type="text" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.engName">
+                  <ng-container *ngFor="let validation of validation_form.engName">
                     <div class="error-message"
                       *ngIf="validations_form.get('engName').hasError(validation.type) && (validations_form.get('engName').dirty || validations_form.get('engName').touched)">
                       {{ validation.message }}
@@ -292,7 +378,7 @@
                     formControlName="engSurname" type="text" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.engSurname">
+                  <ng-container *ngFor="let validation of validation_form.engSurname">
                     <div class="error-message"
                       *ngIf="validations_form.get('engSurname').hasError(validation.type) && (validations_form.get('engSurname').dirty || validations_form.get('engSurname').touched)">
                       {{ validation.message }}
@@ -308,7 +394,7 @@
                     formControlName="nicFamilyName" type="text"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.nicFamilyName">
+                  <ng-container *ngFor="let validation of validation_form.nicFamilyName">
                     <div class="error-message"
                       *ngIf="validations_form.get('nicFamilyName').hasError(validation.type) && (validations_form.get('nicFamilyName').dirty || validations_form.get('nicFamilyName').touched)">
                       {{ validation.message }}
@@ -320,7 +406,7 @@
                     type="text"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.nicName">
+                  <ng-container *ngFor="let validation of validation_form.nicName">
                     <div class="error-message"
                       *ngIf="validations_form.get('nicName').hasError(validation.type) && (validations_form.get('nicName').dirty || validations_form.get('nicName').touched)">
                       {{ validation.message }}
@@ -332,7 +418,7 @@
                     formControlName="nicSurname" type="text"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.nicSurname">
+                  <ng-container *ngFor="let validation of validation_form.nicSurname">
                     <div class="error-message"
                       *ngIf="validations_form.get('nicSurname').hasError(validation.type) && (validations_form.get('nicSurname').dirty || validations_form.get('nicSurname').touched)">
                       {{ validation.message }}
@@ -347,7 +433,7 @@
                   </ion-select>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.gender">
+                  <ng-container *ngFor="let validation of validation_form.gender">
                     <div class="error-message"
                       *ngIf="validations_form.get('gender').hasError(validation.type) && (validations_form.get('gender').dirty || validations_form.get('gender').touched)">
                       {{ validation.message }}
@@ -364,7 +450,7 @@
                   </ion-select>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.civilStatus">
+                  <ng-container *ngFor="let validation of validation_form.civilStatus">
                     <div class="error-message"
                       *ngIf="validations_form.get('civilStatus').hasError(validation.type) && (validations_form.get('civilStatus').dirty || validations_form.get('civilStatus').touched)">
                       {{ validation.message }}
@@ -378,7 +464,7 @@
                     formControlName="profession" type="text" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.profession">
+                  <ng-container *ngFor="let validation of validation_form.profession">
                     <div class="error-message"
                       *ngIf="validations_form.get('profession').hasError(validation.type) && (validations_form.get('profession').dirty || validations_form.get('profession').touched)">
                       {{ validation.message }}
@@ -392,7 +478,7 @@
                   </ion-datetime>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.dateOfBirth">
+                  <ng-container *ngFor="let validation of validation_form.dateOfBirth">
                     <div class="error-message"
                       *ngIf="validations_form.get('dateOfBirth').hasError(validation.type) && (validations_form.get('dateOfBirth').dirty || validations_form.get('dateOfBirth').touched)">
                       {{ validation.message }}
@@ -405,7 +491,7 @@
                     formControlName="birthCertNo" type="tel" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.birthCertNo">
+                  <ng-container *ngFor="let validation of validation_form.birthCertNo">
                     <div class="error-message"
                       *ngIf="validations_form.get('birthCertNo').hasError(validation.type) && (validations_form.get('birthCertNo').dirty || validations_form.get('birthCertNo').touched)">
                       {{ validation.message }}
@@ -418,7 +504,7 @@
                     formControlName="placeOfBirth" type="text" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.placeOfBirth">
+                  <ng-container *ngFor="let validation of validation_form.placeOfBirth">
                     <div class="error-message"
                       *ngIf="validations_form.get('placeOfBirth').hasError(validation.type) && (validations_form.get('placeOfBirth').dirty || validations_form.get('placeOfBirth').touched)">
                       {{ validation.message }}
@@ -432,7 +518,7 @@
                   </ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.division">
+                  <ng-container *ngFor="let validation of validation_form.division">
                     <div class="error-message"
                       *ngIf="validations_form.get('division').hasError(validation.type) && (validations_form.get('division').dirty || validations_form.get('division').touched)">
                       {{ validation.message }}
@@ -446,7 +532,7 @@
                   </ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.district">
+                  <ng-container *ngFor="let validation of validation_form.district">
                     <div class="error-message"
                       *ngIf="validations_form.get('district').hasError(validation.type) && (validations_form.get('district').dirty || validations_form.get('district').touched)">
                       {{ validation.message }}
@@ -475,7 +561,7 @@
                       formControlName="countryOfBirth" type="text"></ion-input>
                   </ion-item>
                   <div class="validation-errors">
-                    <ng-container *ngFor="let validation of validation_messages.countryOfBirth">
+                    <ng-container *ngFor="let validation of validation_form.countryOfBirth">
                       <div class="error-message"
                         *ngIf="validations_form.get('countryOfBirth').hasError(validation.type) && (validations_form.get('countryOfBirth').dirty || validations_form.get('countryOfBirth').touched)">
                         {{ validation.message }}
@@ -487,7 +573,7 @@
                       type="text"></ion-input>
                   </ion-item>
                   <div class="validation-errors">
-                    <ng-container *ngFor="let validation of validation_messages.city">
+                    <ng-container *ngFor="let validation of validation_form.city">
                       <div class="error-message"
                         *ngIf="validations_form.get('city').hasError(validation.type) && (validations_form.get('city').dirty || validations_form.get('city').touched)">
                         {{ validation.message }}
@@ -500,7 +586,7 @@
                       type="number"></ion-input>
                   </ion-item>
                   <div class="validation-errors">
-                    <ng-container *ngFor="let validation of validation_messages.foreignCertNo">
+                    <ng-container *ngFor="let validation of validation_form.foreignCertNo">
                       <div class="error-message"
                         *ngIf="validations_form.get('foreignCertNo').hasError(validation.type) && (validations_form.get('foreignCertNo').dirty || validations_form.get('foreignCertNo').touched)">
                         {{ validation.message }}
@@ -518,7 +604,7 @@
                       formControlName="certDate" type="text" required></ion-input>
                   </ion-item>
                   <div class="validation-errors">
-                    <ng-container *ngFor="let validation of validation_messages.certDate">
+                    <ng-container *ngFor="let validation of validation_form.certDate">
                       <div class="error-message"
                         *ngIf="validations_form.get('certDate').hasError(validation.type) && (validations_form.get('certDate').dirty || validations_form.get('certDate').touched)">
                         {{ validation.message }}
@@ -534,7 +620,7 @@
                     type="text" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.houseNo">
+                  <ng-container *ngFor="let validation of validation_form.houseNo">
                     <div class="error-message"
                       *ngIf="validations_form.get('houseNo').hasError(validation.type) && (validations_form.get('houseNo').dirty || validations_form.get('houseNo').touched)">
                       {{ validation.message }}
@@ -546,7 +632,7 @@
                     formControlName="houseName" type="text" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.houseName">
+                  <ng-container *ngFor="let validation of validation_form.houseName">
                     <div class="error-message"
                       *ngIf="validations_form.get('houseName').hasError(validation.type) && (validations_form.get('houseName').dirty || validations_form.get('houseName').touched)">
                       {{ validation.message }}
@@ -558,7 +644,7 @@
                     type="text" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.streetName">
+                  <ng-container *ngFor="let validation of validation_form.streetName">
                     <div class="error-message"
                       *ngIf="validations_form.get('streetName').hasError(validation.type) && (validations_form.get('streetName').dirty || validations_form.get('streetName').touched)">
                       {{ validation.message }}
@@ -570,7 +656,7 @@
                     formControlName="city" type="text" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.city">
+                  <ng-container *ngFor="let validation of validation_form.city">
                     <div class="error-message"
                       *ngIf="validations_form.get('city').hasError(validation.type) && (validations_form.get('city').dirty || validations_form.get('city').touched)">
                       {{ validation.message }}
@@ -582,7 +668,7 @@
                     formControlName="postalcode" type="text" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.postalcode">
+                  <ng-container *ngFor="let validation of validation_form.postalcode">
                     <div class="error-message"
                       *ngIf="validations_form.get('postalcode').hasError(validation.type) && (validations_form.get('postalcode').dirty || validations_form.get('postalcode').touched)">
                       {{ validation.message }}
@@ -596,7 +682,7 @@
                     formControlName="posthouseNo" type="text" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.posthouseNo">
+                  <ng-container *ngFor="let validation of validation_form.posthouseNo">
                     <div class="error-message"
                       *ngIf="validations_form.get('posthouseNo').hasError(validation.type) && (validations_form.get('posthouseNo').dirty || validations_form.get('posthouseNo').touched)">
                       {{ validation.message }}
@@ -608,7 +694,7 @@
                     formControlName="posthouseName" type="text" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.houseName">
+                  <ng-container *ngFor="let validation of validation_form.houseName">
                     <div class="error-message"
                       *ngIf="validations_form.get('posthouseName').hasError(validation.type) && (validations_form.get('posthouseName').dirty || validations_form.get('posthouseName').touched)">
                       {{ validation.message }}
@@ -620,7 +706,7 @@
                     type="text" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.poststreetName">
+                  <ng-container *ngFor="let validation of validation_form.poststreetName">
                     <div class="error-message"
                       *ngIf="validations_form.get('poststreetName').hasError(validation.type) && (validations_form.get('poststreetName').dirty || validations_form.get('poststreetName').touched)">
                       {{ validation.message }}
@@ -632,7 +718,7 @@
                     formControlName="postcity" type="text" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.postcity">
+                  <ng-container *ngFor="let validation of validation_form.postcity">
                     <div class="error-message"
                       *ngIf="validations_form.get('postcity').hasError(validation.type) && (validations_form.get('postcity').dirty || validations_form.get('postcity').touched)">
                       {{ validation.message }}
@@ -651,7 +737,7 @@
                       formControlName="cardNo" type="text"></ion-input>
                   </ion-item>
                   <div class="validation-errors">
-                    <ng-container *ngFor="let validation of validation_messages.cardNo">
+                    <ng-container *ngFor="let validation of validation_form.cardNo">
                       <div class="error-message"
                         *ngIf="validations_form.get('cardNo').hasError(validation.type) && (validations_form.get('cardNo').dirty || validations_form.get('cardNo').touched)">
                         {{ validation.message }}
@@ -666,7 +752,7 @@
                       type="text"></ion-datetime>
                   </ion-item>
                   <div class="validation-errors">
-                    <ng-container *ngFor="let validation of validation_messages.nicDate">
+                    <ng-container *ngFor="let validation of validation_form.nicDate">
                       <div class="error-message"
                         *ngIf="validations_form.get('nicDate').hasError(validation.type) && (validations_form.get('nicDate').dirty || validations_form.get('nicDate').touched)">
                         {{ validation.message }}
@@ -682,7 +768,7 @@
                       type="text"></ion-input>
                   </ion-item>
                   <div class="validation-errors">
-                    <ng-container *ngFor="let validation of validation_messages.policeName">
+                    <ng-container *ngFor="let validation of validation_form.policeName">
                       <div class="error-message"
                         *ngIf="validations_form.get('policeName').hasError(validation.type) && (validations_form.get('policeName').dirty || validations_form.get('policeName').touched)">
                         {{ validation.message }}
@@ -697,7 +783,7 @@
                       type="text"></ion-datetime>
                   </ion-item>
                   <div class="validation-errors">
-                    <ng-container *ngFor="let validation of validation_messages.policeReportDate">
+                    <ng-container *ngFor="let validation of validation_form.policeReportDate">
                       <div class="error-message"
                         *ngIf="validations_form.get('policeReportDate').hasError(validation.type) && (validations_form.get('policeReportDate').dirty || validations_form.get('policeReportDate').touched)">
                         {{ validation.message }}
@@ -708,22 +794,22 @@
                 <h5>Details required for inquiries | විමසීම් සඳහා අවශ්‍ය තොරතුරු | விசாரணைகளுக்கு தேவையான விவரங்கள்</h5>
                 <h6>Telephone No | දුරකථන අංකය | தொலைபேசி எண்</h6>
                 <ion-item>
-                  <ion-input required="true" placeholder="Residence|නිවසේ|குடியிருப்பு"
-                    formControlName="homePhone" type="tel" maxlength="10"></ion-input>
+                  <ion-input required="true" placeholder="Residence|නිවසේ|குடியிருப்பு" formControlName="homePhone"
+                    type="tel" maxlength="10"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.homePhone">
+                  <ng-container *ngFor="let validation of validation_form.homePhone">
                     <div class="error-message"
                       *ngIf="validations_form.get('homePhone').hasError(validation.type) && (validations_form.get('homePhone').dirty || validations_form.get('homePhone').touched)">
                       {{ validation.message }}
                     </div>
                   </ng-container>
                   <ion-item>
-                    <ion-input required="true" placeholder="Mobile|ජංගම|கைபேசி"
-                      formControlName="mobilePhone" type="tel" maxlength="10"></ion-input>
+                    <ion-input required="true" placeholder="Mobile|ජංගම|கைபேசி" formControlName="mobilePhone" type="tel"
+                      maxlength="10"></ion-input>
                   </ion-item>
                   <div class="validation-errors">
-                    <ng-container *ngFor="let validation of validation_messages.mobilePhone">
+                    <ng-container *ngFor="let validation of validation_form.mobilePhone">
                       <div class="error-message"
                         *ngIf="validations_form.get('mobilePhone').hasError(validation.type) && (validations_form.get('mobilePhone').dirty || validations_form.get('mobilePhone').touched)">
                         {{ validation.message }}
@@ -739,7 +825,7 @@
                       formControlName="GovernmentID" [(ngModel)]="GovernmentID"></ion-input>
                   </ion-item>
                   <div class="validation-errors">
-                    <ng-container *ngFor="let validation of validation_messages.GovernmentID">
+                    <ng-container *ngFor="let validation of validation_form.GovernmentID">
                       <div class="error-message"
                         *ngIf="validations_form.get('GovernmentID').hasError(validation.type) && (validations_form.get('GovernmentID').dirty || validations_form.get('GovernmentID').touched)">
                         {{ validation.message }}
@@ -756,7 +842,7 @@
                         formControlName="email" type="email"></ion-input>
                     </ion-item>
                     <div class="validation-errors">
-                      <ng-container *ngFor="let validation of validation_messages.email">
+                      <ng-container *ngFor="let validation of validation_form.email">
                         <div class="error-message"
                           *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
                           {{ validation.message }}
@@ -781,35 +867,132 @@
       </ion-row>
     </ion-grid>
   </div>
+  <div *ngIf="verifyPanel" style="width: 100%;">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="start" style="padding-left: 5%;">
+          <h2 style="font-size: x-large;"><strong>eCitizen Verification</strong></h2>
+          <p>Use for validaing eApplications, eSupport Requests and Fraud prevention</p>
+          <ion-row>
+            <ion-button (click)=scanCard() shape="round" color="medium" size="small">
+              Scan Card
+            </ion-button>
+          </ion-row>
+          <ion-row>
+            <ion-button (click)=searchECitizen() shape="round" color="medium" size="small">
+              Search eCitizen
+            </ion-button>
+          </ion-row>
+        </ion-col>
+        <ion-col *ngIf="eCitizenScanData">
+          <div class="scanner-progress" *ngIf="scanner">
+            <h2>Place the Government Portal ID on the Scanner</h2>
+            <h5>Scanning in progress</h5>
+            <ion-spinner name="dots"></ion-spinner>
+          </div>
+          <zxing-scanner (scanSuccess)="onCodeResult($event)" class="scanner" *ngIf="portalScanner"></zxing-scanner>
+          <ion-card *ngFor="let user of scannedCardData"
+            style="padding-left: 5%;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;font-size: x-large;">
+            <ion-card-title>Name: {{user.Prefix}}{{user.Full_Name}}
+              <ion-icon *ngIf="user.status ==='Active'" name="shield-checkmark" color="success"></ion-icon>
+              <ion-icon *ngIf="user.status ==='Deleted'" name="shield" color="danger"></ion-icon>
+              <ion-icon *ngIf="user.status ==='Disabled'" name="shield-half" color="black"></ion-icon>
+            </ion-card-title>
+            <ion-card-subtitle>ID: {{user.scanECitizenGovernmentID}}</ion-card-subtitle>
+            <ion-card-content>
+              <ion-img src="{{user.scanECitizenIMG}}" style="height: 150px;width: 100px;"></ion-img>
+              <ion-label>Status: <b>{{user.status}}</b></ion-label>
+              <br>
+              <ion-label>Email: {{user.email}}</ion-label>
+              <br>
+              <ion-label>Home Address: {{user.homeAddress}}</ion-label>
+              <br>
+              <ion-label>Office Address: {{user.officeAddress}}</ion-label>
+              <br>
+              <ion-label>LandLine: {{user.landLine}}</ion-label>
+              <br>
+              <ion-label>Mobile: {{user.mobile}}</ion-label>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col *ngIf="eCitizenSearchData">
+          <ion-searchbar placeholder="Find eCitizens" [(ngModel)]="dataFilter" animated="true" autocomplete="true"
+            (search)="findECitizenByID($event.target.value)">
+          </ion-searchbar>
+          <i style="font-size: x-small;">If the eCitizen is not available on the list, search after entering the
+            full Government Portal ID</i>
+          <ion-card *ngFor="let user of searchECitizenData | filter:dataFilter"
+            style="padding-left: 5%;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;font-size: x-large;">
+            <ion-card-title>Name: {{user.Prefix}} {{user.Full_Name}}
+              <ion-icon *ngIf="user.status ==='Active'" name="shield-checkmark" color="success"></ion-icon>
+              <ion-icon *ngIf="user.status ==='Deleted'" name="shield" color="danger"></ion-icon>
+              <ion-icon *ngIf="user.status ==='Disabled'" name="shield-half" color="black"></ion-icon>
+            </ion-card-title>
+            <ion-card-subtitle>ID: {{user.searchECitizenGovernmentID}}</ion-card-subtitle>
+            <h4></h4>
+            <ion-card-content>
+              <ion-img src="{{user.scanECitizenIMG}}" style="height: 150px;width: 100px;"></ion-img>
+              <ion-label>Status: <b>{{user.status}}</b></ion-label>
+              <br>
+              <ion-label>Email: {{user.email}}</ion-label>
+              <br>
+              <ion-label>Home Address: {{user.homeAddress}}</ion-label>
+              <br>
+              <ion-label>Office Address: {{user.officeAddress}}</ion-label>
+              <br>
+              <ion-label>LandLine: {{user.landLine}}</ion-label>
+              <br>
+              <ion-label>Mobile: {{user.mobile}}</ion-label>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
   <div *ngIf="settingsPanel" style="width: 100%;">
     <ion-grid>
       <ion-row>
         <ion-col class="start" style="padding-left: 5%;">
-          <h2 style="font-size: x-large;"><strong>Settings</strong></h2>
-          <ion-row class="underline">
+          <h2 style="font-size: x-large;"><strong>Settings and Logging</strong></h2>
+          <ion-row>
+            <ion-button (click)=signtoWork() shape="round" color="medium" size="small">
+              Sign in to Work
+            </ion-button>
+          </ion-row>
+          <ion-row>
+            <ion-button (click)=signOffWork() shape="round" color="medium" size="small">
+              Sign off from Work
+            </ion-button>
+          </ion-row>
+          <ion-row>
+            <ion-button (click)=getWorkLogs() shape="round" color="medium" size="small">
+              Activity History
+            </ion-button>
+          </ion-row>
+          <!-- <ion-row class="underline">
             <ion-router-link (click)=getWorkLogs() class="underline">
               Activity History
             </ion-router-link>
-          </ion-row>
+          </ion-row> -->
         </ion-col>
         <ion-col *ngIf="activityLog">
-          <ion-list *ngFor="let log of EWorkLogs | slice:0:15;; let i = index">
+          <ion-list>
             <ion-item>
               <ion-grid>
                 <ion-row style="font-weight: bolder;">
-                  <ion-col>SignIn Time</ion-col>
-                  <ion-col>SignOut Time</ion-col>
+                  <ion-col>Signin Time</ion-col>
+                  <ion-col>Signoff Time</ion-col>
                   <ion-col>Documents Handled</ion-col>
                   <ion-col>Supported Provided</ion-col>
                   <ion-col>Date</ion-col>
                 </ion-row>
               </ion-grid>
             </ion-item>
-            <ion-item>
+            <ion-item *ngFor="let log of EWorkLogs | slice:0:15;; let i = index">
               <ion-grid>
                 <ion-row style="font-size: small;">
                   <ion-col>{{log.signIn}}</ion-col>
-                  <ion-col>{{log.signOut}}</ion-col>
+                  <ion-col>{{log.signOff}}</ion-col>
                   <ion-col>{{log.documentsHandled}}</ion-col>
                   <ion-col>{{log.messagesHandled}}</ion-col>
                   <ion-col>{{log.date}}</ion-col>

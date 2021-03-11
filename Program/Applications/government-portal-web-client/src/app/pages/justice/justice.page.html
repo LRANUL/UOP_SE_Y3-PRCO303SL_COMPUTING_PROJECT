@@ -1,0 +1,102 @@
+<!-- 
+  
+  Contains frontend structure and design for Justice page
+  Variables intialised here are related to the typescript page and used
+  for functionality.
+
+-->
+<!-- PAGE HEADER STARTS -->
+
+<ion-content [fullscreen]="true">
+  <!-- #3082c9 Royal Blue | #c92d39 Government Red -->
+  <div style="background-color:#3082c9;color: white;">
+    <ion-header>
+      <ion-toolbar color="dark">
+        <ion-title>
+          <a href="home" color="light" style="color: white;text-decoration: none;">
+            <strong>GOVERNMENT PORTAL</strong>
+          </a>
+        </ion-title>
+        <ion-button class="log-in" slot="icon-only" slot="end" href="sign-in" color="signin">
+          <ion-icon name="log-in"></ion-icon>
+        </ion-button>
+      </ion-toolbar>
+    </ion-header>
+    <!-- PAGE HEADER ENDS -->
+
+    <!-- PAGE CONTENT STARTS -->
+
+    <!-- PAGE SEARCH AND LINKED CONTENT -->
+    <h1 style="margin-left: 2%;"><strong>WELCOME TO GOVERNMENT PORTAL</strong></h1>
+    <h5 style="margin-left: 2%;">All government services at one place.</h5>
+    <ion-searchbar color="light" style="width: 40%;" animated="true" [(ngModel)]="searchQuery" (click)="click_in()"
+      (clickOutside)="onClickedOutside($event)" (ionInput)="search($event)" placeholder="Search..."></ion-searchbar>
+    <ion-list *ngIf="pagesList" style="position: absolute;z-index:1000;width: 40%;">
+      <ion-item *ngFor="let algoliaResult of algoliaResults | slice:0:3;; let i = index">
+        <a href={{algoliaResult.url}} class="underline-search">{{ algoliaResult.name }}
+        </a>
+      </ion-item>
+    </ion-list>
+  </div>
+  <!-- PAGE SEARCH AND LINKED CONTENT -->
+
+  <!-- PAGE LINKS AND INFORMATION -->
+  <div style="margin: 2%;">
+    <ion-content>
+      <h1>Justice</h1>
+    </ion-content>
+    <h3>Background of The Ministry of Justice Sri Lanka</h3>
+    <p>Supervision of Departments /Institutions that come under the purview of the Ministry of Justice and all other
+      subjects that comes under the purview of these Departments /Institutions.
+    </p>
+    <h4>Functions</h4>
+    <ul>
+      <li>Formulation of policies, plans and programmes in respect of the machinery for administration of justice</li>
+      <li>Implementation and direction of such policies, plans and programmes within the time limit agreed with the
+        national planning authorities and within budgeted resources.</li>
+      <li> Matters relating to the administration of justice which have not been assigned to any other Institution in
+        terms of the Constitution.</li>
+      <li>Implementation of reforms to the legal system taking into consideration societal needs and global trends.</li>
+      <li>Implementation of all matters systematically and efficiently in relation to overall administration, including
+        prevention of delays in the administration of justice within the court system.</li>
+      <li> Criminal prosecutions and civil proceedings on behalf of the government.</li>
+      <li>Tender legal advice to the government and to all government departments.</li>
+      <li>Drafting of legislation</li>
+      <li>Make recommendations to grant pardons, commutations, remissions, respites, and suspensions in relation to
+        sentences passed on any offender.</li>
+      <li>Formulation and implementation of an appropriate programme to enhance the effectiveness and efficiency of the
+        overall Quazi system.</li>
+      <li>Administration of labour tribunals and any other Matters relating thereto.</li>
+      <li>Documentation and consolidation of laws</li>
+      <li>Preparation of legal glossaries</li>
+      <li>Publication of Law Reports</li>
+      <li>Assistance to and Protection of Victims of Crime and Witnesses Act. No. 04 of 2015 of the following item:-
+      <li>Commercial Mediation Centre of Sri Lanka Act, No. 44 of 2000.</li>
+    </ul>
+    <h4>Vision</h4>
+    <p>“Efficient system of administration of justice”
+      Law reform to respond to societal needs in keeping with global advancements and the aspirations of the people.
+    </p>
+    <h4>Mission</h4>
+    <p>Formulation and implementation of policies, plans and programmes aimed at the efficient and meaningful
+      administration of Justice.
+      Law reform for greater recognition, protection and promotion of the rights of the citizens.</p>
+    <a href="page-under-construction" class="underline">
+      Apply for your legal services through Government Portal
+    </a>
+  </div>
+  <!-- PAGE LINKS AND INFORMATION -->
+
+  <!-- PAGE CONTENT ENDS -->
+
+  <!-- PAGE FOOTER STARTS -->
+  <ion-footer class="ion-no-border" align="center">
+    <ion-toolbar color="light">
+      <ion-text>
+        Government Portal<br>
+        Ministry of Home Affairs
+      </ion-text>
+    </ion-toolbar>
+  </ion-footer>
+  <!-- PAGE FOOTER ENDS -->
+</ion-content>
