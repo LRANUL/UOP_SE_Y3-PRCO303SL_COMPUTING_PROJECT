@@ -101,6 +101,13 @@ export class HomeAffairsPage implements OnInit {
     approvedTime: any;
     PhotoURL: any;
   }[];
+  supportTechServices: boolean;
+  prefix: any;
+  fullName: any;
+  officeAddress: any;
+  mobile: any;
+  Division: any;
+  Email: string;
   clearResult(): void {
     qrResultString = null;
   }
@@ -127,7 +134,15 @@ export class HomeAffairsPage implements OnInit {
     Status: any;
     Count: any;
   }[];
-
+  ETechSupportMessages: {
+    Techid: string;
+    TechEmail: any;
+    TechSubject: any;
+    TechDescription: any;
+    TechStatus: any;
+    TechResponse: any;
+    TechCount: any;
+  }[];
   newMessage: boolean;
   accountPanel: boolean;
   NICApplication: boolean;
@@ -165,10 +180,20 @@ export class HomeAffairsPage implements OnInit {
     public alertController: AlertController,
     private stripeService: StripeService,
     private modelCtrl: ModalController
-  ) {}
+  ) { }
 
   async ngOnInit() {
+    
     this.servicesPanel = true;
+    this.accessService.getETechSupportMessages().subscribe((data) => {
+      data.map((e) => {
+        // console.log(e.payload.doc);
+        if (e.payload.doc.data()["Status"] == "New") {
+          // console.log("Unread Messages");
+          this.newMessage = true;
+        }
+      });
+    });
     this.accessService.getESupportMessages().subscribe((data) => {
       data.map((e) => {
         // console.log(e.payload.doc);
@@ -178,12 +203,30 @@ export class HomeAffairsPage implements OnInit {
         }
       });
     });
+    var user = firebase.default.auth().currentUser;
+    
+    await this.firestore
+    .collection("eAdministration")
+    .doc(user.email)
+    .ref.get()
+    .then((doc) => {
+      if (doc.exists) {
+        this.prefix = doc.data()["Prefix"];
+        this.fullName = doc.data()["Full_Name"];
+        this.officeAddress = doc.data()["officeAddress"];
+        this.mobile = doc.data()["mobile"];
+        this.Division = doc.data()["Division"];
+        this.Email = user.email
+      }
+    });
     //  FORM VALIDATORS
     /**
      * Validation Form receives input data sent by the user to Support service
      */
     this.message_form = this.formBuilder.group({
       messageBody: new FormControl("", Validators.compose([])),
+      message: new FormControl("", Validators.compose([])),
+      subject: new FormControl("", Validators.compose([])),
     });
 
     //  FORM VALIDATORS
@@ -750,6 +793,25 @@ export class HomeAffairsPage implements OnInit {
       }
     );
   }
+  requestSupport(value) {
+    this.message_form.reset();
+    this.accessService.techSupport(value).then(
+      async (res) => {
+        const toast = await this.toastController.create({
+          message: "Reponse sent",
+          duration: 2000,
+        });
+        toast.present();
+      },
+      async (err) => {
+        const toast = await this.toastController.create({
+          message: "Reponse not sent, try again. ",
+          duration: 2000,
+        });
+        toast.present();
+      }
+    );
+  }
 
   scanCard() {
     this.eCitizenScanData = true;
@@ -1142,7 +1204,7 @@ export class HomeAffairsPage implements OnInit {
     this.http
       .get(
         "https://government-portal-firebase.herokuapp.com/activate-user?uid=" +
-          user
+        user
       )
       .subscribe(
         async (data) => {
@@ -1173,7 +1235,7 @@ export class HomeAffairsPage implements OnInit {
     this.http
       .get(
         "https://government-portal-firebase.herokuapp.com/disable-user?uid=" +
-          user
+        user
       )
       .subscribe(
         async (data) => {
@@ -1204,7 +1266,7 @@ export class HomeAffairsPage implements OnInit {
     this.http
       .get(
         "https://government-portal-firebase.herokuapp.com/delete-user?uid=" +
-          user
+        user
       )
       .subscribe(
         async (data) => {
@@ -1386,7 +1448,24 @@ export class HomeAffairsPage implements OnInit {
   async getSupportMessages() {
     this.loadingData = true;
     this.supportServices = true;
+    this.supportTechServices = true;
     setTimeout(() => {
+      this.accessService.getETechSupportMessages().subscribe((data) => {
+        // console.log(data);
+        this.loadingData = false;
+        this.ETechSupportMessages = data.map((e) => {
+          return {
+            Techid: e.payload.doc.id,
+            TechEmail: e.payload.doc.data()["Email"],
+            TechSubject: e.payload.doc.data()["Subject"],
+            TechDescription: e.payload.doc.data()["Description"],
+            TechResponse: e.payload.doc.data()["Response"],
+            TechStatus: e.payload.doc.data()["Status"],
+            TechType: e.payload.doc.data()["Type"],
+            TechCount: e.payload.doc.data()["Count"],
+          };
+        });
+      });
       this.accessService.getESupportMessages().subscribe((data) => {
         // console.log(data);
         this.loadingData = false;

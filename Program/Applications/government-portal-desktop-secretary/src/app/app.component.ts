@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { AlertController, Platform } from '@ionic/angular';
+import { AlertController, LoadingController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { OnInit, OnDestroy } from '@angular/core';
+import { RemoteConfigService } from './service/remote-config.service';
 import { Plugins, NetworkStatus, PluginListenerHandle } from '@capacitor/core';
 const { Network } = Plugins;
 
@@ -19,41 +20,43 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private alertController: AlertController,
+    private remoteConfig: RemoteConfigService,
+    private alertCtrl: AlertController,
+    private loadingController: LoadingController,
   ) {
     this.initializeApp();
   }
 
-  private initializeApp() {
+  private async initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
-    this.networkListener = Network.addListener('networkStatusChange', async (status) => {
-      this.networkStatus = status;
-      let alertOffline;
-      let alertOnline;
-      if (status.connected == false) {
-        alertOffline = await this.alertController.create({
-          header: 'OFFLINE',
-          subHeader: 'Disconnected/No Network',
-          message: 'Disconnected from Headquaters',
-          backdropDismiss: false,
-          buttons: ['Close'],
-        });
-        await alertOffline.present();
-      }
-      else if (status.connected == true) {
-        alertOnline = await this.alertController.create({
-          header: 'ONLINE',
-          subHeader: 'Reconnection Successful',
-          message: 'Connected to Headquaters',
-          buttons: ['OK'],
-        });
-        await alertOnline.present();
-      }
-      // console.log('Network status changed', status);
-    });
+    const maintenance = await this.remoteConfig.maintenanceLockCheck();
+    if (maintenance) {
+      const alertMaintenance = await this.alertCtrl.create({
+        header: 'Under Maintenance',
+        subHeader: 'System Down',
+        backdropDismiss: false,
+        message: 'We are currently maintaining the system and all functions are disabled right now, visit back shortly.',
+      });
+      await alertMaintenance.present();
+      this.networkListener = Network.addListener('networkStatusChange', async (status) => {
+        this.networkStatus = status;
+        if (status.connected == false) {
+          const loading = await this.loadingController.create({
+            message: "Service Down, Please use another Kiosk.",
+            backdropDismiss: false,
+            spinner: "circles",
+          });
+          await loading.present();
+        }
+        else if (status.connected == true) {
+          this.loadingController.dismiss()
+        }
+      });
+    }
   }
 
 }
+

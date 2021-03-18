@@ -15,14 +15,14 @@ export class AccessService {
     private auth: AngularFireAuth,
     public alertController: AlertController,
     private navCtrl: NavController
-  ) {}
+  ) { }
   /** Method for getting eApplications to Officer */
   getEApplications() {
     return this.firestore
       .collection("eApplications", (ref) =>
         ref
           .limit(10)
-          .where("status", "in", ["New", "Processing"])
+          .where("status", "in", ["New", "Processing - Stage 1","Processing - Stage 2"])
           .where("payment_status", "==", "paid")
       )
       .snapshotChanges();
@@ -46,6 +46,17 @@ export class AccessService {
     return this.firestore
       .collection("eCitizens", (ref) =>
         ref.where("GovernmentID", "==", GovernmentID)
+      )
+      .snapshotChanges();
+  }
+  /** Method for retrieving eSupport messages */
+  getETechSupportMessages() {
+    var user = firebase.default.auth().currentUser;
+    return this.firestore
+      .collection("eSupport", (ref) =>
+        ref.limit(10).where("Status", "==", "New")
+          .where("Type", "==", "Admin")
+          .where("Email", "==", user.email)
       )
       .snapshotChanges();
   }
@@ -87,7 +98,10 @@ export class AccessService {
   getESupportMessages() {
     return this.firestore
       .collection("eSupport", (ref) =>
-        ref.limit(10).where("Status", "==", "New")
+        ref.
+          limit(10)
+          .where("Status", "==", "New")
+          .where("Type", "==", "eCitizen")
       )
       .snapshotChanges();
   }
@@ -113,6 +127,8 @@ export class AccessService {
       {
         signIn: time,
         date: date,
+        documentsHandled: 0,
+        messagesHandled: 0,
       },
       { merge: true }
     );
@@ -184,7 +200,7 @@ export class AccessService {
       .doc(DocumentID);
     await eApplication.set(
       {
-        status: "Processing",
+        status: "Processing - Stage 2",
         description:
           "Your application is being processed and will be approved soon.",
         processedTimeStamp: "" + new Date(),
@@ -347,7 +363,26 @@ export class AccessService {
       await alert.present();
     });
   }
-
+  /** Method for sending officer support request to Administrator */
+  async techSupport(value) {
+    /**
+         * Data gets stored on firebase, used for message tracking and references
+         */
+    var user = firebase.default.auth().currentUser;
+    console.log(value)
+    this.firestore
+      .collection("/eSupport/")
+      .doc()
+      .set({
+        Description: value.message,
+        Email: user.email,
+        GovernmentID: user.displayName,
+        Status: "New",
+        Type: "Admin",
+        Subject: value.subject,
+        Response: "Support Request Sent | Wait for Response",
+      })
+  }
   /** Method for sending officer reponse to ecitizen */
   sendMessage(ID, messageBody) {
     return new Promise<any>(async (resolve, reject) => {

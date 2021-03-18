@@ -1,6 +1,6 @@
 var admin = require("firebase-admin");
 
-var serviceAccount = require("./prco303sl-3f1b2-firebase-adminsdk-22rup-c730f7de0d.json");
+var serviceAccount = require("./service/prco303sl-3f1b2-firebase-adminsdk-22rup-379c5b2a7e.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -56,6 +56,33 @@ app.get("/get-user", async (req, res) => {
     });
 });
 /**
+ * Get selected Government Portal User (Find by email Firebase)
+ */
+app.get("/create-user", async (req, res) => {
+  var email = req.query.email || "";
+  var phone = req.query.mobile || "";
+  var photoURL = req.query.downloadURL || "";
+  var displayName = req.query.Full_Name || "";
+  var password = req.query.password || "";
+  admin
+    .auth()
+    .createUser({
+      email: email,
+      phoneNumber: phone,
+      password: password,
+      displayName: displayName,
+      photoURL: photoURL,
+      disabled: false,
+    })
+    .then((userRecord) => {
+      res.send(JSON.stringify("Created User Successfully"));
+    })
+    .catch((error) => {
+      console.log('Error creating new user:', error);
+    });
+});
+
+/**
  * Delete selected Government Portal User (Find by uid Firebase)
  */
 app.get("/delete-user", async (req, res) => {
@@ -110,4 +137,4 @@ app.get("/activate-user", async (req, res) => {
       // console.log("Error updating user:", error);
     });
 });
-app.listen(4242, () =>  console.log("Running on port 4242"));
+app.listen(4242, () => console.log("Running on port 4242"));

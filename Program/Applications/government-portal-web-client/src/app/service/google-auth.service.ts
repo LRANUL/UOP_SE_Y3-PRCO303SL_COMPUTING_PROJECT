@@ -329,6 +329,7 @@ export class GoogleAuthService {
             FullName: name,
             GovernmentID: user.displayName,
             Status: "New",
+            Type: "eCitizen",
             Subject: value.subject,
             Response: "Message Sent | Wait for Response",
           })

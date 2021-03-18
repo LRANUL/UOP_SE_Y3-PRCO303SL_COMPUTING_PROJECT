@@ -8,7 +8,7 @@
 <!-- PAGE HEADER STARTS -->
 <ion-header style="background-color: darkgray;color: white;opacity: 0.97;">
   <ion-title>
-    <strong>GOVERNMENT PORTAL</strong>
+    <strong>GOVERNMENT PORTAL OFFICE</strong>
   </ion-title>
   <ion-toolbar>
     <ion-button class="log-out" slot="icon-only" slot="end" color="signin" (click)="logoutOfficer()">
@@ -175,7 +175,7 @@
     <ion-grid>
       <ion-row>
         <ion-col *ngIf="supportServices" class="start" style="padding-left: 5%;">
-          <h2 style="font-size: x-large;"><strong>Support Services</strong></h2>
+          <h2 style="font-size: x-large;"><strong>Citizen Support Services</strong></h2>
           <div *ngIf="ESupportMessages==''">
             <i>No messages at time moment.</i>
           </div>
@@ -207,6 +207,62 @@
               </ion-card-content>
             </form>
           </ion-card>
+          <h2 style="font-size: x-large;"><strong>Tech Support Services</strong></h2>
+          <div *ngIf="ETechSupportMessages==''">
+            <i>No messages at time moment.</i>
+          </div>
+          <div *ngIf="loadingData">
+            <ion-skeleton-text animated></ion-skeleton-text>
+            <ion-skeleton-text animated></ion-skeleton-text>
+            <ion-skeleton-text animated style="height: 300px;"></ion-skeleton-text>
+          </div>
+          <ion-card *ngFor="let message of ETechSupportMessages | slice:0:10;; let i = index">
+            <ion-card-header>
+              <ion-card-title>Officer Email:{{ message.TechEmail }}</ion-card-title>
+              <ion-card-subtitle>Subject: {{ message.TechSubject }}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-label>Message: {{ message.TechDescription }}</ion-label>
+              <br><br>
+              <ion-label style="color: black;">Tech Response: {{ message.TechResponse }}</ion-label>
+            </ion-card-content>
+        </ion-card>
+        </ion-col>
+        <ion-col *ngIf="supportTechServices" class="start" style="padding-left: 5%;">
+          <h2 style="font-size: x-large;"><strong>Tech Support</strong></h2>
+          <form class="form" [formGroup]="message_form" (ngSubmit)="requestSupport(message_form.value)">
+            <h5>Subject</h5>
+            <ion-item>
+              <ion-input required="true" type="text" placeholder="Subject" formControlName="subject" type="text"
+                required></ion-input>
+            </ion-item>
+            <div class="validation-errors">
+              <ng-container *ngFor="let validation of validation_messages.subject">
+                <div class="error-message"
+                  *ngIf="message_form.get('subject').hasError(validation.type) && (message_form.get('subject').dirty || message_form.get('subject').touched)">
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div>
+            <h5>Message</h5>
+            <ion-item>
+              <ion-textarea placeholder="Message" required="true" inputmode="text" type="text" formControlName="message"
+                required></ion-textarea>
+            </ion-item>
+            <div class="validation-errors">
+              <ng-container *ngFor="let validation of validation_messages.message">
+                <div class="error-message"
+                  *ngIf="message_form.get('message').hasError(validation.type) && (message_form.get('message').dirty || message_form.get('message').touched)">
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+              <br>
+              <ion-button type="submit" shape="round" color="light" [disabled]="!message_form.valid">Send<ion-icon name="send-sharp" size="small"></ion-icon>
+              </ion-button>
+            </div>
+            <br>
+            <label style="color: darkgray;" class="error-message">{{errorMessage}}</label>
+          </form>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -954,6 +1010,19 @@
       <ion-row>
         <ion-col class="start" style="padding-left: 5%;">
           <h2 style="font-size: x-large;"><strong>Settings and Logging</strong></h2>
+          <ion-row>
+            Division: {{Division}}
+            <br>
+            Name: {{prefix}} {{fullName}}
+            <br>
+            Office Address: {{officeAddress}}
+            <br>
+            Mobile: {{mobile}}
+            <br>
+            Email: {{Email}}
+            <br>
+          </ion-row>
+          <br>
           <ion-row>
             <ion-button (click)=signtoWork() shape="round" color="medium" size="small">
               Sign in to Work

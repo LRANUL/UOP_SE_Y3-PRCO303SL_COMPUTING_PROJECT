@@ -8,7 +8,7 @@
 <!-- PAGE HEADER STARTS -->
 <ion-header style="background-color: darkgray;color: white;opacity: 0.97;">
   <ion-title>
-    <strong>GOVERNMENT PORTAL</strong>
+    <strong>GOVERNMENT PORTAL SECRETARY</strong>
   </ion-title>
   <ion-toolbar>
     <ion-button class="log-out" slot="icon-only" slot="end" color="signin" (click)="logoutOfficer()">
@@ -267,7 +267,6 @@
                   <ion-label>Mobile: {{user.mobile}}</ion-label>
                 </ion-card-content>
               </ion-card>
-              </ion-list>
             </ion-row>
           </ion-col>
           <ion-col *ngIf="NICApplicant" class="end" style="background: var(--ion-color-form);padding-left: 5%;">
@@ -844,6 +843,19 @@
       <ion-row>
         <ion-col class="start" style="padding-left: 5%;">
           <h2 style="font-size: x-large;"><strong>Settings and Logging</strong></h2>
+          <ion-row>
+            Division: {{Division}}
+            <br>
+            Name: {{prefix}} {{fullName}}
+            <br>
+            Office Address: {{officeAddress}}
+            <br>
+            Mobile: {{mobile}}
+            <br>
+            Email: {{Email}}
+            <br>
+          </ion-row>
+          <br>
           <ion-row>
             <ion-button (click)=signtoWork() shape="round" color="light" size="small">
               Sign in to Work

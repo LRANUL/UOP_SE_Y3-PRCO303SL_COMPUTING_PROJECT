@@ -4,18 +4,75 @@ import { AngularFirestore } from "@angular/fire/firestore";
 import { AlertController, NavController } from "@ionic/angular";
 import * as firebase from "firebase";
 import * as dateFormat from "dateformat";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
   providedIn: "root",
 })
 export class AccessService {
   constructor(
+    public http: HttpClient,
     private firestore: AngularFirestore,
     private auth: AngularFireAuth,
     public alertController: AlertController,
     private navCtrl: NavController
-  ) {}
+  ) { }
 
+  registerOfficer(value) {
+    var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
+    /**
+     * Data gets stored on Firebase for references
+    */
+    this.firestore
+      .collection("eAdministration")
+      .doc(value.email)
+      .set({
+        Type: value.type,
+        Full_Name: value.fullName.toUpperCase(),
+        Gender: value.gender.toUpperCase(),
+        Date_Of_Birth: dateBirth,
+        Place_Of_Birth: value.placeOfBirth.toUpperCase(),
+        Division: value.division.toUpperCase(),
+        NIC: value.nic,
+        downloadURL: value.downloadURL,
+        Prefix: value.prefix,
+        homeAddress: value.homeAddress.toUpperCase(),
+        officeAddress: value.officeAddress.toUpperCase(),
+        mobile: value.mobile,
+        landLine: value.landLine,
+        Email: value.email.toUpperCase(),
+        createdDateTime: new Date(),
+        status: "Active",
+      })
+
+    this.http
+      .post(
+        "https://government-portal-firebase.herokuapp.com/create-user", {
+        email: value.email, password: value.password, downloadURL: value.downloadURL, mobile: value.mobile, Full_Name: value.fullName
+      }
+      )
+      .subscribe(
+        async (data) => {
+          const alert = await this.alertController.create({
+            header: "Account Create ✔",
+            message: value.type + " Account has been created.",
+            buttons: ["OK"],
+          });
+          await alert.present();
+        },
+        async (error) => {
+          // console.log(error);
+          const alert = await this.alertController.create({
+            header: "🚫 Out of Service",
+            subHeader: "Server Access Timeout",
+            message:
+              "Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later.",
+            buttons: ["OK"],
+          });
+          await alert.present();
+        }
+      );
+  }
   /**
    * Method for logging in user to system
    * @param value Holds data coming from Login form and invokes for verfication before allowing access
@@ -59,12 +116,12 @@ export class AccessService {
       }
     });
   }
-   /** Method for retrieving eSupport messages */
-   getETechSupportMessages() {
+  /** Method for retrieving eSupport messages */
+  getETechSupportMessages() {
     return this.firestore
       .collection("eSupport", (ref) =>
         ref.limit(10).where("Status", "==", "New")
-        .where("Type", "==", "Admin")
+          .where("Type", "==", "Admin")
       )
       .snapshotChanges();
   }
@@ -123,6 +180,8 @@ export class AccessService {
       {
         signIn: time,
         date: date,
+        messagesHandled: 0,
+        accountsHandled: 0,
       },
       { merge: true }
     );

@@ -17,7 +17,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgxElectronModule } from 'ngx-electron';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxStripeModule } from 'ngx-stripe';
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,8 +27,7 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     NgxStripeModule.forRoot('pk_test_51IHSuEA5rKg2mqjLa3Gh3JeEVlSE01Ty1uuLmUAwzSSEISREulbOx3FCTLhLtMcxo5QO3Nno4wPoAPUC7vchjnN500co3fV7M0'),
     NgxElectronModule,
-    HttpClientModule,
-    ZXingScannerModule
+    HttpClientModule
   ],
   providers: [
     StatusBar,

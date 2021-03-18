@@ -112,7 +112,6 @@ export class HomeAffairsPage implements OnInit {
   nonFirstTimer: boolean;
   foreignCitizen: boolean;
   handler: any;
-  ECitizens: { uid: any; name: any; photo: any; governmentID: any }[];
   accountManage: boolean;
   Secretary: any;
   Division: any;
@@ -121,6 +120,8 @@ export class HomeAffairsPage implements OnInit {
   officeAddress: any;
   mobile: any;
   landLine: any;
+  ECitizens: { id: string; Prefix: any; Full_Name: any; homeAddress: any; officeAddress: any; ECitizenIMG: any; landLine: any; mobile: any; status: any; email: any; ECitizenGovernmentID: any; }[];
+  Email: any;
   constructor(
     public formBuilder: FormBuilder,
     private accessService: AccessService,
@@ -156,7 +157,8 @@ export class HomeAffairsPage implements OnInit {
         this.fullName = doc.data()["Full_Name"];
         this.officeAddress = doc.data()["officeAddress"];
         this.mobile = doc.data()["mobile"];
-        this.landLine = doc.data()["Divison"];
+        this.Division = doc.data()["Division"];
+        this.Email = user.email
       }
     });
     //  FORM VALIDATORS
@@ -958,11 +960,19 @@ export class HomeAffairsPage implements OnInit {
     this.accessService.getECitizens().subscribe((data) => {
       this.ECitizens = data.map((e) => {
         return {
-          uid: e.payload.doc.data()["uid"],
-          name: e.payload.doc.data()["Full_Name"],
-          photo: e.payload.doc.data()["downloadURL"],
-          governmentID: e.payload.doc.data()["GovernmentID"],
+          id: e.payload.doc.id,
+          Prefix: e.payload.doc.data()["Prefix"],
+          Full_Name: e.payload.doc.data()["Full_Name"],
+          homeAddress: e.payload.doc.data()["homeAddress"],
+          officeAddress: e.payload.doc.data()["officeAddress"],
+          ECitizenIMG: e.payload.doc.data()["downloadURL"],
+          landLine: e.payload.doc.data()["landLine"],
+          mobile: e.payload.doc.data()["mobile"],
           status: e.payload.doc.data()["status"],
+          email: e.payload.doc.data()["Email"],
+          ECitizenGovernmentID: e.payload.doc.data()[
+            "GovernmentID"
+          ],
         };
       });
     });

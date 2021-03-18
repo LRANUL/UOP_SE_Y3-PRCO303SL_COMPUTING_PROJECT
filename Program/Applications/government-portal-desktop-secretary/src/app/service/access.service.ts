@@ -120,6 +120,8 @@ export class AccessService {
       {
         signIn: time,
         date: date,
+        documentsHandled: 0,
+        messagesHandled:0,
       },
       { merge: true }
     );
@@ -191,7 +193,7 @@ export class AccessService {
       .doc(DocumentID);
     await eApplication.set(
       {
-        status: "Processing",
+        status: "Processing - Stage 1",
         description:
           "Your application had been approved by your divisional secretary and is being processed and will be approved soon by NIC Office.",
         processedTimeStamp: "" + new Date(),

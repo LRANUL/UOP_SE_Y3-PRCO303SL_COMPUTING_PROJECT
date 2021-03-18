@@ -34,7 +34,7 @@
             <h1 style="font-size: xx-large;"><strong>Sign in to Government Portal</strong></h1>
             <br>
             <h5>Goverment Portal email address</h5>
-            <form class="form" [formGroup]="validations_form" (ngSubmit)="loginOfficer(validations_form.value)">
+            <form class="form" [formGroup]="validations_form" (keydown.enter)="loginOfficer(validations_form.value)" (ngSubmit)="loginOfficer(validations_form.value)">
               <ion-item>
                 <ion-input required="true" type="email" placeholder="OFFICER EMAIL"
                   formControlName="email" type="email"></ion-input>

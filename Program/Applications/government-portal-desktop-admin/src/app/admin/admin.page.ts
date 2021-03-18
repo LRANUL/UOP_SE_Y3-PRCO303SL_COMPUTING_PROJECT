@@ -9,7 +9,14 @@ import {
 } from "@ionic/angular";
 import * as firebase from "firebase";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { FormBuilder, Validators, FormControl } from "@angular/forms";
+import { FormGroup,FormBuilder, Validators, FormControl } from "@angular/forms";
+import {
+  AngularFireStorage,
+  AngularFireUploadTask,
+  AngularFireStorageReference,
+} from "@angular/fire/storage";
+import { Observable, ReplaySubject } from "rxjs";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: "app-admin",
@@ -38,9 +45,24 @@ export class AdminPage implements OnInit {
   supportPanel: boolean;
   supportServices: boolean;
   loadingData: boolean;
-  ESupportMessages: { id: string; GovernmentID: any; FullName: any; Subject: any; Description: any; Status: any; Type: any; Count: any; }[];
+  ETechSupportMessages: { id: string; Email: any; Subject: any; Description: any; Status: any; Type: any; Count: any; }[];
+  prefix: any;
+  fullName: any;
+  officeAddress: any;
+  mobile: any;
+  Division: any;
+  Email: string;
+  registration_form: any;
+  imageURL = "";
+  CollectionPath = "/Users/eAdministrators";
+  downloadURL: Observable<string>;
+  task: AngularFireUploadTask;
+  progress: Observable<number>;
+  validations_form: FormGroup;
+  errorMessage: string;
 
   constructor(
+    public storage: AngularFireStorage,
     private accessService: AccessService,
     public http: HttpClient,
     public alertController: AlertController,
@@ -73,7 +95,7 @@ export class AdminPage implements OnInit {
     { data: [28, 48, 40, 19, 86, 27, 90], label: "Series B" },
   ];
 
-  ngOnInit() {
+  async ngOnInit() {
     this.accountPanel = true;
     this.accessService.getETechSupportMessages().subscribe((data) => {
       data.map((e) => {
@@ -82,7 +104,26 @@ export class AdminPage implements OnInit {
           // console.log("Unread Messages");
           this.newMessage = true;
         }
+        else{
+          this.newMessage = false;
+        }
       });
+    });
+    var user = firebase.default.auth().currentUser;
+    
+    await this.firestore
+    .collection("eAdministration")
+    .doc(user.email)
+    .ref.get()
+    .then((doc) => {
+      if (doc.exists) {
+        this.prefix = doc.data()["Prefix"];
+        this.fullName = doc.data()["Full_Name"];
+        this.officeAddress = doc.data()["officeAddress"];
+        this.mobile = doc.data()["mobile"];
+        this.Division = doc.data()["Division"];
+        this.Email = user.email
+      }
     });
     /**
      * Validation Form receives input data sent by the user to Support service
@@ -90,6 +131,69 @@ export class AdminPage implements OnInit {
     this.message_form = this.formBuilder.group({
       messageBody: new FormControl("", Validators.compose([])),
     });
+     /**
+     * Mandatory form validators for registration process, applicant has to fill all data which is usally present on their
+     * birth certificate
+     */
+      this.registration_form = this.formBuilder.group({
+        email: new FormControl(
+          "",
+          Validators.compose([
+            Validators.required,
+            Validators.pattern(
+              "^([ a-zA-Z])+$"
+            ),
+          ])
+        ),
+        password: new FormControl(
+          "",
+          Validators.compose([
+            Validators.minLength(15),
+            Validators.maxLength(30),
+            Validators.required,
+          ])
+        ),
+        fullName: new FormControl(
+          "",
+          Validators.compose([
+            Validators.minLength(15),
+            Validators.required,
+            Validators.pattern("^([ a-zA-Z])+$"),
+          ])
+        ),
+        type: new FormControl("", Validators.compose([Validators.required])),
+        prefix: new FormControl("", Validators.compose([Validators.required])),
+        dateOfBirth: new FormControl(
+          "",
+          Validators.compose([Validators.required])
+        ),
+        division: new FormControl(
+          "",
+          Validators.compose([Validators.minLength(10), Validators.required])
+        ),
+        landLine: new FormControl(
+          "",
+          Validators.compose([
+            Validators.pattern("^[0-9]{10}$"),
+            Validators.minLength(10),
+            Validators.required,
+          ])
+        ),
+        mobile: new FormControl(
+          "",
+          Validators.compose([
+            Validators.pattern("^[0-9]{10}$"),
+            Validators.minLength(10),
+            Validators.required,
+          ])
+        ),
+        homeAddress: new FormControl(
+          "",
+          Validators.compose([Validators.minLength(20), Validators.required])
+        ),
+        officeAddress: new FormControl("", Validators.compose([])),
+        downloadURL: new FormControl("", Validators.compose([])),
+      });
   }
   openSupport() {
     this.accountPanel = false;
@@ -116,7 +220,39 @@ export class AdminPage implements OnInit {
     this.supportPanel = false;
     this.statisticsPanel = false;
   }
+ /**
+   * Method reposible for registering officers
+   */
+  registerECitizen(value) {
+    this.accessService.registerOfficer(value);
+  }
 
+  async onFileChange(event) {
+    var NIC = this.registration_form.value.nic
+    const file = event.target.files[0];
+    if (file) {
+      const filePath = `${this.CollectionPath}/${NIC}/ProfilePhoto`;
+      const fileRef: AngularFireStorageReference = this.storage.ref(filePath);
+      this.task = this.storage.upload(filePath, file);
+      this.progress = this.task.percentageChanges();
+      const loading = await this.loadingController.create({
+        message: "Uploading Photo",
+      });
+      await loading.present();
+      this.task
+        .snapshotChanges()
+        .pipe(
+          finalize(() => {
+            fileRef.getDownloadURL().subscribe(async (downloadURL) => {
+              downloadURL = "" + downloadURL;
+              await loading.dismiss();
+              this.registration_form.patchValue({ downloadURL: downloadURL });
+            });
+          })
+        )
+        .subscribe();
+    }
+  }
   /** Methods reposible for loading customer messages to officer screen for reponding */
   async getSupportMessages() {
     this.loadingData = true;
@@ -125,11 +261,10 @@ export class AdminPage implements OnInit {
       this.accessService.getETechSupportMessages().subscribe((data) => {
         // console.log(data);
         this.loadingData = false;
-        this.ESupportMessages = data.map((e) => {
+        this.ETechSupportMessages = data.map((e) => {
           return {
             id: e.payload.doc.id,
-            GovernmentID: e.payload.doc.data()["Email"],
-            FullName: e.payload.doc.data()["FullName"],
+            Email: e.payload.doc.data()["Email"],
             Subject: e.payload.doc.data()["Subject"],
             Description: e.payload.doc.data()["Description"],
             Status: e.payload.doc.data()["Status"],

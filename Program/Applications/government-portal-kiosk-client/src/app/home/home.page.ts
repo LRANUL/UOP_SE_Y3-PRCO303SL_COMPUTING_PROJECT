@@ -252,7 +252,7 @@ export class HomePage implements OnInit {
           });
         } else {
           let invalidCard = new Audio();
-          invalidCard.src = "assets/audio/no-card-si.mp3";
+          invalidCard.src = "assets/audio/no-card-ta.mp3";
           invalidCard.load();
           invalidCard.play();
         }
