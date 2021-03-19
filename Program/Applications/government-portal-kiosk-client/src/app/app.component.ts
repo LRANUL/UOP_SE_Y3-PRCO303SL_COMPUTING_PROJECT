@@ -6,6 +6,9 @@ import { OnInit, OnDestroy } from '@angular/core';
 import { RemoteConfigService } from './service/remote-config.service';
 import { Plugins, NetworkStatus, PluginListenerHandle } from '@capacitor/core';
 const { Network } = Plugins;
+import firebase from "firebase/app";
+import "firebase/performance";
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -32,6 +35,9 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+    firebase.initializeApp(environment.config);
+    // Initializing Application Performance Monitoring accodring to Firebase Documentation
+    const performance = firebase.performance();
     const maintenance = await this.remoteConfig.maintenanceLockCheck();
     if (maintenance) {
       const alertMaintenance = await this.alertCtrl.create({

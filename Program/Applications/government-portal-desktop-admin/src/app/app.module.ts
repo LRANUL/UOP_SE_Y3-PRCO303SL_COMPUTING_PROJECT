@@ -16,7 +16,6 @@ import { environment } from '../environments/environment';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxElectronModule } from 'ngx-electron';
 import { HttpClientModule } from '@angular/common/http';
-import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +29,6 @@ import { ChartsModule } from 'ng2-charts';
     AngularFireAuthModule,
     AngularFirestoreModule,
     ReactiveFormsModule,
-    ChartsModule,
     NgxElectronModule,
   ],
   providers: [

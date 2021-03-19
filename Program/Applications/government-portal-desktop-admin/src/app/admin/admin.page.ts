@@ -9,7 +9,7 @@ import {
 } from "@ionic/angular";
 import * as firebase from "firebase";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { FormGroup,FormBuilder, Validators, FormControl } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
 import {
   AngularFireStorage,
   AngularFireUploadTask,
@@ -52,14 +52,19 @@ export class AdminPage implements OnInit {
   mobile: any;
   Division: any;
   Email: string;
-  registration_form: any;
   imageURL = "";
   CollectionPath = "/Users/eAdministrators";
   downloadURL: Observable<string>;
   task: AngularFireUploadTask;
   progress: Observable<number>;
-  validations_form: FormGroup;
+  registration_form: FormGroup;
   errorMessage: string;
+  accountCreate: boolean;
+  system_maintenance: boolean;
+  web_system_maintenance: boolean;
+  kiosk_system_maintenance: boolean;
+  office_system_maintenance: boolean;
+  secretary_system_maintenance: boolean;
 
   constructor(
     public storage: AngularFireStorage,
@@ -71,32 +76,12 @@ export class AdminPage implements OnInit {
     private firestore: AngularFirestore,
     public loadingController: LoadingController,
     private modelCtrl: ModalController
-  ) {}
-
-  public barChartOptions = {
-    scaleShowVerticalLines: false,
-    responsive: true,
-  };
-
-  public barChartLabels = [
-    "2006",
-    "2007",
-    "2008",
-    "2009",
-    "2010",
-    "2011",
-    "2012",
-  ];
-  public barChartType = "bar";
-  public barChartLegend = true;
-
-  public barChartData = [
-    { data: [28, 48, 40, 19, 86, 27, 90], label: "Active Users" },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: "Series B" },
-  ];
+  ) { }
 
   async ngOnInit() {
     this.accountPanel = true;
+    // Function for checking all system status
+    this.checkSystemStatus();
     this.accessService.getETechSupportMessages().subscribe((data) => {
       data.map((e) => {
         // console.log(e.payload.doc);
@@ -104,97 +89,194 @@ export class AdminPage implements OnInit {
           // console.log("Unread Messages");
           this.newMessage = true;
         }
-        else{
+        else {
           this.newMessage = false;
         }
       });
     });
     var user = firebase.default.auth().currentUser;
-    
+
     await this.firestore
-    .collection("eAdministration")
-    .doc(user.email)
-    .ref.get()
-    .then((doc) => {
-      if (doc.exists) {
-        this.prefix = doc.data()["Prefix"];
-        this.fullName = doc.data()["Full_Name"];
-        this.officeAddress = doc.data()["officeAddress"];
-        this.mobile = doc.data()["mobile"];
-        this.Division = doc.data()["Division"];
-        this.Email = user.email
-      }
-    });
+      .collection("eAdministration")
+      .doc(user.email)
+      .ref.get()
+      .then((doc) => {
+        if (doc.exists) {
+          this.prefix = doc.data()["Prefix"];
+          this.fullName = doc.data()["Full_Name"];
+          this.officeAddress = doc.data()["officeAddress"];
+          this.mobile = doc.data()["mobile"];
+          this.Division = doc.data()["Division"];
+          this.Email = user.email
+        }
+      });
     /**
      * Validation Form receives input data sent by the user to Support service
      */
     this.message_form = this.formBuilder.group({
       messageBody: new FormControl("", Validators.compose([])),
     });
-     /**
-     * Mandatory form validators for registration process, applicant has to fill all data which is usally present on their
-     * birth certificate
-     */
-      this.registration_form = this.formBuilder.group({
-        email: new FormControl(
-          "",
-          Validators.compose([
-            Validators.required,
-            Validators.pattern(
-              "^([ a-zA-Z])+$"
-            ),
-          ])
-        ),
-        password: new FormControl(
-          "",
-          Validators.compose([
-            Validators.minLength(15),
-            Validators.maxLength(30),
-            Validators.required,
-          ])
-        ),
-        fullName: new FormControl(
-          "",
-          Validators.compose([
-            Validators.minLength(15),
-            Validators.required,
-            Validators.pattern("^([ a-zA-Z])+$"),
-          ])
-        ),
-        type: new FormControl("", Validators.compose([Validators.required])),
-        prefix: new FormControl("", Validators.compose([Validators.required])),
-        dateOfBirth: new FormControl(
-          "",
-          Validators.compose([Validators.required])
-        ),
-        division: new FormControl(
-          "",
-          Validators.compose([Validators.minLength(10), Validators.required])
-        ),
-        landLine: new FormControl(
-          "",
-          Validators.compose([
-            Validators.pattern("^[0-9]{10}$"),
-            Validators.minLength(10),
-            Validators.required,
-          ])
-        ),
-        mobile: new FormControl(
-          "",
-          Validators.compose([
-            Validators.pattern("^[0-9]{10}$"),
-            Validators.minLength(10),
-            Validators.required,
-          ])
-        ),
-        homeAddress: new FormControl(
-          "",
-          Validators.compose([Validators.minLength(20), Validators.required])
-        ),
-        officeAddress: new FormControl("", Validators.compose([])),
-        downloadURL: new FormControl("", Validators.compose([])),
-      });
+    /**
+    * Form validators for registration process
+    */
+    this.registration_form = this.formBuilder.group({
+      email: new FormControl(
+        "",
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(
+            "^([ a-zA-Z])+$"
+          ),
+        ])
+      ),
+      password: new FormControl(
+        "",
+        Validators.compose([
+          Validators.minLength(15),
+          Validators.maxLength(30),
+          Validators.required,
+        ])
+      ),
+      fullName: new FormControl(
+        "",
+        Validators.compose([
+          Validators.minLength(15),
+          Validators.required,
+          Validators.pattern("^([ a-zA-Z])+$"),
+        ])
+      ),
+      type: new FormControl("", Validators.compose([Validators.required])),
+      nic: new FormControl("", Validators.compose([Validators.required])),
+      gender: new FormControl("", Validators.compose([Validators.required])),
+      prefix: new FormControl("", Validators.compose([Validators.required])),
+      dateOfBirth: new FormControl(
+        "",
+        Validators.compose([Validators.required])
+      ),
+      division: new FormControl(
+        "",
+        Validators.compose([Validators.minLength(10), Validators.required])
+      ),
+      landLine: new FormControl(
+        "",
+        Validators.compose([
+          Validators.pattern("^[0-9]{10}$"),
+          Validators.minLength(10),
+          Validators.required,
+        ])
+      ),
+      mobile: new FormControl(
+        "",
+        Validators.compose([
+          Validators.pattern("^[0-9]{10}$"),
+          Validators.minLength(10),
+          Validators.required,
+        ])
+      ),
+      homeAddress: new FormControl(
+        "",
+        Validators.compose([Validators.minLength(20), Validators.required])
+      ),
+      officeAddress: new FormControl("", Validators.compose([])),
+      downloadURL: new FormControl("", Validators.compose([])),
+    });
   }
+  validation_form = {
+    email: [
+      {
+        type: "required",
+        message: "Your Government Portal username is required."
+      }, {
+        type: "pattern",
+        message: "Invalid username."
+      }
+    ],
+    password: [
+      {
+        type: "required",
+        message: "Password is required."
+      }, {
+        type: "minlength",
+        message: "Password must be at meet mininum characters."
+      }, {
+        type: "maxlength",
+        message: "Password cannot be longer than 30 characters long."
+      }
+    ],
+    prefix: [
+      {
+        type: "required",
+        message: "Name prefix is required.",
+      },
+    ],
+    fullName: [
+      {
+        type: "required",
+        message: "Full Name is required.",
+      },
+    ],
+    gender: [
+      {
+        type: "required",
+        message: "Gender is required.",
+      },
+    ],
+    nic: [
+      {
+        type: "required",
+        message: "NIC is required.",
+      },
+    ],
+    dateOfBirth: [
+      {
+        type: "required",
+        message: "Date of Birth is required.",
+      },
+    ],
+    placeOfBirth: [
+      {
+        type: "required",
+        message: "Place of birth is required.",
+      },
+    ],
+    division: [
+      {
+        type: "required",
+        message: "Registar's division is required.",
+      },
+    ],
+    homeAddress: [
+      {
+        type: "required",
+        message: "Home Address is required.",
+      },
+    ],
+    officeAddress: [
+      {
+        type: "required",
+        message: "Office Address is required.",
+      },
+    ],
+    mobile: [
+      {
+        type: "required",
+        message: "Mobile number is required.",
+      },
+    ],
+    landLine: [
+      {
+        type: "required",
+        message: "Landline number is required.",
+      },
+    ],
+    type: [
+      {
+        type: "required",
+        message: "Account type is required.",
+      },
+    ],
+  }
+
   openSupport() {
     this.accountPanel = false;
     this.settingsPanel = false;
@@ -220,10 +302,11 @@ export class AdminPage implements OnInit {
     this.supportPanel = false;
     this.statisticsPanel = false;
   }
- /**
-   * Method reposible for registering officers
-   */
-  registerECitizen(value) {
+
+  /**
+    * Method reposible for registering officers
+    */
+  registerOfficer(value) {
     this.accessService.registerOfficer(value);
   }
 
@@ -253,6 +336,96 @@ export class AdminPage implements OnInit {
         .subscribe();
     }
   }
+/** Checking System Status */
+checkSystemStatus(){
+  // Full System
+  this.accessService.getSystemMaintenanceStatus().subscribe(
+    (data) => {
+      if(data=='true'){
+        this.system_maintenance = true
+      }
+      else{
+        this.system_maintenance = false
+      }
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+  // Web System
+  this.accessService.getWebSystemMaintenanceStatus().subscribe(
+    (data) => {
+      if(data=='true'){
+        this.web_system_maintenance = true
+      }
+      else{
+        this.web_system_maintenance = false
+      }
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+  // Kiosk System
+  this.accessService.getKioskSystemMaintenanceStatus().subscribe(
+    (data) => {
+      if(data=='true'){
+        this.kiosk_system_maintenance = true
+      }
+      else{
+        this.kiosk_system_maintenance = false
+      }
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+  // Office System
+  this.accessService.getOfficeSystemMaintenanceStatus().subscribe(
+    (data) => {
+      if(data=='true'){
+        this.office_system_maintenance = true
+      }
+      else{
+        this.office_system_maintenance = false
+      }
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+  // Secretary System
+  this.accessService.getSecretarySystemMaintenanceStatus().subscribe(
+    (data) => {
+      if(data=='true'){
+        this.secretary_system_maintenance = true
+      }
+      else{
+        this.secretary_system_maintenance = false
+      }
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+}
+/** System Status Management */
+systemMaintenance(value){
+  this.accessService.setSystemMaintenance(value)
+}
+kioskSystemMaintenance(value){
+  this.accessService.setKioskSystemMaintenance(value)
+}
+webSystemMaintenance(value){
+  this.accessService.setWebSystemMaintenance(value)
+}
+officeSystemMaintenance(value){
+  this.accessService.setOfficeSystemMaintenance(value)
+}
+secretarySystemMaintenance(value){
+  this.accessService.setSecretarySystemMaintenance(value)
+}
+
   /** Methods reposible for loading customer messages to officer screen for reponding */
   async getSupportMessages() {
     this.loadingData = true;
@@ -275,11 +448,17 @@ export class AdminPage implements OnInit {
       });
     }, 1000);
   }
+  createAccount() {
+    this.accountCreate = true;
+    this.accountManage = false;
+  }
   /**
    * Manages Government Portal accounts
    */
   async manageAccount() {
     this.accountManage = true;
+    this.accountCreate = false;
+
     this.http
       .get(`https://government-portal-firebase.herokuapp.com/get-all-users`)
       .subscribe(
@@ -318,7 +497,7 @@ export class AdminPage implements OnInit {
       this.http
         .get(
           "https://government-portal-firebase.herokuapp.com/get-user?email=" +
-            value
+          value
         )
         .subscribe(
           (data) => {
@@ -348,7 +527,7 @@ export class AdminPage implements OnInit {
     this.http
       .get(
         "https://government-portal-firebase.herokuapp.com/activate-user?uid=" +
-          user
+        user
       )
       .subscribe(
         async (data) => {
@@ -380,7 +559,7 @@ export class AdminPage implements OnInit {
     this.http
       .get(
         "https://government-portal-firebase.herokuapp.com/disable-user?uid=" +
-          user
+        user
       )
       .subscribe(
         async (data) => {
@@ -412,7 +591,7 @@ export class AdminPage implements OnInit {
     this.http
       .get(
         "https://government-portal-firebase.herokuapp.com/delete-user?uid=" +
-          user
+        user
       )
       .subscribe(
         async (data) => {

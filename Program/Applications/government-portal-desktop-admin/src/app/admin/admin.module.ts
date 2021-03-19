@@ -9,7 +9,6 @@ import { AdminPage } from './admin.page';
 
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
-import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -18,7 +17,6 @@ import { ChartsModule } from 'ng2-charts';
     Ng2SearchPipeModule,
     IonicModule,
     AdminPageRoutingModule,
-    ChartsModule,
     ReactiveFormsModule
   ],
   declarations: [AdminPage]

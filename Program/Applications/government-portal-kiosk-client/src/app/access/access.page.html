@@ -34,7 +34,7 @@
             <h1 style="font-size: xx-large;"><strong>Government Portal</strong></h1>
             <br>
             <h5>Goverment Portal Kiosk</h5>
-            <form class="form" [formGroup]="validations_form" (ngSubmit)="loginKiosk(validations_form.value)">
+            <form class="form" [formGroup]="validations_form"  (keydown.enter)="loginKiosk(validations_form.value)" (ngSubmit)="loginKiosk(validations_form.value)">
               <ion-item>
                 <ion-input required="true" type="email" placeholder="KIOSK NAME"
                   formControlName="email" type="email"></ion-input>

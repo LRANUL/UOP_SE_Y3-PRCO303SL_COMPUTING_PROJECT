@@ -10,6 +10,39 @@ import { HttpClient } from "@angular/common/http";
   providedIn: "root",
 })
 export class AccessService {
+  private BASE_URL = 'http://localhost:5000/'
+
+/** Management of System via Remote Configuration - Allows management of all system clients */
+  setSystemMaintenance(value) {
+    return this.http.get(this.BASE_URL + "system_maintenance?value="+value);
+  }
+  setKioskSystemMaintenance(value: any) {
+    return this.http.get(this.BASE_URL + "kiosk_system_maintenance?value="+value);
+  }
+  setWebSystemMaintenance(value: any) {
+    return this.http.get(this.BASE_URL + "web_system_maintenance?value="+value);
+  }
+  setOfficeSystemMaintenance(value: any) {
+    return this.http.get(this.BASE_URL + "office_system_maintenance?value="+value);
+  }
+  setSecretarySystemMaintenance(value: any) {
+    return this.http.get(this.BASE_URL + "secretary_system_maintenance?value="+value);
+  }
+  getSystemMaintenanceStatus() {
+    return this.http.get(this.BASE_URL + "system_maintenance_status");
+  }
+  getWebSystemMaintenanceStatus() {
+    return this.http.get(this.BASE_URL + "web_system_maintenance_status");
+  }
+  getKioskSystemMaintenanceStatus() {
+    return this.http.get(this.BASE_URL + "kiosk_system_maintenance_status");
+  }
+  getOfficeSystemMaintenanceStatus() {
+    return this.http.get(this.BASE_URL + "office_system_maintenance_status");
+  }
+  getSecretarySystemMaintenanceStatus() {
+    return this.http.get(this.BASE_URL + "secretary_system_maintenance_status");
+  }
   constructor(
     public http: HttpClient,
     private firestore: AngularFirestore,
@@ -28,27 +61,28 @@ export class AccessService {
       .doc(value.email)
       .set({
         Type: value.type,
-        Full_Name: value.fullName.toUpperCase(),
-        Gender: value.gender.toUpperCase(),
+        Full_Name: value.fullName,
+        Gender: value.gender,
         Date_Of_Birth: dateBirth,
-        Place_Of_Birth: value.placeOfBirth.toUpperCase(),
-        Division: value.division.toUpperCase(),
+        Place_Of_Birth: value.placeOfBirth,
+        Division: value.division,
         NIC: value.nic,
         downloadURL: value.downloadURL,
         Prefix: value.prefix,
-        homeAddress: value.homeAddress.toUpperCase(),
-        officeAddress: value.officeAddress.toUpperCase(),
+        homeAddress: value.homeAddress,
+        officeAddress: value.officeAddress,
         mobile: value.mobile,
         landLine: value.landLine,
-        Email: value.email.toUpperCase(),
+        Email: value.email + '@homeaffairs.gov.lk',
         createdDateTime: new Date(),
         status: "Active",
       })
 
     this.http
       .post(
-        "https://government-portal-firebase.herokuapp.com/create-user", {
-        email: value.email, password: value.password, downloadURL: value.downloadURL, mobile: value.mobile, Full_Name: value.fullName
+        "http://localhost:5000/create-user", {
+          // "https://government-portal-firebase.herokuapp.com/create-user", {
+        email: value.email + '@homeaffairs.gov.lk', password: value.password, downloadURL: value.downloadURL, mobile: value.mobile, Full_Name: value.fullName
       }
       )
       .subscribe(

@@ -27,7 +27,7 @@
         </ion-tab-button>
         <ion-tab-button (click)=openStatistics() name="Statistics">
           <ion-icon name="stats-chart-outline"></ion-icon>
-          <ion-label>Statistics</ion-label>
+          <ion-label>System</ion-label>
         </ion-tab-button>
         <ion-tab-button (click)=openSettings() name="Settings">
           <ion-icon name="settings"></ion-icon>
@@ -97,14 +97,14 @@
           </ion-col>
           <ion-col *ngIf="accountCreate" class="end">
             <form class="form" [formGroup]="registration_form" (ngSubmit)="registerOfficer(registration_form.value)">
-              <h5>Account</h5>
+              <h6>Account</h6>
               <ion-item>
                 <ion-select placeholder="SELECT ACCOUNT TYPE" formControlName="type">
                   <ion-select-option value="Officer">OFFICER</ion-select-option>
                   <ion-select-option value="Seceratary">SECRETARY</ion-select-option>
                 </ion-select>
               </ion-item>
-              <h5>Prefix</h5>
+              <h6>Prefix</h6>
               <ion-select formControlName="prefix" type="text" required placeholder="PREFIX">
                 <ion-select-option value="Mr.">Mr.</ion-select-option>
                 <ion-select-option value="Ms.">Ms.</ion-select-option>
@@ -117,24 +117,24 @@
                 <ng-container *ngFor="let validation of validation_form.prefix">
                   <div class="error-message"
                     *ngIf="registration_form.get('prefix').hasError(validation.type) && (registration_form.get('prefix').dirty || registration_form.get('prefix').touched)">
-                    {{ validation.message }}
+                   <i> {{ validation.message }} </i>
                   </div>
                 </ng-container>
               </div>
-              <h5>Full Name of Officer</h5>
+              <h6>Full Name of Officer</h6>
               <ion-item>
                 <ion-input required="true" type="text" placeholder="INSERT OFFICER FULL NAME" formControlName="fullName"
-                  type="text" required style="text-transform: uppercase;" maxlength="512"></ion-input>
+                  type="text" required maxlength="512"></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of validation_form.fullName">
                   <div class="error-message"
                     *ngIf="registration_form.get('fullName').hasError(validation.type) && (registration_form.get('fullName').dirty || registration_form.get('fullName').touched)">
-                    {{ validation.message }}
+                   <i> {{ validation.message }} </i>
                   </div>
                 </ng-container>
               </div>
-              <h5>Gender</h5>
+              <h6>Gender</h6>
               <ion-item>
                 <ion-select placeholder="SELECT YOUR GENDER" formControlName="gender">
                   <ion-select-option value="Female">FEMALE</ion-select-option>
@@ -145,11 +145,11 @@
                 <ng-container *ngFor="let validation of validation_form.gender">
                   <div class="error-message"
                     *ngIf="registration_form.get('gender').hasError(validation.type) && (registration_form.get('gender').dirty || registration_form.get('gender').touched)">
-                    {{ validation.message }}
+                   <i> {{ validation.message }} </i>
                   </div>
                 </ng-container>
               </div>
-              <h5>Date of Birth</h5>
+              <h6>Date of Birth</h6>
               <ion-item>
                 <ion-datetime min='1910-01-01' max='2000-12-31' displayFormat="MM DD YYYY" pickerFormat="MM DD YYYY"
                   placeholder="SELECT DATE OF BIRTH" formControlName="dateOfBirth" type="text"></ion-datetime>
@@ -158,37 +158,37 @@
                 <ng-container *ngFor="let validation of validation_form.dateOfBirth">
                   <div class="error-message"
                     *ngIf="registration_form.get('dateOfBirth').hasError(validation.type) && (registration_form.get('dateOfBirth').dirty || registration_form.get('dateOfBirth').touched)">
-                    {{ validation.message }}
+                   <i> {{ validation.message }} </i>
                   </div>
                 </ng-container>
               </div>
-              <h5>Division</h5>
+              <h6>Division</h6>
               <ion-item>
                 <ion-input required="true" type="text" placeholder="INSERT DIVISION" formControlName="division"
-                  type="text" required style="text-transform: uppercase;"></ion-input>
+                  type="text" required ></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of validation_form.division">
                   <div class="error-message"
                     *ngIf="registration_form.get('division').hasError(validation.type) && (registration_form.get('division').dirty || registration_form.get('division').touched)">
-                    {{ validation.message }}
+                   <i> {{ validation.message }} </i>
                   </div>
                 </ng-container>
               </div>
-              <h5>National Identification Card No</h5>
+              <h6>National Identification Card No</h6>
               <ion-item>
                 <ion-input required="true" placeholder="INSERT NIC" formControlName="nic" type="tel" required
-                  style="text-transform: uppercase;" maxlength="14"></ion-input>
+                   maxlength="14"></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of validation_form.nic">
                   <div class="error-message"
                     *ngIf="registration_form.get('nic').hasError(validation.type) && (registration_form.get('nic').dirty || registration_form.get('nic').touched)">
-                    {{ validation.message }}
+                   <i> {{ validation.message }} </i>
                   </div>
                 </ng-container>
               </div>
-              <h5>Profile Photo</h5>
+              <h6>Profile Photo</h6>
               <p>Photograph given for system enrollment</p>
               <ion-item>
                 <div *ngIf="progress | async as value">Progress: {{ value | number }}%
@@ -197,72 +197,72 @@
                 <ion-input required="true" type="file" (change)="onFileChange($event)" accept=".jpeg,.jpg,.png">
                 </ion-input>
               </ion-item>
-              <h5>Home Address</h5>
+              <h6>Home Address</h6>
               <ion-item>
                 <ion-input required="true" type="text" placeholder="HOME ADDRESS IN FULL" formControlName="homeAddress"
-                  type="text" required style="text-transform: uppercase;"></ion-input>
+                  type="text" required></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of validation_form.homeAddress">
                   <div class="error-message"
                     *ngIf="registration_form.get('homeAddress').hasError(validation.type) && (registration_form.get('homeAddress').dirty || registration_form.get('homeAddress').touched)">
-                    {{ validation.message }}
+                   <i> {{ validation.message }} </i>
                   </div>
                 </ng-container>
               </div>
-              <h5>Office Address</h5>
+              <h6>Office Address</h6>
               <ion-item>
                 <ion-input required="true" type="text" placeholder="OFFICE ADDRESS IN FULL"
-                  formControlName="officeAddress" type="text" style="text-transform: uppercase;"></ion-input>
+                  formControlName="officeAddress" type="text" ></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of validation_form.officeAddress">
                   <div class="error-message"
                     *ngIf="registration_form.get('officeAddress').hasError(validation.type) && (registration_form.get('officeAddress').dirty || registration_form.get('officeAddress').touched)">
-                    {{ validation.message }}
+                   <i> {{ validation.message }} </i>
                   </div>
                 </ng-container>
               </div>
-              <h5>Mobile Number</h5>
+              <h6>Mobile Number</h6>
               <ion-item>
                 <ion-input required="true" type="tel" placeholder="MOBILE NUMBER" formControlName="mobile" type="tel"
-                  required style="text-transform: uppercase;" maxlength="10"></ion-input>
+                  required maxlength="10"></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of validation_form.mobile">
                   <div class="error-message"
                     *ngIf="registration_form.get('mobile').hasError(validation.type) && (registration_form.get('mobile').dirty || registration_form.get('mobile').touched)">
-                    {{ validation.message }}
+                   <i> {{ validation.message }} </i>
                   </div>
                 </ng-container>
               </div>
-              <h5>Landline Number</h5>
+              <h6>Landline Number</h6>
               <ion-item>
                 <ion-input required="true" type="tel" placeholder="LANDLINE NUMBER" formControlName="landLine"
-                  type="tel" required style="text-transform: uppercase;" maxlength="10"></ion-input>
+                  type="tel" required maxlength="10"></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of validation_form.landLine">
                   <div class="error-message"
                     *ngIf="registration_form.get('landLine').hasError(validation.type) && (registration_form.get('landLine').dirty || registration_form.get('landLine').touched)">
-                    {{ validation.message }}
+                   <i> {{ validation.message }} </i>
                   </div>
                 </ng-container>
               </div>
-              <h5>Email address</h5>
+              <h6>User Name</h6>
               <ion-item>
                 <ion-input required="true" type="email" placeholder="EMAIL FOR OFFICER" formControlName="email"
-                  type="email" required></ion-input> @homeaffairs.gov.lk
+                  type="email" required></ion-input> 
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of validation_form.email">
                   <div class="error-message"
                     *ngIf="registration_form.get('email').hasError(validation.type) && (registration_form.get('email').dirty || registration_form.get('email').touched)">
-                    {{ validation.message }}
+                   <i> {{ validation.message }} </i>
                   </div>
                 </ng-container>
               </div>
-              <h5>Password</h5>
+              <h6>Password</h6>
               <ion-item>
                 <ion-input required="true" inputmode="text" type="password" clear-on-edit=true placeholder="PASSWORD"
                   formControlName="password" type="password" required></ion-input>
@@ -271,7 +271,7 @@
                 <ng-container *ngFor="let validation of validation_form.password">
                   <div class="error-message"
                     *ngIf="registration_form.get('password').hasError(validation.type) && (registration_form.get('password').dirty || registration_form.get('password').touched)">
-                    {{ validation.message }}
+                   <i> {{ validation.message }} </i>
                   </div>
                 </ng-container>
                 <br>
@@ -331,13 +331,30 @@
     <ion-grid>
       <ion-row>
         <ion-col class="start" style="padding-left: 5%;">
-          <h2 style="font-size: x-large;"><strong>Statistics</strong></h2>
+          <h2 style="font-size: x-large;"><strong>System Management</strong></h2>
           <div>
-            <div style="display: block">
-              <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-                [legend]="barChartLegend" [chartType]="barChartType">
-              </canvas>
-            </div>
+            <ion-list class="ios">
+              <ion-item>
+                <ion-label>Full System Maintenance</ion-label>
+                <ion-toggle color="danger" [(ngModel)]="system_maintenance" (ngModelChange)="systemMaintenance(system_maintenance)"></ion-toggle>
+              </ion-item>
+              <ion-item>
+                <ion-label>Secretary System Maintenance</ion-label>
+                <ion-toggle color="warning" [(ngModel)]="secretary_system_maintenance" (ngModelChange)="secretarySystemMaintenance(secretary_system_maintenance)"></ion-toggle>
+              </ion-item>
+              <ion-item>
+                <ion-label>Office System Maintenance</ion-label>
+                <ion-toggle color="warning" [(ngModel)]="office_system_maintenance" (ngModelChange)="officeSystemMaintenance(office_system_maintenance)"></ion-toggle>
+              </ion-item>
+              <ion-item>
+                <ion-label>Web System Maintenance</ion-label>
+                <ion-toggle color="warning" [(ngModel)]="web_system_maintenance" (ngModelChange)="webSystemMaintenance(web_system_maintenance)"></ion-toggle>
+              </ion-item>
+              <ion-item>
+                <ion-label>Kiosk System Maintenance</ion-label>
+                <ion-toggle color="warning" [(ngModel)]="kiosk_system_maintenance" (ngModelChange)="kioskSystemMaintenance(kiosk_system_maintenance)"></ion-toggle>
+              </ion-item>
+            </ion-list>
           </div>
         </ion-col>
       </ion-row>

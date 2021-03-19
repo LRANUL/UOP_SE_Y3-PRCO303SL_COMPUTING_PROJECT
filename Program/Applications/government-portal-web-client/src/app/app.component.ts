@@ -5,7 +5,9 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Plugins } from '@capacitor/core';
 import { AlertController } from '@ionic/angular';
 import { RemoteConfigService } from './service/remote-config.service';
-
+import firebase from "firebase/app";
+import "firebase/performance";
+import { environment } from '../environments/environment';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -27,6 +29,9 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+    firebase.initializeApp(environment.config);
+    // Initializing Application Performance Monitoring accodring to Firebase Documentation
+    const performance = firebase.performance();
     const maintenance = await this.remoteConfig.maintenanceLockCheck();
     if (maintenance) {
       const alertMaintenance = await this.alertCtrl.create({
