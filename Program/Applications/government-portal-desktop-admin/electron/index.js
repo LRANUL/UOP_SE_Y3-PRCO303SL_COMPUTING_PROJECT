@@ -1,7 +1,7 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const isDevMode = require('electron-is-dev');
 const { CapacitorSplashScreen, configCapacitor } = require('@capacitor/electron');
-
+if(require('electron-squirrel-startup')) return;
 const path = require('path');
 
 // Place holders for our windows so they don't get garbage collected.
@@ -27,7 +27,7 @@ const menuTemplateDev = [
     ],
   },
 ];
-
+Menu.setApplicationMenu(false)
 async function createWindow() {
   // Define our main window size
   mainWindow = new BrowserWindow({

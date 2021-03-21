@@ -31,7 +31,7 @@ export class AccessService {
       .collection("eApplications", (ref) =>
         ref
           .limit(10)
-          .where("status", "in", ["New", "Processing"])
+          .where("status", "in", ["New", "Processing - Stage 1|සැකසීම - අදියර 1|செயலாக்கம் - நிலை 1"])
           .where("payment_status", "==", "paid")
           .where("division", "==", Division)
       )
@@ -193,9 +193,9 @@ export class AccessService {
       .doc(DocumentID);
     await eApplication.set(
       {
-        status: "Processing - Stage 1",
+        status: "Processing - Stage 1|සැකසීම - අදියර 1|செயலாக்கம் - நிலை 1",
         description:
-          "Your application had been approved by your divisional secretary and is being processed and will be approved soon by NIC Office.",
+          "Your application had been approved by your public officer and is being processed at the divisional secretary and will be approved soon by NIC Office.|ඔබගේ අයදුම්පත ඔබගේ රජයේ නිලධාරියා විසින් අනුමත කර ඇති අතර එය ප්‍රාදේශීය ලේකම්වරයා වෙත යොමු කරනු ලබන අතර එය ජාතික හැඳුනුම්පත් කාර්යාලය විසින් අනුමත කරනු ඇත.|உங்கள் விண்ணப்பம் உங்கள் பொது அதிகாரியால் அங்கீகரிக்கப்பட்டு, பிரதேச செயலாளரிடம் செயல்படுத்தப்பட்டு, விரைவில் என்.ஐ.சி அலுவலகத்தால் அங்கீகரிக்கப்படும்.",
         processedTimeStamp: "" + new Date(),
       },
       { merge: true }
@@ -223,7 +223,7 @@ export class AccessService {
       .doc(DocumentID);
     const res = await eApplication.set(
       {
-        status: "Declined",
+        status: "Declined|ප්රතික්ෂේප විය|குறைந்தது",
         description: Reason,
         approvedTimeStamp: "" + new Date(),
       },
@@ -267,7 +267,7 @@ export class AccessService {
           status: "New",
           GovernmentID: value.GovernmentID,
           payment_status: "paid",
-          description: "Application sent for Department",
+          description: "Application sent for Department | දෙපාර්තමේන්තුව සඳහා අයදුම්පත යවා ඇත| துறைக்கு விண்ணப்பம் அனுப்பப்பட்டது",
           email: value.email,
           familyName: value.familyName,
           name: value.name,

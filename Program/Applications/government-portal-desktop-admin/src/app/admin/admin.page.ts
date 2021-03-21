@@ -233,12 +233,6 @@ export class AdminPage implements OnInit {
         message: "Date of Birth is required.",
       },
     ],
-    placeOfBirth: [
-      {
-        type: "required",
-        message: "Place of birth is required.",
-      },
-    ],
     division: [
       {
         type: "required",

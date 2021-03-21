@@ -31,13 +31,9 @@ export class HomePage implements OnInit {
     private service: AccessService,
     private firestore: AngularFirestore,
     public alertController: AlertController
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.portalScanner = true;
-    setTimeout(() => {
-      this.portalScanner = false;
-    }, 3000);
   }
 
   English() {
@@ -78,10 +74,11 @@ export class HomePage implements OnInit {
                       role: "cancel",
                     },
                     {
-                      text: "Ok",
+                      text: "OK",
                       handler: (data) => {
                         if (Access_PIN == data.Access_PIN) {
                           welcome.play();
+                          qrResultString = null;
                           this.navCtrl.navigateForward(
                             "english?id=" + GovernmentID
                           );
@@ -136,25 +133,26 @@ export class HomePage implements OnInit {
               if (MatchID == GovernmentID) {
                 this.portalScanner = false;
                 const alert = await this.alertController.create({
-                  header: "Access PIN Required",
+                  header: "ප්‍රවේශ PIN අවශ්‍යය",
                   inputs: [
                     {
                       name: "Access_PIN",
                       type: "number",
                       max: 999999,
-                      placeholder: "6-Digit PIN",
+                      placeholder: "6-ඉලක්කම් PIN",
                     },
                   ],
                   buttons: [
                     {
-                      text: "Cancel",
+                      text: "අවලංගු කරන්න",
                       role: "cancel",
                     },
                     {
-                      text: "Ok",
+                      text: "හරි",
                       handler: (data) => {
                         if (Access_PIN == data.Access_PIN) {
                           welcome.play();
+                          qrResultString = null;
                           this.navCtrl.navigateForward(
                             "sinhala?id=" + GovernmentID
                           );
@@ -209,25 +207,26 @@ export class HomePage implements OnInit {
               if (MatchID == GovernmentID) {
                 this.portalScanner = false;
                 const alert = await this.alertController.create({
-                  header: "Access PIN Required",
+                  header: "அணுகல் பின் தேவை",
                   inputs: [
                     {
                       name: "Access_PIN",
                       type: "number",
                       max: 999999,
-                      placeholder: "6-Digit PIN",
+                      placeholder: "6-இலக்க பின்",
                     },
                   ],
                   buttons: [
                     {
-                      text: "Cancel",
+                      text: "ரத்துசெய்",
                       role: "cancel",
                     },
                     {
-                      text: "Ok",
+                      text: "சரி",
                       handler: (data) => {
                         if (Access_PIN == data.Access_PIN) {
                           welcome.play();
+                          qrResultString = null;
                           this.navCtrl.navigateForward(
                             "tamil?id=" + GovernmentID
                           );

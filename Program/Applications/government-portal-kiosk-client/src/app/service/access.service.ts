@@ -27,10 +27,10 @@ export class AccessService {
          * Data gets stored on firebase, used for message tracking and references
          */
         const alert = await this.alertController.create({
-          header: "✅ Support Requested",
-          subHeader: "Message Sent",
+          header: "✅ Support Requested|සහාය ඉල්ලා ඇත|ஆதரவு கோரப்பட்டது",
+          subHeader: "Message Sent|පණිවිඩය යැව්වා|தகவல் அனுப்பப்பட்டது",
           message:
-            "Your message has been sent, wait for a reponse from support.",
+            "Your message has been sent, wait for a reponse from support.| ඔබගේ පණිවිඩය යවා ඇත, සහාය දක්වන ප්‍රතිචාරයක් බලාපොරොත්තුවෙන් සිටින්න.|உங்கள் செய்தி அனுப்பப்பட்டது, ஆதரவிலிருந்து பதிலுக்காக காத்திருங்கள்.",
           buttons: ["OK"],
         });
         await alert.present();
@@ -43,7 +43,7 @@ export class AccessService {
             GovernmentID: GovernmentID,
             Status: "New",
             Subject: value.subject,
-            Response: "Message Sent | Wait for Response",
+            Response: "Message Sent | Wait for Response/පණිවිඩය යවන ලදි | ප්‍රතිචාරය සඳහා රැඳී සිටින්න/செய்தி அனுப்பப்பட்டது | பதிலுக்காக காத்திருங்கள்",
           })
           .then(
             (response) => resolve(response),
@@ -60,11 +60,10 @@ export class AccessService {
       .snapshotChanges();
   }
 
-  getEApplications() {
-    var user = firebase.default.auth().currentUser;
+  getEApplication(GovernmentID) {
     return this.firestore
       .collection("eApplications", (ref) =>
-        ref.where("GovernmentID", "==", user.displayName)
+        ref.where("GovernmentID", "==", GovernmentID)
       )
       .snapshotChanges();
   }
@@ -98,7 +97,7 @@ export class AccessService {
           status: "New",
           GovernmentID: value.GovernmentID,
           payment_status: "paid",
-          description: "Application sent for Department",
+          description: "Application sent for Department | දෙපාර්තමේන්තුව සඳහා අයදුම්පත යවා ඇත| துறைக்கு விண்ணப்பம் அனுப்பப்பட்டது",
           email: value.email,
           familyName: value.familyName,
           name: value.name,
@@ -149,10 +148,10 @@ export class AccessService {
           (error) => reject(error)
         );
       const alert = await this.alertController.create({
-        header: "✅ Application Requested",
-        subHeader: "Application Sent",
+        header: "✅ Application Requested|අයදුම්පත ඉල්ලා ඇත|விண்ணப்பம் கோரப்பட்டது",
+        subHeader: "Application Sent|අයදුම්පත යවන ලදි|விண்ணப்பம் அனுப்பப்பட்டது",
         message:
-          "Your application has been sent, check Services page for process tracking.",
+          "Your application has been sent, check Services page for process tracking.|ඔබගේ අයදුම්පත යවා ඇත, ක්‍රියාවලි ලුහුබැඳීම සඳහා සේවා පිටුව පරීක්ෂා කරන්න.|உங்கள் விண்ணப்பம் அனுப்பப்பட்டுள்ளது, செயல்முறை கண்காணிப்புக்கு சேவைகள் பக்கத்தை சரிபார்க்கவும்.",
         buttons: ["OK"],
       });
       await alert.present();

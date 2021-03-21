@@ -1,7 +1,7 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const isDevMode = require('electron-is-dev');
 const { CapacitorSplashScreen, configCapacitor } = require('@capacitor/electron');
-
+if(require('electron-squirrel-startup')) return;
 const path = require('path');
 
 // Place holders for our windows so they don't get garbage collected.
@@ -27,13 +27,14 @@ const menuTemplateDev = [
     ],
   },
 ];
-
-async function createWindow () {
+Menu.setApplicationMenu(false)
+async function createWindow() {
   // Define our main window size
   mainWindow = new BrowserWindow({
     height: 920,
     width: 1600,
     show: false,
+    icon: `file://${__dirname}/app/assets/icon/icon.ico`,
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, 'node_modules', '@capacitor', 'electron', 'dist', 'electron-bridge.js')
@@ -46,10 +47,10 @@ async function createWindow () {
     // Set our above template to the Menu Object if we are in development mode, dont want users having the devtools.
     Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplateDev));
     // If we are developers we might as well open the devtools by default.
-    mainWindow.webContents.openDevTools();
+    mainWindow.webContents.closeDevTools();
   }
 
-  if(useSplashScreen) {
+  if (useSplashScreen) {
     splashScreen = new CapacitorSplashScreen(mainWindow);
     splashScreen.init();
   } else {

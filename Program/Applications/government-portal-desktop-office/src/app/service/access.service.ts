@@ -22,7 +22,7 @@ export class AccessService {
       .collection("eApplications", (ref) =>
         ref
           .limit(10)
-          .where("status", "in", ["New", "Processing - Stage 1","Processing - Stage 2"])
+          .where("status", "in", ["New", "Processing - Stage 1|සැකසීම - අදියර 1|செயலாக்கம் - நிலை 1","Processing - Stage 2|සැකසීම - අදියර 2|செயலாக்கம் - நிலை 2"])
           .where("payment_status", "==", "paid")
       )
       .snapshotChanges();
@@ -200,9 +200,9 @@ export class AccessService {
       .doc(DocumentID);
     await eApplication.set(
       {
-        status: "Processing - Stage 2",
+        status: "Processing - Stage 2|සැකසීම - අදියර 2|செயலாக்கம் - நிலை 2",
         description:
-          "Your application is being processed and will be approved soon.",
+          "Your application has being processed at the divisional secretary and will be approved soon.|ඔබගේ අයදුම්පත ප්‍රාදේශීය ලේකම් වෙත ඉදිරිපත් කර ඇති අතර එය ඉක්මණින් අනුමත වේ.|உங்கள் விண்ணப்பம் பிரதேச செயலாளரிடம் செயல்படுத்தப்பட்டு விரைவில் ஒப்புதல் பெறப்படும்.",
         processedTimeStamp: "" + new Date(),
       },
       { merge: true }
@@ -230,9 +230,9 @@ export class AccessService {
       .doc(DocumentID);
     const res = await eApplication.set(
       {
-        status: "Processed",
+        status: "Approved|අනුමත කර ඇත|அங்கீகரிக்கப்பட்டது",
         description:
-          "Your application is processed, we have mailed your ID card.",
+          "Your application is processed, we have mailed your ID card.|ඔබගේ අයදුම්පත සකසා ඇත, අපි ඔබගේ හැඳුනුම්පත තැපැල් කර ඇත.|உங்கள் விண்ணப்பம் செயலாக்கப்பட்டது, நாங்கள் உங்கள் அடையாள அட்டையை அனுப்பியுள்ளோம்.",
         approvedTimeStamp: "" + new Date(),
       },
       { merge: true }
@@ -259,7 +259,7 @@ export class AccessService {
       .doc(DocumentID);
     const res = await eApplication.set(
       {
-        status: "Declined",
+        status: "Declined|ප්රතික්ෂේප විය|குறைந்தது",
         description: Reason,
         approvedTimeStamp: "" + new Date(),
       },
@@ -303,7 +303,7 @@ export class AccessService {
           status: "New",
           GovernmentID: value.GovernmentID,
           payment_status: "paid",
-          description: "Application sent for Department",
+          description: "Application sent for Department | දෙපාර්තමේන්තුව සඳහා අයදුම්පත යවා ඇත| துறைக்கு விண்ணப்பம் அனுப்பப்பட்டது",
           email: value.email,
           familyName: value.familyName,
           name: value.name,

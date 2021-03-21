@@ -81,7 +81,7 @@ export class EnglishPage implements OnInit {
     private stripeService: StripeService,
     private route: ActivatedRoute,
     public loadingController: LoadingController
-  ) {}
+  ) { }
 
   async ngOnInit() {
     const loading = await this.loadingController.create({
@@ -93,10 +93,13 @@ export class EnglishPage implements OnInit {
       this.isLoaded = true;
     }, 4000);
     this.GovernmentID = this.route.snapshot.queryParams.id;
+    localStorage.setItem('GovernmentID', this.GovernmentID)
+    this.GovernmentID = localStorage.getItem('GovernmentID');
     this.portalScanner = false;
     // 15 Minutes and logout initiated
     this.kioskUserTimer();
     setTimeout(() => {
+      localStorage.removeItem('GovernmentID')
       this.navCtrl.navigateForward("home");
     }, 900000);
     await this.firestore
@@ -395,17 +398,17 @@ export class EnglishPage implements OnInit {
         type: "pattern",
         message: "Invalid email.",
       },
-    ],fullName: [
+    ], fullName: [
       {
         type: "pattern",
         message: "Invalid Name.",
       },
-    ],subject: [
+    ], subject: [
       {
         type: "pattern",
         message: "Invalid Subject.",
       },
-    ],message: [
+    ], message: [
       {
         type: "pattern",
         message: "Invalid Message Format.",
@@ -672,7 +675,7 @@ export class EnglishPage implements OnInit {
    * their data was accepts and sent or rejected.
    */
   async sendApplication(value) {
-    if (this.validations_form.valid) {
+    if (!this.validations_form.valid) {
       this.firestore
         .collection("BirthRegistrations")
         .doc("" + value.birthCertNo + "")
@@ -711,11 +714,11 @@ export class EnglishPage implements OnInit {
                   if (result.error) {
                     // Show error to your customer (e.g., insufficient funds)
                     const alert = await this.alertController.create({
-                      header: "🚫 Application Rejected",
-                      subHeader: "Application Payment",
+                      header: "🚫 Application Rejected|අයදුම්පත ප්‍රතික්ෂේප කරන ලදි|விண்ணப்பம் நிராகரிக்கப்பட்டது",
+                      subHeader: "Application Payment|අයදුම්පත් ගෙවීම|விண்ணப்ப கட்டணம்",
                       message:
-                        "Your application has not been sent, try again and make the payment process using card that has credit.",
-                      buttons: ["OK"],
+                        "Your application has not been sent, try again and make the payment process using card that has credit.|ඔබගේ අයදුම්පත යවා නැත, නැවත උත්සාහ කර ණය ඇති කාඩ්පත භාවිතයෙන් ගෙවීම් ක්‍රියාවලිය කරන්න.|உங்கள் விண்ணப்பம் அனுப்பப்படவில்லை, மீண்டும் முயற்சி செய்து கடன் பெற்ற அட்டையைப் பயன்படுத்தி கட்டணச் செயல்முறையைச் செய்யுங்கள்.",
+                      buttons: ["OK|හරි|சரி"],
                     });
                     await alert.present();
                     this.validations_form.reset();
@@ -742,6 +745,7 @@ export class EnglishPage implements OnInit {
                                 this.card.element.clear();
                                 await loading.dismiss();
                                 this.NICApplicant = false;
+                                this.GovernmentID = localStorage.getItem('GovernmentID')
                               },
                               async (err) => {
                                 // console.log(err);
@@ -756,11 +760,11 @@ export class EnglishPage implements OnInit {
                * Informs applicant that the details dont't match with records to proceed further
                */
               const alert = await this.alertController.create({
-                header: "⚠ Application Not Sent",
-                subHeader: "Registration Details !",
+                header: "⚠ Application Not Sent !|අයදුම්පත යවා නැත!|விண்ணப்பம் அனுப்பப்படவில்லை!",
+                subHeader: "Registration Details !|ලියාපදිංචි විස්තර!|பதிவு விவரங்கள்!",
                 message:
-                  "Your application has not been sent, as the entered details does not your match records.",
-                buttons: ["Retry"],
+                  "Your application has not been sent, as the entered details does not your match records.|ඇතුළත් කළ විස්තර ඔබගේ ගැලපුම් වාර්තා නොවන බැවින් ඔබගේ අයදුම්පත යවා නැත.|உள்ளிடப்பட்ட விவரங்கள் உங்கள் பொருந்தக்கூடிய பதிவுகளைப் பெறாததால், உங்கள் விண்ணப்பம் அனுப்பப்படவில்லை.",
+                buttons: ["Retry|නැවත උත්සාහ කරන්න|மீண்டும் முயற்சிக்கவும்"],
               });
               await alert.present();
             }
@@ -770,11 +774,11 @@ export class EnglishPage implements OnInit {
              * This logic condition is set to prevent malicous use of system for unauthorised businesses
              */
             const alert = await this.alertController.create({
-              header: "⚠ Application Not Sent !",
-              subHeader: "Birth Registration",
+              header: "⚠ Application Not Sent !|අයදුම්පත යවා නැත!|விண்ணப்பம் அனுப்பப்படவில்லை!",
+              subHeader: "Birth Registration|උප්පැන්න ලියාපදිංචි කිරීම|பிறப்பு பதிவு",
               message:
-                "Your application has not been sent, as your details does not match any records.",
-              buttons: ["Close"],
+                "Your application has not been sent, as your details does not match any records.|ඔබගේ විස්තර කිසිදු වාර්තාවකට නොගැලපෙන බැවින් ඔබගේ අයදුම්පත යවා නොමැත.|உங்கள் விவரங்கள் எந்த பதிவுகளுக்கும் பொருந்தாததால், உங்கள் விண்ணப்பம் அனுப்பப்படவில்லை.",
+              buttons: ["Close|වසන්න|நெருக்கமான"],
             });
             await alert.present();
           }
@@ -784,6 +788,7 @@ export class EnglishPage implements OnInit {
 
   private createPaymentIntent(amount: number): Observable<PaymentIntent> {
     return this.http.post<PaymentIntent>(
+      // `http://localhost:4242/kiosk-pay-nic`, // for testing
       `https://government-portal-stripe.herokuapp.com/kiosk-pay-nic`,
       { amount }
     );
@@ -867,10 +872,11 @@ export class EnglishPage implements OnInit {
    */
   async NICStatus() {
     this.Applications = false;
+    this.NICApplicant = false;
     this.NICApplicantStatus = true;
     this.messageStatus = false;
     this.messageForm = false;
-    this.accessService.getEApplications().subscribe((data) => {
+    this.accessService.getEApplication(this.GovernmentID).subscribe((data) => {
       this.EApplications = data.map((e) => {
         // console.log(e.payload.doc.data()["requestType"]);
         return {
@@ -920,10 +926,11 @@ export class EnglishPage implements OnInit {
    */
   async passAlertMessage() {
     const alert = await this.alertController.create({
-      header: "✅ Support Requested",
-      subHeader: "Message Sent",
-      message: "Your reponse was sent to customer support",
-      buttons: ["OK"],
+      header: "✅ Support Requested|සහාය ඉල්ලා ඇත|ஆதரவு கோரப்பட்டது",
+      subHeader: "Message Sent|පණිවිඩය යැව්වා|தகவல் அனுப்பப்பட்டது",
+      message:
+        "Your message has been sent, wait for a reponse from support.| ඔබගේ පණිවිඩය යවා ඇත, සහාය දක්වන ප්‍රතිචාරයක් බලාපොරොත්තුවෙන් සිටින්න.|உங்கள் செய்தி அனுப்பப்பட்டது, ஆதரவிலிருந்து பதிலுக்காக காத்திருங்கள்.",
+        buttons: ["OK|හරි|சரி"],
     });
     await alert.present();
   }
@@ -932,17 +939,18 @@ export class EnglishPage implements OnInit {
    */
   async failAlertMessage() {
     const alert = await this.alertController.create({
-      header: "⚠ Message Not Send",
-      subHeader: "Network Error",
+      header: "⚠ Message Not Send|පණිවිඩය යවන්නේ නැත|செய்தி அனுப்பவில்லை",
+      subHeader: "Network Error|ජාල දෝෂය|பிணைய பிழை",
       message:
-        "Your message has not been sent, Try again later or contact support.",
-      buttons: ["OK"],
+        "Your message has not been sent, Try again later or contact support.|ඔබගේ පණිවිඩය යවා නැත, පසුව නැවත උත්සාහ කරන්න හෝ සහාය අමතන්න.|உங்கள் செய்தி அனுப்பப்படவில்லை, பின்னர் மீண்டும் முயற்சிக்கவும் அல்லது ஆதரவைத் தொடர்பு கொள்ளவும்.",
+        buttons: ["OK|හරි|சரி"],
     });
 
     await alert.present();
   }
   eSupport() {
     this.Applications = false;
+    this.NICApplicant = false;
     this.NICApplicantStatus = false;
     this.messageStatus = true;
     this.messageForm = true;
@@ -961,8 +969,15 @@ export class EnglishPage implements OnInit {
         });
       });
   }
-  Refresh() {
-    window.location.reload();
+  async Refresh() {
+    this.ngOnInit
+    const loading = await this.loadingController.create({
+      message: "Refreshing",
+      backdropDismiss: false,
+      spinner: "bubbles",
+      duration: 1000,
+    });
+    await loading.present();
   }
 
   kioskUserTimer() {
@@ -997,6 +1012,7 @@ export class EnglishPage implements OnInit {
     }, 1000);
   }
   Logout() {
+    localStorage.removeItem('GovernmentID')
     this.navCtrl.navigateForward("home");
   }
 }

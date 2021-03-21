@@ -15,7 +15,6 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "algoliasearch",
               "crypto-js",
               "qrcode",
               "dateformat"

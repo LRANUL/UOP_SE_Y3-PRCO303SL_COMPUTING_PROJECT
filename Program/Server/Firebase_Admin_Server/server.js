@@ -11,7 +11,7 @@ const app = express();
 // app.use(express.static("."), express.json());
 var cors = require('cors')
 
-app.use(cors())
+app.use(cors(),express.json())
 // const APP_DOMAIN = "http://localhost:8100";
 // const APP_DOMAIN = "http://localhost:4200";
 
@@ -61,19 +61,17 @@ app.get("/get-user", async (req, res) => {
     });
 });
 /**
- * Get selected Government Portal User (Find by email Firebase)
+ * Create Officer or Secretary
  */
-app.get("/create-user", async (req, res) => {
-  var email = req.query.email || "";
-  var phone = req.query.mobile || "";
-  var photoURL = req.query.downloadURL || "";
-  var displayName = req.query.Full_Name || "";
-  var password = req.query.password || "";
+app.post("/create-user", async (req, res) => {
+  var email = req.body.email || "";
+  var photoURL = req.body.downloadURL || "";
+  var displayName = req.body.Full_Name || "";
+  var password = req.body.password || "";
   admin
     .auth()
     .createUser({
       email: email,
-      phoneNumber: phone,
       password: password,
       displayName: displayName,
       photoURL: photoURL,

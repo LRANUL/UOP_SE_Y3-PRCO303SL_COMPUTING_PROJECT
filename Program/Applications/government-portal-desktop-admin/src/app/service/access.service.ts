@@ -10,7 +10,7 @@ import { HttpClient } from "@angular/common/http";
   providedIn: "root",
 })
 export class AccessService {
-  private BASE_URL = 'http://localhost:5000/'
+  private BASE_URL = 'https://government-portal-firebase.herokuapp.com/'
 
 /** Management of System via Remote Configuration - Allows management of all system clients */
   setSystemMaintenance(value) {
@@ -58,13 +58,12 @@ export class AccessService {
     */
     this.firestore
       .collection("eAdministration")
-      .doc(value.email)
+      .doc(value.email+'@homeaffairs.gov.lk')
       .set({
         Type: value.type,
         Full_Name: value.fullName,
         Gender: value.gender,
         Date_Of_Birth: dateBirth,
-        Place_Of_Birth: value.placeOfBirth,
         Division: value.division,
         NIC: value.nic,
         downloadURL: value.downloadURL,
@@ -80,9 +79,9 @@ export class AccessService {
 
     this.http
       .post(
-        "http://localhost:5000/create-user", {
-          // "https://government-portal-firebase.herokuapp.com/create-user", {
-        email: value.email + '@homeaffairs.gov.lk', password: value.password, downloadURL: value.downloadURL, mobile: value.mobile, Full_Name: value.fullName
+        // "http://localhost:5000/create-user", {
+          "https://government-portal-firebase.herokuapp.com/create-user", {
+        email: value.email + '@homeaffairs.gov.lk', password: value.password, downloadURL: value.downloadURL, Full_Name: value.fullName
       }
       )
       .subscribe(

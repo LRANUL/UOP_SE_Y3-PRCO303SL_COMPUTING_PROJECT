@@ -3,19 +3,22 @@ const stripe = require("stripe")(
 );
 const express = require("express");
 const app = express();
-app.use(express.static("."), express.json());
-const APP_DOMAIN = "http://localhost:8100"; // ONLY DURING DEVELOPMENT
-app.use(function (req, res, next) {
-  res.header(
-    "Access-Control-Allow-Origin",
-    APP_DOMAIN,
-  );
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+// app.use(express.static("."), express.json());
+var cors = require('cors')
+
+app.use(cors())
+// const APP_DOMAIN = "http://localhost:8100"; // ONLY DURING DEVELOPMENT
+// app.use(function (req, res, next) {
+//   res.header(
+//     "Access-Control-Allow-Origin",
+//     APP_DOMAIN,
+//   );
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   next();
+// });
 
 app.post("/pay-nic", async (req, res) => {
   token = req.body.token;
