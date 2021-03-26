@@ -657,16 +657,16 @@ export class AccountPage implements OnInit {
    */
   validate(sessionID, token) {
     var user = firebase.auth().currentUser;
-    // this.http
-    //   .get(
-    //     "https://government-portal-stripe.herokuapp.com/validate?id=" +
-    //       sessionID)
-    //   .subscribe(
-        this.http
+    this.http
       .get(
-        "http://localhost:4242/validate?id=" +
+        "https://government-portal-stripe.herokuapp.com/validate?id=" +
           sessionID)
       .subscribe(
+        // this.http
+      // .get(
+      //   "http://localhost:4242/validate?id=" +
+      //     sessionID)
+      // .subscribe(
         async (data) => {
           console.log(data);
           if (data == "paid") {
@@ -883,8 +883,8 @@ export class AccountPage implements OnInit {
     const stripe = await loadStripe(
       "pk_test_51IHSuEA5rKg2mqjLa3Gh3JeEVlSE01Ty1uuLmUAwzSSEISREulbOx3FCTLhLtMcxo5QO3Nno4wPoAPUC7vchjnN500co3fV7M0"
     );
-    // fetch("https://government-portal-stripe.herokuapp.com/pay-nic", {
-      fetch("http://localhost:4242/pay-nic", {
+    fetch("https://government-portal-stripe.herokuapp.com/pay-nic", {
+      // fetch("http://localhost:4242/pay-nic", {
       method: "POST",
       body: JSON.stringify({
         token: token,

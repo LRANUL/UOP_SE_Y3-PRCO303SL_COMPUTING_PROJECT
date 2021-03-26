@@ -81,7 +81,7 @@
             </a>
           </ion-row>
         </ion-col>
-        <ion-col *ngIf="NICApplicant" class="end" style="background: var(--ion-color-form);padding-left: 5%;">
+        <ion-col *ngIf="NICApplicant" class="end" style="background: var(--ion-color-form);padding-left: 5%;" size="auto">
           <div style="position: relative;
           float: right;color: darkgray;font-weight: bold;cursor:pointer;" (click)=exitApp()>Exit Application</div>
           <ion-row>
@@ -645,11 +645,11 @@
         </ion-row>
       </ion-col>
       <ion-row style="padding-right: 5%;">
-        <ion-col *ngIf="NICApplicantStatus" class="end" style="background: var(--ion-color-form);">
+        <ion-col *ngIf="NICApplicantStatus" class="end" style="background: var(--ion-color-form);" size="auto">
           <div style="position: relative; float: right;color: rgb(126, 125, 125);font-weight: bold;cursor:pointer;"
             (click)=exitStatus()>Exit</div>
           <ion-list>
-            <ion-item>
+            <!-- <ion-item>
               <ion-grid>
                 <ion-row style="font-weight: bolder;">
                   <ion-col>Request</ion-col>
@@ -658,14 +658,14 @@
                   <ion-col>Status</ion-col>
                 </ion-row>
               </ion-grid>
-            </ion-item>
+            </ion-item> -->
             <ion-item *ngFor="let application of EApplications | slice:0:10;; let i = index">
               <ion-grid>
                 <ion-row style="font-size: small;">
-                  <ion-col>{{application.requestType}}</ion-col>
-                  <ion-col>{{application.assigneeName}}</ion-col>
-                  <ion-col>{{application.applicationDescription}}</ion-col>
-                  <ion-col>{{application.applicationStatus}}
+                  <ion-col><b>Request</b>: {{application.requestType}}</ion-col>
+                  <ion-col><b>Assigned Division</b>: {{application.assigneeName}}</ion-col>
+                  <ion-col><b>Description</b>: {{application.applicationDescription}}</ion-col>
+                  <ion-col><b>Status</b>:{{application.applicationStatus}}
                     <div style="font-size: xx-small;margin-top: 5%;">Received Time: {{application.receivedTime}}</div>
                     <div style="font-size: xx-small;margin-top: 5%;">Processed Time: {{application.processedTime}}</div>
                     <div style="font-size: xx-small;margin-top: 5%;">Approved/Decline Time: {{application.approvedTime}}
@@ -676,7 +676,7 @@
             </ion-item>
           </ion-list>
         </ion-col>
-        <ion-col *ngIf="messageForm" class="end" style="background: var(--ion-color-form);">
+        <ion-col *ngIf="messageForm" class="end" style="background: var(--ion-color-form);" size="auto">
           <div style="position: relative; float: right;color: rgb(126, 125, 125);font-weight: bold;cursor:pointer;"
             (click)=closeMessageForm()>Close</div>
           <form class="form" [formGroup]="message_form" (ngSubmit)="supportCitizen(message_form.value)">
@@ -755,16 +755,15 @@
             </a>
           </ion-row>
         </ion-col>
-        <ion-col>
+        <ion-col size="auto">
           <b>Government Portal ID</b>
           <div class="portalID">
-            <img src="assets/icon/emblem.png" style="height:70px;">
+            <img class="IDEmblem" src="assets/icon/emblem.png">
             <ngx-qrcode [element-type]="elementType" [value]="QRCode" errorCorrectionLevel="H"
-              style="float: right;width: 90px;">
+              class="IDQRCode">
             </ngx-qrcode>
-            <img src="{{photoUrl}}"
-              style="width: 130px;height: 150px;float: left;border-radius: 5px;margin-left: 10px;">
-            <span style="float: right;margin: 10px;">
+            <img src="{{photoUrl}}" class="IDProfilePhoto">
+            <span class="IDDetails">
               <h4>{{fullName}}</h4>
               <h5><i>{{Displayname}}</i></h5>
             </span>

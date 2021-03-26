@@ -13,14 +13,108 @@ ion-content {
 .portalID {
   background-color: #0f0b5a;
   color: white;
-  width: 450px;
-  height: 230px;
   border-radius: 25px;
   width: 450px;
   height: 250px;
   border-color: black;
   border-width: 5px;
   padding: 10px;
+}
+.IDEmblem{
+  height:70px;
+}
+.IDQRCode{
+  float: right;
+  width: 90px;
+}
+.IDProfilePhoto{
+  width: 130px;height: 150px;float: left;border-radius: 5px;margin-left: 10px;
+}
+.IDDetails{
+  float: right;
+  margin: 10px;
+}
+@media (max-width : 420px) {
+  .portalID {
+  width: 380px;
+  height: 230px;
+  padding: 5px;
+  }
+  .IDEmblem{
+    height:60px;
+    margin: 5px;
+  }
+  .IDQRCode{
+    float: right;
+    width: 70px;
+    margin: 5px;
+
+  }
+  .IDProfilePhoto{
+    width: 110px;height: 140px;float: left;border-radius: 5px;margin-left: 10px;
+  }
+  .IDDetails{
+    float: right;
+    margin: 5px;
+  }
+}
+@media (max-width : 380px) {
+  .portalID {
+  width: 340px;
+  height: 220px;
+  padding: 5px;
+  }
+  .IDEmblem{
+    height:50px;
+    margin: 5px;
+  }
+  .IDQRCode{
+    float: right;
+    width: 60px;
+    margin: 5px;
+  }
+  .IDProfilePhoto{
+    width: 110px;height: 140px;float: left;border-radius: 5px;margin-left: 10px;
+  }
+  .IDDetails{
+    float: right;
+    margin: 3px;
+  }
+  h4{
+    font-size: 16px;
+  }
+  h5{
+    font-size: 14px;
+  }
+}
+@media (max-width : 330px) {
+  .portalID {
+  width: 280px;
+  height: 190px;
+  padding: 5px;
+  }
+  .IDEmblem{
+    height:40px;
+    margin: 5px;
+  }
+  .IDQRCode{
+    float: right;
+    width: 50px;
+    margin: 5px;
+  }
+  .IDProfilePhoto{
+    width: 90px;height: 120px;float: left;border-radius: 5px;margin-left: 10px;
+  }
+  .IDDetails{
+    float: right;
+    margin: 2px;
+  }
+  h4{
+    font-size: 14px;
+  }
+  h5{
+    font-size: 12px;
+  }
 }
 .portalIDPIN {
   opacity: 0.5;
