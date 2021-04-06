@@ -1,6 +1,6 @@
 {
   "name": "government-portal-desktop-secretary",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Government Portal Secretary",
   "main": "index.js",
   "scripts": {

@@ -1148,6 +1148,13 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@capacitor-community/firebase-remote-config@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@capacitor-community/firebase-remote-config/-/firebase-remote-config-0.1.3.tgz#3a4633d52b31304caabd1d07f5d6883523302342"
+  integrity sha512-9ls76b99Jcia4KVb1nq2Ydk8klfkFFGtns/tLvxeIHTvd58692AdDXAvf0+MNtxkOGZNzS2JSb/q/iSQxWj13g==
+  dependencies:
+    "@capacitor/core" latest
+
 "@capacitor/cli@2.4.6":
   version "2.4.6"
   resolved "https://registry.yarnpkg.com/@capacitor/cli/-/cli-2.4.6.tgz#f95cf071403006b04cb0e8d21818292b0f9448ea"
@@ -1169,6 +1176,13 @@
   version "2.4.6"
   resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-2.4.6.tgz#71cc6e23ef37fbb47c3c1736f1dea47302a5e22a"
   integrity sha512-3KLSMorCELA5RNRXwHOGlRGuxXaxCEYHC29wOUxObicI2mf14hbMJWylt4QBzNmSqh3/ha7u4/CAZMoJUQR/QA==
+  dependencies:
+    tslib "^1.9.0"
+
+"@capacitor/core@latest":
+  version "2.4.7"
+  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-2.4.7.tgz#f3b4d5728db7e764c1153da5e67d369bda35b772"
+  integrity sha512-ZPzXXQ4EPwR/ZhNDkmlxyzw4FvquIl/ROj8HMMM0MEd4xZfM8ulNGPIL6br9TWdlFLGBKq40eymPZjKaivGnig==
   dependencies:
     tslib "^1.9.0"
 
@@ -5842,7 +5856,7 @@ glob@7.1.6, glob@^7.0.3, glob@^7.0.6, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glo
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-global@^4.3.2:
+global@^4.3.2, global@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/global/-/global-4.4.0.tgz#3e7b105179006a323ed71aafca3e9c57a5cc6406"
   integrity sha512-wv/LAoHdRE3BeTGz53FAamhGlPLhlssK45usmGFThIi4XqnBmjKQ16u+RNbP7WvigRZDxUsM0J3gcQ5yicaL0w==

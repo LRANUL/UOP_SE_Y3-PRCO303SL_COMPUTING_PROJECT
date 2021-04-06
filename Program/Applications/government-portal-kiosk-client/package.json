@@ -1,6 +1,6 @@
 {
   "name": "governmentportal-kiosk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Mr. Ranul Ladduwahetty",
   "homepage": "https://github.com/LRANUL/UOP_SE_Y3-PRCO303SL_COMPUTING_PROJECT",
   "scripts": {
@@ -12,7 +12,8 @@
     "e2e": "ng e2e",
     "electron": "electron .",
     "electron-serve": "ng build --prod && electron .",
-    "compodoc": "npx compodoc -p tsconfig.app.json src"
+    "compodoc-produce-docs": "compodoc -p ./tsconfig.json",
+    "compodoc-serve-docs": "compodoc -s ./tsconfig.json"
   },
   "private": true,
   "dependencies": {

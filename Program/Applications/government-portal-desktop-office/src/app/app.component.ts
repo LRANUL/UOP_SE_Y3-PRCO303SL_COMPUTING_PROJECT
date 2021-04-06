@@ -51,9 +51,9 @@ export class AppComponent {
         this.networkStatus = status;
         if (status.connected == false) {
           const loading = await this.loadingController.create({
-            message: "Service Down, Please use another Kiosk.",
+            message: "Network Down, Please wait while we reconnect you...",
             backdropDismiss: false,
-            spinner: "circles",
+            spinner: "dots",
           });
           await loading.present();
         }

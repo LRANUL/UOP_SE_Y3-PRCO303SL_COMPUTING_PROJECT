@@ -330,95 +330,95 @@ export class AdminPage implements OnInit {
         .subscribe();
     }
   }
-/** Checking System Status */
-checkSystemStatus(){
-  // Full System
-  this.accessService.getSystemMaintenanceStatus().subscribe(
-    (data) => {
-      if(data=='true'){
-        this.system_maintenance = true
+  /** Checking System Status */
+  checkSystemStatus() {
+    // Full System
+    this.accessService.getSystemMaintenanceStatus().subscribe(
+      (data) => {
+        if (data == 'true') {
+          this.system_maintenance = true
+        }
+        else {
+          this.system_maintenance = false
+        }
+      },
+      (error) => {
+        console.log(error);
       }
-      else{
-        this.system_maintenance = false
+    );
+    // Web System
+    this.accessService.getWebSystemMaintenanceStatus().subscribe(
+      (data) => {
+        if (data == 'true') {
+          this.web_system_maintenance = true
+        }
+        else {
+          this.web_system_maintenance = false
+        }
+      },
+      (error) => {
+        console.log(error);
       }
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
-  // Web System
-  this.accessService.getWebSystemMaintenanceStatus().subscribe(
-    (data) => {
-      if(data=='true'){
-        this.web_system_maintenance = true
+    );
+    // Kiosk System
+    this.accessService.getKioskSystemMaintenanceStatus().subscribe(
+      (data) => {
+        if (data == 'true') {
+          this.kiosk_system_maintenance = true
+        }
+        else {
+          this.kiosk_system_maintenance = false
+        }
+      },
+      (error) => {
+        console.log(error);
       }
-      else{
-        this.web_system_maintenance = false
+    );
+    // Office System
+    this.accessService.getOfficeSystemMaintenanceStatus().subscribe(
+      (data) => {
+        if (data == 'true') {
+          this.office_system_maintenance = true
+        }
+        else {
+          this.office_system_maintenance = false
+        }
+      },
+      (error) => {
+        console.log(error);
       }
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
-  // Kiosk System
-  this.accessService.getKioskSystemMaintenanceStatus().subscribe(
-    (data) => {
-      if(data=='true'){
-        this.kiosk_system_maintenance = true
+    );
+    // Secretary System
+    this.accessService.getSecretarySystemMaintenanceStatus().subscribe(
+      (data) => {
+        if (data == 'true') {
+          this.secretary_system_maintenance = true
+        }
+        else {
+          this.secretary_system_maintenance = false
+        }
+      },
+      (error) => {
+        console.log(error);
       }
-      else{
-        this.kiosk_system_maintenance = false
-      }
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
-  // Office System
-  this.accessService.getOfficeSystemMaintenanceStatus().subscribe(
-    (data) => {
-      if(data=='true'){
-        this.office_system_maintenance = true
-      }
-      else{
-        this.office_system_maintenance = false
-      }
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
-  // Secretary System
-  this.accessService.getSecretarySystemMaintenanceStatus().subscribe(
-    (data) => {
-      if(data=='true'){
-        this.secretary_system_maintenance = true
-      }
-      else{
-        this.secretary_system_maintenance = false
-      }
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
-}
-/** System Status Management */
-systemMaintenance(value){
-  this.accessService.setSystemMaintenance(value)
-}
-kioskSystemMaintenance(value){
-  this.accessService.setKioskSystemMaintenance(value)
-}
-webSystemMaintenance(value){
-  this.accessService.setWebSystemMaintenance(value)
-}
-officeSystemMaintenance(value){
-  this.accessService.setOfficeSystemMaintenance(value)
-}
-secretarySystemMaintenance(value){
-  this.accessService.setSecretarySystemMaintenance(value)
-}
+    );
+  }
+  /** System Status Management */
+  systemMaintenance(value) {
+    this.accessService.setSystemMaintenance(value)
+  }
+  kioskSystemMaintenance(value) {
+    this.accessService.setKioskSystemMaintenance(value)
+  }
+  webSystemMaintenance(value) {
+    this.accessService.setWebSystemMaintenance(value)
+  }
+  officeSystemMaintenance(value) {
+    this.accessService.setOfficeSystemMaintenance(value)
+  }
+  secretarySystemMaintenance(value) {
+    this.accessService.setSecretarySystemMaintenance(value)
+  }
 
   /** Methods reposible for loading customer messages to officer screen for reponding */
   async getSupportMessages() {
@@ -672,5 +672,12 @@ secretarySystemMaintenance(value){
   /**Logs out Officer */
   async logoutAdmin() {
     this.accessService.logoutAdmin();
+    // Clear cache variables
+    this.prefix = null;
+    this.fullName = null;
+    this.officeAddress = null;
+    this.mobile = null;
+    this.Division = null;
+    this.Email = null;
   }
 }

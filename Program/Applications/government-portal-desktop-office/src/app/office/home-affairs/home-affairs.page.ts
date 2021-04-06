@@ -1609,5 +1609,12 @@ export class HomeAffairsPage implements OnInit {
       duration: 2000,
     });
     toast.present();
+    // Clear cache variables
+    this.prefix = null;
+    this.fullName = null;
+    this.officeAddress = null;
+    this.mobile = null;
+    this.Division = null;
+    this.Email = null;
   }
 }
