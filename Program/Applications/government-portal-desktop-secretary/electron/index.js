@@ -27,7 +27,10 @@ const menuTemplateDev = [
     ],
   },
 ];
+
+// Hides the Menu of the Application
 Menu.setApplicationMenu(false)
+
 async function createWindow() {
   // Define our main window size
   mainWindow = new BrowserWindow({

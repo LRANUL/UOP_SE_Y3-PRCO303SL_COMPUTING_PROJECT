@@ -39,6 +39,7 @@ export class AppComponent {
     // Initializing Application Performance Monitoring accodring to Firebase Documentation
     const performance = firebase.performance();
     const maintenance = await this.remoteConfig.maintenanceLockCheck();
+    const officeMaintenanceLockCheck = await this.remoteConfig.officeMaintenanceLockCheck();
     if (maintenance) {
       const alertMaintenance = await this.alertCtrl.create({
         header: 'Under Maintenance',
@@ -47,22 +48,30 @@ export class AppComponent {
         message: 'We are currently maintaining the system and all functions are disabled right now, visit back shortly.',
       });
       await alertMaintenance.present();
-      this.networkListener = Network.addListener('networkStatusChange', async (status) => {
-        this.networkStatus = status;
-        if (status.connected == false) {
-          const loading = await this.loadingController.create({
-            message: "Network Down, Please wait while we reconnect you...",
-            backdropDismiss: false,
-            spinner: "dots",
-          });
-          await loading.present();
-        }
-        else if (status.connected == true) {
-          this.loadingController.dismiss()
-        }
-      });
     }
+    else if (officeMaintenanceLockCheck) {
+      const alertMaintenance = await this.alertCtrl.create({
+        header: 'Under Maintenance',
+        subHeader: 'System Down',
+        backdropDismiss: false,
+        message: 'We are currently maintaining the system and all functions are disabled right now, visit back shortly.',
+      });
+      await alertMaintenance.present();
+    }
+    this.networkListener = Network.addListener('networkStatusChange', async (status) => {
+      this.networkStatus = status;
+      if (status.connected == false) {
+        const loading = await this.loadingController.create({
+          message: "Network Down, Please wait while we reconnect you...",
+          backdropDismiss: false,
+          spinner: "dots",
+        });
+        await loading.present();
+      }
+      else if (status.connected == true) {
+        this.loadingController.dismiss()
+      }
+    });
   }
-
 }
 

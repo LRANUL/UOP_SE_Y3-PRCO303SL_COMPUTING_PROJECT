@@ -33,6 +33,7 @@ export class AppComponent {
     // Initializing Application Performance Monitoring accodring to Firebase Documentation
     const performance = firebase.performance();
     const maintenance = await this.remoteConfig.maintenanceLockCheck();
+    const webMaintenanceLockCheck = await this.remoteConfig.webMaintenanceLockCheck();
     if (maintenance) {
       const alertMaintenance = await this.alertCtrl.create({
         header: 'Under Maintenance',
@@ -41,7 +42,16 @@ export class AppComponent {
         message: 'We are currently maintaining the system and all functions are disabled right now, visit back shortly.',
       });
       await alertMaintenance.present();
+    }
+    else if (webMaintenanceLockCheck) {
+      const alertMaintenance = await this.alertCtrl.create({
+        header: 'Under Maintenance',
+        subHeader: 'System Down',
+        backdropDismiss: false,
+        message: 'We are currently maintaining the system and all functions are disabled right now, visit back shortly.',
+      });
+      await alertMaintenance.present();
+    }
   }
-}
 
 }

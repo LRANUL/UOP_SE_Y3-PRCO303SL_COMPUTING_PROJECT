@@ -33,6 +33,7 @@ export class RemoteConfigService {
     await this.remoteConfig.initialize({ minimumFetchIntervalInSeconds: 3600 });
     this.remoteConfig.defaultConfig = {
       "system_maintenance": "false",
+      "web_system_maintenance": "false",
     };
   }
   async maintenanceLockCheck() {
@@ -45,16 +46,35 @@ export class RemoteConfigService {
     }
     return false;
   }
+  async webMaintenanceLockCheck() {
+    if (this.remoteConfig) {
+      const webMaintenanceLock = await this.webMaintenanceLock() || 'false';
+      if (webMaintenanceLock == 'true') {
+        return true;
+      }
+      return false;
+    }
+    return false;
+  }
 
   private async maintenanceLock() {
     return new Promise<string>((resolve, reject) => {
       this.remoteConfig.fetchAndActivate().then(() => {
-        this.remoteConfig.getString({ key: 'system_maintenancew', })
+        this.remoteConfig.getString({ key: 'system_maintenance', })
           .then(data => resolve(data))
           .catch(err => reject(err));
       })
         .catch(err => reject(err));
     });
   }
-
+  private async webMaintenanceLock() {
+    return new Promise<string>((resolve, reject) => {
+      this.remoteConfig.fetchAndActivate().then(() => {
+        this.remoteConfig.getString({ key: 'web_system_maintenance', })
+          .then(data => resolve(data))
+          .catch(err => reject(err));
+      })
+        .catch(err => reject(err));
+    });
+  }
 }
