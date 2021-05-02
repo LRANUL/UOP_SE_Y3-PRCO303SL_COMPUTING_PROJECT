@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Plugins } from '@capacitor/core';
 import '@capacitor-community/firebase-remote-config';
-import { AngularFireModule } from '@angular/fire';
-import { environment } from 'src/environments/environment';
-AngularFireModule.initializeApp(environment)
 const { FirebaseRemoteConfig } = Plugins;
 FirebaseRemoteConfig.initializeFirebase({
   apiKey: "AIzaSyAB8BDQmIz8jCENQDgD0rnzr1GxzLLvChM",

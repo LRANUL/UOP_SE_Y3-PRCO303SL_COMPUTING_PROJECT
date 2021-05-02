@@ -77,9 +77,9 @@
         <ion-col *ngIf="NICApplicantStatus" class="end" style="background: var(--ion-color-form);">
           <div style="position: relative; float: right;color: rgb(126, 125, 125);font-weight: bold;cursor:pointer;"
             (click)=exitStatus()>Exit</div>
-            <ion-searchbar placeholder="Find Applications" [(ngModel)]="applicationFilter" animated="true" autocomplete="true"
-                (search)="findEApplication($event.target.value)">
-              </ion-searchbar>
+          <ion-searchbar placeholder="Find Applications" [(ngModel)]="applicationFilter" animated="true"
+            autocomplete="true" (search)="findEApplication($event.target.value)">
+          </ion-searchbar>
           <ion-card *ngFor="let application of NICApplicationStatus | filter:applicationFilter">
             <ion-card-title>Applicant: {{ application.name }} {{ application.familyName }}</ion-card-title>
             <ion-card-subtitle>GovernmentID: {{application.GovernmentID}}</ion-card-subtitle>
@@ -92,6 +92,8 @@
               <ion-label>Description: {{application.applicationDescription}}</ion-label>
               <br>
               <ion-label>Status: {{application.applicationStatus}}</ion-label>
+              <br>
+              <ion-label>Payment Status: {{application.payment_status}}</ion-label>
               <br>
               <ion-label>Received Time: {{application.receivedTime}}</ion-label>
               <br>
@@ -225,8 +227,12 @@
               <ion-label>Message: {{ message.TechDescription }}</ion-label>
               <br><br>
               <ion-label style="color: black;">Tech Response: {{ message.TechResponse }}</ion-label>
+              <br>
+              <ion-label class="underline" (click)="markSupportRead(message.Techid)"><i>click to mark as read</i>
+                <ion-icon name="checkmark-done-circle-outline"></ion-icon>
+              </ion-label>
             </ion-card-content>
-        </ion-card>
+          </ion-card>
         </ion-col>
         <ion-col *ngIf="supportTechServices" class="start" style="padding-left: 5%;">
           <h2 style="font-size: x-large;"><strong>Tech Support</strong></h2>
@@ -257,7 +263,8 @@
                 </div>
               </ng-container>
               <br>
-              <ion-button type="submit" shape="round" color="light" [disabled]="!message_form.valid">Send<ion-icon name="send-sharp" size="small"></ion-icon>
+              <ion-button type="submit" shape="round" color="light" [disabled]="!message_form.valid">Send<ion-icon
+                  name="send-sharp" size="small"></ion-icon>
               </ion-button>
             </div>
             <br>
@@ -343,8 +350,7 @@
                   <ion-img src="{{user.photo}}" style="height: 70px;width: 50px;"></ion-img>
                   <ion-label>{{user.name}}</ion-label>
                   <ion-label>{{user.governmentID}}</ion-label>
-                  <ion-button color="warning"
-                    (click)="updateAccessPIN(user.governmentID)">Access PIN</ion-button>
+                  <ion-button color="warning" (click)="updateAccessPIN(user.governmentID,user.dateofBirth)">Access PIN</ion-button>
                   <ion-button *ngIf="user.status == 'Disabled'" color="success"
                     (click)="activateAccount(user.uid, user.governmentID)">Activate</ion-button>
                   <ion-button *ngIf="user.status == 'Active'" color="medium"

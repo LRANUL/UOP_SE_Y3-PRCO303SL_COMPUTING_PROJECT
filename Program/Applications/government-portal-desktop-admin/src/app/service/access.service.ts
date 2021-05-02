@@ -64,7 +64,7 @@ export class AccessService {
         Full_Name: value.fullName,
         Gender: value.gender,
         Date_Of_Birth: dateBirth,
-        Division: value.division,
+        Division: value.division.toUpperCase(),
         NIC: value.nic,
         downloadURL: value.downloadURL,
         Prefix: value.prefix,

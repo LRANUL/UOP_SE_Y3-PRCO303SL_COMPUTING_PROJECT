@@ -56,7 +56,7 @@ export class HomeAffairsPage implements OnInit {
   };
 
   scannedData: string;
-  portalScanner = false;
+  portalScanner: boolean;
   eCitizenScanData: boolean;
   scanner: boolean;
   eCitizenSearchData: boolean;
@@ -96,6 +96,7 @@ export class HomeAffairsPage implements OnInit {
     assigneeName: any;
     applicationDescription: any;
     applicationStatus: any;
+    payment_status: any;
     receivedTime: any;
     processedTime: any;
     approvedTime: any;
@@ -167,7 +168,7 @@ export class HomeAffairsPage implements OnInit {
   nonFirstTimer: boolean;
   foreignCitizen: boolean;
   handler: any;
-  ECitizens: { uid: any; name: any; photo: any; governmentID: any }[];
+  ECitizens: { uid: any; name: any; photo: any; governmentID: any; dateofBirth: any; }[];
   accountManage: boolean;
   verifyPanel: boolean;
   constructor(
@@ -183,7 +184,7 @@ export class HomeAffairsPage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    
+    this.portalScanner = true
     this.servicesPanel = true;
     this.accessService.getETechSupportMessages().subscribe((data) => {
       data.map((e) => {
@@ -204,21 +205,21 @@ export class HomeAffairsPage implements OnInit {
       });
     });
     var user = firebase.default.auth().currentUser;
-    
+
     await this.firestore
-    .collection("eAdministration")
-    .doc(user.email)
-    .ref.get()
-    .then((doc) => {
-      if (doc.exists) {
-        this.prefix = doc.data()["Prefix"];
-        this.fullName = doc.data()["Full_Name"];
-        this.officeAddress = doc.data()["officeAddress"];
-        this.mobile = doc.data()["mobile"];
-        this.Division = doc.data()["Division"];
-        this.Email = user.email
-      }
-    });
+      .collection("eAdministration")
+      .doc(user.email)
+      .ref.get()
+      .then((doc) => {
+        if (doc.exists) {
+          this.prefix = doc.data()["Prefix"];
+          this.fullName = doc.data()["Full_Name"];
+          this.officeAddress = doc.data()["officeAddress"];
+          this.mobile = doc.data()["mobile"];
+          this.Division = doc.data()["Division"];
+          this.Email = user.email
+        }
+      });
     //  FORM VALIDATORS
     /**
      * Validation Form receives input data sent by the user to Support service
@@ -812,11 +813,11 @@ export class HomeAffairsPage implements OnInit {
       }
     );
   }
-
+  /** Method for Scanning cards for vertification */
   scanCard() {
     this.eCitizenScanData = true;
     this.eCitizenSearchData = false;
-
+    // Activates Recognision and Camera
     this.portalScanner = true;
     this.scanner = true;
     setTimeout(() => {
@@ -826,7 +827,15 @@ export class HomeAffairsPage implements OnInit {
         if (qrResultString) {
           this.accessService
             .getECitizenByCard(qrResultString)
-            .subscribe((data) => {
+            .subscribe(async (data) => {
+              console.log(data)
+              if (data.length == 0) {
+                const toast = await this.toastController.create({
+                  message: "Card Fraud | Invalid Card",
+                  duration: 2000,
+                });
+                toast.present();
+              }
               data.map(async (e) => {
                 var bioData = e.payload.doc.data()["Biometric_Data"];
                 var GovernmentID = e.payload.doc.data()["GovernmentID"];
@@ -857,12 +866,6 @@ export class HomeAffairsPage implements OnInit {
                       ],
                     };
                   });
-                } else {
-                  const toast = await this.toastController.create({
-                    message: "Card Fraud | Invalid Card",
-                    duration: 2000,
-                  });
-                  toast.present();
                 }
               });
             });
@@ -871,9 +874,15 @@ export class HomeAffairsPage implements OnInit {
             message: "Card not found to scanner, try again.",
             duration: 2000,
           });
+          toast.present();
         }
       }, 1000);
     }, 10000);
+    /** Clears fetched data */
+    setTimeout(() => {
+      this.scannedCardData = [];
+    },
+      25000)
   }
   searchECitizen() {
     this.eCitizenSearchData = true;
@@ -1045,6 +1054,7 @@ export class HomeAffairsPage implements OnInit {
           assigneeName: e.payload.doc.data()["division"],
           applicationDescription: e.payload.doc.data()["description"],
           applicationStatus: e.payload.doc.data()["status"],
+          payment_status: e.payload.doc.data()["payment_status"],
           receivedTime: e.payload.doc.data()["sentTimeStamp"],
           processedTime: e.payload.doc.data()["processedTimeStamp"],
           approvedTime: e.payload.doc.data()["approvedTimeStamp"],
@@ -1074,6 +1084,7 @@ export class HomeAffairsPage implements OnInit {
               "applicationDescription"
             ],
             applicationStatus: e.payload.doc.data()["applicationStatus"],
+            payment_status: e.payload.doc.data()["payment_status"],
             receivedTime: e.payload.doc.data()["receivedTime"],
             processedTime: e.payload.doc.data()["processedTime"],
             approvedTime: e.payload.doc.data()["approvedTime"],
@@ -1161,6 +1172,7 @@ export class HomeAffairsPage implements OnInit {
           photo: e.payload.doc.data()["downloadURL"],
           governmentID: e.payload.doc.data()["GovernmentID"],
           status: e.payload.doc.data()["status"],
+          dateofBirth: e.payload.doc.data()["Date_Of_Birth"],
         };
       });
     });
@@ -1183,21 +1195,72 @@ export class HomeAffairsPage implements OnInit {
             photo: e.payload.doc.data()["downloadURL"],
             governmentID: e.payload.doc.data()["GovernmentID"],
             status: e.payload.doc.data()["status"],
+            dateofBirth: e.payload.doc.data()["Date_Of_Birth"],
           };
         });
       });
     }
   }
   /** Method for account PIN update */
-  async updateAccessPIN(governmentID) {
-    var Access_PIN = Math.floor(Math.random() * 9000000 + 1000000);
-    this.accessService.updateECitizenAccessPIN(Access_PIN, governmentID);
-    const alert = await this.alertController.create({
-      header: "Access PIN Updated ✔",
-      message: governmentID + " Access PIN has been updated",
-      buttons: ["OK"],
+  async updateAccessPIN(governmentID, citizenDateofBirth) {
+    const verifyAlert = await this.alertController.create({
+      header: "Citizen Verification",
+      inputs: [
+        {
+          name: "dateOfBirth",
+          type: "text",
+          placeholder: "Eg: 01/12/2020",
+        },
+      ],
+      message: 'Provide Citizen Data of Birth for verification',
+      buttons: [
+        {
+          text: "Cancel",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: () => {
+          },
+        },
+        {
+          text: "Check",
+          handler: async (alertData) => {
+            if (citizenDateofBirth === alertData.dateOfBirth) {
+              var Access_PIN = Math.floor(Math.random() * 9000000 + 1000000);
+              this.accessService.updateECitizenAccessPIN(Access_PIN, governmentID);
+              const alertSuccess = await this.alertController.create({
+                header: "Access PIN Updated ✔",
+                message: governmentID + " Access PIN has been updated",
+                buttons: [
+                  {
+                    text: 'View PIN',
+                    handler: async () => {
+                      const alert = await this.alertController.create({
+                        header: "Access PIN: " + Access_PIN,
+                        buttons: ["CLOSE"],
+                      });
+                      await alert.present();
+                    }
+                  },
+                  {
+                    text: 'OK',
+                  }
+                ],
+              });
+              await alertSuccess.present();
+            }
+            else {
+              const alertFail = await this.alertController.create({
+                header: "Wrong Date of Birth ❌",
+                message: "Provide Date of Birth doesn't match citizen record!",
+                buttons: ["Close"]
+              })
+              await alertFail.present();
+            }
+          },
+        },
+      ],
     });
-    await alert.present();
+    await verifyAlert.present();
   }
   /** Method for account activation */
   activateAccount(user, governmentID) {
@@ -1548,6 +1611,11 @@ export class HomeAffairsPage implements OnInit {
 
     await alert.present();
   }
+  /** Method for marking tech support as read */
+  markSupportRead(id) {
+    this.accessService.markTechMessageRead(id);
+  }
+
   /**Method reponsible for working tracking of active hours */
   getWorkLogs() {
     this.activityLog = true;

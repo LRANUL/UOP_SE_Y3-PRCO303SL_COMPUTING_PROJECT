@@ -7,7 +7,7 @@
 -->
 <!-- PAGE HEADER STARTS -->
 <ion-header>
-  <div *ngIf="isLoaded" style="background-color: #3880ff;color: #fff;">
+  <div *ngIf="isLoaded" style="background-color: #01195c;color: #fff;">
     <ion-title>
       සාදරයෙන් පිළිගනිමු, {{fullName}}
     </ion-title>
@@ -15,7 +15,7 @@
   </div>
   <ion-toolbar>
     <ion-tabs>
-      <ion-tab-bar slot="top" color="primary">
+      <ion-tab-bar slot="top" color="kiosk">
         <ion-tab-button (click)="Application()">
           <ion-icon name="document"></ion-icon>
           <ion-label>e-අයදුම්පත්</ion-label>
@@ -692,7 +692,7 @@
                     </div>
                   </ng-container>
                   <br>
-                  <ion-button type="submit" color="primary" [disabled]="!message_form.valid">යවන්න<ion-icon
+                  <ion-button type="submit" color="kiosk" [disabled]="!message_form.valid">යවන්න<ion-icon
                       name="log-in-outline"></ion-icon>
                   </ion-button>
                 </div>

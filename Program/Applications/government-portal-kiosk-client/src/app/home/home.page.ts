@@ -13,7 +13,7 @@ var qrResultString: string;
 })
 export class HomePage implements OnInit {
   scannedData: string;
-  portalScanner = false;
+  portalScanner:boolean;
   scanner_en = false;
   scanner_si = false;
   scanner_ta = false;
@@ -46,6 +46,7 @@ export class HomePage implements OnInit {
       this.scanner_en = false;
       this.portalScanner = false;
       setTimeout(async () => {
+        console.log(qrResultString)
         if (qrResultString) {
           this.service.getECitizen(qrResultString).subscribe((data) => {
             data.map(async (e) => {

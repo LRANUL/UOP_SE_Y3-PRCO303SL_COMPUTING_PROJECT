@@ -7,7 +7,7 @@
 -->
 <!-- PAGE HEADER STARTS -->
 <ion-header>
-  <div *ngIf="isLoaded" style="background-color: #3880ff;color: #fff;">
+  <div *ngIf="isLoaded" style="background-color: #01195c;color: #fff;">
     <ion-title>
       WELCOME, {{fullName}}
     </ion-title>
@@ -15,7 +15,7 @@
   </div>
   <ion-toolbar>
     <ion-tabs>
-      <ion-tab-bar slot="top" color="primary">
+      <ion-tab-bar slot="top" color="kiosk">
         <ion-tab-button (click)="Application()">
           <ion-icon name="document"></ion-icon>
           <ion-label>eApplications</ion-label>
@@ -52,25 +52,25 @@
         <ion-col class="start" style="padding-left: 5%;" style="width: 100%;" *ngIf="Applications">
           <h2 style="font-size: x-large;"><strong>Apply for NIC</strong></h2>
           <ion-row>
-            <ion-button (click)=firstNICApp() shape="round" fill="outline">
+            <ion-button (click)=firstNICApp() shape="round"  color="kiosk">
               Apply for First Timer NIC Applicant
             </ion-button>
           </ion-row>
           <br>
           <ion-row>
-            <ion-button (click)=renewNICApp() shape="round" fill="outline">
+            <ion-button (click)=renewNICApp() shape="round" color="kiosk">
               Apply for Renewals of NIC Application
             </ion-button>
           </ion-row>
           <br>
           <ion-row>
-            <ion-button (click)=correctionNICApp() shape="round" fill="outline">
+            <ion-button (click)=correctionNICApp() shape="round" color="kiosk">
               Apply for Corrections of NIC Application
             </ion-button>
           </ion-row>
           <br>
           <ion-row>
-            <ion-button (click)=lostNICApp() shape="round" fill="outline">
+            <ion-button (click)=lostNICApp() shape="round" color="kiosk">
               Apply for Lost of NIC Application
             </ion-button>
           </ion-row>
@@ -692,7 +692,7 @@
                     </div>
                   </ng-container>
                   <br>
-                  <ion-button type="submit" color="primary" [disabled]="!message_form.valid">Send<ion-icon
+                  <ion-button type="submit" color="kiosk" [disabled]="!message_form.valid">Send<ion-icon
                       name="log-in-outline"></ion-icon>
                   </ion-button>
                 </div>

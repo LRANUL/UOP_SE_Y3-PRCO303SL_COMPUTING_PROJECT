@@ -22,7 +22,7 @@ export class AccessService {
       .collection("eApplications", (ref) =>
         ref
           .limit(10)
-          .where("status", "in", ["New", "Processing - Stage 1|සැකසීම - අදියර 1|செயலாக்கம் - நிலை 1","Processing - Stage 2|සැකසීම - අදියර 2|செயலாக்கம் - நிலை 2"])
+          .where("status", "in", ["Processing - Stage 1|සැකසීම - අදියර 1|செயலாக்கம் - நிலை 1","Processing - Stage 2|සැකසීම - අදියර 2|செயலாக்கம் - நிலை 2"])
           .where("payment_status", "==", "paid")
       )
       .snapshotChanges();
@@ -54,7 +54,7 @@ export class AccessService {
     var user = firebase.default.auth().currentUser;
     return this.firestore
       .collection("eSupport", (ref) =>
-        ref.limit(10).where("Status", "==", "New")
+        ref.limit(10).where("Status", "in", ["New","Completed"])
           .where("Type", "==", "Admin")
           .where("Email", "==", user.email)
       )
@@ -376,12 +376,21 @@ export class AccessService {
       .set({
         Description: value.message,
         Email: user.email,
-        GovernmentID: user.displayName,
         Status: "New",
         Type: "Admin",
         Subject: value.subject,
         Response: "Support Request Sent | Wait for Response",
       })
+  }
+  /** Method for marking messages as read */
+  async markTechMessageRead(ID){
+    const eSupport = this.firestore.collection("eSupport").doc(ID);
+    const res = await eSupport.set(
+      {
+        Status: "Read",
+      },
+      { merge: true }
+    );
   }
   /** Method for sending officer reponse to ecitizen */
   sendMessage(ID, messageBody) {

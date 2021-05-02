@@ -11,7 +11,6 @@ import { NgxStripeModule } from "ngx-stripe";
 import { GuidePageModule } from "../guide/guide.module";
 import { ZXingScannerModule } from "@zxing/ngx-scanner";
 
-ZXingScannerModule;
 @NgModule({
   imports: [
     GuidePageModule,
