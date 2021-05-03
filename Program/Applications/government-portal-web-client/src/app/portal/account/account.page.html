@@ -51,7 +51,7 @@
   </ion-header>
 
   <!-- PAGE LINKS AND INFORMATION -->
-
+<!-- START OF  NIC FORM (LINE 54-634) -->
   <div *ngIf="servicesPanel" style="width: 100%;">
     <ion-grid>
       <ion-row>
@@ -81,7 +81,8 @@
             </a>
           </ion-row>
         </ion-col>
-        <ion-col *ngIf="NICApplicant" class="end" style="background: var(--ion-color-form);padding-left: 5%;" size="auto">
+        <ion-col *ngIf="NICApplicant" class="end" style="background: var(--ion-color-form);padding-left: 5%;"
+          size="auto">
           <div style="position: relative;
           float: right;color: darkgray;font-weight: bold;cursor:pointer;" (click)=exitApp()>Exit Application</div>
           <ion-row>
@@ -573,8 +574,8 @@
               <h5>Details required for inquiries | විමසීම් සඳහා අවශ්‍ය තොරතුරු | விசாரணைகளுக்கு தேவையான விவரங்கள்</h5>
               <h6>Telephone No | දුරකථන අංකය | தொலைபேசி எண்</h6>
               <ion-item>
-                <ion-input required="true" placeholder="Residence|නිවසේ|குடியிருப்பு"
-                  formControlName="homePhone" type="tel" maxlength="10"></ion-input>
+                <ion-input required="true" placeholder="Residence|නිවසේ|குடியிருப்பு" formControlName="homePhone"
+                  type="tel" maxlength="10"></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of validation_form.homePhone">
@@ -584,8 +585,8 @@
                   </div>
                 </ng-container>
                 <ion-item>
-                  <ion-input required="true" placeholder="Mobile|ජංගම|கைபேசி"
-                    formControlName="mobilePhone" type="tel" maxlength="10"></ion-input>
+                  <ion-input required="true" placeholder="Mobile|ජංගම|கைபேசி" formControlName="mobilePhone" type="tel"
+                    maxlength="10"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of validation_form.mobilePhone">
@@ -611,6 +612,8 @@
                   </ng-container>
                 </div>
                 <br>
+                <b>Please Note that a service charge of 100.00 LKR would be charged.</b>
+                <br>
                 <ion-text style="font-size: x-small;color: gray;">By clicking Apply, you agree to our
                   Terms,
                   Data Policy and Cookies Policy. Please note that only if your data matches our records, the
@@ -628,6 +631,8 @@
       </ion-row>
     </ion-grid>
   </div>
+  <!-- END OF NIC FORM -->
+  <!-- START OF SUPPORT SERVICES -->
   <div *ngIf="supportPanel">
     <ion-grid style="margin-left: 5%;">
       <h2 style="font-size: x-large;"><strong>Support Services</strong></h2>
@@ -738,6 +743,8 @@
       </ion-row>
     </ion-grid>
   </div>
+  <!-- END OF SUPPORT SERVICES -->
+  <!-- START OF SETTINGS AND ACCOUNT MANAGEMENT -->
   <div *ngIf="settingsPanel">
     <ion-grid style="margin-left: 5%;">
       <h2 style="font-size: x-large;"><strong>Settings Services</strong></h2>
@@ -759,8 +766,7 @@
           <b>Government Portal ID</b>
           <div class="portalID">
             <img class="IDEmblem" src="assets/icon/emblem.png">
-            <ngx-qrcode [element-type]="elementType" [value]="QRCode" errorCorrectionLevel="H"
-              class="IDQRCode">
+            <ngx-qrcode [element-type]="elementType" [value]="QRCode" errorCorrectionLevel="H" class="IDQRCode">
             </ngx-qrcode>
             <img src="{{photoUrl}}" class="IDProfilePhoto">
             <span class="IDDetails">
@@ -790,7 +796,7 @@
       </ion-row>
     </ion-grid>
   </div>
-
+<!-- END OF SETTINGS AND ACCOUNT MANAGEMENT -->
 
   <!-- PAGE CONTENT ENDS -->
 
