@@ -5,7 +5,7 @@ import {
   Validators,
   FormControl,
 } from "@angular/forms";
-import { LoadingController } from "@ionic/angular";
+import { AlertController, LoadingController } from "@ionic/angular";
 
 import { GoogleAuthService } from "../service/google-auth.service";
 import {
@@ -15,6 +15,8 @@ import {
 } from "@angular/fire/storage";
 import { Observable, ReplaySubject } from "rxjs";
 import { finalize } from "rxjs/operators";
+import { AngularFirestore } from "@angular/fire/firestore";
+import { Router } from "@angular/router";
 
 /**
  * Create Account Page Responsible for handling backend logic of Client Account Registration,
@@ -38,8 +40,11 @@ export class CreateAccountPage implements OnInit {
     public formBuilder: FormBuilder,
     public authService: GoogleAuthService,
     public storage: AngularFireStorage,
+    protected route: Router,
+    protected firestore: AngularFirestore,
+    public alertController: AlertController,
     public loadingController: LoadingController
-  ) {}
+  ) { }
 
   ngOnInit() {
     /**
@@ -291,4 +296,38 @@ export class CreateAccountPage implements OnInit {
       this.validations_form.patchValue({ bioData: encodedBioData });
     });
   }
+  /** Method to prevent multiple accounts */
+  accountDuplicateCheck() {
+    const RegNo = this.validations_form.controls['birthRegNo'].value
+    if (RegNo.length >= 4 && RegNo.length <= 10) {
+      this.firestore
+        .collection("BirthRegistrations")
+        .doc("" + RegNo + "")
+        .ref.get()
+        .then(async (doc) => {
+          if (doc.exists) {
+            /** Informs user an account already exists */
+            if (doc.data()["Registered"] == true) {
+              const alert = await this.alertController.create({
+                header: "⚠ You already have an account with us",
+                backdropDismiss: false,
+                message:
+                  "Your registration has failed, as the entered details show that you have account with us. Please recover it using the web portal or contact one of our officers.",
+                buttons: [
+                  {
+                    text: 'Sign in',
+                    handler: () => {
+                      this.route.navigate(["sign-in"]);
+                    }
+                  }],
+              });
+              await alert.present();
+            }
+          }
+        }
+        )
+    }
+  }
+
 }
+

@@ -9,7 +9,12 @@ import {
 } from "@ionic/angular";
 import * as firebase from "firebase";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from "@angular/forms";
 import {
   AngularFireStorage,
   AngularFireUploadTask,
@@ -45,7 +50,15 @@ export class AdminPage implements OnInit {
   supportPanel: boolean;
   supportServices: boolean;
   loadingData: boolean;
-  ETechSupportMessages: { id: string; Email: any; Subject: any; Description: any; Status: any; Type: any; Count: any; }[];
+  ETechSupportMessages: {
+    id: string;
+    Email: any;
+    Subject: any;
+    Description: any;
+    Status: any;
+    Type: any;
+    Count: any;
+  }[];
   prefix: any;
   fullName: any;
   officeAddress: any;
@@ -67,6 +80,8 @@ export class AdminPage implements OnInit {
   secretary_system_maintenance: boolean;
   registrationPanel: boolean;
   citizenRegistration_form: any;
+  kiosk_registration_form: FormGroup;
+  kioskAccount: boolean;
 
   constructor(
     public storage: AngularFireStorage,
@@ -78,7 +93,7 @@ export class AdminPage implements OnInit {
     private firestore: AngularFirestore,
     public loadingController: LoadingController,
     private modelCtrl: ModalController
-  ) { }
+  ) {}
 
   async ngOnInit() {
     this.accountPanel = true;
@@ -90,8 +105,7 @@ export class AdminPage implements OnInit {
         if (e.payload.doc.data()["Status"] == "New") {
           // console.log("Unread Messages");
           this.newMessage = true;
-        }
-        else {
+        } else {
           this.newMessage = false;
         }
       });
@@ -109,7 +123,7 @@ export class AdminPage implements OnInit {
           this.officeAddress = doc.data()["officeAddress"];
           this.mobile = doc.data()["mobile"];
           this.Division = doc.data()["Division"];
-          this.Email = user.email
+          this.Email = user.email;
         }
       });
     /**
@@ -147,7 +161,10 @@ export class AdminPage implements OnInit {
         ])
       ),
       gender: new FormControl("", Validators.compose([Validators.required])),
-      birthCertNo: new FormControl("", Validators.compose([Validators.maxLength(10), Validators.required])),
+      birthCertNo: new FormControl(
+        "",
+        Validators.compose([Validators.maxLength(10), Validators.required])
+      ),
       dateOfBirth: new FormControl(
         "",
         Validators.compose([Validators.required])
@@ -157,17 +174,34 @@ export class AdminPage implements OnInit {
         Validators.compose([Validators.required])
       ),
     });
+    /** Form Validators for Kiosk Registration */
+    this.kiosk_registration_form = this.formBuilder.group({
+      email: new FormControl(
+        "",
+        Validators.compose([
+          Validators.minLength(3),
+          Validators.maxLength(10),
+          Validators.required
+        ])
+      ),
+      password: new FormControl(
+        "",
+        Validators.compose([
+          Validators.minLength(15),
+          Validators.maxLength(30),
+          Validators.required,
+        ])
+      ),
+    });
     /**
-    * Form validators for registration process
-    */
+     * Form validators for registration process
+     */
     this.registration_form = this.formBuilder.group({
       email: new FormControl(
         "",
         Validators.compose([
           Validators.required,
-          Validators.pattern(
-            "^([ a-zA-Z])+$"
-          ),
+          Validators.pattern("^([ a-zA-Z])+$"),
         ])
       ),
       password: new FormControl(
@@ -226,23 +260,26 @@ export class AdminPage implements OnInit {
     email: [
       {
         type: "required",
-        message: "Your Government Portal username is required."
-      }, {
+        message: "Your Government Portal username is required.",
+      },
+      {
         type: "pattern",
-        message: "Invalid username."
-      }
+        message: "Invalid username.",
+      },
     ],
     password: [
       {
         type: "required",
-        message: "Password is required."
-      }, {
+        message: "Password is required.",
+      },
+      {
         type: "minlength",
-        message: "Password must be at meet mininum characters."
-      }, {
+        message: "Password must be at meet mininum characters.",
+      },
+      {
         type: "maxlength",
-        message: "Password cannot be longer than 30 characters long."
-      }
+        message: "Password cannot be longer than 30 characters long.",
+      },
     ],
     prefix: [
       {
@@ -310,17 +347,18 @@ export class AdminPage implements OnInit {
         message: "Account type is required.",
       },
     ],
-  }
+  };
 
   citizen_validation_form = {
     fullname: [
       {
         type: "required",
-        message: "Your Government Portal username is required."
-      }, {
+        message: "Your Government Portal username is required.",
+      },
+      {
         type: "pattern",
-        message: "Invalid username."
-      }
+        message: "Invalid username.",
+      },
     ],
     fatherFullName: [
       {
@@ -333,7 +371,8 @@ export class AdminPage implements OnInit {
         type: "required",
         message: "Mother's name is required.",
       },
-    ], birthCertNo: [
+    ],
+    birthCertNo: [
       {
         type: "required",
         message: "Birth Certification Number is required.",
@@ -357,7 +396,37 @@ export class AdminPage implements OnInit {
         message: "Date of Birth is required.",
       },
     ],
-  }
+  };
+  kiosk_registration = {
+    email: [
+      {
+        type: "required",
+        message: "Government Portal  Kiosk username is required.",
+      },
+      {
+        type: "minlength",
+        message: "Must be a mininum of 3 characters.",
+      },
+      {
+        type: "maxlength",
+        message: "Cannot be longer than 10 characters long.",
+      },
+    ],
+    password: [
+      {
+        type: "required",
+        message: "Password is required.",
+      },
+      {
+        type: "minlength",
+        message: "Password must be at meet mininum characters.",
+      },
+      {
+        type: "maxlength",
+        message: "Password cannot be longer than 30 characters long.",
+      },
+    ],
+  };
 
   openSupport() {
     this.accountPanel = false;
@@ -372,7 +441,7 @@ export class AdminPage implements OnInit {
     this.settingsPanel = false;
     this.supportPanel = false;
     this.statisticsPanel = false;
-    this.registrationPanel = true
+    this.registrationPanel = true;
   }
   openStatistics() {
     this.accountPanel = false;
@@ -397,14 +466,25 @@ export class AdminPage implements OnInit {
   }
 
   /**
-    * Method reposible for registering officers
-    */
+   * Method reposible for registering officers
+   * @param {Form} value getting form values for officer registration
+   */
   registerOfficer(value) {
     this.accessService.registerOfficer(value);
   }
-
+  /**
+   * Method reposible for registering kiosk
+   * @param {Form} value getting form values for kiosk registration
+   */
+  registerKiosk(value) {
+    this.accessService.registerKiosk(value);
+  }
+  /**
+   * Method reposible for uploading officer photo
+   * @param {file} event getting image data for uploading
+   */
   async onFileChange(event) {
-    var NIC = this.registration_form.value.nic
+    var NIC = this.registration_form.value.nic;
     const file = event.target.files[0];
     if (file) {
       const filePath = `${this.CollectionPath}/${NIC}/ProfilePhoto`;
@@ -429,22 +509,22 @@ export class AdminPage implements OnInit {
         .subscribe();
     }
   }
-  /** Method for registering citizens births */
+  /** Method for registering citizens births
+   * @param value form data for citizen registrations
+   */
   citizenRegistration(value) {
-    console.log(value)
+    console.log(value);
     this.accessService.registerBirths(value);
-
   }
   /** Checking System Status */
   checkSystemStatus() {
     // Full System
     this.accessService.getSystemMaintenanceStatus().subscribe(
       (data) => {
-        if (data == 'true') {
-          this.system_maintenance = true
-        }
-        else {
-          this.system_maintenance = false
+        if (data == "true") {
+          this.system_maintenance = true;
+        } else {
+          this.system_maintenance = false;
         }
       },
       (error) => {
@@ -454,11 +534,10 @@ export class AdminPage implements OnInit {
     // Web System
     this.accessService.getWebSystemMaintenanceStatus().subscribe(
       (data) => {
-        if (data == 'true') {
-          this.web_system_maintenance = true
-        }
-        else {
-          this.web_system_maintenance = false
+        if (data == "true") {
+          this.web_system_maintenance = true;
+        } else {
+          this.web_system_maintenance = false;
         }
       },
       (error) => {
@@ -468,11 +547,10 @@ export class AdminPage implements OnInit {
     // Kiosk System
     this.accessService.getKioskSystemMaintenanceStatus().subscribe(
       (data) => {
-        if (data == 'true') {
-          this.kiosk_system_maintenance = true
-        }
-        else {
-          this.kiosk_system_maintenance = false
+        if (data == "true") {
+          this.kiosk_system_maintenance = true;
+        } else {
+          this.kiosk_system_maintenance = false;
         }
       },
       (error) => {
@@ -482,11 +560,10 @@ export class AdminPage implements OnInit {
     // Office System
     this.accessService.getOfficeSystemMaintenanceStatus().subscribe(
       (data) => {
-        if (data == 'true') {
-          this.office_system_maintenance = true
-        }
-        else {
-          this.office_system_maintenance = false
+        if (data == "true") {
+          this.office_system_maintenance = true;
+        } else {
+          this.office_system_maintenance = false;
         }
       },
       (error) => {
@@ -496,11 +573,10 @@ export class AdminPage implements OnInit {
     // Secretary System
     this.accessService.getSecretarySystemMaintenanceStatus().subscribe(
       (data) => {
-        if (data == 'true') {
-          this.secretary_system_maintenance = true
-        }
-        else {
-          this.secretary_system_maintenance = false
+        if (data == "true") {
+          this.secretary_system_maintenance = true;
+        } else {
+          this.secretary_system_maintenance = false;
         }
       },
       (error) => {
@@ -513,12 +589,11 @@ export class AdminPage implements OnInit {
     this.accessService.setSystemMaintenance(value).subscribe(
       (data) => {
         if (data == "Updated Settings") {
-          loading.dismiss()
-          this.checkSystemStatus()
-        }
-        else {
-          loading.dismiss()
-          this.checkSystemStatus()
+          loading.dismiss();
+          this.checkSystemStatus();
+        } else {
+          loading.dismiss();
+          this.checkSystemStatus();
         }
       },
       (error) => {
@@ -526,7 +601,7 @@ export class AdminPage implements OnInit {
       }
     );
     const loading = await this.loadingController.create({
-      message: 'Updating Settings. Please wait...'
+      message: "Updating Settings. Please wait...",
     });
     await loading.present();
   }
@@ -534,12 +609,11 @@ export class AdminPage implements OnInit {
     this.accessService.setKioskSystemMaintenance(value).subscribe(
       (data) => {
         if (data == "Updated Settings") {
-          loading.dismiss()
-          this.checkSystemStatus()
-        }
-        else {
-          loading.dismiss()
-          this.checkSystemStatus()
+          loading.dismiss();
+          this.checkSystemStatus();
+        } else {
+          loading.dismiss();
+          this.checkSystemStatus();
         }
       },
       (error) => {
@@ -547,7 +621,7 @@ export class AdminPage implements OnInit {
       }
     );
     const loading = await this.loadingController.create({
-      message: 'Updating Settings. Please wait...'
+      message: "Updating Settings. Please wait...",
     });
     await loading.present();
   }
@@ -555,12 +629,11 @@ export class AdminPage implements OnInit {
     this.accessService.setWebSystemMaintenance(value).subscribe(
       (data) => {
         if (data == "Updated Settings") {
-          loading.dismiss()
-          this.checkSystemStatus()
-        }
-        else {
-          loading.dismiss()
-          this.checkSystemStatus()
+          loading.dismiss();
+          this.checkSystemStatus();
+        } else {
+          loading.dismiss();
+          this.checkSystemStatus();
         }
       },
       (error) => {
@@ -568,7 +641,7 @@ export class AdminPage implements OnInit {
       }
     );
     const loading = await this.loadingController.create({
-      message: 'Updating Settings. Please wait...'
+      message: "Updating Settings. Please wait...",
     });
     await loading.present();
   }
@@ -576,12 +649,11 @@ export class AdminPage implements OnInit {
     this.accessService.setOfficeSystemMaintenance(value).subscribe(
       (data) => {
         if (data == "Updated Settings") {
-          loading.dismiss()
-          this.checkSystemStatus()
-        }
-        else {
-          loading.dismiss()
-          this.checkSystemStatus()
+          loading.dismiss();
+          this.checkSystemStatus();
+        } else {
+          loading.dismiss();
+          this.checkSystemStatus();
         }
       },
       (error) => {
@@ -589,7 +661,7 @@ export class AdminPage implements OnInit {
       }
     );
     const loading = await this.loadingController.create({
-      message: 'Updating Settings. Please wait...'
+      message: "Updating Settings. Please wait...",
     });
     await loading.present();
   }
@@ -597,12 +669,11 @@ export class AdminPage implements OnInit {
     this.accessService.setSecretarySystemMaintenance(value).subscribe(
       (data) => {
         if (data == "Updated Settings") {
-          loading.dismiss()
-          this.checkSystemStatus()
-        }
-        else {
-          loading.dismiss()
-          this.checkSystemStatus()
+          loading.dismiss();
+          this.checkSystemStatus();
+        } else {
+          loading.dismiss();
+          this.checkSystemStatus();
         }
       },
       (error) => {
@@ -610,7 +681,7 @@ export class AdminPage implements OnInit {
       }
     );
     const loading = await this.loadingController.create({
-      message: 'Updating Settings. Please wait...'
+      message: "Updating Settings. Please wait...",
     });
     await loading.present();
   }
@@ -640,6 +711,12 @@ export class AdminPage implements OnInit {
   createAccount() {
     this.accountCreate = true;
     this.accountManage = false;
+    this.kioskAccount = false;
+  }
+  createKiosk() {
+    this.accountCreate = false;
+    this.accountManage = false;
+    this.kioskAccount = true;
   }
   /**
    * Manages Government Portal accounts
@@ -647,6 +724,7 @@ export class AdminPage implements OnInit {
   async manageAccount() {
     this.accountManage = true;
     this.accountCreate = false;
+    this.kioskAccount = false;
 
     this.http
       .get(`https://government-portal-firebase.herokuapp.com/get-all-users`)
@@ -686,7 +764,7 @@ export class AdminPage implements OnInit {
       this.http
         .get(
           "https://government-portal-firebase.herokuapp.com/get-user?email=" +
-          value
+            value
         )
         .subscribe(
           (data) => {
@@ -716,7 +794,7 @@ export class AdminPage implements OnInit {
     this.http
       .get(
         "https://government-portal-firebase.herokuapp.com/activate-user?uid=" +
-        user
+          user
       )
       .subscribe(
         async (data) => {
@@ -748,7 +826,7 @@ export class AdminPage implements OnInit {
     this.http
       .get(
         "https://government-portal-firebase.herokuapp.com/disable-user?uid=" +
-        user
+          user
       )
       .subscribe(
         async (data) => {
@@ -780,7 +858,7 @@ export class AdminPage implements OnInit {
     this.http
       .get(
         "https://government-portal-firebase.herokuapp.com/delete-user?uid=" +
-        user
+          user
       )
       .subscribe(
         async (data) => {
@@ -805,6 +883,11 @@ export class AdminPage implements OnInit {
         }
       );
   }
+  /**
+   * Technical Messages for Administrator
+   * @param value message data
+   * @param ID officer email
+   */
   supportOfficer(value, ID) {
     var message = value.messageBody;
     this.message_form.reset();

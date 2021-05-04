@@ -168,7 +168,13 @@ export class HomeAffairsPage implements OnInit {
   nonFirstTimer: boolean;
   foreignCitizen: boolean;
   handler: any;
-  ECitizens: { uid: any; name: any; photo: any; governmentID: any; dateofBirth: any; }[];
+  ECitizens: {
+    uid: any;
+    name: any;
+    photo: any;
+    governmentID: any;
+    dateofBirth: any;
+  }[];
   accountManage: boolean;
   verifyPanel: boolean;
   constructor(
@@ -181,10 +187,10 @@ export class HomeAffairsPage implements OnInit {
     public alertController: AlertController,
     private stripeService: StripeService,
     private modelCtrl: ModalController
-  ) { }
+  ) {}
 
   async ngOnInit() {
-    this.portalScanner = true
+    this.portalScanner = true;
     this.servicesPanel = true;
     this.accessService.getETechSupportMessages().subscribe((data) => {
       data.map((e) => {
@@ -217,7 +223,7 @@ export class HomeAffairsPage implements OnInit {
           this.officeAddress = doc.data()["officeAddress"];
           this.mobile = doc.data()["mobile"];
           this.Division = doc.data()["Division"];
-          this.Email = user.email
+          this.Email = user.email;
         }
       });
     //  FORM VALIDATORS
@@ -237,9 +243,7 @@ export class HomeAffairsPage implements OnInit {
     this.nic_form = this.formBuilder.group({
       fullName: new FormControl(
         "",
-        Validators.compose([
-          Validators.pattern("^^[a-z A-Z\\.\\s]+$"),
-        ])
+        Validators.compose([Validators.pattern("^^[a-z A-Z\\.\\s]+$")])
       ),
       subject: new FormControl(
         "",
@@ -774,6 +778,11 @@ export class HomeAffairsPage implements OnInit {
       },
     ],
   };
+  /**
+   * Method for sending support for eCitizens
+   * @param value form message body
+   * @param ID Government ID
+   */
   supportCitizen(value, ID) {
     var message = value.messageBody;
     this.message_form.reset();
@@ -794,6 +803,9 @@ export class HomeAffairsPage implements OnInit {
       }
     );
   }
+  /**
+   * Method for sending technical support
+   */
   requestSupport(value) {
     this.message_form.reset();
     this.accessService.techSupport(value).then(
@@ -828,7 +840,7 @@ export class HomeAffairsPage implements OnInit {
           this.accessService
             .getECitizenByCard(qrResultString)
             .subscribe(async (data) => {
-              console.log(data)
+              console.log(data);
               if (data.length == 0) {
                 const toast = await this.toastController.create({
                   message: "Card Fraud | Invalid Card",
@@ -881,9 +893,11 @@ export class HomeAffairsPage implements OnInit {
     /** Clears fetched data */
     setTimeout(() => {
       this.scannedCardData = [];
-    },
-      25000)
+    }, 25000);
   }
+  /**
+   * Method for retreving all eCitizens
+   */
   searchECitizen() {
     this.eCitizenSearchData = true;
     this.eCitizenScanData = false;
@@ -906,6 +920,10 @@ export class HomeAffairsPage implements OnInit {
       });
     });
   }
+  /**
+   * Method for finding eCitizen by ID
+   * @param value contains Government Portal ID
+   */
   findECitizenByID(value) {
     if (value == "") {
       this.searchECitizen();
@@ -930,6 +948,7 @@ export class HomeAffairsPage implements OnInit {
       });
     }
   }
+  /** Methods for Tabs Handling */
   openService() {
     this.servicesPanel = true;
     this.supportPanel = false;
@@ -1036,6 +1055,7 @@ export class HomeAffairsPage implements OnInit {
   exitStatus() {
     this.NICApplicantStatus = false;
   }
+  /**Retriving list of NIC applications */
   getNICApplicationStatus() {
     this.NICApplicantStatus = true;
     this.NICApplication = false;
@@ -1063,6 +1083,7 @@ export class HomeAffairsPage implements OnInit {
       });
     });
   }
+  /**Finding eApplications */
   findEApplication(value) {
     if (value == "") {
       this.getNICApplicationStatus();
@@ -1183,6 +1204,7 @@ export class HomeAffairsPage implements OnInit {
   exitECitizenManager() {
     this.accountManage = false;
   }
+  /** Method for finding ecitizens */
   findECitizen(value) {
     if (value == "") {
       this.manageAccount();
@@ -1212,48 +1234,49 @@ export class HomeAffairsPage implements OnInit {
           placeholder: "Eg: 01/12/2020",
         },
       ],
-      message: 'Provide Citizen Data of Birth for verification',
+      message: "Provide Citizen Data of Birth for verification",
       buttons: [
         {
           text: "Cancel",
           role: "cancel",
           cssClass: "secondary",
-          handler: () => {
-          },
+          handler: () => {},
         },
         {
           text: "Check",
           handler: async (alertData) => {
             if (citizenDateofBirth === alertData.dateOfBirth) {
               var Access_PIN = Math.floor(Math.random() * 9000000 + 1000000);
-              this.accessService.updateECitizenAccessPIN(Access_PIN, governmentID);
+              this.accessService.updateECitizenAccessPIN(
+                Access_PIN,
+                governmentID
+              );
               const alertSuccess = await this.alertController.create({
                 header: "Access PIN Updated ✔",
                 message: governmentID + " Access PIN has been updated",
                 buttons: [
                   {
-                    text: 'View PIN',
+                    text: "View PIN",
                     handler: async () => {
                       const alert = await this.alertController.create({
                         header: "Access PIN: " + Access_PIN,
                         buttons: ["CLOSE"],
                       });
                       await alert.present();
-                    }
+                    },
                   },
                   {
-                    text: 'OK',
-                  }
+                    text: "OK",
+                  },
                 ],
               });
               await alertSuccess.present();
-            }
-            else {
+            } else {
               const alertFail = await this.alertController.create({
                 header: "Wrong Date of Birth ❌",
                 message: "Provide Date of Birth doesn't match citizen record!",
-                buttons: ["Close"]
-              })
+                buttons: ["Close"],
+              });
               await alertFail.present();
             }
           },
@@ -1267,7 +1290,7 @@ export class HomeAffairsPage implements OnInit {
     this.http
       .get(
         "https://government-portal-firebase.herokuapp.com/activate-user?uid=" +
-        user
+          user
       )
       .subscribe(
         async (data) => {
@@ -1298,7 +1321,7 @@ export class HomeAffairsPage implements OnInit {
     this.http
       .get(
         "https://government-portal-firebase.herokuapp.com/disable-user?uid=" +
-        user
+          user
       )
       .subscribe(
         async (data) => {
@@ -1329,7 +1352,7 @@ export class HomeAffairsPage implements OnInit {
     this.http
       .get(
         "https://government-portal-firebase.herokuapp.com/delete-user?uid=" +
-        user
+          user
       )
       .subscribe(
         async (data) => {
@@ -1567,25 +1590,29 @@ export class HomeAffairsPage implements OnInit {
           name: "IncorrectData",
           type: "radio",
           label: "Form Not Valid",
-          value: "Form Not Valid / Incorrect|පෝරමය වලංගු නොවේ / වැරදිය|படிவம் செல்லுபடியாகாது / தவறானது",
+          value:
+            "Form Not Valid / Incorrect|පෝරමය වලංගු නොවේ / වැරදිය|படிவம் செல்லுபடியாகாது / தவறானது",
         },
         {
           name: "PhoneFailed",
           type: "radio",
           label: "Phone Verification Failed",
-          value: "Phone Verification Failed|දුරකථන සත්‍යාපනය අසාර්ථක විය|தொலைபேசி சரிபார்ப்பு தோல்வியுற்றது",
+          value:
+            "Phone Verification Failed|දුරකථන සත්‍යාපනය අසාර්ථක විය|தொலைபேசி சரிபார்ப்பு தோல்வியுற்றது",
         },
         {
           name: "FakeData",
           type: "radio",
           label: "Form Data Mismatch",
-          value: "Form Data Mismatch / Third Party Attempt|ආකෘති නොගැලපීම / තෙවන පාර්ශවීය උත්සාහය|படிவம் தரவு பொருந்தாதது / மூன்றாம் தரப்பு முயற்சி",
+          value:
+            "Form Data Mismatch / Third Party Attempt|ආකෘති නොගැලපීම / තෙවන පාර්ශවීය උත්සාහය|படிவம் தரவு பொருந்தாதது / மூன்றாம் தரப்பு முயற்சி",
         },
         {
           name: "photoFail",
           type: "radio",
           label: "Photo Mismatch",
-          value: "Photo Mismatch / Third Party Attempt|ඡායාරූප නොගැලපීම / තෙවන පාර්ශවීය උත්සාහය|புகைப்பட பொருத்தமின்மை / மூன்றாம் தரப்பு முயற்சி ",
+          value:
+            "Photo Mismatch / Third Party Attempt|ඡායාරූප නොගැලපීම / තෙවන පාර්ශවීය උත්සාහය|புகைப்பட பொருத்தமின்மை / மூன்றாம் தரப்பு முயற்சி ",
         },
       ],
       buttons: [

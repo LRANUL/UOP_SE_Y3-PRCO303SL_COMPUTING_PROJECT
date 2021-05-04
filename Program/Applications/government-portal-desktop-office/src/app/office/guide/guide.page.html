@@ -2,7 +2,12 @@
   <ion-toolbar>
     <ion-title>
       <ion-icon name="information-circle" color="primary"></ion-icon>Guide
-      <ion-button size="small" color="danger" (click)=closeGuide() style="float: right;">
+      <ion-button
+        size="small"
+        color="danger"
+        (click)="closeGuide()"
+        style="float: right"
+      >
         <ion-icon name="close"></ion-icon>
       </ion-button>
     </ion-title>
@@ -10,15 +15,16 @@
 </ion-header>
 <!-- Guide Content -->
 <ion-content>
-  <ion-searchbar placeholder="Find Information" [(ngModel)]="dataFilter" animated="true" autocomplete="true"
-    (search)="findDocument($event.target.value)">
+  <ion-searchbar
+    placeholder="Find Information"
+    [(ngModel)]="dataFilter"
+    animated="true"
+    autocomplete="true"
+    (search)="findDocument($event.target.value)"
+  >
   </ion-searchbar>
   <ion-card *ngFor="let document of eDocuments | filter:dataFilter">
-    <ion-card-title>
-      {{document.Subject}}
-    </ion-card-title>
-    <ion-card-content>
-      {{document.Description}}
-    </ion-card-content>
+    <ion-card-title> {{document.Subject}} </ion-card-title>
+    <ion-card-content> {{document.Description}} </ion-card-content>
   </ion-card>
 </ion-content>

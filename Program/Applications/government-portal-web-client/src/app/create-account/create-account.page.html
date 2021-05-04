@@ -34,9 +34,24 @@
     <ion-list style="margin-left: 5%;">
       <h1 style="font-size: xx-large;"><strong>Register with Government Portal</strong></h1>
       <br>
-      <form class="form" [formGroup]="validations_form" (keydown.enter)="registerECitizen(validations_form.value)" (ngSubmit)="registerECitizen(validations_form.value)">
+      <form class="form" [formGroup]="validations_form" (keydown.enter)="registerECitizen(validations_form.value)"
+        (ngSubmit)="registerECitizen(validations_form.value)">
+        <h5>No. of Birth Registration Entry</h5>
+        <ion-item>
+          <ion-input type="tel" placeholder="INSERT YOUR BRITH REGISTRATION ENTRY NO." formControlName="birthRegNo"
+            type="text" required style="text-transform: uppercase;" maxlength="10"
+            (change)="accountDuplicateCheck()"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_form.birthRegNo">
+            <div class="error-message"
+              *ngIf="validations_form.get('birthRegNo').hasError(validation.type) && (validations_form.get('birthRegNo').dirty || validations_form.get('birthRegNo').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
         <h5>Prefix</h5>
-        <ion-select formControlName="prefix"  type="text" required  placeholder="PREFIX">
+        <ion-select formControlName="prefix" type="text" required placeholder="PREFIX">
           <ion-select-option value="Mr.">Mr.</ion-select-option>
           <ion-select-option value="Ms.">Ms.</ion-select-option>
           <ion-select-option value="Mrs.">Mrs.</ion-select-option>
@@ -115,19 +130,6 @@
           <ng-container *ngFor="let validation of validation_form.registarDivision">
             <div class="error-message"
               *ngIf="validations_form.get('registarDivision').hasError(validation.type) && (validations_form.get('registarDivision').dirty || validations_form.get('registarDivision').touched)">
-              {{ validation.message }}
-            </div>
-          </ng-container>
-        </div>
-        <h5>No. of Birth Registration Entry</h5>
-        <ion-item>
-          <ion-input type="tel" placeholder="INSERT YOUR BRITH REGISTRATION ENTRY NO." formControlName="birthRegNo"
-            type="text" required style="text-transform: uppercase;" maxlength="10"></ion-input>
-        </ion-item>
-        <div class="validation-errors">
-          <ng-container *ngFor="let validation of validation_form.birthRegNo">
-            <div class="error-message"
-              *ngIf="validations_form.get('birthRegNo').hasError(validation.type) && (validations_form.get('birthRegNo').dirty || validations_form.get('birthRegNo').touched)">
               {{ validation.message }}
             </div>
           </ng-container>

@@ -1,19 +1,19 @@
-import { Component } from '@angular/core';
-import { AlertController, LoadingController, Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { OnInit, OnDestroy } from '@angular/core';
-import { RemoteConfigService } from './service/remote-config.service';
-import { Plugins, NetworkStatus, PluginListenerHandle } from '@capacitor/core';
+import { Component } from "@angular/core";
+import { AlertController, LoadingController, Platform } from "@ionic/angular";
+import { SplashScreen } from "@ionic-native/splash-screen/ngx";
+import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { OnInit, OnDestroy } from "@angular/core";
+import { RemoteConfigService } from "./service/remote-config.service";
+import { Plugins, NetworkStatus, PluginListenerHandle } from "@capacitor/core";
 const { Network } = Plugins;
 import firebase from "firebase/app";
 import "firebase/performance";
-import { environment } from '../environments/environment';
+import { environment } from "../environments/environment";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss']
+  selector: "app-root",
+  templateUrl: "app.component.html",
+  styleUrls: ["app.component.scss"],
 })
 export class AppComponent {
   private networkStatus: any;
@@ -25,7 +25,7 @@ export class AppComponent {
     private statusBar: StatusBar,
     private remoteConfig: RemoteConfigService,
     private alertCtrl: AlertController,
-    private loadingController: LoadingController,
+    private loadingController: LoadingController
   ) {
     this.initializeApp();
   }
@@ -38,40 +38,45 @@ export class AppComponent {
     firebase.initializeApp(environment.firebaseConfig);
     // Initializing Application Performance Monitoring accodring to Firebase Documentation
     const performance = firebase.performance();
+    // Remote Configuration code
     const maintenance = await this.remoteConfig.maintenanceLockCheck();
     const officeMaintenanceLockCheck = await this.remoteConfig.officeMaintenanceLockCheck();
+    /**Method to lock system during full system maintenance */
     if (maintenance) {
       const alertMaintenance = await this.alertCtrl.create({
-        header: 'Under Maintenance',
-        subHeader: 'System Down',
+        header: "System Under Maintenance",
+        subHeader: "System Down",
         backdropDismiss: false,
-        message: 'We are currently maintaining the system and all functions are disabled right now, visit back shortly.',
+        message:
+          "We are currently maintaining the system and all functions are disabled right now, visit back shortly.",
       });
       await alertMaintenance.present();
-    }
-    else if (officeMaintenanceLockCheck) {
+      /**Method to lock system during Officer system maintenance */
+    } else if (officeMaintenanceLockCheck) {
       const alertMaintenance = await this.alertCtrl.create({
-        header: 'Under Maintenance',
-        subHeader: 'System Down',
+        header: "Officer Systems Under Maintenance",
+        subHeader: "System Down",
         backdropDismiss: false,
-        message: 'We are currently maintaining the system and all functions are disabled right now, visit back shortly.',
+        message:
+          "We are currently maintaining the system and all functions are disabled right now, visit back shortly.",
       });
       await alertMaintenance.present();
     }
-    this.networkListener = Network.addListener('networkStatusChange', async (status) => {
-      this.networkStatus = status;
-      if (status.connected == false) {
-        const loading = await this.loadingController.create({
-          message: "Network Down, Please wait while we reconnect you...",
-          backdropDismiss: false,
-          spinner: "dots",
-        });
-        await loading.present();
+    this.networkListener = Network.addListener(
+      "networkStatusChange",
+      async (status) => {
+        this.networkStatus = status;
+        if (status.connected == false) {
+          const loading = await this.loadingController.create({
+            message: "Network Down, Please wait while we reconnect you...",
+            backdropDismiss: false,
+            spinner: "dots",
+          });
+          await loading.present();
+        } else if (status.connected == true) {
+          this.loadingController.dismiss();
+        }
       }
-      else if (status.connected == true) {
-        this.loadingController.dismiss()
-      }
-    });
+    );
   }
 }
-

@@ -9,9 +9,9 @@ admin.initializeApp({
 const express = require("express");
 const app = express();
 // app.use(express.static("."), express.json());
-var cors = require('cors')
+var cors = require("cors");
 
-app.use(cors(),express.json())
+app.use(cors(), express.json());
 // const APP_DOMAIN = "http://localhost:8100";
 // const APP_DOMAIN = "http://localhost:4200";
 
@@ -81,7 +81,27 @@ app.post("/create-user", async (req, res) => {
       res.send(JSON.stringify("Created User Successfully"));
     })
     .catch((error) => {
-      console.log('Error creating new user:', error);
+      console.log("Error creating new user:", error);
+    });
+});
+/**
+ * Create Kiosk
+ */
+app.post("/create-kiosk", async (req, res) => {
+  var email = req.body.email || "";
+  var password = req.body.password || "";
+  admin
+    .auth()
+    .createUser({
+      email: email,
+      password: password,
+      disabled: false,
+    })
+    .then((userRecord) => {
+      res.send(JSON.stringify("Created Kiosk Successfully"));
+    })
+    .catch((error) => {
+      console.log("Error creating new user:", error);
     });
 });
 
@@ -141,244 +161,284 @@ app.get("/activate-user", async (req, res) => {
     });
 });
 
-
 // SYSTEM MAINTENANCE STATUS
-
+/**
+ * Getting Full System Maintenance Status
+ */
 app.get("/system_maintenance_status", async (req, res) => {
   var config = admin.remoteConfig();
-  config.getTemplate()
-      .then(function (template) {
-        console.log('ETag from server: ' + template.etag);
-        var templateStr = JSON.stringify(template.parameters['system_maintenance'].defaultValue['value']);
-        console.log(templateStr)
-        res.send(templateStr);
-      })
-      .catch(function (err) {
-          res.send(JSON.stringify('Unable to get Status'));
-        console.error(err);
-      });
-
+  config
+    .getTemplate()
+    .then(function (template) {
+      console.log("ETag from server: " + template.etag);
+      var templateStr = JSON.stringify(
+        template.parameters["system_maintenance"].defaultValue["value"]
+      );
+      console.log(templateStr);
+      res.send(templateStr);
+    })
+    .catch(function (err) {
+      res.send(JSON.stringify("Unable to get Status"));
+      console.error(err);
+    });
 });
+/**
+ * Getting Web System Maintenance Status
+ */
 app.get("/web_system_maintenance_status", async (req, res) => {
   var config = admin.remoteConfig();
-  config.getTemplate()
-      .then(function (template) {
-        console.log('ETag from server: ' + template.etag);
-        var templateStr = JSON.stringify(template.parameters['web_system_maintenance'].defaultValue['value']);
-        console.log(templateStr)
-        res.send(templateStr);
-      })
-      .catch(function (err) {
-          res.send(JSON.stringify('Unable to get Status'));
-        console.error(err);
-      });
-
+  config
+    .getTemplate()
+    .then(function (template) {
+      console.log("ETag from server: " + template.etag);
+      var templateStr = JSON.stringify(
+        template.parameters["web_system_maintenance"].defaultValue["value"]
+      );
+      console.log(templateStr);
+      res.send(templateStr);
+    })
+    .catch(function (err) {
+      res.send(JSON.stringify("Unable to get Status"));
+      console.error(err);
+    });
 });
+/**
+ * Getting Kiosk System Maintenance Status
+ */
 app.get("/kiosk_system_maintenance_status", async (req, res) => {
   var config = admin.remoteConfig();
-  config.getTemplate()
-      .then(function (template) {
-        console.log('ETag from server: ' + template.etag);
-        var templateStr = JSON.stringify(template.parameters['kiosk_system_maintenance'].defaultValue['value']);
-        console.log(templateStr)
-        res.send(templateStr);
-      })
-      .catch(function (err) {
-          res.send(JSON.stringify('Unable to get Status'));
-        console.error(err);
-      });
-
+  config
+    .getTemplate()
+    .then(function (template) {
+      console.log("ETag from server: " + template.etag);
+      var templateStr = JSON.stringify(
+        template.parameters["kiosk_system_maintenance"].defaultValue["value"]
+      );
+      console.log(templateStr);
+      res.send(templateStr);
+    })
+    .catch(function (err) {
+      res.send(JSON.stringify("Unable to get Status"));
+      console.error(err);
+    });
 });
+/**
+ * Getting Office System Maintenance Status
+ */
 app.get("/office_system_maintenance_status", async (req, res) => {
   var config = admin.remoteConfig();
-  config.getTemplate()
-      .then(function (template) {
-        console.log('ETag from server: ' + template.etag);
-        var templateStr = JSON.stringify(template.parameters['office_system_maintenance'].defaultValue['value']);
-        console.log(templateStr)
-        res.send(templateStr);
-      })
-      .catch(function (err) {
-          res.send(JSON.stringify('Unable to get Status'));
-        console.error(err);
-      });
-
+  config
+    .getTemplate()
+    .then(function (template) {
+      console.log("ETag from server: " + template.etag);
+      var templateStr = JSON.stringify(
+        template.parameters["office_system_maintenance"].defaultValue["value"]
+      );
+      console.log(templateStr);
+      res.send(templateStr);
+    })
+    .catch(function (err) {
+      res.send(JSON.stringify("Unable to get Status"));
+      console.error(err);
+    });
 });
+/**
+ * Getting Secretary System Maintenance Status
+ */
 app.get("/secretary_system_maintenance_status", async (req, res) => {
   var config = admin.remoteConfig();
-  config.getTemplate()
-      .then(function (template) {
-        console.log('ETag from server: ' + template.etag);
-        var templateStr = JSON.stringify(template.parameters['secretary_system_maintenance'].defaultValue['value']);
-        console.log(templateStr)
-        res.send(templateStr);
-      })
-      .catch(function (err) {
-          res.send(JSON.stringify('Unable to get Status'));
-        console.error(err);
-      });
-
+  config
+    .getTemplate()
+    .then(function (template) {
+      console.log("ETag from server: " + template.etag);
+      var templateStr = JSON.stringify(
+        template.parameters["secretary_system_maintenance"].defaultValue[
+          "value"
+        ]
+      );
+      console.log(templateStr);
+      res.send(templateStr);
+    })
+    .catch(function (err) {
+      res.send(JSON.stringify("Unable to get Status"));
+      console.error(err);
+    });
 });
 
 // SYSTEM MAINTENANCE MANAGER
-/** Full System Maintenance */
+/** Full System Maintenance Update*/
 app.get("/system_maintenance", async (req, res) => {
   var value = req.query.value || "";
   var config = admin.remoteConfig();
-  config.getTemplate()
-      .then(function (template) {
-          console.log('ETag from server: ' + template.etag);
-          var templateStr = JSON.stringify(template);
-          template.parameters['system_maintenance'] = {
-              defaultValue: {
-                  value: value
-              },
-              description: 'For Locking System Access During System Maintenance - Full Scale Lock Down',
-          };
-          config.publishTemplate(template)
-              .then(function (updatedTemplate) {
-                  res.send(JSON.stringify('Updated Settings'));
-                  console.log('ETag from server: ' + updatedTemplate.etag);
-              })
-              .catch(function (err) {
-                  console.error('Unable to publish template.');
-                  res.send(JSON.stringify('Unable to publish template.'));
-
-                  console.error(err);
-              });
-      })
-      .catch(function (err) {
-          res.send(JSON.stringify('Unable to Update'));
+  config
+    .getTemplate()
+    .then(function (template) {
+      console.log("ETag from server: " + template.etag);
+      var templateStr = JSON.stringify(template);
+      template.parameters["system_maintenance"] = {
+        defaultValue: {
+          value: value,
+        },
+        description:
+          "For Locking System Access During System Maintenance - Full Scale Lock Down",
+      };
+      config
+        .publishTemplate(template)
+        .then(function (updatedTemplate) {
+          res.send(JSON.stringify("Updated Settings"));
+          console.log("ETag from server: " + updatedTemplate.etag);
+        })
+        .catch(function (err) {
+          console.error("Unable to publish template.");
+          res.send(JSON.stringify("Unable to publish template."));
 
           console.error(err);
-      });
+        });
+    })
+    .catch(function (err) {
+      res.send(JSON.stringify("Unable to Update"));
+
+      console.error(err);
+    });
 });
-/** Web Maintenance */
+/** Web Maintenance Update*/
 app.get("/web_system_maintenance", async (req, res) => {
   var value = req.query.value || "";
   var config = admin.remoteConfig();
-  config.getTemplate()
-      .then(function (template) {
-          console.log('ETag from server: ' + template.etag);
-          var templateStr = JSON.stringify(template);
-          template.parameters['web_system_maintenance'] = {
-              defaultValue: {
-                  value: value
-              },
-              description: 'For Locking Web System Access During System Maintenance - Web System Lock Down',
-          };
-          config.publishTemplate(template)
-              .then(function (updatedTemplate) {
-                  res.send(JSON.stringify('Updated Settings'));
-                  console.log('ETag from server: ' + updatedTemplate.etag);
-              })
-              .catch(function (err) {
-                  console.error('Unable to publish template.');
-                  res.send(JSON.stringify('Unable to publish template.'));
-
-                  console.error(err);
-              });
-      })
-      .catch(function (err) {
-          res.send(JSON.stringify('Unable to Update'));
+  config
+    .getTemplate()
+    .then(function (template) {
+      console.log("ETag from server: " + template.etag);
+      var templateStr = JSON.stringify(template);
+      template.parameters["web_system_maintenance"] = {
+        defaultValue: {
+          value: value,
+        },
+        description:
+          "For Locking Web System Access During System Maintenance - Web System Lock Down",
+      };
+      config
+        .publishTemplate(template)
+        .then(function (updatedTemplate) {
+          res.send(JSON.stringify("Updated Settings"));
+          console.log("ETag from server: " + updatedTemplate.etag);
+        })
+        .catch(function (err) {
+          console.error("Unable to publish template.");
+          res.send(JSON.stringify("Unable to publish template."));
 
           console.error(err);
-      });
+        });
+    })
+    .catch(function (err) {
+      res.send(JSON.stringify("Unable to Update"));
+
+      console.error(err);
+    });
 });
-/** Kiosk Maintenance */
+/** Kiosk Maintenance Update*/
 app.get("/kiosk_system_maintenance", async (req, res) => {
   var value = req.query.value || "";
   var config = admin.remoteConfig();
-  config.getTemplate()
-      .then(function (template) {
-          console.log('ETag from server: ' + template.etag);
-          var templateStr = JSON.stringify(template);
-          template.parameters['kiosk_system_maintenance'] = {
-              defaultValue: {
-                  value: value
-              },
-              description: 'For Locking Kiosk System Access During System Maintenance - Kiosk System Lock Down',
-          };
-          config.publishTemplate(template)
-              .then(function (updatedTemplate) {
-                  res.send(JSON.stringify('Updated Settings'));
-                  console.log('ETag from server: ' + updatedTemplate.etag);
-              })
-              .catch(function (err) {
-                  console.error('Unable to publish template.');
-                  res.send(JSON.stringify('Unable to publish template.'));
-
-                  console.error(err);
-              });
-      })
-      .catch(function (err) {
-          res.send(JSON.stringify('Unable to Update'));
+  config
+    .getTemplate()
+    .then(function (template) {
+      console.log("ETag from server: " + template.etag);
+      var templateStr = JSON.stringify(template);
+      template.parameters["kiosk_system_maintenance"] = {
+        defaultValue: {
+          value: value,
+        },
+        description:
+          "For Locking Kiosk System Access During System Maintenance - Kiosk System Lock Down",
+      };
+      config
+        .publishTemplate(template)
+        .then(function (updatedTemplate) {
+          res.send(JSON.stringify("Updated Settings"));
+          console.log("ETag from server: " + updatedTemplate.etag);
+        })
+        .catch(function (err) {
+          console.error("Unable to publish template.");
+          res.send(JSON.stringify("Unable to publish template."));
 
           console.error(err);
-      });
+        });
+    })
+    .catch(function (err) {
+      res.send(JSON.stringify("Unable to Update"));
+
+      console.error(err);
+    });
 });
-/** Office Maintenance */
+/** Office Maintenance Update*/
 app.get("/office_system_maintenance", async (req, res) => {
   var value = req.query.value || "";
   var config = admin.remoteConfig();
-  config.getTemplate()
-      .then(function (template) {
-          console.log('ETag from server: ' + template.etag);
-          var templateStr = JSON.stringify(template);
-          template.parameters['office_system_maintenance'] = {
-              defaultValue: {
-                  value: value
-              },
-              description: 'For Locking Office System Access During System Maintenance - Office System Lock Down',
-          };
-          config.publishTemplate(template)
-              .then(function (updatedTemplate) {
-                  res.send(JSON.stringify('Updated Settings'));
-                  console.log('ETag from server: ' + updatedTemplate.etag);
-              })
-              .catch(function (err) {
-                  console.error('Unable to publish template.');
-                  res.send(JSON.stringify('Unable to publish template.'));
-
-                  console.error(err);
-              });
-      })
-      .catch(function (err) {
-          res.send(JSON.stringify('Unable to Update'));
+  config
+    .getTemplate()
+    .then(function (template) {
+      console.log("ETag from server: " + template.etag);
+      var templateStr = JSON.stringify(template);
+      template.parameters["office_system_maintenance"] = {
+        defaultValue: {
+          value: value,
+        },
+        description:
+          "For Locking Office System Access During System Maintenance - Office System Lock Down",
+      };
+      config
+        .publishTemplate(template)
+        .then(function (updatedTemplate) {
+          res.send(JSON.stringify("Updated Settings"));
+          console.log("ETag from server: " + updatedTemplate.etag);
+        })
+        .catch(function (err) {
+          console.error("Unable to publish template.");
+          res.send(JSON.stringify("Unable to publish template."));
 
           console.error(err);
-      });
+        });
+    })
+    .catch(function (err) {
+      res.send(JSON.stringify("Unable to Update"));
+
+      console.error(err);
+    });
 });
-/** Secretary Maintenance */
+/** Secretary Maintenance Update*/
 app.get("/secretary_system_maintenance", async (req, res) => {
   var value = req.query.value || "";
   var config = admin.remoteConfig();
-  config.getTemplate()
-      .then(function (template) {
-          console.log('ETag from server: ' + template.etag);
-          var templateStr = JSON.stringify(template);
-          template.parameters['secretary_system_maintenance'] = {
-              defaultValue: {
-                  value: value
-              },
-              description: 'For Locking Secretary System Access During System Maintenance - Secretary System Lock Down',
-          };
-          config.publishTemplate(template)
-              .then(function (updatedTemplate) {
-                  res.send(JSON.stringify('Updated Settings'));
-                  console.log('ETag from server: ' + updatedTemplate.etag);
-              })
-              .catch(function (err) {
-                  console.error('Unable to publish template.');
-                  res.send(JSON.stringify('Unable to publish template.'));
-
-                  console.error(err);
-              });
-      })
-      .catch(function (err) {
-          res.send(JSON.stringify('Unable to Update'));
+  config
+    .getTemplate()
+    .then(function (template) {
+      console.log("ETag from server: " + template.etag);
+      var templateStr = JSON.stringify(template);
+      template.parameters["secretary_system_maintenance"] = {
+        defaultValue: {
+          value: value,
+        },
+        description:
+          "For Locking Secretary System Access During System Maintenance - Secretary System Lock Down",
+      };
+      config
+        .publishTemplate(template)
+        .then(function (updatedTemplate) {
+          res.send(JSON.stringify("Updated Settings"));
+          console.log("ETag from server: " + updatedTemplate.etag);
+        })
+        .catch(function (err) {
+          console.error("Unable to publish template.");
+          res.send(JSON.stringify("Unable to publish template."));
 
           console.error(err);
-      });
+        });
+    })
+    .catch(function (err) {
+      res.send(JSON.stringify("Unable to Update"));
+
+      console.error(err);
+    });
 });
 app.listen(5000, () => console.log("Running on port 5000"));

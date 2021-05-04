@@ -13,7 +13,7 @@ var qrResultString: string;
 })
 export class HomePage implements OnInit {
   scannedData: string;
-  portalScanner:boolean;
+  portalScanner: boolean;
   scanner_en = false;
   scanner_si = false;
   scanner_ta = false;
@@ -73,13 +73,16 @@ export class HomePage implements OnInit {
                     {
                       text: "Cancel",
                       role: "cancel",
+                      handler: () => {
+                        qrResultString = null;
+                      }
                     },
                     {
                       text: "OK",
                       handler: (data) => {
+                        qrResultString = null;
                         if (Access_PIN == data.Access_PIN) {
                           welcome.play();
-                          qrResultString = null;
                           this.navCtrl.navigateForward(
                             "english?id=" + GovernmentID
                           );
@@ -147,13 +150,16 @@ export class HomePage implements OnInit {
                     {
                       text: "අවලංගු කරන්න",
                       role: "cancel",
+                      handler: () => {
+                        qrResultString = null;
+                      }
                     },
                     {
                       text: "හරි",
                       handler: (data) => {
+                        qrResultString = null;
                         if (Access_PIN == data.Access_PIN) {
                           welcome.play();
-                          qrResultString = null;
                           this.navCtrl.navigateForward(
                             "sinhala?id=" + GovernmentID
                           );
@@ -221,13 +227,16 @@ export class HomePage implements OnInit {
                     {
                       text: "ரத்துசெய்",
                       role: "cancel",
+                      handler: () => {
+                        qrResultString = null;
+                      }
                     },
                     {
                       text: "சரி",
                       handler: (data) => {
+                        qrResultString = null;
                         if (Access_PIN == data.Access_PIN) {
                           welcome.play();
-                          qrResultString = null;
                           this.navCtrl.navigateForward(
                             "tamil?id=" + GovernmentID
                           );

@@ -60,108 +60,130 @@ export class GoogleAuthService {
         .ref.get()
         .then(async (doc) => {
           if (doc.exists) {
-            var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
-            if (
-              doc.data()["birthRegNo"] == value.birthRegNo &&
-              doc.data()["gender"] == value.gender.toUpperCase() &&
-              doc.data()["dateOfBirth"] == dateBirth &&
-              doc.data()["Full_Name"] == value.fullName.toUpperCase()
-            ) {
-              return new Promise<any>(async (resolve, reject) => {
-                this.gAuth
-                  .createUserWithEmailAndPassword(value.email, value.password)
-                  .then(
-                    (res) => resolve(res),
-                    (err) => reject(err)
-                  );
-
-                this.gAuth.authState.subscribe(async (user) => {
-                  if (user) {
-                    user.updateProfile({
-                      displayName: value.GovernmentID,
-                      photoURL: value.downloadURL,
-                    });
-                  }
-                  // Access PIN for Users via Portal Card
-                  var Access_PIN = Math.floor(
-                    Math.random() * 9000000 + 1000000
-                  );
-                  // https://code.google.com/archive/p/crypto-js/
-
-                  var Access_Key = CryptoJS.AES.encrypt(
-                    value.GovernmentID,
-                    value.bioData
-                  ).toString();
-                  /**
-                   * Data gets stored on Firebase for references
-                   * */
-                  this.firestore
-                    .collection("eCitizens")
-                    .doc(value.GovernmentID)
-                    .set({
-                      Access_PIN: Access_PIN,
-                      Access_Key: Access_Key,
-                      Full_Name: value.fullName.toUpperCase(),
-                      Gender: value.gender.toUpperCase(),
-                      Date_Of_Birth: dateBirth,
-                      Place_Of_Birth: value.placeOfBirth.toUpperCase(),
-                      Registar_Division: value.registarDivision.toUpperCase(),
-                      Birth_Reg_No: value.birthRegNo,
-                      Biometric_Data: value.bioData,
-                      GovernmentID: value.GovernmentID,
-                      downloadURL: value.downloadURL,
-                      Father_Name: value.fatherName.toUpperCase(),
-                      Mother_Name: value.motherName.toUpperCase(),
-                      Prefix: value.prefix,
-                      homeAddress: value.homeAddress.toUpperCase(),
-                      officeAddress: value.officeAddress.toUpperCase(),
-                      mobile: value.mobile,
-                      landLine: value.landLine,
-                      Email: value.email.toUpperCase(),
-                      createdDateTime: new Date(),
-                      status: "Active",
-                    })
-                    .then(
-                      async (res) => {
-                        resolve(res);
-                        const eCitizen = this.firestore
-                          .collection("eCitizens")
-                          .doc(value.GovernmentID);
-                        await eCitizen.set(
-                          {
-                            uid: "" + user.uid,
-                          },
-                          { merge: true }
-                        );
-                      },
-                      (err) => reject(err)
-                    );
-                });
-                // console.log("eCitizen Registered");
-                /**
-                 * Once verifed registration takes place and informs applicant about the process by toast messages
-                 * If registration is successful user will be redirect to login page
-                 */
-                const toast = await this.toastController.create({
-                  message: "Registration successful ✅",
-                  duration: 2000,
-                });
-                toast.present();
-                this.route.navigate(["sign-in"]);
-              });
-            } else {
-              /**
-               * Informs applicant that the details dont't match with record
-               */
-              // console.log("BIRTH REGISTRATION NOT MATCH!");
+            /** Informs user an account already exists */
+            if (doc.data()["Registered"] == true) {
               const alert = await this.alertController.create({
-                header: "Registration Failed",
-                subHeader: "BIRTH REGISTRATION DATA MISMATCH",
+                header: "⚠ Registration Failed",
+                subHeader: "Already have an account with us",
                 message:
-                  "Your registration has failed, as the entered details does not your match records.",
-                buttons: ["Retry"],
+                  "Your registration has failed, as the entered details show that you have account with us. Please recover it using the web portal or contact one of our officers.",
+                buttons: ["Ok"],
               });
               await alert.present();
+            }
+            else {
+              var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
+              if (
+                doc.data()["birthRegNo"] == value.birthRegNo &&
+                doc.data()["gender"] == value.gender.toUpperCase() &&
+                doc.data()["dateOfBirth"] == dateBirth &&
+                doc.data()["Full_Name"] == value.fullName.toUpperCase()
+              ) {
+                return new Promise<any>(async (resolve, reject) => {
+                  this.gAuth
+                    .createUserWithEmailAndPassword(value.email, value.password)
+                    .then(
+                      (res) => resolve(res),
+                      (err) => reject(err)
+                    );
+
+                  this.gAuth.authState.subscribe(async (user) => {
+                    if (user) {
+                      user.updateProfile({
+                        displayName: value.GovernmentID,
+                        photoURL: value.downloadURL,
+                      });
+                    }
+                    // Access PIN for Users via Portal Card
+                    var Access_PIN = Math.floor(
+                      Math.random() * 9000000 + 1000000
+                    );
+                    // https://code.google.com/archive/p/crypto-js/
+
+                    var Access_Key = CryptoJS.AES.encrypt(
+                      value.GovernmentID,
+                      value.bioData
+                    ).toString();
+                    /**
+                     * Data gets stored on Firebase for references
+                     * */
+                    this.firestore
+                      .collection("eCitizens")
+                      .doc(value.GovernmentID)
+                      .set({
+                        Access_PIN: Access_PIN,
+                        Access_Key: Access_Key,
+                        Full_Name: value.fullName.toUpperCase(),
+                        Gender: value.gender.toUpperCase(),
+                        Date_Of_Birth: dateBirth,
+                        Place_Of_Birth: value.placeOfBirth.toUpperCase(),
+                        Registar_Division: value.registarDivision.toUpperCase(),
+                        Birth_Reg_No: value.birthRegNo,
+                        Biometric_Data: value.bioData,
+                        GovernmentID: value.GovernmentID,
+                        downloadURL: value.downloadURL,
+                        Father_Name: value.fatherName.toUpperCase(),
+                        Mother_Name: value.motherName.toUpperCase(),
+                        Prefix: value.prefix,
+                        homeAddress: value.homeAddress.toUpperCase(),
+                        officeAddress: value.officeAddress.toUpperCase(),
+                        mobile: value.mobile,
+                        landLine: value.landLine,
+                        Email: value.email.toUpperCase(),
+                        createdDateTime: new Date(),
+                        status: "Active",
+                      })
+                      .then(
+                        async (res) => {
+                          resolve(res);
+                          const eCitizen = this.firestore
+                            .collection("eCitizens")
+                            .doc(value.GovernmentID);
+                          await eCitizen.set(
+                            {
+                              uid: "" + user.uid,
+                            },
+                            { merge: true }
+                          );
+                          const citizenUpdate = this.firestore
+                            .collection("BirthRegistrations")
+                            .doc(value.birthRegNo);
+                          await citizenUpdate.set(
+                            {
+                              Registered: true,
+                            },
+                            { merge: true }
+                          );
+                        },
+                        (err) => reject(err)
+                      );
+                  });
+                  // console.log("eCitizen Registered");
+                  /**
+                   * Once verifed registration takes place and informs applicant about the process by toast messages
+                   * If registration is successful user will be redirect to login page
+                   */
+                  const toast = await this.toastController.create({
+                    message: "Registration successful ✅",
+                    duration: 2000,
+                  });
+                  toast.present();
+                  this.route.navigate(["sign-in"]);
+                });
+              } else {
+                /**
+                 * Informs applicant that the details dont't match with record
+                 */
+                // console.log("BIRTH REGISTRATION NOT MATCH!");
+                const alert = await this.alertController.create({
+                  header: "Registration Failed",
+                  subHeader: "BIRTH REGISTRATION DATA MISMATCH",
+                  message:
+                    "Your registration has failed, as the entered details does not your match records.",
+                  buttons: ["Retry"],
+                });
+                await alert.present();
+              }
             }
           } else {
             /**
@@ -363,11 +385,22 @@ export class GoogleAuthService {
    * @param value Holds data coming from Login form and invokes for verfication before allowing access
    */
   loginCitizen(value) {
-    return new Promise<any>((resolve, reject) => {
-      this.gAuth.signInWithEmailAndPassword(value.email, value.password).then(
-        (res) => resolve(res),
-        (err) => reject(err)
-      );
+    return new Promise<any>(async (resolve, reject) => {
+      const email = value.email.toLowerCase();
+      const address = email.split("@").pop();
+      if (address == "homeaffairs.gov.lk" || address == "admin.gov.lk" || address == "kiosk.gov.lk" || address == "gov.lk") {
+        const alert = await this.alertController.create({
+          header: "⚠ Unauthorized Access",
+          message: "Login attempt failed, no record of eCitizen found.",
+          buttons: ["Close"],
+        });
+        await alert.present();
+      } else {
+        this.gAuth.signInWithEmailAndPassword(value.email, value.password).then(
+          (res) => resolve(res),
+          (err) => reject(err)
+        );
+      }
     });
   }
 

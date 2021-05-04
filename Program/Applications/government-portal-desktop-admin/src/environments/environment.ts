@@ -14,8 +14,8 @@ export const environment = {
     storageBucket: "prco303sl-3f1b2.appspot.com",
     messagingSenderId: "249428583886",
     appId: "1:249428583886:web:57574a422325a56a16b79f",
-    measurementId: "G-50JXP96D8X"
-  }
+    measurementId: "G-50JXP96D8X",
+  },
 };
 
 /*

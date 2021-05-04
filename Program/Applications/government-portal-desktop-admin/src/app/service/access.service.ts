@@ -10,24 +10,34 @@ import { HttpClient } from "@angular/common/http";
   providedIn: "root",
 })
 export class AccessService {
-  private BASE_URL = 'https://government-portal-firebase.herokuapp.com/'
+  private BASE_URL = "https://government-portal-firebase.herokuapp.com/";
 
   /** Management of System via Remote Configuration - Allows management of all system clients */
+  // Setting Maintenance Status Line 16-31
   setSystemMaintenance(value) {
     return this.http.get(this.BASE_URL + "system_maintenance?value=" + value);
   }
   setKioskSystemMaintenance(value: any) {
-    return this.http.get(this.BASE_URL + "kiosk_system_maintenance?value=" + value);
+    return this.http.get(
+      this.BASE_URL + "kiosk_system_maintenance?value=" + value
+    );
   }
   setWebSystemMaintenance(value: any) {
-    return this.http.get(this.BASE_URL + "web_system_maintenance?value=" + value);
+    return this.http.get(
+      this.BASE_URL + "web_system_maintenance?value=" + value
+    );
   }
   setOfficeSystemMaintenance(value: any) {
-    return this.http.get(this.BASE_URL + "office_system_maintenance?value=" + value);
+    return this.http.get(
+      this.BASE_URL + "office_system_maintenance?value=" + value
+    );
   }
   setSecretarySystemMaintenance(value: any) {
-    return this.http.get(this.BASE_URL + "secretary_system_maintenance?value=" + value);
+    return this.http.get(
+      this.BASE_URL + "secretary_system_maintenance?value=" + value
+    );
   }
+  // Checking Maintenance Status Line 33-47
   getSystemMaintenanceStatus() {
     return this.http.get(this.BASE_URL + "system_maintenance_status");
   }
@@ -49,16 +59,19 @@ export class AccessService {
     private auth: AngularFireAuth,
     public alertController: AlertController,
     private navCtrl: NavController
-  ) { }
-  /** MEthod for Officer Registration */
+  ) {}
+  /**
+   *  Method for Officer Registration
+   * @param {Form} contains form data
+   * */
   registerOfficer(value) {
     var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
     /**
      * Data gets stored on Firebase for references
-    */
+     */
     this.firestore
       .collection("eAdministration")
-      .doc(value.email + '@homeaffairs.gov.lk')
+      .doc(value.email + "@homeaffairs.gov.lk")
       .set({
         Type: value.type,
         Full_Name: value.fullName,
@@ -72,22 +85,26 @@ export class AccessService {
         officeAddress: value.officeAddress,
         mobile: value.mobile,
         landLine: value.landLine,
-        Email: value.email + '@homeaffairs.gov.lk',
+        Email: value.email + "@homeaffairs.gov.lk",
         createdDateTime: new Date(),
         status: "Active",
-      })
+      });
 
     this.http
       .post(
         // "http://localhost:5000/create-user", {
-        "https://government-portal-firebase.herokuapp.com/create-user", {
-        email: value.email + '@homeaffairs.gov.lk', password: value.password, downloadURL: value.downloadURL, Full_Name: value.fullName
-      }
+        "https://government-portal-firebase.herokuapp.com/create-user",
+        {
+          email: value.email + "@homeaffairs.gov.lk",
+          password: value.password,
+          downloadURL: value.downloadURL,
+          Full_Name: value.fullName,
+        }
       )
       .subscribe(
         async (data) => {
           const alert = await this.alertController.create({
-            header: "Account Create ✔",
+            header: "Account Created ✔",
             message: value.type + " Account has been created.",
             buttons: ["OK"],
           });
@@ -106,14 +123,52 @@ export class AccessService {
         }
       );
   }
-  /**Method for Citizen Registration */
+  /**
+   * Method for Kiosk Registration
+   * @param {Form} contains form data
+   * */
+  registerKiosk(value) {
+    this.http
+      .post(
+        // "http://localhost:5000/create-user", {
+        "https://government-portal-firebase.herokuapp.com/create-kiosk",
+        {
+          email: value.email + "@kiosk.gov.lk",
+          password: value.password,
+        }
+      )
+      .subscribe(
+        async (data) => {
+          const alert = await this.alertController.create({
+            header: "Kiosk Account Created ✔",
+            message: value.email + " Kiosk account has been created.",
+            buttons: ["OK"],
+          });
+          await alert.present();
+        },
+        async (error) => {
+          // console.log(error);
+          const alert = await this.alertController.create({
+            header: "🚫 Out of Service",
+            subHeader: "Server Access Timeout",
+            message:
+              "Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later.",
+            buttons: ["OK"],
+          });
+          await alert.present();
+        }
+      );
+  }
+  /**
+   * Method for Citizen Registration
+   * @param {Form} contains form data*/
   registerBirths(value) {
-    console.log(value)
+    console.log(value);
 
     var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
     /**
      * Data gets stored on Firebase for references
-    */
+     */
     this.firestore
       .collection("BirthRegistrations")
       .doc(value.birthCertNo.toString())
@@ -125,11 +180,15 @@ export class AccessService {
         dateOfBirth: dateBirth,
         gender: value.gender.toUpperCase(),
         placeOfBirth: value.placeOfBirth.toUpperCase(),
-      }).then(
+      })
+      .then(
         async (data) => {
           const alert = await this.alertController.create({
             header: "Birth Registration Added",
-            message: "Record with Birth Registration No: "+value.birthCertNo.toString() + " has been added to Government Portal.",
+            message:
+              "Record with Birth Registration No: " +
+              value.birthCertNo.toString() +
+              " has been added to Government Portal.",
             buttons: ["OK"],
           });
           await alert.present();
@@ -194,8 +253,7 @@ export class AccessService {
   getETechSupportMessages() {
     return this.firestore
       .collection("eSupport", (ref) =>
-        ref.limit(10).where("Status", "==", "New")
-          .where("Type", "==", "Admin")
+        ref.limit(10).where("Status", "==", "New").where("Type", "==", "Admin")
       )
       .snapshotChanges();
   }

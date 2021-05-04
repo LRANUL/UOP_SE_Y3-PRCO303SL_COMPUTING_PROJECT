@@ -15,14 +15,17 @@ export class AccessService {
     private auth: AngularFireAuth,
     public alertController: AlertController,
     private navCtrl: NavController
-  ) { }
+  ) {}
   /** Method for getting eApplications to Officer */
   getEApplications() {
     return this.firestore
       .collection("eApplications", (ref) =>
         ref
           .limit(10)
-          .where("status", "in", ["Processing - Stage 1|සැකසීම - අදියර 1|செயலாக்கம் - நிலை 1","Processing - Stage 2|සැකසීම - අදියර 2|செயலாக்கம் - நிலை 2"])
+          .where("status", "in", [
+            "Processing - Stage 1|සැකසීම - අදියර 1|செயலாக்கம் - நிலை 1",
+            "Processing - Stage 2|සැකසීම - අදියර 2|செயலாக்கம் - நிலை 2",
+          ])
           .where("payment_status", "==", "paid")
       )
       .snapshotChanges();
@@ -54,7 +57,9 @@ export class AccessService {
     var user = firebase.default.auth().currentUser;
     return this.firestore
       .collection("eSupport", (ref) =>
-        ref.limit(10).where("Status", "in", ["New","Completed"])
+        ref
+          .limit(10)
+          .where("Status", "in", ["New", "Completed"])
           .where("Type", "==", "Admin")
           .where("Email", "==", user.email)
       )
@@ -98,8 +103,8 @@ export class AccessService {
   getESupportMessages() {
     return this.firestore
       .collection("eSupport", (ref) =>
-        ref.
-          limit(10)
+        ref
+          .limit(10)
           .where("Status", "==", "New")
           .where("Type", "==", "eCitizen")
       )
@@ -303,7 +308,8 @@ export class AccessService {
           status: "New",
           GovernmentID: value.GovernmentID,
           payment_status: "paid",
-          description: "Application sent for Department | දෙපාර්තමේන්තුව සඳහා අයදුම්පත යවා ඇත| துறைக்கு விண்ணப்பம் அனுப்பப்பட்டது",
+          description:
+            "Application sent for Department | දෙපාර්තමේන්තුව සඳහා අයදුම්පත යවා ඇත| துறைக்கு விண்ணப்பம் அனுப்பப்பட்டது",
           email: value.email,
           familyName: value.familyName,
           name: value.name,
@@ -366,24 +372,21 @@ export class AccessService {
   /** Method for sending officer support request to Administrator */
   async techSupport(value) {
     /**
-         * Data gets stored on firebase, used for message tracking and references
-         */
+     * Data gets stored on firebase, used for message tracking and references
+     */
     var user = firebase.default.auth().currentUser;
-    console.log(value)
-    this.firestore
-      .collection("/eSupport/")
-      .doc()
-      .set({
-        Description: value.message,
-        Email: user.email,
-        Status: "New",
-        Type: "Admin",
-        Subject: value.subject,
-        Response: "Support Request Sent | Wait for Response",
-      })
+    console.log(value);
+    this.firestore.collection("/eSupport/").doc().set({
+      Description: value.message,
+      Email: user.email,
+      Status: "New",
+      Type: "Admin",
+      Subject: value.subject,
+      Response: "Support Request Sent | Wait for Response",
+    });
   }
   /** Method for marking messages as read */
-  async markTechMessageRead(ID){
+  async markTechMessageRead(ID) {
     const eSupport = this.firestore.collection("eSupport").doc(ID);
     const res = await eSupport.set(
       {
@@ -453,6 +456,7 @@ export class AccessService {
       }
     });
   }
+  /**Method for logging user out */
   logoutOfficer() {
     return new Promise<void>((resolve, reject) => {
       if (this.auth.currentUser) {

@@ -22,9 +22,9 @@ import firebase from "firebase/app";
   styleUrls: ["./sign-in.page.scss"],
 })
 export class SignInPage implements OnInit {
-   validations_form: FormGroup;
-   errorMessage: string;
-   userEmail: string;
+  validations_form: FormGroup;
+  errorMessage: string;
+  userEmail: string;
   constructor(
     public firestore: AngularFirestore,
     public toastController: ToastController,
@@ -34,7 +34,7 @@ export class SignInPage implements OnInit {
     public navCtrl: NavController,
     public authService: GoogleAuthService,
     public loadingController: LoadingController
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.gAuth.authState.subscribe(async (user) => {
@@ -74,7 +74,7 @@ export class SignInPage implements OnInit {
       ),
     });
   }
-   validation_form = {
+  validation_form = {
     email: [
       {
         type: "required",
@@ -134,20 +134,39 @@ export class SignInPage implements OnInit {
                 toast.present();
               })
               .catch(async error => {
-              const toast = this.toastController.create({
-                message: "Your request not approved, Email not registered.",
-                duration: 2000,
-              });
-              (await toast).present();
-            })
+                const toast = this.toastController.create({
+                  message: "Your request not approved, Email not registered.",
+                  duration: 2000,
+                });
+                (await toast).present();
+              })
           },
         },
       ],
     });
     await alert.present();
   }
-
-   loginCitizen(value) {
+  async forgotID() {
+    const alert = await this.alertController.create({
+      header: "Recovering Forgotten IDs",
+      backdropDismiss: false,
+      message:
+        "Please recover your email by contact one of our officers. Please provide accurate details during verification.",
+      buttons: ["Okay"],
+    });
+    await alert.present();
+  }
+  async forgotCredentials() {
+    const alert = await this.alertController.create({
+      header: "Recovering Forgotten Credentials",
+      backdropDismiss: false,
+      message:
+        "Please recover your credentails by contact one of our officers. Please keep you birth registration data ready for verfications.",
+      buttons: ["Okay"],
+    });
+    await alert.present();
+  }
+  loginCitizen(value) {
     this.authService.loginCitizen(value).then(
       (res) => {
         // console.log(res);
