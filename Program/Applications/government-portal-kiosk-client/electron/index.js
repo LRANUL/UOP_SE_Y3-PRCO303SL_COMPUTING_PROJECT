@@ -1,8 +1,60 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, globalShortcut, session, dialog, nativeTheme } = require('electron');
+
 const isDevMode = require('electron-is-dev');
+const OperatingSystem = require("os");
 const { CapacitorSplashScreen, configCapacitor } = require('@capacitor/electron');
-if(require('electron-squirrel-startup')) return;
+if (require('electron-squirrel-startup')) return;
 const path = require('path');
+// Set Default Theme on System
+nativeTheme.themeSource = 'sytem';
+
+// Gets application version details
+app.whenReady().then(() => {
+  globalShortcut.register(process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Alt+Shift+I', () => {
+    const options = {
+      type: 'info',
+      buttons: ['Close'],
+      title: 'Government Portal Kiosk',
+      message: 'Software Information',
+      detail:
+        "Version: " + app.getVersion() +
+        "\nDeveloper: Ranul Ladduwahetty (Student ID: 10673986)\n" +
+        "Module Code: PRCO303SL\n" +
+        "Module Name: Computing Project\n" +
+        "Current OS: " + OperatingSystem.release +
+        "\n\nAbout: Developed for module PRCO303SL coursework by Ranul Ladduwahetty, Student at University of Plymouth.\n",
+    };
+    dialog.showMessageBox(null, options);
+  })
+})
+// Log out for service
+app.whenReady().then(() => {
+  globalShortcut.register(process.platform === 'darwin' ? 'Alt+Cmd+S' : 'Alt+Shift+S', () => {
+    const options = {
+      type: 'warning',
+      defaultId: 1,
+      buttons: ['Close', 'Restart System', 'Reset System'],
+      title: 'Government Portal Kiosk',
+      message: 'Service Request',
+      detail: 'Please Note that Resetting will log you out and all existing data will be purged.',
+    };
+
+    dialog.showMessageBox(options).then((choice) => {
+
+      console.log(choice.response);
+      if (choice.response == 1) {
+        app.relaunch();
+        app.quit();
+      }
+      else if (choice.response == 2) {
+        session.defaultSession.clearStorageData().then(async (data) => {
+          app.relaunch();
+          app.quit();
+        })
+      }
+    })
+  })
+})
 
 // Place holders for our windows so they don't get garbage collected.
 let mainWindow = null;
@@ -31,8 +83,8 @@ Menu.setApplicationMenu(false)
 async function createWindow() {
   // Define our main window size
   mainWindow = new BrowserWindow({
-    height: 920,
-    width: 1600,
+    height: 800,
+    width: 1280,
     show: false,
     icon: `file://${__dirname}/app/assets/icon/icon.ico`,
     webPreferences: {
