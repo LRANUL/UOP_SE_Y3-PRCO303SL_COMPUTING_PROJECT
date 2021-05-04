@@ -42,6 +42,9 @@ export class AppComponent {
         message: 'We are currently maintaining the system and all functions are disabled right now, visit back shortly.',
       });
       await alertMaintenance.present();
+      setTimeout(() => {
+        window.location.reload();
+      }, 10000);
     }
     else if (webMaintenanceLockCheck) {
       const alertMaintenance = await this.alertCtrl.create({
@@ -51,6 +54,9 @@ export class AppComponent {
         message: 'We are currently maintaining the system and all functions are disabled right now, visit back shortly.',
       });
       await alertMaintenance.present();
+      setTimeout(() => {
+        window.location.reload();
+      }, 10000);
     }
   }
 

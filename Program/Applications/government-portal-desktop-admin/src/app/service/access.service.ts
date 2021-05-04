@@ -12,21 +12,21 @@ import { HttpClient } from "@angular/common/http";
 export class AccessService {
   private BASE_URL = 'https://government-portal-firebase.herokuapp.com/'
 
-/** Management of System via Remote Configuration - Allows management of all system clients */
+  /** Management of System via Remote Configuration - Allows management of all system clients */
   setSystemMaintenance(value) {
-    return this.http.get(this.BASE_URL + "system_maintenance?value="+value);
+    return this.http.get(this.BASE_URL + "system_maintenance?value=" + value);
   }
   setKioskSystemMaintenance(value: any) {
-    return this.http.get(this.BASE_URL + "kiosk_system_maintenance?value="+value);
+    return this.http.get(this.BASE_URL + "kiosk_system_maintenance?value=" + value);
   }
   setWebSystemMaintenance(value: any) {
-    return this.http.get(this.BASE_URL + "web_system_maintenance?value="+value);
+    return this.http.get(this.BASE_URL + "web_system_maintenance?value=" + value);
   }
   setOfficeSystemMaintenance(value: any) {
-    return this.http.get(this.BASE_URL + "office_system_maintenance?value="+value);
+    return this.http.get(this.BASE_URL + "office_system_maintenance?value=" + value);
   }
   setSecretarySystemMaintenance(value: any) {
-    return this.http.get(this.BASE_URL + "secretary_system_maintenance?value="+value);
+    return this.http.get(this.BASE_URL + "secretary_system_maintenance?value=" + value);
   }
   getSystemMaintenanceStatus() {
     return this.http.get(this.BASE_URL + "system_maintenance_status");
@@ -50,7 +50,7 @@ export class AccessService {
     public alertController: AlertController,
     private navCtrl: NavController
   ) { }
-
+  /** MEthod for Officer Registration */
   registerOfficer(value) {
     var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
     /**
@@ -58,7 +58,7 @@ export class AccessService {
     */
     this.firestore
       .collection("eAdministration")
-      .doc(value.email+'@homeaffairs.gov.lk')
+      .doc(value.email + '@homeaffairs.gov.lk')
       .set({
         Type: value.type,
         Full_Name: value.fullName,
@@ -80,7 +80,7 @@ export class AccessService {
     this.http
       .post(
         // "http://localhost:5000/create-user", {
-          "https://government-portal-firebase.herokuapp.com/create-user", {
+        "https://government-portal-firebase.herokuapp.com/create-user", {
         email: value.email + '@homeaffairs.gov.lk', password: value.password, downloadURL: value.downloadURL, Full_Name: value.fullName
       }
       )
@@ -89,6 +89,47 @@ export class AccessService {
           const alert = await this.alertController.create({
             header: "Account Create ✔",
             message: value.type + " Account has been created.",
+            buttons: ["OK"],
+          });
+          await alert.present();
+        },
+        async (error) => {
+          // console.log(error);
+          const alert = await this.alertController.create({
+            header: "🚫 Out of Service",
+            subHeader: "Server Access Timeout",
+            message:
+              "Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later.",
+            buttons: ["OK"],
+          });
+          await alert.present();
+        }
+      );
+  }
+  /**Method for Citizen Registration */
+  registerBirths(value) {
+    console.log(value)
+
+    var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
+    /**
+     * Data gets stored on Firebase for references
+    */
+    this.firestore
+      .collection("BirthRegistrations")
+      .doc(value.birthCertNo.toString())
+      .set({
+        FatherName: value.fatherFullName.toUpperCase(),
+        Full_Name: value.fullName.toUpperCase(),
+        MotherName: value.motherFullName.toUpperCase(),
+        birthRegNo: value.birthCertNo.toString(),
+        dateOfBirth: dateBirth,
+        gender: value.gender.toUpperCase(),
+        placeOfBirth: value.placeOfBirth.toUpperCase(),
+      }).then(
+        async (data) => {
+          const alert = await this.alertController.create({
+            header: "Birth Registration Added",
+            message: "Record with Birth Registration No: "+value.birthCertNo.toString() + " has been added to Government Portal.",
             buttons: ["OK"],
           });
           await alert.present();

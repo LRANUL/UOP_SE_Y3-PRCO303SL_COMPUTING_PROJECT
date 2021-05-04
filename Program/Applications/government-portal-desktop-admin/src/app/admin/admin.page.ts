@@ -65,6 +65,8 @@ export class AdminPage implements OnInit {
   kiosk_system_maintenance: boolean;
   office_system_maintenance: boolean;
   secretary_system_maintenance: boolean;
+  registrationPanel: boolean;
+  citizenRegistration_form: any;
 
   constructor(
     public storage: AngularFireStorage,
@@ -115,6 +117,45 @@ export class AdminPage implements OnInit {
      */
     this.message_form = this.formBuilder.group({
       messageBody: new FormControl("", Validators.compose([])),
+    });
+    /**
+     * Validations for birth registration
+     */
+    this.citizenRegistration_form = this.formBuilder.group({
+      fullName: new FormControl(
+        "",
+        Validators.compose([
+          Validators.minLength(10),
+          Validators.required,
+          Validators.pattern("^([ a-zA-Z])+$"),
+        ])
+      ),
+      fatherFullName: new FormControl(
+        "",
+        Validators.compose([
+          Validators.minLength(10),
+          Validators.required,
+          Validators.pattern("^([ a-zA-Z])+$"),
+        ])
+      ),
+      motherFullName: new FormControl(
+        "",
+        Validators.compose([
+          Validators.minLength(10),
+          Validators.required,
+          Validators.pattern("^([ a-zA-Z])+$"),
+        ])
+      ),
+      gender: new FormControl("", Validators.compose([Validators.required])),
+      birthCertNo: new FormControl("", Validators.compose([Validators.maxLength(10), Validators.required])),
+      dateOfBirth: new FormControl(
+        "",
+        Validators.compose([Validators.required])
+      ),
+      placeOfBirth: new FormControl(
+        "",
+        Validators.compose([Validators.required])
+      ),
     });
     /**
     * Form validators for registration process
@@ -271,28 +312,86 @@ export class AdminPage implements OnInit {
     ],
   }
 
+  citizen_validation_form = {
+    fullname: [
+      {
+        type: "required",
+        message: "Your Government Portal username is required."
+      }, {
+        type: "pattern",
+        message: "Invalid username."
+      }
+    ],
+    fatherFullName: [
+      {
+        type: "required",
+        message: "Father's name is required.",
+      },
+    ],
+    motherFullName: [
+      {
+        type: "required",
+        message: "Mother's name is required.",
+      },
+    ], birthCertNo: [
+      {
+        type: "required",
+        message: "Birth Certification Number is required.",
+      },
+    ],
+    placeofBirth: [
+      {
+        type: "required",
+        message: "Place of birth is required.",
+      },
+    ],
+    gender: [
+      {
+        type: "required",
+        message: "Gender is required.",
+      },
+    ],
+    dateOfBirth: [
+      {
+        type: "required",
+        message: "Date of Birth is required.",
+      },
+    ],
+  }
+
   openSupport() {
     this.accountPanel = false;
     this.settingsPanel = false;
     this.statisticsPanel = false;
+    this.registrationPanel = false;
     this.supportPanel = true;
     this.getSupportMessages();
+  }
+  openRegistration() {
+    this.accountPanel = false;
+    this.settingsPanel = false;
+    this.supportPanel = false;
+    this.statisticsPanel = false;
+    this.registrationPanel = true
   }
   openStatistics() {
     this.accountPanel = false;
     this.settingsPanel = false;
+    this.registrationPanel = false;
     this.supportPanel = false;
     this.statisticsPanel = true;
   }
   openSettings() {
     this.accountPanel = false;
     this.supportPanel = false;
+    this.registrationPanel = false;
     this.settingsPanel = true;
     this.statisticsPanel = false;
   }
   openAccounts() {
     this.accountPanel = true;
     this.settingsPanel = false;
+    this.registrationPanel = false;
     this.supportPanel = false;
     this.statisticsPanel = false;
   }
@@ -329,6 +428,12 @@ export class AdminPage implements OnInit {
         )
         .subscribe();
     }
+  }
+  /** Method for registering citizens births */
+  citizenRegistration(value) {
+    console.log(value)
+    this.accessService.registerBirths(value);
+
   }
   /** Checking System Status */
   checkSystemStatus() {
@@ -404,20 +509,110 @@ export class AdminPage implements OnInit {
     );
   }
   /** System Status Management */
-  systemMaintenance(value) {
-    this.accessService.setSystemMaintenance(value)
+  async systemMaintenance(value) {
+    this.accessService.setSystemMaintenance(value).subscribe(
+      (data) => {
+        if (data == "Updated Settings") {
+          loading.dismiss()
+          this.checkSystemStatus()
+        }
+        else {
+          loading.dismiss()
+          this.checkSystemStatus()
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    const loading = await this.loadingController.create({
+      message: 'Updating Settings. Please wait...'
+    });
+    await loading.present();
   }
-  kioskSystemMaintenance(value) {
-    this.accessService.setKioskSystemMaintenance(value)
+  async kioskSystemMaintenance(value) {
+    this.accessService.setKioskSystemMaintenance(value).subscribe(
+      (data) => {
+        if (data == "Updated Settings") {
+          loading.dismiss()
+          this.checkSystemStatus()
+        }
+        else {
+          loading.dismiss()
+          this.checkSystemStatus()
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    const loading = await this.loadingController.create({
+      message: 'Updating Settings. Please wait...'
+    });
+    await loading.present();
   }
-  webSystemMaintenance(value) {
-    this.accessService.setWebSystemMaintenance(value)
+  async webSystemMaintenance(value) {
+    this.accessService.setWebSystemMaintenance(value).subscribe(
+      (data) => {
+        if (data == "Updated Settings") {
+          loading.dismiss()
+          this.checkSystemStatus()
+        }
+        else {
+          loading.dismiss()
+          this.checkSystemStatus()
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    const loading = await this.loadingController.create({
+      message: 'Updating Settings. Please wait...'
+    });
+    await loading.present();
   }
-  officeSystemMaintenance(value) {
-    this.accessService.setOfficeSystemMaintenance(value)
+  async officeSystemMaintenance(value) {
+    this.accessService.setOfficeSystemMaintenance(value).subscribe(
+      (data) => {
+        if (data == "Updated Settings") {
+          loading.dismiss()
+          this.checkSystemStatus()
+        }
+        else {
+          loading.dismiss()
+          this.checkSystemStatus()
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    const loading = await this.loadingController.create({
+      message: 'Updating Settings. Please wait...'
+    });
+    await loading.present();
   }
-  secretarySystemMaintenance(value) {
-    this.accessService.setSecretarySystemMaintenance(value)
+  async secretarySystemMaintenance(value) {
+    this.accessService.setSecretarySystemMaintenance(value).subscribe(
+      (data) => {
+        if (data == "Updated Settings") {
+          loading.dismiss()
+          this.checkSystemStatus()
+        }
+        else {
+          loading.dismiss()
+          this.checkSystemStatus()
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    const loading = await this.loadingController.create({
+      message: 'Updating Settings. Please wait...'
+    });
+    await loading.present();
   }
 
   /** Methods reposible for loading customer messages to officer screen for reponding */

@@ -23,6 +23,7 @@ Communicate effectively all aspects of the project deliverables including the th
 | Final Project report/Poster Submission | 05/04/2021 | |
 | Final Presentations | 05/05/2021 |  Onwards	01hr per student (9:00 ~ 16:00) |
 | Project Fair | 21/05/2021 | Date can be changed |
+<img src="https://longurl.in/MOSfG" alt=""/>
 ## Module Assessment
 Your performance in a module will be assessed during the academic year, normally through a combination of coursework and end of year examinations. You must pass the assessments in order to be credited with that module for your award. In addition, some modules may have to be passed as pre-requisites for others taken later in your programme. 
 
@@ -55,7 +56,7 @@ You are requested to adhere to the assessment guidelines given by the relevant l
 | | Fluent use of English language | 5 |	
 | | Addressing arguments arise by the panel and audience | 5 |	
 | Deliverables (10 Marks) | Punctual and complete interim submissions through SPMS | 5 |	
-| | Continuous communication with the supervisoe | 5 |	
+| | Continuous communication with the supervisor | 5 |	
 
 ##### Assessment mode
 
