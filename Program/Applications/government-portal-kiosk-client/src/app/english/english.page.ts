@@ -81,7 +81,7 @@ export class EnglishPage implements OnInit {
     private stripeService: StripeService,
     private route: ActivatedRoute,
     public loadingController: LoadingController
-  ) { }
+  ) {}
 
   async ngOnInit() {
     const loading = await this.loadingController.create({
@@ -93,13 +93,13 @@ export class EnglishPage implements OnInit {
       this.isLoaded = true;
     }, 4000);
     this.GovernmentID = this.route.snapshot.queryParams.id;
-    localStorage.setItem('GovernmentID', this.GovernmentID)
-    this.GovernmentID = localStorage.getItem('GovernmentID');
+    localStorage.setItem("GovernmentID", this.GovernmentID);
+    this.GovernmentID = localStorage.getItem("GovernmentID");
     this.portalScanner = false;
     // 15 Minutes and logout initiated
     this.kioskUserTimer();
     setTimeout(() => {
-      localStorage.removeItem('GovernmentID')
+      localStorage.removeItem("GovernmentID");
       this.navCtrl.navigateForward("home");
     }, 900000);
     await this.firestore
@@ -117,9 +117,7 @@ export class EnglishPage implements OnInit {
     this.message_form = this.formBuilder.group({
       fullName: new FormControl(
         "",
-        Validators.compose([
-          Validators.pattern("^^[a-z A-Z\\.\\s]+$"),
-        ])
+        Validators.compose([Validators.pattern("^^[a-z A-Z\\.\\s]+$")])
       ),
       subject: new FormControl(
         "",
@@ -398,17 +396,20 @@ export class EnglishPage implements OnInit {
         type: "pattern",
         message: "Invalid email.",
       },
-    ], fullName: [
+    ],
+    fullName: [
       {
         type: "pattern",
         message: "Invalid Name.",
       },
-    ], subject: [
+    ],
+    subject: [
       {
         type: "pattern",
         message: "Invalid Subject.",
       },
-    ], message: [
+    ],
+    message: [
       {
         type: "pattern",
         message: "Invalid Message Format.",
@@ -714,8 +715,10 @@ export class EnglishPage implements OnInit {
                   if (result.error) {
                     // Show error to your customer (e.g., insufficient funds)
                     const alert = await this.alertController.create({
-                      header: "🚫 Application Rejected|අයදුම්පත ප්‍රතික්ෂේප කරන ලදි|விண்ணப்பம் நிராகரிக்கப்பட்டது",
-                      subHeader: "Application Payment|අයදුම්පත් ගෙවීම|விண்ணப்ப கட்டணம்",
+                      header:
+                        "🚫 Application Rejected|අයදුම්පත ප්‍රතික්ෂේප කරන ලදි|விண்ணப்பம் நிராகரிக்கப்பட்டது",
+                      subHeader:
+                        "Application Payment|අයදුම්පත් ගෙවීම|விண்ணப்ப கட்டணம்",
                       message:
                         "Your application has not been sent, try again and make the payment process using card that has credit.|ඔබගේ අයදුම්පත යවා නැත, නැවත උත්සාහ කර ණය ඇති කාඩ්පත භාවිතයෙන් ගෙවීම් ක්‍රියාවලිය කරන්න.|உங்கள் விண்ணப்பம் அனுப்பப்படவில்லை, மீண்டும் முயற்சி செய்து கடன் பெற்ற அட்டையைப் பயன்படுத்தி கட்டணச் செயல்முறையைச் செய்யுங்கள்.",
                       buttons: ["OK|හරි|சரி"],
@@ -745,7 +748,9 @@ export class EnglishPage implements OnInit {
                                 this.card.element.clear();
                                 await loading.dismiss();
                                 this.NICApplicant = false;
-                                this.GovernmentID = localStorage.getItem('GovernmentID')
+                                this.GovernmentID = localStorage.getItem(
+                                  "GovernmentID"
+                                );
                               },
                               async (err) => {
                                 // console.log(err);
@@ -760,8 +765,10 @@ export class EnglishPage implements OnInit {
                * Informs applicant that the details dont't match with records to proceed further
                */
               const alert = await this.alertController.create({
-                header: "⚠ Application Not Sent !|අයදුම්පත යවා නැත!|விண்ணப்பம் அனுப்பப்படவில்லை!",
-                subHeader: "Registration Details !|ලියාපදිංචි විස්තර!|பதிவு விவரங்கள்!",
+                header:
+                  "⚠ Application Not Sent !|අයදුම්පත යවා නැත!|விண்ணப்பம் அனுப்பப்படவில்லை!",
+                subHeader:
+                  "Registration Details !|ලියාපදිංචි විස්තර!|பதிவு விவரங்கள்!",
                 message:
                   "Your application has not been sent, as the entered details does not your match records.|ඇතුළත් කළ විස්තර ඔබගේ ගැලපුම් වාර්තා නොවන බැවින් ඔබගේ අයදුම්පත යවා නැත.|உள்ளிடப்பட்ட விவரங்கள் உங்கள் பொருந்தக்கூடிய பதிவுகளைப் பெறாததால், உங்கள் விண்ணப்பம் அனுப்பப்படவில்லை.",
                 buttons: ["Retry|නැවත උත්සාහ කරන්න|மீண்டும் முயற்சிக்கவும்"],
@@ -774,8 +781,10 @@ export class EnglishPage implements OnInit {
              * This logic condition is set to prevent malicous use of system for unauthorised businesses
              */
             const alert = await this.alertController.create({
-              header: "⚠ Application Not Sent !|අයදුම්පත යවා නැත!|விண்ணப்பம் அனுப்பப்படவில்லை!",
-              subHeader: "Birth Registration|උප්පැන්න ලියාපදිංචි කිරීම|பிறப்பு பதிவு",
+              header:
+                "⚠ Application Not Sent !|අයදුම්පත යවා නැත!|விண்ணப்பம் அனுப்பப்படவில்லை!",
+              subHeader:
+                "Birth Registration|උප්පැන්න ලියාපදිංචි කිරීම|பிறப்பு பதிவு",
               message:
                 "Your application has not been sent, as your details does not match any records.|ඔබගේ විස්තර කිසිදු වාර්තාවකට නොගැලපෙන බැවින් ඔබගේ අයදුම්පත යවා නොමැත.|உங்கள் விவரங்கள் எந்த பதிவுகளுக்கும் பொருந்தாததால், உங்கள் விண்ணப்பம் அனுப்பப்படவில்லை.",
               buttons: ["Close|වසන්න|நெருக்கமான"],
@@ -785,7 +794,11 @@ export class EnglishPage implements OnInit {
         });
     }
   }
-
+  /**
+   * Method for securely generating client token
+   * @param amount NIC application value
+   * @returns payment intent
+   */
   private createPaymentIntent(amount: number): Observable<PaymentIntent> {
     return this.http.post<PaymentIntent>(
       // `http://localhost:4242/kiosk-pay-nic`, // for testing
@@ -903,6 +916,10 @@ export class EnglishPage implements OnInit {
   private closeMessageForm() {
     this.messageForm = false;
   }
+  /**
+   * Method for sending support messages to eCitizens
+   * @param value Message form data
+   */
   private supportCitizen(value) {
     this.accessService
       .sendSupportMessage(
@@ -930,7 +947,7 @@ export class EnglishPage implements OnInit {
       subHeader: "Message Sent|පණිවිඩය යැව්වා|தகவல் அனுப்பப்பட்டது",
       message:
         "Your message has been sent, wait for a reponse from support.| ඔබගේ පණිවිඩය යවා ඇත, සහාය දක්වන ප්‍රතිචාරයක් බලාපොරොත්තුවෙන් සිටින්න.|உங்கள் செய்தி அனுப்பப்பட்டது, ஆதரவிலிருந்து பதிலுக்காக காத்திருங்கள்.",
-        buttons: ["OK|හරි|சரி"],
+      buttons: ["OK|හරි|சரி"],
     });
     await alert.present();
   }
@@ -943,11 +960,14 @@ export class EnglishPage implements OnInit {
       subHeader: "Network Error|ජාල දෝෂය|பிணைய பிழை",
       message:
         "Your message has not been sent, Try again later or contact support.|ඔබගේ පණිවිඩය යවා නැත, පසුව නැවත උත්සාහ කරන්න හෝ සහාය අමතන්න.|உங்கள் செய்தி அனுப்பப்படவில்லை, பின்னர் மீண்டும் முயற்சிக்கவும் அல்லது ஆதரவைத் தொடர்பு கொள்ளவும்.",
-        buttons: ["OK|හරි|சரி"],
+      buttons: ["OK|හරි|சரி"],
     });
 
     await alert.present();
   }
+  /**
+   * Method for getting eSupport
+   */
   eSupport() {
     this.Applications = false;
     this.NICApplicant = false;
@@ -969,8 +989,11 @@ export class EnglishPage implements OnInit {
         });
       });
   }
+  /**
+   * Method for in app refreshing
+   */
   async Refresh() {
-    this.ngOnInit
+    this.ngOnInit;
     const loading = await this.loadingController.create({
       message: "Refreshing",
       backdropDismiss: false,
@@ -979,7 +1002,10 @@ export class EnglishPage implements OnInit {
     });
     await loading.present();
   }
-
+  /**
+   * Method for creating a automated timer and logout, below source was reffered for this.
+   * Any other logics were learned at the University, Linkedin and other professional Courses.
+   */
   kioskUserTimer() {
     // Source refered from https://www.w3schools.com/howto/howto_js_countdown.asp
     let minutes = 15;
@@ -1011,8 +1037,11 @@ export class EnglishPage implements OnInit {
       liveTime = SetTime;
     }, 1000);
   }
+  /**
+   * Method for logging out temporary signined eCitizen
+   */
   Logout() {
-    localStorage.removeItem('GovernmentID')
+    localStorage.removeItem("GovernmentID");
     this.navCtrl.navigateForward("home");
   }
 }

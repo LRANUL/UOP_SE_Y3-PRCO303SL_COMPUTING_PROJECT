@@ -34,7 +34,7 @@ export class SignInPage implements OnInit {
     public navCtrl: NavController,
     public authService: GoogleAuthService,
     public loadingController: LoadingController
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.gAuth.authState.subscribe(async (user) => {
@@ -100,6 +100,9 @@ export class SignInPage implements OnInit {
       },
     ],
   };
+  /**
+   * Method for lost credentials
+   */
   async forgotPassword() {
     const alert = await this.alertController.create({
       header: "Enter your Government Portal Email",
@@ -133,19 +136,22 @@ export class SignInPage implements OnInit {
                 });
                 toast.present();
               })
-              .catch(async error => {
+              .catch(async (error) => {
                 const toast = this.toastController.create({
                   message: "Your request not approved, Email not registered.",
                   duration: 2000,
                 });
                 (await toast).present();
-              })
+              });
           },
         },
       ],
     });
     await alert.present();
   }
+  /**
+   * Alert for lost credentials
+   */
   async forgotID() {
     const alert = await this.alertController.create({
       header: "Recovering Forgotten IDs",
@@ -156,6 +162,9 @@ export class SignInPage implements OnInit {
     });
     await alert.present();
   }
+  /**
+   * Alert for lost credentials
+   */
   async forgotCredentials() {
     const alert = await this.alertController.create({
       header: "Recovering Forgotten Credentials",
@@ -166,6 +175,10 @@ export class SignInPage implements OnInit {
     });
     await alert.present();
   }
+  /**
+   * Method for logging in Citizen
+   * @param value form credentials
+   */
   loginCitizen(value) {
     this.authService.loginCitizen(value).then(
       (res) => {

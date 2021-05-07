@@ -6,7 +6,7 @@ const { CapacitorSplashScreen, configCapacitor } = require('@capacitor/electron'
 if (require('electron-squirrel-startup')) return;
 const path = require('path');
 // Set Default Theme on System
-nativeTheme.themeSource = 'sytem';
+nativeTheme.themeSource = 'system';
 
 // Gets application version details
 app.whenReady().then(() => {

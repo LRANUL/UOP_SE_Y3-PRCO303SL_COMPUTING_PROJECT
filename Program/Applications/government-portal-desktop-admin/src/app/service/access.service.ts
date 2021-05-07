@@ -10,9 +10,17 @@ import { HttpClient } from "@angular/common/http";
   providedIn: "root",
 })
 export class AccessService {
+  
   private BASE_URL = "https://government-portal-firebase.herokuapp.com/";
 
-  /** Management of System via Remote Configuration - Allows management of all system clients */
+  constructor(
+    public http: HttpClient,
+    private firestore: AngularFirestore,
+    private auth: AngularFireAuth,
+    public alertController: AlertController,
+    private navCtrl: NavController
+  ) {}
+    /** Management of System via Remote Configuration - Allows management of all system clients */
   // Setting Maintenance Status Line 16-31
   setSystemMaintenance(value) {
     return this.http.get(this.BASE_URL + "system_maintenance?value=" + value);
@@ -53,13 +61,6 @@ export class AccessService {
   getSecretarySystemMaintenanceStatus() {
     return this.http.get(this.BASE_URL + "secretary_system_maintenance_status");
   }
-  constructor(
-    public http: HttpClient,
-    private firestore: AngularFirestore,
-    private auth: AngularFireAuth,
-    public alertController: AlertController,
-    private navCtrl: NavController
-  ) {}
   /**
    *  Method for Officer Registration
    * @param {Form} contains form data
@@ -122,6 +123,51 @@ export class AccessService {
           await alert.present();
         }
       );
+  }
+  /**
+   * Method for unlocking theft cards
+   * @param GovernmentID eCitizen ID
+   * @returns unlock result
+   */
+  async PortalCardManage(Status: any, GovernmentID: any) {
+    const eCitizen = this.firestore.collection("eCitizens").doc(GovernmentID);
+    const res = await eCitizen.set(
+      {
+        kioskLock: Status,
+      },
+      { merge: true }
+    ).then(
+      async (data) => {
+        if(Status == true){
+          const alert = await this.alertController.create({
+            header: "Card Locked 🔓",
+            message: GovernmentID + " card has been locked.",
+            buttons: ["OK"],
+          });
+          await alert.present();
+        }
+        else{
+          const alert = await this.alertController.create({
+            header: "Card UnLocked 🔓",
+            message: GovernmentID + " card has been unlocked.",
+            buttons: ["OK"],
+          });
+          await alert.present();
+        }
+      },
+      async (error) => {
+        // console.log(error);
+        const alert = await this.alertController.create({
+          header: "🚫 Out of Service",
+          subHeader: "Server Access Timeout",
+          message:
+            "Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later.",
+          buttons: ["OK"],
+        });
+        await alert.present();
+      }
+    );
+
   }
   /**
    * Method for Kiosk Registration
@@ -229,6 +275,25 @@ export class AccessService {
         await alert.present();
       }
     });
+  }
+   /** Method for retrieving active new eCitizen users*/
+   getECitizens() {
+    return this.firestore
+      .collection("eCitizens", (ref) =>
+        ref.limit(50).where("status", "!=", "Deleted")
+      )
+      .snapshotChanges();
+  }
+
+  /** Method for retrieving an active eCitizen*/
+  getECitizen(GovernmentID) {
+    return this.firestore
+      .collection("eCitizens", (ref) =>
+        ref
+          .where("GovernmentID", "==", GovernmentID)
+          .where("status", "!=", "Deleted")
+      )
+      .snapshotChanges();
   }
   /**
    * Method for logging out user to system

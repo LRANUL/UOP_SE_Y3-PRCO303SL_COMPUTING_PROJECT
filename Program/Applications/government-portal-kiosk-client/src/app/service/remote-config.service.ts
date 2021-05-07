@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Plugins } from '@capacitor/core';
-import '@capacitor-community/firebase-remote-config';
+import { Injectable } from "@angular/core";
+import { Plugins } from "@capacitor/core";
+import "@capacitor-community/firebase-remote-config";
 const { FirebaseRemoteConfig } = Plugins;
 FirebaseRemoteConfig.initializeFirebase({
   apiKey: "AIzaSyAB8BDQmIz8jCENQDgD0rnzr1GxzLLvChM",
@@ -10,15 +10,13 @@ FirebaseRemoteConfig.initializeFirebase({
   storageBucket: "prco303sl-3f1b2.appspot.com",
   messagingSenderId: "249428583886",
   appId: "1:249428583886:web:57574a422325a56a16b79f",
-  measurementId: "G-50JXP96D8X"
+  measurementId: "G-50JXP96D8X",
 });
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
-
 export class RemoteConfigService {
-
   remoteConfig: any = null;
 
   constructor() {
@@ -29,15 +27,18 @@ export class RemoteConfigService {
     this.remoteConfig = FirebaseRemoteConfig as any;
     await this.remoteConfig.initialize({ minimumFetchIntervalInSeconds: 3600 });
     this.remoteConfig.defaultConfig = {
-      "system_maintenance": "false",
-      "kiosk_system_maintenance": "false",
-
+      system_maintenance: "false",
+      kiosk_system_maintenance: "false",
     };
   }
+  /**
+   * Methods for maintenance locks
+   * @returns boolean
+   */
   async maintenanceLockCheck() {
     if (this.remoteConfig) {
-      const maintenanceLock = await this.maintenanceLock() || 'false';
-      if (maintenanceLock == 'true') {
+      const maintenanceLock = (await this.maintenanceLock()) || "false";
+      if (maintenanceLock == "true") {
         return true;
       }
       return false;
@@ -46,8 +47,9 @@ export class RemoteConfigService {
   }
   async kioskMaintenanceLockCheck() {
     if (this.remoteConfig) {
-      const kioskMaintenanceLock = await this.kioskMaintenanceLock() || 'false';
-      if (kioskMaintenanceLock == 'true') {
+      const kioskMaintenanceLock =
+        (await this.kioskMaintenanceLock()) || "false";
+      if (kioskMaintenanceLock == "true") {
         return true;
       }
       return false;
@@ -56,22 +58,28 @@ export class RemoteConfigService {
   }
   private async maintenanceLock() {
     return new Promise<string>((resolve, reject) => {
-      this.remoteConfig.fetchAndActivate().then(() => {
-        this.remoteConfig.getString({ key: 'system_maintenance', })
-          .then(data => resolve(data))
-          .catch(err => reject(err));
-      })
-        .catch(err => reject(err));
+      this.remoteConfig
+        .fetchAndActivate()
+        .then(() => {
+          this.remoteConfig
+            .getString({ key: "system_maintenance" })
+            .then((data) => resolve(data))
+            .catch((err) => reject(err));
+        })
+        .catch((err) => reject(err));
     });
   }
   private async kioskMaintenanceLock() {
     return new Promise<string>((resolve, reject) => {
-      this.remoteConfig.fetchAndActivate().then(() => {
-        this.remoteConfig.getString({ key: 'kiosk_system_maintenance', })
-          .then(data => resolve(data))
-          .catch(err => reject(err));
-      })
-        .catch(err => reject(err));
+      this.remoteConfig
+        .fetchAndActivate()
+        .then(() => {
+          this.remoteConfig
+            .getString({ key: "kiosk_system_maintenance" })
+            .then((data) => resolve(data))
+            .catch((err) => reject(err));
+        })
+        .catch((err) => reject(err));
     });
   }
 }

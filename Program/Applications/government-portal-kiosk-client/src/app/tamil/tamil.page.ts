@@ -904,6 +904,10 @@ export class TamilPage implements OnInit {
   private closeMessageForm() {
     this.messageForm = false;
   }
+   /**
+   * Method for sending support messages to eCitizens
+   * @param value Message form data
+   */
   private supportCitizen(value) {
     this.accessService
       .sendSupportMessage(
@@ -949,6 +953,9 @@ export class TamilPage implements OnInit {
 
     await alert.present();
   }
+  /**
+   * Method for getting eSupport
+   */
   eSupport() {
     this.NICApplicant = false;
     this.Applications = false;
@@ -980,7 +987,10 @@ export class TamilPage implements OnInit {
     });
     await loading.present();
   }
-
+/**
+   * Method for creating a automated timer and logout, below source was reffered for this.
+   * Any other logics were learned at the University, Linkedin and other professional Courses.
+   */
   kioskUserTimer() {
     // Source refered from https://www.w3schools.com/howto/howto_js_countdown.asp
     let minutes = 15;
@@ -1012,6 +1022,9 @@ export class TamilPage implements OnInit {
       liveTime = SetTime;
     }, 1000);
   }
+  /**
+   * Method for logging out temporary signined eCitizen
+   */
   Logout() {
     localStorage.removeItem('GovernmentID')
     this.navCtrl.navigateForward("home");

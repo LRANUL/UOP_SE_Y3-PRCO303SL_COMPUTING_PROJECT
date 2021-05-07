@@ -9,7 +9,7 @@
 <ion-header>
   <ion-toolbar color="dark">
     <ion-title>
-      <a href="home" color="light" style="color: white;text-decoration: none;">
+      <a href="home" color="light" style="color: white; text-decoration: none">
         <strong>GOVERNMENT PORTAL</strong>
       </a>
     </ion-title>
@@ -17,9 +17,7 @@
 </ion-header>
 <!-- PAGE HEADER ENDS -->
 <ion-content [fullscreen]="true">
-
   <!-- PAGE CONTENT STARTS -->
-
 
   <!-- PAGE SEARCH AND LINKED CONTENT -->
 
@@ -31,27 +29,47 @@
         <ion-back-button defaultHref="sign-in" text="Back"></ion-back-button>
       </ion-buttons>
     </ion-toolbar>
-    <ion-list style="margin-left: 5%;">
-      <h1 style="font-size: xx-large;"><strong>Register with Government Portal</strong></h1>
-      <br>
-      <form class="form" [formGroup]="validations_form" (keydown.enter)="registerECitizen(validations_form.value)"
-        (ngSubmit)="registerECitizen(validations_form.value)">
+    <ion-list style="margin-left: 5%">
+      <h1 style="font-size: xx-large">
+        <strong>Register with Government Portal</strong>
+      </h1>
+      <br />
+      <form
+        class="form"
+        [formGroup]="validations_form"
+        (keydown.enter)="registerECitizen(validations_form.value)"
+        (ngSubmit)="registerECitizen(validations_form.value)"
+      >
         <h5>No. of Birth Registration Entry</h5>
         <ion-item>
-          <ion-input type="tel" placeholder="INSERT YOUR BRITH REGISTRATION ENTRY NO." formControlName="birthRegNo"
-            type="text" required style="text-transform: uppercase;" maxlength="10"
-            (change)="accountDuplicateCheck()"></ion-input>
+          <ion-input
+            type="tel"
+            placeholder="INSERT YOUR BRITH REGISTRATION ENTRY NO."
+            formControlName="birthRegNo"
+            type="text"
+            required
+            style="text-transform: uppercase"
+            maxlength="10"
+            (change)="accountDuplicateCheck()"
+          ></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_form.birthRegNo">
-            <div class="error-message"
-              *ngIf="validations_form.get('birthRegNo').hasError(validation.type) && (validations_form.get('birthRegNo').dirty || validations_form.get('birthRegNo').touched)">
+            <div
+              class="error-message"
+              *ngIf="validations_form.get('birthRegNo').hasError(validation.type) && (validations_form.get('birthRegNo').dirty || validations_form.get('birthRegNo').touched)"
+            >
               {{ validation.message }}
             </div>
           </ng-container>
         </div>
         <h5>Prefix</h5>
-        <ion-select formControlName="prefix" type="text" required placeholder="PREFIX">
+        <ion-select
+          formControlName="prefix"
+          type="text"
+          required
+          placeholder="PREFIX"
+        >
           <ion-select-option value="Mr.">Mr.</ion-select-option>
           <ion-select-option value="Ms.">Ms.</ion-select-option>
           <ion-select-option value="Mrs.">Mrs.</ion-select-option>
@@ -61,21 +79,33 @@
         </ion-select>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_form.prefix">
-            <div class="error-message"
-              *ngIf="validations_form.get('prefix').hasError(validation.type) && (validations_form.get('prefix').dirty || validations_form.get('prefix').touched)">
+            <div
+              class="error-message"
+              *ngIf="validations_form.get('prefix').hasError(validation.type) && (validations_form.get('prefix').dirty || validations_form.get('prefix').touched)"
+            >
               {{ validation.message }}
             </div>
           </ng-container>
         </div>
         <h5>Full Name of Applicant</h5>
         <ion-item>
-          <ion-input required="true" type="text" placeholder="INSERT YOUR FULL NAME" formControlName="fullName"
-            type="text" required style="text-transform: uppercase;" maxlength="512"></ion-input>
+          <ion-input
+            required="true"
+            type="text"
+            placeholder="INSERT YOUR FULL NAME"
+            formControlName="fullName"
+            type="text"
+            required
+            style="text-transform: uppercase"
+            maxlength="512"
+          ></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_form.fullName">
-            <div class="error-message"
-              *ngIf="validations_form.get('fullName').hasError(validation.type) && (validations_form.get('fullName').dirty || validations_form.get('fullName').touched)">
+            <div
+              class="error-message"
+              *ngIf="validations_form.get('fullName').hasError(validation.type) && (validations_form.get('fullName').dirty || validations_form.get('fullName').touched)"
+            >
               {{ validation.message }}
             </div>
           </ng-container>
@@ -89,181 +119,309 @@
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_form.gender">
-            <div class="error-message"
-              *ngIf="validations_form.get('gender').hasError(validation.type) && (validations_form.get('gender').dirty || validations_form.get('gender').touched)">
+            <div
+              class="error-message"
+              *ngIf="validations_form.get('gender').hasError(validation.type) && (validations_form.get('gender').dirty || validations_form.get('gender').touched)"
+            >
               {{ validation.message }}
             </div>
           </ng-container>
         </div>
         <h5>Date of Birth</h5>
         <ion-item>
-          <ion-datetime min='1910-01-01' max='2000-12-31' displayFormat="MM DD YYYY" pickerFormat="MM DD YYYY"
-            placeholder="SELECT DATE OF BIRTH" formControlName="dateOfBirth" type="text"></ion-datetime>
+          <ion-datetime
+            min="1910-01-01"
+            max="2000-12-31"
+            displayFormat="MM DD YYYY"
+            pickerFormat="MM DD YYYY"
+            placeholder="SELECT DATE OF BIRTH"
+            formControlName="dateOfBirth"
+            type="text"
+          ></ion-datetime>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_form.dateOfBirth">
-            <div class="error-message"
-              *ngIf="validations_form.get('dateOfBirth').hasError(validation.type) && (validations_form.get('dateOfBirth').dirty || validations_form.get('dateOfBirth').touched)">
+            <div
+              class="error-message"
+              *ngIf="validations_form.get('dateOfBirth').hasError(validation.type) && (validations_form.get('dateOfBirth').dirty || validations_form.get('dateOfBirth').touched)"
+            >
               {{ validation.message }}
             </div>
           </ng-container>
         </div>
-        <h5>Place of Birth (Hospital, House No. and Street, Town or Village or name of Estate)</h5>
+        <h5>
+          Place of Birth (Hospital, House No. and Street, Town or Village or
+          name of Estate)
+        </h5>
         <ion-item>
-          <ion-input required="true" type="text" placeholder="INSERT YOUR PLACE OF BIRTH" formControlName="placeOfBirth"
-            type="text" required style="text-transform: uppercase;"></ion-input>
+          <ion-input
+            required="true"
+            type="text"
+            placeholder="INSERT YOUR PLACE OF BIRTH"
+            formControlName="placeOfBirth"
+            type="text"
+            required
+            style="text-transform: uppercase"
+          ></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_form.placeOfBirth">
-            <div class="error-message"
-              *ngIf="validations_form.get('placeOfBirth').hasError(validation.type) && (validations_form.get('placeOfBirth').dirty || validations_form.get('placeOfBirth').touched)">
+            <div
+              class="error-message"
+              *ngIf="validations_form.get('placeOfBirth').hasError(validation.type) && (validations_form.get('placeOfBirth').dirty || validations_form.get('placeOfBirth').touched)"
+            >
               {{ validation.message }}
             </div>
           </ng-container>
         </div>
         <h5>Registar's Division</h5>
         <ion-item>
-          <ion-input required="true" type="text" placeholder="INSERT YOUR REGISTAR'S DIVISION"
-            formControlName="registarDivision" type="text" required style="text-transform: uppercase;"></ion-input>
+          <ion-input
+            required="true"
+            type="text"
+            placeholder="INSERT YOUR REGISTAR'S DIVISION"
+            formControlName="registarDivision"
+            type="text"
+            required
+            style="text-transform: uppercase"
+          ></ion-input>
         </ion-item>
         <div class="validation-errors">
-          <ng-container *ngFor="let validation of validation_form.registarDivision">
-            <div class="error-message"
-              *ngIf="validations_form.get('registarDivision').hasError(validation.type) && (validations_form.get('registarDivision').dirty || validations_form.get('registarDivision').touched)">
+          <ng-container
+            *ngFor="let validation of validation_form.registarDivision"
+          >
+            <div
+              class="error-message"
+              *ngIf="validations_form.get('registarDivision').hasError(validation.type) && (validations_form.get('registarDivision').dirty || validations_form.get('registarDivision').touched)"
+            >
               {{ validation.message }}
             </div>
           </ng-container>
         </div>
         <h5>Father's Name</h5>
         <ion-item>
-          <ion-input required="true" type="text" placeholder="INSERT YOUR FATHER'S FULL NAME"
-            formControlName="fatherName" type="text" required style="text-transform: uppercase;"></ion-input>
+          <ion-input
+            required="true"
+            type="text"
+            placeholder="INSERT YOUR FATHER'S FULL NAME"
+            formControlName="fatherName"
+            type="text"
+            required
+            style="text-transform: uppercase"
+          ></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_form.fatherName">
-            <div class="error-message"
-              *ngIf="validations_form.get('fatherName').hasError(validation.type) && (validations_form.get('fatherName').dirty || validations_form.get('fatherName').touched)">
+            <div
+              class="error-message"
+              *ngIf="validations_form.get('fatherName').hasError(validation.type) && (validations_form.get('fatherName').dirty || validations_form.get('fatherName').touched)"
+            >
               {{ validation.message }}
             </div>
           </ng-container>
         </div>
         <h5>Mother's Name</h5>
         <ion-item>
-          <ion-input required="true" type="text" placeholder="INSERT YOUR MOTHER'S FULL NAME"
-            formControlName="motherName" type="text" required style="text-transform: uppercase;"></ion-input>
+          <ion-input
+            required="true"
+            type="text"
+            placeholder="INSERT YOUR MOTHER'S FULL NAME"
+            formControlName="motherName"
+            type="text"
+            required
+            style="text-transform: uppercase"
+          ></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_form.motherName">
-            <div class="error-message"
-              *ngIf="validations_form.get('motherName').hasError(validation.type) && (validations_form.get('motherName').dirty || validations_form.get('motherName').touched)">
+            <div
+              class="error-message"
+              *ngIf="validations_form.get('motherName').hasError(validation.type) && (validations_form.get('motherName').dirty || validations_form.get('motherName').touched)"
+            >
               {{ validation.message }}
             </div>
           </ng-container>
         </div>
         <h5>ID Photo</h5>
-        <p>Insert a valid photograph that is clearly showing your facial characteristics</p>
+        <p>
+          Insert a valid photograph that is clearly showing your facial
+          characteristics
+        </p>
         <ion-item>
-          <div *ngIf="progress | async as value">Progress: {{ value | number }}%
-            <ion-progress-bar color="primary" value="{{ value / 100 }}"></ion-progress-bar>
+          <div *ngIf="progress | async as value">
+            Progress: {{ value | number }}%
+            <ion-progress-bar
+              color="primary"
+              value="{{ value / 100 }}"
+            ></ion-progress-bar>
           </div>
-          <ion-input required="true" type="file" (change)="onFileChange($event)" accept=".jpeg,.jpg,.png"></ion-input>
+          <ion-input
+            required="true"
+            type="file"
+            (change)="onFileChange($event)"
+            accept=".jpeg,.jpg,.png"
+          ></ion-input>
         </ion-item>
         <h5>Home Address (Current)</h5>
         <ion-item>
-          <ion-input required="true" type="text" placeholder="INSERT YOUR HOME ADDRESS IN FULL"
-            formControlName="homeAddress" type="text" required style="text-transform: uppercase;"></ion-input>
+          <ion-input
+            required="true"
+            type="text"
+            placeholder="INSERT YOUR HOME ADDRESS IN FULL"
+            formControlName="homeAddress"
+            type="text"
+            required
+            style="text-transform: uppercase"
+          ></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_form.homeAddress">
-            <div class="error-message"
-              *ngIf="validations_form.get('homeAddress').hasError(validation.type) && (validations_form.get('homeAddress').dirty || validations_form.get('homeAddress').touched)">
+            <div
+              class="error-message"
+              *ngIf="validations_form.get('homeAddress').hasError(validation.type) && (validations_form.get('homeAddress').dirty || validations_form.get('homeAddress').touched)"
+            >
               {{ validation.message }}
             </div>
           </ng-container>
         </div>
         <h5>Office Address</h5>
         <ion-item>
-          <ion-input required="true" type="text" placeholder="INSERT YOUR OFFICE ADDRESS IN FULL"
-            formControlName="officeAddress" type="text" style="text-transform: uppercase;"></ion-input>
+          <ion-input
+            required="true"
+            type="text"
+            placeholder="INSERT YOUR OFFICE ADDRESS IN FULL"
+            formControlName="officeAddress"
+            type="text"
+            style="text-transform: uppercase"
+          ></ion-input>
         </ion-item>
         <div class="validation-errors">
-          <ng-container *ngFor="let validation of validation_form.officeAddress">
-            <div class="error-message"
-              *ngIf="validations_form.get('officeAddress').hasError(validation.type) && (validations_form.get('officeAddress').dirty || validations_form.get('officeAddress').touched)">
+          <ng-container
+            *ngFor="let validation of validation_form.officeAddress"
+          >
+            <div
+              class="error-message"
+              *ngIf="validations_form.get('officeAddress').hasError(validation.type) && (validations_form.get('officeAddress').dirty || validations_form.get('officeAddress').touched)"
+            >
               {{ validation.message }}
             </div>
           </ng-container>
         </div>
         <h5>Mobile Number</h5>
         <ion-item>
-          <ion-input required="true" type="tel" placeholder="INSERT YOUR MOBILE NUMBER" formControlName="mobile"
-            type="tel" required style="text-transform: uppercase;" maxlength="10"></ion-input>
+          <ion-input
+            required="true"
+            type="tel"
+            placeholder="INSERT YOUR MOBILE NUMBER"
+            formControlName="mobile"
+            type="tel"
+            required
+            style="text-transform: uppercase"
+            maxlength="10"
+          ></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_form.mobile">
-            <div class="error-message"
-              *ngIf="validations_form.get('mobile').hasError(validation.type) && (validations_form.get('mobile').dirty || validations_form.get('mobile').touched)">
+            <div
+              class="error-message"
+              *ngIf="validations_form.get('mobile').hasError(validation.type) && (validations_form.get('mobile').dirty || validations_form.get('mobile').touched)"
+            >
               {{ validation.message }}
             </div>
           </ng-container>
         </div>
         <h5>Landline Number</h5>
         <ion-item>
-          <ion-input required="true" type="tel" placeholder="INSERT YOUR LANDLINE NUMBER" formControlName="landLine"
-            type="tel" required style="text-transform: uppercase;" maxlength="10"></ion-input>
+          <ion-input
+            required="true"
+            type="tel"
+            placeholder="INSERT YOUR LANDLINE NUMBER"
+            formControlName="landLine"
+            type="tel"
+            required
+            style="text-transform: uppercase"
+            maxlength="10"
+          ></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_form.landLine">
-            <div class="error-message"
-              *ngIf="validations_form.get('landLine').hasError(validation.type) && (validations_form.get('landLine').dirty || validations_form.get('landLine').touched)">
+            <div
+              class="error-message"
+              *ngIf="validations_form.get('landLine').hasError(validation.type) && (validations_form.get('landLine').dirty || validations_form.get('landLine').touched)"
+            >
               {{ validation.message }}
             </div>
           </ng-container>
         </div>
         <h5>Email address</h5>
-        <ion-text style="font-style: italic;color: gray;">This would be your Government Portal access email address
+        <ion-text style="font-style: italic; color: gray"
+          >This would be your Government Portal access email address
         </ion-text>
         <ion-item>
-          <ion-input required="true" type="email" placeholder="INSERT YOUR EMAIL" formControlName="email" type="email"
-            required></ion-input>
+          <ion-input
+            required="true"
+            type="email"
+            placeholder="INSERT YOUR EMAIL"
+            formControlName="email"
+            type="email"
+            required
+          ></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_form.email">
-            <div class="error-message"
-              *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
+            <div
+              class="error-message"
+              *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)"
+            >
               {{ validation.message }}
             </div>
           </ng-container>
         </div>
         <h5>Password</h5>
-        <ion-text style="font-style: italic;color: gray;">This would be your Government Portal access password
+        <ion-text style="font-style: italic; color: gray"
+          >This would be your Government Portal access password
         </ion-text>
         <ion-item>
-          <ion-input required="true" inputmode="text" type="password" clear-on-edit=true placeholder="PASSWORD"
-            formControlName="password" type="password" required></ion-input>
+          <ion-input
+            required="true"
+            inputmode="text"
+            type="password"
+            clear-on-edit="true"
+            placeholder="PASSWORD"
+            formControlName="password"
+            type="password"
+            required
+          ></ion-input>
         </ion-item>
         <div class="validation-errors">
           <ng-container *ngFor="let validation of validation_form.password">
-            <div class="error-message"
-              *ngIf="validations_form.get('password').hasError(validation.type) && (validations_form.get('password').dirty || validations_form.get('password').touched)">
+            <div
+              class="error-message"
+              *ngIf="validations_form.get('password').hasError(validation.type) && (validations_form.get('password').dirty || validations_form.get('password').touched)"
+            >
               {{ validation.message }}
             </div>
           </ng-container>
-          <br>
-          <ion-text style="font-size: x-small;color: gray;">By clicking Register information, you agree to our Terms,
-            Data Policy and Cookies Policy. Please note that only if your data matches our records, the registration
-            would be approved.</ion-text>
-          <br>
-          <ion-button type="submit" color="signin" [disabled]="!validations_form.valid">Register information<ion-icon
-              name="key-outline"></ion-icon>
+          <br />
+          <ion-text style="font-size: x-small; color: gray"
+            >By clicking Register information, you agree to our Terms, Data
+            Policy and Cookies Policy. Please note that only if your data
+            matches our records, the registration would be approved.</ion-text
+          >
+          <br />
+          <ion-button
+            type="submit"
+            color="signin"
+            [disabled]="!validations_form.valid"
+            >Register information<ion-icon name="key-outline"></ion-icon>
           </ion-button>
           <label class="error-message">{{errorMessage}}</label>
         </div>
-        <br>
+        <br />
       </form>
     </ion-list>
-    <br>
-    <ion-grid style="margin-left: 5%;">
+    <br />
+    <ion-grid style="margin-left: 5%">
       <ion-row>
         <a href="#" class="underline">Get help</a>
       </ion-row>
@@ -273,14 +431,12 @@
   <!-- PAGE LINKS AND INFORMATION -->
 
   <!-- PAGE CONTENT ENDS -->
-
-
 </ion-content>
 <!-- PAGE FOOTER STARTS -->
 <ion-footer class="ion-no-border" align="center">
   <ion-toolbar color="light">
     <ion-text>
-      Government Portal<br>
+      Government Portal<br />
       Ministry of Home Affairs
     </ion-text>
   </ion-toolbar>

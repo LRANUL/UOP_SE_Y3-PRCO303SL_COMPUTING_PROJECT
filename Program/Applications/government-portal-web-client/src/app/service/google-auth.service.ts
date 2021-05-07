@@ -70,8 +70,7 @@ export class GoogleAuthService {
                 buttons: ["Ok"],
               });
               await alert.present();
-            }
-            else {
+            } else {
               var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
               if (
                 doc.data()["birthRegNo"] == value.birthRegNo &&
@@ -388,7 +387,12 @@ export class GoogleAuthService {
     return new Promise<any>(async (resolve, reject) => {
       const email = value.email.toLowerCase();
       const address = email.split("@").pop();
-      if (address == "homeaffairs.gov.lk" || address == "admin.gov.lk" || address == "kiosk.gov.lk" || address == "gov.lk") {
+      if (
+        address == "homeaffairs.gov.lk" ||
+        address == "admin.gov.lk" ||
+        address == "kiosk.gov.lk" ||
+        address == "gov.lk"
+      ) {
         const alert = await this.alertController.create({
           header: "⚠ Unauthorized Access",
           message: "Login attempt failed, no record of eCitizen found.",

@@ -120,7 +120,19 @@ export class HomeAffairsPage implements OnInit {
   officeAddress: any;
   mobile: any;
   landLine: any;
-  ECitizens: { id: string; Prefix: any; Full_Name: any; homeAddress: any; officeAddress: any; ECitizenIMG: any; landLine: any; mobile: any; status: any; email: any; ECitizenGovernmentID: any; }[];
+  ECitizens: {
+    id: string;
+    Prefix: any;
+    Full_Name: any;
+    homeAddress: any;
+    officeAddress: any;
+    ECitizenIMG: any;
+    landLine: any;
+    mobile: any;
+    status: any;
+    email: any;
+    ECitizenGovernmentID: any;
+  }[];
   Email: any;
   constructor(
     public formBuilder: FormBuilder,
@@ -146,21 +158,21 @@ export class HomeAffairsPage implements OnInit {
       });
     });
     var user = firebase.default.auth().currentUser;
-    
+
     await this.firestore
-    .collection("eAdministration")
-    .doc(user.email)
-    .ref.get()
-    .then((doc) => {
-      if (doc.exists) {
-        this.prefix = doc.data()["Prefix"];
-        this.fullName = doc.data()["Full_Name"];
-        this.officeAddress = doc.data()["officeAddress"];
-        this.mobile = doc.data()["mobile"];
-        this.Division = doc.data()["Division"];
-        this.Email = user.email
-      }
-    });
+      .collection("eAdministration")
+      .doc(user.email)
+      .ref.get()
+      .then((doc) => {
+        if (doc.exists) {
+          this.prefix = doc.data()["Prefix"];
+          this.fullName = doc.data()["Full_Name"];
+          this.officeAddress = doc.data()["officeAddress"];
+          this.mobile = doc.data()["mobile"];
+          this.Division = doc.data()["Division"];
+          this.Email = user.email;
+        }
+      });
     //  FORM VALIDATORS
     /**
      * Validation Form receives input data sent by the user to Support service
@@ -176,9 +188,7 @@ export class HomeAffairsPage implements OnInit {
     this.nic_form = this.formBuilder.group({
       fullName: new FormControl(
         "",
-        Validators.compose([
-          Validators.pattern("^^[a-z A-Z\\.\\s]+$"),
-        ])
+        Validators.compose([Validators.pattern("^^[a-z A-Z\\.\\s]+$")])
       ),
       subject: new FormControl(
         "",
@@ -734,7 +744,6 @@ export class HomeAffairsPage implements OnInit {
     );
   }
 
- 
   openService() {
     this.servicesPanel = true;
     this.supportPanel = false;
@@ -761,7 +770,7 @@ export class HomeAffairsPage implements OnInit {
     this.supportPanel = false;
     this.accountPanel = false;
   }
- 
+
   /**
    * Method responsible for fetching all paid NIC applications to officer
    */
@@ -834,34 +843,9 @@ export class HomeAffairsPage implements OnInit {
   getNICApplicationStatus() {
     this.NICApplicantStatus = true;
     this.NICApplication = false;
-    this.accessService.getEApplicationStatus(this.Division).subscribe((data) => {
-      // console.log(data);
-      this.loadingData = false;
-
-      this.NICApplicationStatus = data.map((e) => {
-        // console.log(e.payload.doc);
-        return {
-          id: e.payload.doc.id,
-          GovernmentID: e.payload.doc.data()["GovernmentID"],
-          requestType: e.payload.doc.data()["requestType"],
-          name: e.payload.doc.data()["name"],
-          familyName: e.payload.doc.data()["familyName"],
-          assigneeName: e.payload.doc.data()["division"],
-          applicationDescription: e.payload.doc.data()["description"],
-          applicationStatus: e.payload.doc.data()["status"],
-          receivedTime: e.payload.doc.data()["sentTimeStamp"],
-          processedTime: e.payload.doc.data()["processedTimeStamp"],
-          approvedTime: e.payload.doc.data()["approvedTimeStamp"],
-          PhotoURL: e.payload.doc.data()["photoURL"],
-        };
-      });
-    });
-  }
-  findEApplication(value) {
-    if (value == "") {
-      this.getNICApplicationStatus();
-    } else {
-      this.accessService.getEApplicationStatusByID(value,this.Division).subscribe((data) => {
+    this.accessService
+      .getEApplicationStatus(this.Division)
+      .subscribe((data) => {
         // console.log(data);
         this.loadingData = false;
 
@@ -873,18 +857,51 @@ export class HomeAffairsPage implements OnInit {
             requestType: e.payload.doc.data()["requestType"],
             name: e.payload.doc.data()["name"],
             familyName: e.payload.doc.data()["familyName"],
-            assigneeName: e.payload.doc.data()["assigneeName"],
-            applicationDescription: e.payload.doc.data()[
-              "applicationDescription"
-            ],
-            applicationStatus: e.payload.doc.data()["applicationStatus"],
-            receivedTime: e.payload.doc.data()["receivedTime"],
-            processedTime: e.payload.doc.data()["processedTime"],
-            approvedTime: e.payload.doc.data()["approvedTime"],
+            assigneeName: e.payload.doc.data()["division"],
+            applicationDescription: e.payload.doc.data()["description"],
+            applicationStatus: e.payload.doc.data()["status"],
+            receivedTime: e.payload.doc.data()["sentTimeStamp"],
+            processedTime: e.payload.doc.data()["processedTimeStamp"],
+            approvedTime: e.payload.doc.data()["approvedTimeStamp"],
             PhotoURL: e.payload.doc.data()["photoURL"],
           };
         });
       });
+  }
+  /**
+   * Method for finding eApplications
+   * @param value Government ID
+   */
+  findEApplication(value) {
+    if (value == "") {
+      this.getNICApplicationStatus();
+    } else {
+      this.accessService
+        .getEApplicationStatusByID(value, this.Division)
+        .subscribe((data) => {
+          // console.log(data);
+          this.loadingData = false;
+
+          this.NICApplicationStatus = data.map((e) => {
+            // console.log(e.payload.doc);
+            return {
+              id: e.payload.doc.id,
+              GovernmentID: e.payload.doc.data()["GovernmentID"],
+              requestType: e.payload.doc.data()["requestType"],
+              name: e.payload.doc.data()["name"],
+              familyName: e.payload.doc.data()["familyName"],
+              assigneeName: e.payload.doc.data()["assigneeName"],
+              applicationDescription: e.payload.doc.data()[
+                "applicationDescription"
+              ],
+              applicationStatus: e.payload.doc.data()["applicationStatus"],
+              receivedTime: e.payload.doc.data()["receivedTime"],
+              processedTime: e.payload.doc.data()["processedTime"],
+              approvedTime: e.payload.doc.data()["approvedTime"],
+              PhotoURL: e.payload.doc.data()["photoURL"],
+            };
+          });
+        });
     }
   }
   /**
@@ -953,7 +970,7 @@ export class HomeAffairsPage implements OnInit {
     this.NICApplicant = false;
   }
   /**
-   * Manages eCitizens accounts
+   * Search eCitizens accounts
    */
   manageAccount() {
     this.accountManage = true;
@@ -970,9 +987,7 @@ export class HomeAffairsPage implements OnInit {
           mobile: e.payload.doc.data()["mobile"],
           status: e.payload.doc.data()["status"],
           email: e.payload.doc.data()["Email"],
-          ECitizenGovernmentID: e.payload.doc.data()[
-            "GovernmentID"
-          ],
+          ECitizenGovernmentID: e.payload.doc.data()["GovernmentID"],
         };
       });
     });
@@ -983,6 +998,10 @@ export class HomeAffairsPage implements OnInit {
   exitECitizenManager() {
     this.accountManage = false;
   }
+  /**
+   * Method for finding eCitizens
+   * @param value Government ID
+   */
   findECitizen(value) {
     if (value == "") {
       this.manageAccount();
@@ -1000,9 +1019,7 @@ export class HomeAffairsPage implements OnInit {
             mobile: e.payload.doc.data()["mobile"],
             status: e.payload.doc.data()["status"],
             email: e.payload.doc.data()["Email"],
-            ECitizenGovernmentID: e.payload.doc.data()[
-              "GovernmentID"
-            ],
+            ECitizenGovernmentID: e.payload.doc.data()["GovernmentID"],
           };
         });
       });
@@ -1081,7 +1098,6 @@ export class HomeAffairsPage implements OnInit {
         }
       );
   }
-
 
   /**
    * Method reposible for sending validated data to google-auth service page for further verfication and uploading to firebase
@@ -1262,7 +1278,6 @@ export class HomeAffairsPage implements OnInit {
     this.accessService.setApplicationToProcessing(GovernmentID);
   }
 
-
   /** Method for approving NIC application status  */
   async declineRequest(GovernmentID) {
     const alert = await this.alertController.create({
@@ -1273,25 +1288,29 @@ export class HomeAffairsPage implements OnInit {
           name: "IncorrectData",
           type: "radio",
           label: "Form Not Valid",
-          value: "Form Not Valid / Incorrect|පෝරමය වලංගු නොවේ / වැරදිය|படிவம் செல்லுபடியாகாது / தவறானது",
+          value:
+            "Form Not Valid / Incorrect|පෝරමය වලංගු නොවේ / වැරදිය|படிவம் செல்லுபடியாகாது / தவறானது",
         },
         {
           name: "PhoneFailed",
           type: "radio",
           label: "Phone Verification Failed",
-          value: "Phone Verification Failed|දුරකථන සත්‍යාපනය අසාර්ථක විය|தொலைபேசி சரிபார்ப்பு தோல்வியுற்றது",
+          value:
+            "Phone Verification Failed|දුරකථන සත්‍යාපනය අසාර්ථක විය|தொலைபேசி சரிபார்ப்பு தோல்வியுற்றது",
         },
         {
           name: "FakeData",
           type: "radio",
           label: "Form Data Mismatch",
-          value: "Form Data Mismatch / Third Party Attempt|ආකෘති නොගැලපීම / තෙවන පාර්ශවීය උත්සාහය|படிவம் தரவு பொருந்தாதது / மூன்றாம் தரப்பு முயற்சி",
+          value:
+            "Form Data Mismatch / Third Party Attempt|ආකෘති නොගැලපීම / තෙවන පාර්ශවීය උත්සාහය|படிவம் தரவு பொருந்தாதது / மூன்றாம் தரப்பு முயற்சி",
         },
         {
           name: "photoFail",
           type: "radio",
           label: "Photo Mismatch",
-          value: "Photo Mismatch / Third Party Attempt|ඡායාරූප නොගැලපීම / තෙවන පාර්ශවීය උත්සාහය|புகைப்பட பொருத்தமின்மை / மூன்றாம் தரப்பு முயற்சி ",
+          value:
+            "Photo Mismatch / Third Party Attempt|ඡායාරූප නොගැලපීම / තෙවන පාර්ශවීය උත්සාහය|புகைப்பட பொருத்தமின்மை / மூன்றாம் தரப்பு முயற்சி ",
         },
       ],
       buttons: [

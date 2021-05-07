@@ -16,7 +16,10 @@ export class AccessService {
     public alertController: AlertController,
     private navCtrl: NavController
   ) {}
-
+  /**
+   * Method for getting secretry details
+   * @returns Secretary Details
+   */
   getSecretary() {
     var user = firebase.default.auth().currentUser;
     return this.firestore
@@ -31,7 +34,10 @@ export class AccessService {
       .collection("eApplications", (ref) =>
         ref
           .limit(10)
-          .where("status", "in", ["New", "Processing - Stage 1|සැකසීම - අදියර 1|செயலாக்கம் - நிலை 1"])
+          .where("status", "in", [
+            "New",
+            "Processing - Stage 1|සැකසීම - අදියර 1|செயலாக்கம் - நிலை 1",
+          ])
           .where("payment_status", "==", "paid")
           .where("division", "==", Division)
       )
@@ -121,7 +127,7 @@ export class AccessService {
         signIn: time,
         date: date,
         documentsHandled: 0,
-        messagesHandled:0,
+        messagesHandled: 0,
       },
       { merge: true }
     );
@@ -267,7 +273,8 @@ export class AccessService {
           status: "New",
           GovernmentID: value.GovernmentID,
           payment_status: "paid",
-          description: "Application sent for Department | දෙපාර්තමේන්තුව සඳහා අයදුම්පත යවා ඇත| துறைக்கு விண்ணப்பம் அனுப்பப்பட்டது",
+          description:
+            "Application sent for Department | දෙපාර්තමේන්තුව සඳහා අයදුම්පත යවා ඇත| துறைக்கு விண்ணப்பம் அனுப்பப்பட்டது",
           email: value.email,
           familyName: value.familyName,
           name: value.name,
@@ -389,6 +396,10 @@ export class AccessService {
       }
     });
   }
+  /**
+   * Method for logging out Secretary
+   * @returns
+   */
   logoutOfficer() {
     return new Promise<void>((resolve, reject) => {
       if (this.auth.currentUser) {

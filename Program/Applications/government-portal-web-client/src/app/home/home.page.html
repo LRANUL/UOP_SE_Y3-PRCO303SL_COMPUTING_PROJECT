@@ -1,12 +1,21 @@
 <!-- PAGE SPLASH SCREEN STARTS -->
-<div name="loading" *ngIf="loading" style="height: 100%;" style="background-color:#ffffff;">
-  <ion-img src="assets/splash/splash.png" style="height: 15%;"></ion-img>
-  <ion-img src="assets/splash/animation.gif" style="height:500px;"></ion-img>
+<div
+  name="loading"
+  *ngIf="loading"
+  style="height: 100%"
+  style="background-color: #ffffff"
+>
+  <ion-img src="assets/splash/splash.png" style="height: 15%"></ion-img>
+  <ion-img src="assets/splash/animation.gif" style="height: 500px"></ion-img>
 </div>
 <!-- PAGE SPLASH SCREEN ENDS -->
 <!-- WELCOME MODAL STARTS -->
-<div name="Welcome" *ngIf="Welcome" style="margin: 5px;height: 100%;background-color: #ffffff;">
-  <ion-slides pager="false" [options]="slideOpts" style="height: 90%;">
+<div
+  name="Welcome"
+  *ngIf="Welcome"
+  style="margin: 5px; height: 100%; background-color: #ffffff"
+>
+  <ion-slides pager="false" [options]="slideOpts" style="height: 90%">
     <ion-slide>
       <img src="assets/splash/Page-1.png" />
     </ion-slide>
@@ -29,15 +38,25 @@
 
 <ion-content [fullscreen]="true" [hidden]="!home">
   <!-- #3082c9 Royal Blue | #c92d39 Government Red -->
-  <div style="background-color:#3082c9;color: white;">
+  <div style="background-color: #3082c9; color: white">
     <ion-header>
       <ion-toolbar color="dark">
         <ion-title>
-          <a href="home" color="light" style="color: white;text-decoration: none;">
+          <a
+            href="home"
+            color="light"
+            style="color: white; text-decoration: none"
+          >
             <strong>GOVERNMENT PORTAL</strong>
           </a>
         </ion-title>
-        <ion-button class="log-in" slot="icon-only" slot="end" href="sign-in" color="signin">
+        <ion-button
+          class="log-in"
+          slot="icon-only"
+          slot="end"
+          href="sign-in"
+          color="signin"
+        >
           <ion-icon name="log-in"></ion-icon>
         </ion-button>
       </ion-toolbar>
@@ -47,13 +66,29 @@
     <!-- PAGE CONTENT STARTS -->
 
     <!-- PAGE SEARCH AND LINKED CONTENT -->
-    <h1 style="margin-left: 2%;"><strong>WELCOME TO GOVERNMENT PORTAL</strong></h1>
-    <h5 style="margin-left: 2%;">All government services at one place.</h5>
-    <ion-searchbar color="light" style="width: 40%;" animated="true" [(ngModel)]="searchQuery" (click)="click_in()"
-      (clickOutside)="onClickedOutside($event)" (ionInput)="search($event)" placeholder="Search..."></ion-searchbar>
-    <ion-list *ngIf="pagesList" style="position: absolute;z-index:1000;width: 40%;">
-      <ion-item *ngFor="let algoliaResult of algoliaResults | slice:0:3;; let i = index">
-        <a href={{algoliaResult.url}} class="underline-search">{{ algoliaResult.name }}
+    <h1 style="margin-left: 2%">
+      <strong>WELCOME TO GOVERNMENT PORTAL</strong>
+    </h1>
+    <h5 style="margin-left: 2%">All government services at one place.</h5>
+    <ion-searchbar
+      color="light"
+      style="width: 40%"
+      animated="true"
+      [(ngModel)]="searchQuery"
+      (click)="click_in()"
+      (clickOutside)="onClickedOutside($event)"
+      (ionInput)="search($event)"
+      placeholder="Search..."
+    ></ion-searchbar>
+    <ion-list
+      *ngIf="pagesList"
+      style="position: absolute; z-index: 1000; width: 40%"
+    >
+      <ion-item
+        *ngFor="let algoliaResult of algoliaResults | slice:0:3;; let i = index"
+      >
+        <a href="{{algoliaResult.url}}" class="underline-search"
+          >{{ algoliaResult.name }}
         </a>
       </ion-item>
     </ion-list>
@@ -62,73 +97,80 @@
 
   <!-- PAGE LINKS AND INFORMATION -->
   <ion-content>
-    <ion-grid style="margin-top: 2%;">
+    <ion-grid style="margin-top: 2%">
       <ion-row>
         <ion-col class="start">
-          <a href="registrations" class="underline">Registration of Persons
-          </a>
+          <a href="registrations" class="underline">Registration of Persons </a>
           <p>Includes applications for Identity cards, renewals and lost</p>
         </ion-col>
         <ion-col class="center">
-          <a href="agriculture" class="underline">Agriculture, Livestock and Fisheries
+          <a href="agriculture" class="underline"
+            >Agriculture, Livestock and Fisheries
           </a>
-          <p>Includes importing natural resources, pesticides and certifications</p>
+          <p>
+            Includes importing natural resources, pesticides and certifications
+          </p>
         </ion-col>
         <ion-col class="end">
-          <a href="media" class="underline">Communication and Media
-          </a>
+          <a href="media" class="underline">Communication and Media </a>
           <p>Includes news casting, media loans and broadcasting</p>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col class="start">
-          <a href="banking" class="underline">Banking, Tax and Insurance
-          </a>
+          <a href="banking" class="underline">Banking, Tax and Insurance </a>
           <p>Includes employee funds, registrations, exchange and management</p>
         </ion-col>
         <ion-col class="center">
-          <a href="education" class="underline">Education and Training
-          </a>
+          <a href="education" class="underline">Education and Training </a>
           <p>Includes higher education, examinations and vocational training</p>
         </ion-col>
         <ion-col class="end">
-          <a href="healthcare" class="underline">Healthcare, Wellbeing and Social Service
+          <a href="healthcare" class="underline"
+            >Healthcare, Wellbeing and Social Service
           </a>
           <p>Includes Hospital care, public services and Indigenous medicine</p>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col class="start">
-          <a href="employeement" class="underline">Employment Information
-          </a>
-          <p>Includes public employement, job designing, labour and career guidance</p>
+          <a href="employeement" class="underline">Employment Information </a>
+          <p>
+            Includes public employement, job designing, labour and career
+            guidance
+          </p>
         </ion-col>
         <ion-col class="center">
-          <a href="housing" class="underline">Housing, Property and Utilities
+          <a href="housing" class="underline"
+            >Housing, Property and Utilities
           </a>
           <p>Includes constructions, housing, machinery and materials</p>
         </ion-col>
         <ion-col class="end">
-          <a href="environment" class="underline">Environment
-          </a>
-          <p>Includes industrial licensing, pollution control and inspection reports</p>
+          <a href="environment" class="underline">Environment </a>
+          <p>
+            Includes industrial licensing, pollution control and inspection
+            reports
+          </p>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col class="start">
-          <a href="justice" class="underline">Justice, Law and Rights
-          </a>
+          <a href="justice" class="underline">Justice, Law and Rights </a>
           <p>Includes oaths, death inquiries, peace and foreign summons</p>
         </ion-col>
         <ion-col class="center">
-          <a href="travel" class="underline">Travel, Tourism and Leisure
-          </a>
-          <p>Includes applications for certifications, guidance and operations</p>
+          <a href="travel" class="underline">Travel, Tourism and Leisure </a>
+          <p>
+            Includes applications for certifications, guidance and operations
+          </p>
         </ion-col>
         <ion-col class="end">
-          <a href="trading" class="underline">Trade, Business and Industry
-          </a>
-          <p>Includes foreign trade, marketing and guidance for import and exports</p>
+          <a href="trading" class="underline">Trade, Business and Industry </a>
+          <p>
+            Includes foreign trade, marketing and guidance for import and
+            exports
+          </p>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -143,7 +185,7 @@
 <ion-footer class="ion-border" align="center">
   <ion-toolbar color="light">
     <ion-text>
-      Government Portal<br>
+      Government Portal<br />
       Ministry of Home Affairs
     </ion-text>
   </ion-toolbar>

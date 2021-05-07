@@ -82,6 +82,10 @@ export class AdminPage implements OnInit {
   citizenRegistration_form: any;
   kiosk_registration_form: FormGroup;
   kioskAccount: boolean;
+  citizenBirthRegistration: boolean;
+  kioskCardUnlocker: boolean;
+  ECitizens: any;
+  listLoaded: any;
 
   constructor(
     public storage: AngularFireStorage,
@@ -181,7 +185,7 @@ export class AdminPage implements OnInit {
         Validators.compose([
           Validators.minLength(3),
           Validators.maxLength(10),
-          Validators.required
+          Validators.required,
         ])
       ),
       password: new FormControl(
@@ -436,7 +440,7 @@ export class AdminPage implements OnInit {
     this.supportPanel = true;
     this.getSupportMessages();
   }
-  openRegistration() {
+  openCitizenManager() {
     this.accountPanel = false;
     this.settingsPanel = false;
     this.supportPanel = false;
@@ -464,7 +468,18 @@ export class AdminPage implements OnInit {
     this.supportPanel = false;
     this.statisticsPanel = false;
   }
-
+  /**
+   * Methods for opening birth registration and kiosk locked card manager
+   */
+  addBirths() {
+    this.citizenBirthRegistration = true;
+    this.kioskCardUnlocker = false;
+  }
+  unLockKiosk() {
+    this.citizenBirthRegistration = false;
+    this.kioskCardUnlocker = true;
+    this.searchAccount();
+  }
   /**
    * Method reposible for registering officers
    * @param {Form} value getting form values for officer registration
@@ -527,8 +542,16 @@ export class AdminPage implements OnInit {
           this.system_maintenance = false;
         }
       },
-      (error) => {
+      async (error) => {
         console.log(error);
+        const alert = await this.alertController.create({
+          header: "🚫 Out of Service",
+          subHeader: "Server Access Timeout",
+          message:
+            "Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later.",
+          buttons: ["OK"],
+        });
+        await alert.present();
       }
     );
     // Web System
@@ -596,8 +619,15 @@ export class AdminPage implements OnInit {
           this.checkSystemStatus();
         }
       },
-      (error) => {
-        console.log(error);
+      async (error) => {
+        const alert = await this.alertController.create({
+          header: "🚫 Out of Service",
+          subHeader: "Server Access Timeout",
+          message:
+            "Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later.",
+          buttons: ["OK"],
+        });
+        await alert.present();
       }
     );
     const loading = await this.loadingController.create({
@@ -616,8 +646,15 @@ export class AdminPage implements OnInit {
           this.checkSystemStatus();
         }
       },
-      (error) => {
-        console.log(error);
+      async (error) => {
+        const alert = await this.alertController.create({
+          header: "🚫 Out of Service",
+          subHeader: "Server Access Timeout",
+          message:
+            "Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later.",
+          buttons: ["OK"],
+        });
+        await alert.present();
       }
     );
     const loading = await this.loadingController.create({
@@ -636,8 +673,15 @@ export class AdminPage implements OnInit {
           this.checkSystemStatus();
         }
       },
-      (error) => {
-        console.log(error);
+      async (error) => {
+        const alert = await this.alertController.create({
+          header: "🚫 Out of Service",
+          subHeader: "Server Access Timeout",
+          message:
+            "Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later.",
+          buttons: ["OK"],
+        });
+        await alert.present();
       }
     );
     const loading = await this.loadingController.create({
@@ -656,8 +700,15 @@ export class AdminPage implements OnInit {
           this.checkSystemStatus();
         }
       },
-      (error) => {
-        console.log(error);
+      async (error) => {
+        const alert = await this.alertController.create({
+          header: "🚫 Out of Service",
+          subHeader: "Server Access Timeout",
+          message:
+            "Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later.",
+          buttons: ["OK"],
+        });
+        await alert.present();
       }
     );
     const loading = await this.loadingController.create({
@@ -676,8 +727,16 @@ export class AdminPage implements OnInit {
           this.checkSystemStatus();
         }
       },
-      (error) => {
+      async (error) => {
         console.log(error);
+        const alert = await this.alertController.create({
+          header: "🚫 Out of Service",
+          subHeader: "Server Access Timeout",
+          message:
+            "Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later.",
+          buttons: ["OK"],
+        });
+        await alert.present();
       }
     );
     const loading = await this.loadingController.create({
@@ -717,6 +776,53 @@ export class AdminPage implements OnInit {
     this.accountCreate = false;
     this.accountManage = false;
     this.kioskAccount = true;
+  }
+
+  /**
+   * Search eCitizens accounts
+   */
+  searchAccount() {
+    this.accountManage = true;
+    this.accessService.getECitizens().subscribe((data) => {
+      this.ECitizens = data.map((e) => {
+        return {
+          id: e.payload.doc.id,
+          Prefix: e.payload.doc.data()["Prefix"],
+          Full_Name: e.payload.doc.data()["Full_Name"],
+          kioskLock: e.payload.doc.data()["kioskLock"],
+          status: e.payload.doc.data()["status"],
+          ECitizenGovernmentID: e.payload.doc.data()["GovernmentID"],
+        };
+      });
+        this.listLoaded = true;
+    });
+  }
+
+  /**
+   * Method for finding eCitizens
+   * @param value Government ID
+   */
+  findECitizen(value) {
+    if (value == "") {
+      this.searchAccount();
+    } else {
+      this.accessService.getECitizen(value).subscribe((data) => {
+        this.ECitizens = data.map((e) => {
+          return {
+            id: e.payload.doc.id,
+            Prefix: e.payload.doc.data()["Prefix"],
+            Full_Name: e.payload.doc.data()["Full_Name"],
+            kioskLock: e.payload.doc.data()["kioskLock"],
+            status: e.payload.doc.data()["status"],
+            ECitizenGovernmentID: e.payload.doc.data()["GovernmentID"],
+          };
+        });
+      });
+    }
+  }
+  /** Method for card locking and unlocking */
+  async manageCard(status, governmentID) {
+    this.accessService.PortalCardManage(status, governmentID);
   }
   /**
    * Manages Government Portal accounts

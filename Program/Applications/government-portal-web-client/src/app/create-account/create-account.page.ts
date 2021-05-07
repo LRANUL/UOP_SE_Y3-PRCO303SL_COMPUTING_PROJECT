@@ -44,7 +44,7 @@ export class CreateAccountPage implements OnInit {
     protected firestore: AngularFirestore,
     public alertController: AlertController,
     public loadingController: LoadingController
-  ) { }
+  ) {}
 
   ngOnInit() {
     /**
@@ -298,7 +298,7 @@ export class CreateAccountPage implements OnInit {
   }
   /** Method to prevent multiple accounts */
   accountDuplicateCheck() {
-    const RegNo = this.validations_form.controls['birthRegNo'].value
+    const RegNo = this.validations_form.controls["birthRegNo"].value;
     if (RegNo.length >= 4 && RegNo.length <= 10) {
       this.firestore
         .collection("BirthRegistrations")
@@ -315,19 +315,17 @@ export class CreateAccountPage implements OnInit {
                   "Your registration has failed, as the entered details show that you have account with us. Please recover it using the web portal or contact one of our officers.",
                 buttons: [
                   {
-                    text: 'Sign in',
+                    text: "Sign in",
                     handler: () => {
                       this.route.navigate(["sign-in"]);
-                    }
-                  }],
+                    },
+                  },
+                ],
               });
               await alert.present();
             }
           }
-        }
-        )
+        });
     }
   }
-
 }
-

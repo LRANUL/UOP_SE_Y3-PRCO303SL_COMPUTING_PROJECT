@@ -151,21 +151,14 @@ export class AccountPage implements OnInit {
      * Validation Form receives input data sent by the user to Support service
      */
     this.message_form = this.formBuilder.group({
-      fullName: new FormControl(
-        "",
-        Validators.compose([
-        ])
-      ),
+      fullName: new FormControl("", Validators.compose([])),
       subject: new FormControl(
         "",
-        Validators.compose([
-          Validators.minLength(5),
-          Validators.required,
-        ])
+        Validators.compose([Validators.minLength(5), Validators.required])
       ),
       message: new FormControl(
         "",
-        Validators.compose([Validators.minLength(5),Validators.required]),
+        Validators.compose([Validators.minLength(5), Validators.required])
       ),
     });
 
@@ -264,7 +257,10 @@ export class AccountPage implements OnInit {
           Validators.pattern("^([ a-zA-Z])+$"),
         ])
       ),
-      dateOfBirth: new FormControl("", Validators.compose([Validators.required])),
+      dateOfBirth: new FormControl(
+        "",
+        Validators.compose([Validators.required])
+      ),
       placeOfBirth: new FormControl(
         "",
         Validators.compose([
@@ -288,23 +284,32 @@ export class AccountPage implements OnInit {
       ),
       birthRegNo: new FormControl(
         "",
-        Validators.compose([Validators.minLength(4),Validators.pattern("^([0-9])+$"),Validators.maxLength(6)])
+        Validators.compose([
+          Validators.minLength(4),
+          Validators.pattern("^([0-9])+$"),
+          Validators.maxLength(6),
+        ])
       ),
       birthCertNo: new FormControl(
         "",
-        Validators.compose([Validators.minLength(4),Validators.pattern("^([0-9])+$"),Validators.maxLength(6)])
+        Validators.compose([
+          Validators.minLength(4),
+          Validators.pattern("^([0-9])+$"),
+          Validators.maxLength(6),
+        ])
       ),
       countryOfBirth: new FormControl(
         "",
         Validators.compose([Validators.pattern("^([ a-zA-Z])+$")])
       ),
-      NICType: new FormControl(
-        "",
-        Validators.compose([])
-      ),
+      NICType: new FormControl("", Validators.compose([])),
       foreignCertNo: new FormControl(
         "",
-        Validators.compose([Validators.minLength(4),Validators.pattern("^([0-9])+$"),Validators.maxLength(6)])
+        Validators.compose([
+          Validators.minLength(4),
+          Validators.pattern("^([0-9])+$"),
+          Validators.maxLength(6),
+        ])
       ),
       city: new FormControl(
         "",
@@ -315,7 +320,10 @@ export class AccountPage implements OnInit {
       ),
       houseNo: new FormControl(
         "",
-        Validators.compose([Validators.pattern("^([ \u00c0-\u01ffa-zA-Z0-9'\-])+$"),Validators.maxLength(6)])
+        Validators.compose([
+          Validators.pattern("^([ \u00c0-\u01ffa-zA-Z0-9'-])+$"),
+          Validators.maxLength(6),
+        ])
       ),
       houseName: new FormControl(
         "",
@@ -331,14 +339,23 @@ export class AccountPage implements OnInit {
           Validators.pattern("^([ a-zA-Z])+$"),
         ])
       ),
-      postalcode: new FormControl("", Validators.compose([Validators.pattern("^([0-9])+$"),Validators.maxLength(6)])),
+      postalcode: new FormControl(
+        "",
+        Validators.compose([
+          Validators.pattern("^([0-9])+$"),
+          Validators.maxLength(6),
+        ])
+      ),
       postcity: new FormControl(
         "",
         Validators.compose([Validators.pattern("^([ a-zA-Z])+$")])
       ),
       posthouseNo: new FormControl(
         "",
-        Validators.compose([Validators.pattern("^([ \u00c0-\u01ffa-zA-Z0-9'\-])+$"),Validators.maxLength(6),])
+        Validators.compose([
+          Validators.pattern("^([ \u00c0-\u01ffa-zA-Z0-9'-])+$"),
+          Validators.maxLength(6),
+        ])
       ),
       posthouseName: new FormControl(
         "",
@@ -354,11 +371,21 @@ export class AccountPage implements OnInit {
           Validators.pattern("^([ a-zA-Z])+$"),
         ])
       ),
-      postpostalcode: new FormControl("", Validators.compose([Validators.pattern("^([0-9])+$"),Validators.maxLength(6)])),
+      postpostalcode: new FormControl(
+        "",
+        Validators.compose([
+          Validators.pattern("^([0-9])+$"),
+          Validators.maxLength(6),
+        ])
+      ),
       certDate: new FormControl("", Validators.compose([])),
       cardNo: new FormControl(
         "",
-        Validators.compose([Validators.minLength(4),Validators.pattern("^([0-9])+$"),Validators.maxLength(6),])
+        Validators.compose([
+          Validators.minLength(4),
+          Validators.pattern("^([0-9])+$"),
+          Validators.maxLength(6),
+        ])
       ),
       nicDate: new FormControl("", Validators.compose([])),
       policeName: new FormControl(
@@ -397,7 +424,7 @@ export class AccountPage implements OnInit {
         message: "Content is required for sending.",
       },
     ],
-  }
+  };
   //  Validation Form
   validation_form = {
     email: [
@@ -409,7 +436,8 @@ export class AccountPage implements OnInit {
         type: "pattern",
         message: "Invalid email.",
       },
-    ],registarDivision: [
+    ],
+    registarDivision: [
       {
         type: "pattern",
         message: "Invalid name for division.",
@@ -660,13 +688,14 @@ export class AccountPage implements OnInit {
     this.http
       .get(
         "https://government-portal-stripe.herokuapp.com/validate?id=" +
-          sessionID)
+          sessionID
+      )
       .subscribe(
         // this.http
-      // .get(
-      //   "http://localhost:4242/validate?id=" +
-      //     sessionID)
-      // .subscribe(
+        // .get(
+        //   "http://localhost:4242/validate?id=" +
+        //     sessionID)
+        // .subscribe(
         async (data) => {
           console.log(data);
           if (data == "paid") {
