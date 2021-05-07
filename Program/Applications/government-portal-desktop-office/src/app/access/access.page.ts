@@ -9,9 +9,12 @@ import {
   ToastController,
   AlertController,
   NavController,
+  LoadingController,
 } from "@ionic/angular";
 import { AccessService } from "../service/access.service";
-
+import * as firebase from "firebase/app";
+import * as dateFormat from "dateformat";
+import { AngularFirestore } from "@angular/fire/firestore";
 @Component({
   selector: "app-access",
   templateUrl: "./access.page.html",
@@ -24,7 +27,9 @@ export class AccessPage implements OnInit {
   constructor(
     public toastController: ToastController,
     public alertController: AlertController,
+    public loadingController: LoadingController,
     public formBuilder: FormBuilder,
+    private firestore: AngularFirestore,
     private navCtrl: NavController,
     private accessService: AccessService
   ) {}
@@ -75,11 +80,32 @@ export class AccessPage implements OnInit {
     ],
   };
 /**Method for logging in officer */
-  private loginOfficer(value) {
+  private async loginOfficer(value) {
+    const loading = await this.loadingController.create({
+      message: "Logging in...",
+    });
     this.accessService.loginOfficer(value).then(
-      (res) => {
+      async (res) => {
         // console.log(res);
-        this.errorMessage = "";
+        loading.dismiss();
+
+        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        const eAdministration = this.firestore
+          .collection("eAdministration")
+          .doc("eServices")
+          .collection("SystemLogs")
+          .doc(date);
+        await eAdministration.set(
+          {
+            Login: firebase.default.firestore.FieldValue.arrayUnion(
+              "officer login attempt from " +
+                value.email +
+                " at: " +
+                new Date()
+            ),
+          },
+          { merge: true }
+        ),
         this.navCtrl.navigateForward("office/home-affairs");
       },
       async (err) => {
@@ -91,6 +117,24 @@ export class AccessPage implements OnInit {
           buttons: ["Close"],
         });
         await alert.present();
+        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        const eAdministration = this.firestore
+          .collection("eAdministration")
+          .doc("eServices")
+          .collection("SystemLogs")
+          .doc(date);
+        const res = await eAdministration.set(
+          {
+            Login: firebase.default.firestore.FieldValue.arrayUnion(
+              "officer failed login attempt " +
+                " using " +
+                value.email +
+                " at: " +
+                new Date()
+            ),
+          },
+          { merge: true }
+        );
       }
     );
   }

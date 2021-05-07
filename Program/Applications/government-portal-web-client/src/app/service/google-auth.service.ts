@@ -167,6 +167,24 @@ export class GoogleAuthService {
                     duration: 2000,
                   });
                   toast.present();
+                  var user = firebase.default.auth().currentUser;
+                  var date = dateFormat(new Date(), "mm-dd-yyyy");
+                  const eAdministration = this.firestore
+                    .collection("eAdministration")
+                    .doc("eServices")
+                    .collection("SystemLogs")
+                    .doc(date);
+                  await eAdministration.set(
+                    {
+                      Account: firebase.default.firestore.FieldValue.arrayUnion(
+                        "web eCitizen registered" +
+                          user.email +
+                          " at: " +
+                          new Date()
+                      ),
+                    },
+                    { merge: true }
+                  );
                   this.route.navigate(["sign-in"]);
                 });
               } else {
@@ -227,7 +245,25 @@ export class GoogleAuthService {
               doc.data()["gender"] == value.gender.toUpperCase() &&
               doc.data()["dateOfBirth"] == dateBirth
             ) {
-              return new Promise<any>((resolve, reject) => {
+              return new Promise<any>(async (resolve, reject) => {
+                var user = firebase.default.auth().currentUser;
+                var date = dateFormat(new Date(), "mm-dd-yyyy");
+                const eAdministration = this.firestore
+                  .collection("eAdministration")
+                  .doc("eServices")
+                  .collection("SystemLogs")
+                  .doc(date);
+                await eAdministration.set(
+                  {
+                    Login: firebase.default.firestore.FieldValue.arrayUnion(
+                      "web NIC application attempt from " +
+                        user.email +
+                        " at: " +
+                        new Date()
+                    ),
+                  },
+                  { merge: true }
+                );
                 var user = firebase.default.auth().currentUser;
                 this.firestore
                   .collection("/eApplications/")
@@ -342,6 +378,21 @@ export class GoogleAuthService {
         });
         await alert.present();
         var user = firebase.default.auth().currentUser;
+        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        const eAdministration = this.firestore
+          .collection("eAdministration")
+          .doc("eServices")
+          .collection("SystemLogs")
+          .doc(date);
+        await eAdministration.set(
+          {
+            Login: firebase.default.firestore.FieldValue.arrayUnion(
+              "web support message from" + user.email + " at: " + new Date()
+            ),
+          },
+          { merge: true }
+        );
+        var user = firebase.default.auth().currentUser;
         this.firestore
           .collection("/eSupport/")
           .doc()
@@ -399,6 +450,24 @@ export class GoogleAuthService {
           buttons: ["Close"],
         });
         await alert.present();
+        var user = firebase.default.auth().currentUser;
+        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        const eAdministration = this.firestore
+          .collection("eAdministration")
+          .doc("eServices")
+          .collection("SystemLogs")
+          .doc(date);
+        await eAdministration.set(
+          {
+            Login: firebase.default.firestore.FieldValue.arrayUnion(
+              "web failed login attempt from " +
+                value.email +
+                " at: " +
+                new Date()
+            ),
+          },
+          { merge: true }
+        );
       } else {
         this.gAuth.signInWithEmailAndPassword(value.email, value.password).then(
           (res) => resolve(res),
@@ -413,10 +482,25 @@ export class GoogleAuthService {
    */
   logoutCitizen() {
     return new Promise<void>((resolve, reject) => {
+      var user = firebase.default.auth().currentUser;
+      var date = dateFormat(new Date(), "mm-dd-yyyy");
       if (this.gAuth.currentUser) {
         this.gAuth
           .signOut()
-          .then(() => {
+          .then(async () => {
+            const eAdministration = this.firestore
+              .collection("eAdministration")
+              .doc("eServices")
+              .collection("SystemLogs")
+              .doc(date);
+            await eAdministration.set(
+              {
+                Login: firebase.default.firestore.FieldValue.arrayUnion(
+                  "web logout attempt from " + user.email + " at: " + new Date()
+                ),
+              },
+              { merge: true }
+            );
             // console.log("Signing out");
             resolve();
           })

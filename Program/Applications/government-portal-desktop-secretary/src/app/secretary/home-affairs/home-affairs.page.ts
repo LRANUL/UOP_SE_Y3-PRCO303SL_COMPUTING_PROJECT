@@ -1025,79 +1025,80 @@ export class HomeAffairsPage implements OnInit {
       });
     }
   }
-  /** Method for account PIN update */
-  async updateAccessPIN(governmentID) {
-    var Access_PIN = Math.floor(Math.random() * 9000000 + 1000000);
-    this.accessService.updateECitizenAccessPIN(Access_PIN, governmentID);
-    const alert = await this.alertController.create({
-      header: "Access PIN Updated ✔",
-      message: governmentID + " Access PIN has been updated",
-      buttons: ["OK"],
-    });
-    await alert.present();
-  }
-  /** Method for account activation */
-  activateAccount(user, governmentID) {
-    this.http
-      .get(
-        "https://government-portal-firebase.herokuapp.com/activate-user?uid=" +
-          user
-      )
-      .subscribe(
-        async (data) => {
-          // console.log(data);
-          this.accessService.activateECitizen(governmentID);
-          const alert = await this.alertController.create({
-            header: "Account Activated ✔",
-            message: governmentID + " has been activate",
-            buttons: ["OK"],
-          });
-          await alert.present();
-        },
-        async (error) => {
-          // console.log(error);
-          const alert = await this.alertController.create({
-            header: "🚫 Out of Service",
-            subHeader: "Server Access Timeout",
-            message:
-              "Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later or contact administrator",
-            buttons: ["OK"],
-          });
-          await alert.present();
-        }
-      );
-  }
+  // KEPT FOR FUTURE USE
+  // /** Method for account PIN update */
+  // async updateAccessPIN(governmentID) {
+  //   var Access_PIN = Math.floor(Math.random() * 9000000 + 1000000);
+  //   this.accessService.updateECitizenAccessPIN(Access_PIN, governmentID);
+  //   const alert = await this.alertController.create({
+  //     header: "Access PIN Updated ✔",
+  //     message: governmentID + " Access PIN has been updated",
+  //     buttons: ["OK"],
+  //   });
+  //   await alert.present();
+  // }
+  // /** Method for account activation */
+  // activateAccount(user, governmentID) {
+  //   this.http
+  //     .get(
+  //       "https://government-portal-firebase.herokuapp.com/activate-user?uid=" +
+  //         user
+  //     )
+  //     .subscribe(
+  //       async (data) => {
+  //         // console.log(data);
+  //         this.accessService.activateECitizen(governmentID);
+  //         const alert = await this.alertController.create({
+  //           header: "Account Activated ✔",
+  //           message: governmentID + " has been activate",
+  //           buttons: ["OK"],
+  //         });
+  //         await alert.present();
+  //       },
+  //       async (error) => {
+  //         // console.log(error);
+  //         const alert = await this.alertController.create({
+  //           header: "🚫 Out of Service",
+  //           subHeader: "Server Access Timeout",
+  //           message:
+  //             "Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later or contact administrator",
+  //           buttons: ["OK"],
+  //         });
+  //         await alert.present();
+  //       }
+  //     );
+  // }
 
-  disableAccount(user, governmentID) {
-    this.http
-      .get(
-        "https://government-portal-firebase.herokuapp.com/disable-user?uid=" +
-          user
-      )
-      .subscribe(
-        async (data) => {
-          // console.log(data);
-          this.accessService.disableECitizen(governmentID);
-          const alert = await this.alertController.create({
-            header: "Account Disabled ✔",
-            message: governmentID + " has been disabled",
-            buttons: ["OK"],
-          });
-          await alert.present();
-        },
-        async (error) => {
-          // console.log(error);
-          const alert = await this.alertController.create({
-            header: "🚫 Out of Service",
-            subHeader: "Server Access Timeout",
-            message:
-              "Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later or contact administrator",
-            buttons: ["OK"],
-          });
-          await alert.present();
-        }
-      );
-  }
+  // disableAccount(user, governmentID) {
+  //   this.http
+  //     .get(
+  //       "https://government-portal-firebase.herokuapp.com/disable-user?uid=" +
+  //         user
+  //     )
+  //     .subscribe(
+  //       async (data) => {
+  //         // console.log(data);
+  //         this.accessService.disableECitizen(governmentID);
+  //         const alert = await this.alertController.create({
+  //           header: "Account Disabled ✔",
+  //           message: governmentID + " has been disabled",
+  //           buttons: ["OK"],
+  //         });
+  //         await alert.present();
+  //       },
+  //       async (error) => {
+  //         // console.log(error);
+  //         const alert = await this.alertController.create({
+  //           header: "🚫 Out of Service",
+  //           subHeader: "Server Access Timeout",
+  //           message:
+  //             "Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later or contact administrator",
+  //           buttons: ["OK"],
+  //         });
+  //         await alert.present();
+  //       }
+  //     );
+  // }
 
   /**
    * Method reposible for sending validated data to google-auth service page for further verfication and uploading to firebase

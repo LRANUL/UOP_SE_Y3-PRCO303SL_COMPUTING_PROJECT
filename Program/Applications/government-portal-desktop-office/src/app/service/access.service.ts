@@ -166,6 +166,26 @@ export class AccessService {
       },
       { merge: true }
     );
+    var user = firebase.default.auth().currentUser;
+      var date = dateFormat(new Date(), "mm-dd-yyyy");
+      const eAdministrationLog = this.firestore
+        .collection("eAdministration")
+        .doc("eServices")
+        .collection("SystemLogs")
+        .doc(date);
+      await eAdministrationLog.set(
+        {
+          Account: firebase.default.firestore.FieldValue.arrayUnion(
+            "officer card PIN update attempt to " +
+              governmentID +
+              " from " +
+              user.email +
+              " at: " +
+              new Date()
+          ),
+        },
+        { merge: true }
+      );
   }
   /** Method for activating disabled eCitizen account */
   async activateECitizen(governmentID) {
@@ -176,6 +196,26 @@ export class AccessService {
       },
       { merge: true }
     );
+    var user = firebase.default.auth().currentUser;
+      var date = dateFormat(new Date(), "mm-dd-yyyy");
+      const eAdministrationLog = this.firestore
+        .collection("eAdministration")
+        .doc("eServices")
+        .collection("SystemLogs")
+        .doc(date);
+      await eAdministrationLog.set(
+        {
+          Account: firebase.default.firestore.FieldValue.arrayUnion(
+            "officer account activate attempt to " +
+              governmentID +
+              " from " +
+              user.email +
+              " at: " +
+              new Date()
+          ),
+        },
+        { merge: true }
+      );
   }
   /** Method for disabling active eCitizen account */
   async disableECitizen(governmentID) {
@@ -186,6 +226,26 @@ export class AccessService {
       },
       { merge: true }
     );
+    var user = firebase.default.auth().currentUser;
+      var date = dateFormat(new Date(), "mm-dd-yyyy");
+      const eAdministrationLog = this.firestore
+        .collection("eAdministration")
+        .doc("eServices")
+        .collection("SystemLogs")
+        .doc(date);
+      await eAdministrationLog.set(
+        {
+          Account: firebase.default.firestore.FieldValue.arrayUnion(
+            "officer account disable attempt to " +
+              governmentID +
+              " from " +
+              user.email +
+              " at: " +
+              new Date()
+          ),
+        },
+        { merge: true }
+      );
   }
   /** Method for permanentely locking eCitizen account, do not delete actual profile [HOLD FOR REFERENCES] */
   async deleteECitizen(governmentID) {
@@ -196,6 +256,26 @@ export class AccessService {
       },
       { merge: true }
     );
+    var user = firebase.default.auth().currentUser;
+      var date = dateFormat(new Date(), "mm-dd-yyyy");
+      const eAdministrationLog = this.firestore
+        .collection("eAdministration")
+        .doc("eServices")
+        .collection("SystemLogs")
+        .doc(date);
+      await eAdministrationLog.set(
+        {
+          Account: firebase.default.firestore.FieldValue.arrayUnion(
+            "officer account delete attempt to " +
+              governmentID +
+              " from " +
+              user.email +
+              " at: " +
+              new Date()
+          ),
+        },
+        { merge: true }
+      );
   }
   /** Method for setting application to processing */
   async setApplicationToProcessing(DocumentID) {
@@ -223,6 +303,26 @@ export class AccessService {
     await eAdministration.set(
       {
         documentsHandled: documentNo,
+      },
+      { merge: true }
+    );
+    var user = firebase.default.auth().currentUser;
+    var date = dateFormat(new Date(), "mm-dd-yyyy");
+    const eAdministrationLog = this.firestore
+      .collection("eAdministration")
+      .doc("eServices")
+      .collection("SystemLogs")
+      .doc(date);
+    await eAdministrationLog.set(
+      {
+        Account: firebase.default.firestore.FieldValue.arrayUnion(
+          "secretary set NIC application to Phase 2 with ID " +
+            DocumentID +
+            " from " +
+            user.email +
+            " at: " +
+            new Date()
+        ),
       },
       { merge: true }
     );
@@ -256,6 +356,26 @@ export class AccessService {
       },
       { merge: true }
     );
+    var user = firebase.default.auth().currentUser;
+    var date = dateFormat(new Date(), "mm-dd-yyyy");
+    const eAdministrationLog = this.firestore
+      .collection("eAdministration")
+      .doc("eServices")
+      .collection("SystemLogs")
+      .doc(date);
+    await eAdministrationLog.set(
+      {
+        Account: firebase.default.firestore.FieldValue.arrayUnion(
+          "secretary set NIC application to Processed with ID " +
+            DocumentID +
+            " from " +
+            user.email +
+            " at: " +
+            new Date()
+        ),
+      },
+      { merge: true }
+    );
   }
   /** Method for declining application*/
   async setApplicationToDeclined(DocumentID, Reason) {
@@ -281,6 +401,26 @@ export class AccessService {
     await eAdministration.set(
       {
         documentsHandled: documentNo,
+      },
+      { merge: true }
+    );
+    var user = firebase.default.auth().currentUser;
+    var date = dateFormat(new Date(), "mm-dd-yyyy");
+    const eAdministrationLog = this.firestore
+      .collection("eAdministration")
+      .doc("eServices")
+      .collection("SystemLogs")
+      .doc(date);
+    await eAdministrationLog.set(
+      {
+        Account: firebase.default.firestore.FieldValue.arrayUnion(
+          "secretary declined application with ID " +
+            DocumentID +
+            " from " +
+            user.email +
+            " at: " +
+            new Date()
+        ),
       },
       { merge: true }
     );
@@ -367,6 +507,26 @@ export class AccessService {
         buttons: ["OK"],
       });
       await alert.present();
+      var user = firebase.default.auth().currentUser;
+      var date = dateFormat(new Date(), "mm-dd-yyyy");
+      const eAdministrationLog = this.firestore
+        .collection("eAdministration")
+        .doc("eServices")
+        .collection("SystemLogs")
+        .doc(date);
+      await eAdministrationLog.set(
+        {
+          Application: firebase.default.firestore.FieldValue.arrayUnion(
+            "officer NIC application attempt to " +
+              value.GovernmentID +
+              " from " +
+              user.email +
+              " at: " +
+              new Date()
+          ),
+        },
+        { merge: true }
+      );
     });
   }
   /** Method for sending officer support request to Administrator */
@@ -384,6 +544,24 @@ export class AccessService {
       Subject: value.subject,
       Response: "Support Request Sent | Wait for Response",
     });
+    var user = firebase.default.auth().currentUser;
+      var date = dateFormat(new Date(), "mm-dd-yyyy");
+      const eAdministrationLog = this.firestore
+        .collection("eAdministration")
+        .doc("eServices")
+        .collection("SystemLogs")
+        .doc(date);
+      await eAdministrationLog.set(
+        {
+          Application: firebase.default.firestore.FieldValue.arrayUnion(
+            "officer technical message attempt from" +
+              user.email +
+              " at: " +
+              new Date()
+          ),
+        },
+        { merge: true }
+      );
   }
   /** Method for marking messages as read */
   async markTechMessageRead(ID) {
@@ -412,6 +590,25 @@ export class AccessService {
         { merge: true }
       );
       var user = firebase.default.auth().currentUser;
+      var date = dateFormat(new Date(), "mm-dd-yyyy");
+      const eAdministrationLog = this.firestore
+        .collection("eAdministration")
+        .doc("eServices")
+        .collection("SystemLogs")
+        .doc(date);
+      await eAdministrationLog.set(
+        {
+          Application: firebase.default.firestore.FieldValue.arrayUnion(
+            "officer message attempt to " +
+              ID +
+              " from " +
+              user.email +
+              " at: " +
+              new Date()
+          ),
+        },
+        { merge: true }
+      );
       var supportNo = firebase.default.firestore.FieldValue.increment(1);
       var date = dateFormat(new Date(), "mm-dd-yyyy");
       const eAdministration = this.firestore
@@ -445,6 +642,7 @@ export class AccessService {
           (res) => resolve(res),
           (err) => reject(err)
         );
+        
         this.navCtrl.navigateForward("office/home-affairs");
       } else {
         const alert = await this.alertController.create({
@@ -453,17 +651,54 @@ export class AccessService {
           buttons: ["Close"],
         });
         await alert.present();
+        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        const eAdministration = this.firestore
+          .collection("eAdministration")
+          .doc("eServices")
+          .collection("SystemLogs")
+          .doc(date);
+        const res = await eAdministration.set(
+          {
+            Login: firebase.default.firestore.FieldValue.arrayUnion(
+              "officer failed login attempt " +
+                " using " +
+                value.email +
+                " at: " +
+                new Date()
+            ),
+          },
+          { merge: true }
+        );
       }
     });
   }
   /**Method for logging user out */
   logoutOfficer() {
     return new Promise<void>((resolve, reject) => {
+      var user = firebase.default.auth().currentUser;
+            var date = dateFormat(new Date(), "mm-dd-yyyy");
       if (this.auth.currentUser) {
         this.auth
           .signOut()
-          .then(() => {
+          .then(async () => {
             // console.log("Signing out");
+            
+            const eAdministration = this.firestore
+              .collection("eAdministration")
+              .doc("eServices")
+              .collection("SystemLogs")
+              .doc(date);
+            await eAdministration.set(
+              {
+                Login: firebase.default.firestore.FieldValue.arrayUnion(
+                  "officer logout attempt from " +
+                    user.email +
+                    " at: " +
+                    new Date()
+                ),
+              },
+              { merge: true }
+            );
             this.navCtrl.navigateForward("access");
             resolve();
           })

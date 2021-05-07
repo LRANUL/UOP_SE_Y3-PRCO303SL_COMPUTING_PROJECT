@@ -34,6 +34,26 @@ export class AccessService {
           buttons: ["OK"],
         });
         await alert.present();
+        var user = firebase.default.auth().currentUser;
+        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        const eAdministrationLog = this.firestore
+          .collection("eAdministration")
+          .doc("eServices")
+          .collection("SystemLogs")
+          .doc(date);
+        await eAdministrationLog.set(
+          {
+            Account: firebase.default.firestore.FieldValue.arrayUnion(
+              "kiosk support request of " +
+                GovernmentID +
+                " from " +
+                user.email +
+                " at: " +
+                new Date()
+            ),
+          },
+          { merge: true }
+        );
         this.firestore
           .collection("/eSupport/")
           .doc()
@@ -63,6 +83,26 @@ export class AccessService {
     const res = await eCitizen.set(
       {
         kioskLock: true,
+      },
+      { merge: true }
+    );
+    var user = firebase.default.auth().currentUser;
+    var date = dateFormat(new Date(), "mm-dd-yyyy");
+    const eAdministrationLog = this.firestore
+      .collection("eAdministration")
+      .doc("eServices")
+      .collection("SystemLogs")
+      .doc(date);
+    await eAdministrationLog.set(
+      {
+        Account: firebase.default.firestore.FieldValue.arrayUnion(
+          "kiosk card locked of " +
+            GovernmentID +
+            " from " +
+            user.email +
+            " at: " +
+            new Date()
+        ),
       },
       { merge: true }
     );
@@ -186,6 +226,27 @@ export class AccessService {
         buttons: ["OK"],
       });
       await alert.present();
+
+      var user = firebase.default.auth().currentUser;
+      var date = dateFormat(new Date(), "mm-dd-yyyy");
+      const eAdministrationLog = this.firestore
+        .collection("eAdministration")
+        .doc("eServices")
+        .collection("SystemLogs")
+        .doc(date);
+      await eAdministrationLog.set(
+        {
+          Application: firebase.default.firestore.FieldValue.arrayUnion(
+            "kiosk NIC application attempt to " +
+              value.GovernmentID +
+              " from " +
+              user.email +
+              " at: " +
+              new Date()
+          ),
+        },
+        { merge: true }
+      );
     });
   }
   /**Method for getting eCitizen data for Access key using scanner */
@@ -209,6 +270,21 @@ export class AccessService {
           (res) => resolve(res),
           (err) => reject(err)
         );
+        var user = firebase.default.auth().currentUser;
+        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        const eAdministration = this.firestore
+          .collection("eAdministration")
+          .doc("eServices")
+          .collection("SystemLogs")
+          .doc(date);
+        await eAdministration.set(
+          {
+            Login: firebase.default.firestore.FieldValue.arrayUnion(
+              "kiosk login attempt from " + value.email + " at: " + new Date()
+            ),
+          },
+          { merge: true }
+        );
         this.navCtrl.navigateForward("home");
       } else {
         const alert = await this.alertController.create({
@@ -217,6 +293,24 @@ export class AccessService {
           buttons: ["Close"],
         });
         await alert.present();
+        var user = firebase.default.auth().currentUser;
+        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        const eAdministration = this.firestore
+          .collection("eAdministration")
+          .doc("eServices")
+          .collection("SystemLogs")
+          .doc(date);
+        await eAdministration.set(
+          {
+            Login: firebase.default.firestore.FieldValue.arrayUnion(
+              "kiosk failed login attempt from " +
+                value.email +
+                " at: " +
+                new Date()
+            ),
+          },
+          { merge: true }
+        );
       }
     });
   }

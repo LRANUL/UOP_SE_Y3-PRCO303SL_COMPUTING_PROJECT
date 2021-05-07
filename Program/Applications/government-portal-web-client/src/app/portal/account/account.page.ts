@@ -20,7 +20,7 @@ import {
   FormControl,
 } from "@angular/forms";
 import * as dateFormat from "dateformat";
-import firebase from "firebase/app";
+import * as firebase from "firebase/app";
 import { loadStripe } from "@stripe/stripe-js";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 /**
@@ -99,7 +99,7 @@ export class AccountPage implements OnInit {
           backdropDismiss: true,
         });
         await loading.present();
-        var user = firebase.auth().currentUser;
+        var user = firebase.default.auth().currentUser;
 
         if (user != null) {
           this.Displayname = user.displayName;
@@ -684,7 +684,7 @@ export class AccountPage implements OnInit {
    * @param sessionID contains server send token ID used for validation on pending payments
    */
   validate(sessionID, token) {
-    var user = firebase.auth().currentUser;
+    var user = firebase.default.auth().currentUser;
     this.http
       .get(
         "https://government-portal-stripe.herokuapp.com/validate?id=" +
@@ -707,6 +707,24 @@ export class AccountPage implements OnInit {
               buttons: ["OK"],
             });
             await alert.present();
+            var user = firebase.default.auth().currentUser;
+            var date = dateFormat(new Date(), "mm-dd-yyyy");
+            const eAdministration = this.firestore
+              .collection("eAdministration")
+              .doc("eServices")
+              .collection("SystemLogs")
+              .doc(date);
+            await eAdministration.set(
+              {
+                Account: firebase.default.firestore.FieldValue.arrayUnion(
+                  "web send NIC application from " +
+                    user.email +
+                    " at: " +
+                    new Date()
+                ),
+              },
+              { merge: true }
+            );
             const eApplication = this.firestore
               .collection("eApplications")
               .doc(token);
@@ -725,6 +743,24 @@ export class AccountPage implements OnInit {
               buttons: ["OK"],
             });
             await alert.present();
+            var user = firebase.default.auth().currentUser;
+            var date = dateFormat(new Date(), "mm-dd-yyyy");
+            const eAdministration = this.firestore
+              .collection("eAdministration")
+              .doc("eServices")
+              .collection("SystemLogs")
+              .doc(date);
+            await eAdministration.set(
+              {
+                Account: firebase.default.firestore.FieldValue.arrayUnion(
+                  "web failed payment " +
+                    user.email +
+                    " at: " +
+                    new Date()
+                ),
+              },
+              { merge: true }
+            );
             const eApplication = this.firestore
               .collection("eApplications")
               .doc(token);
@@ -749,6 +785,21 @@ export class AccountPage implements OnInit {
       backdropDismiss: true,
     });
     await loading.present();
+    var user = firebase.default.auth().currentUser;
+    var date = dateFormat(new Date(), "mm-dd-yyyy");
+    const eAdministration = this.firestore
+      .collection("eAdministration")
+      .doc("eServices")
+      .collection("SystemLogs")
+      .doc(date);
+    await eAdministration.set(
+      {
+        Login: firebase.default.firestore.FieldValue.arrayUnion(
+          "web logout attempt from " + user.email + " at: " + new Date()
+        ),
+      },
+      { merge: true }
+    );
     this.authService
       .logoutCitizen()
       .then(async (res) => {
@@ -881,7 +932,7 @@ export class AccountPage implements OnInit {
     this.foreignCitizen = false;
   }
   async getPortalPIN() {
-    var user = firebase.auth().currentUser;
+    var user = firebase.default.auth().currentUser;
     await this.firestore
       .collection("eCitizens/")
       .doc(user.displayName)
@@ -1053,7 +1104,7 @@ export class AccountPage implements OnInit {
         {
           text: "Change",
           handler: async (alertData) => {
-            var user = firebase.auth().currentUser;
+            var user = firebase.default.auth().currentUser;
             user
               .updatePassword(alertData.password)
               .then(async (res) => {
@@ -1108,7 +1159,7 @@ export class AccountPage implements OnInit {
         {
           text: "Change",
           handler: async (alertData) => {
-            var user = firebase.auth().currentUser;
+            var user = firebase.default.auth().currentUser;
             user
               .updateEmail(alertData.email)
               .then(async (res) => {
@@ -1117,6 +1168,24 @@ export class AccountPage implements OnInit {
                   duration: 2000,
                 });
                 toast.present();
+                var user = firebase.default.auth().currentUser;
+                var date = dateFormat(new Date(), "mm-dd-yyyy");
+                const eAdministration = this.firestore
+                  .collection("eAdministration")
+                  .doc("eServices")
+                  .collection("SystemLogs")
+                  .doc(date);
+                await eAdministration.set(
+                  {
+                    Account: firebase.default.firestore.FieldValue.arrayUnion(
+                      "web email update attempt from " +
+                        user.email +
+                        " at: " +
+                        new Date()
+                    ),
+                  },
+                  { merge: true }
+                );
               })
               .catch(async (error) => {
                 const toast = await this.toastController.create({

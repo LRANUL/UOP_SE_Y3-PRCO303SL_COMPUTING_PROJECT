@@ -1696,7 +1696,38 @@ export class HomeAffairsPage implements OnInit {
   }
   /**Logs out Officer */
   async logoutOfficer() {
-    this.accessService.logoutOfficer();
+    const loading = await this.loadingController.create({
+      message: "Logging out...",
+    });
+    await loading.present();
+    this.accessService.logoutOfficer().then(
+      async (res) => {
+        // console.log(res);
+        loading.dismiss();
+      },
+      async (err) => {
+        loading.dismiss();
+        var user = firebase.default.auth().currentUser;
+        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        const eAdministration = this.firestore
+          .collection("eAdministration")
+          .doc("eServices")
+          .collection("SystemLogs")
+          .doc(date);
+
+        await eAdministration.set(
+          {
+            Login: firebase.default.firestore.FieldValue.arrayUnion(
+              "officer failed logout attempt from " +
+                user.email +
+                " at: " +
+                new Date()
+            ),
+          },
+          { merge: true }
+        );
+      }
+    );
     // Automated Checkout during signout | Not to implement with sign as auth may recheck user status effecting work records
     this.accessService.signOff();
     const toast = await this.toastController.create({

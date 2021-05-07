@@ -14,8 +14,8 @@ import {
   ToastController,
 } from "@ionic/angular";
 import { GoogleAuthService } from "../service/google-auth.service";
-import firebase from "firebase/app";
-
+import * as firebase from "firebase/app";
+import * as dateFormat from "dateformat";
 @Component({
   selector: "app-sign-in",
   templateUrl: "./sign-in.page.html",
@@ -126,7 +126,7 @@ export class SignInPage implements OnInit {
         {
           text: "Change",
           handler: async (alertData) => {
-            var auth = firebase.auth();
+            var auth = firebase.default.auth();
             auth
               .sendPasswordResetEmail(alertData.email)
               .then(async (res) => {
@@ -179,15 +179,53 @@ export class SignInPage implements OnInit {
    * Method for logging in Citizen
    * @param value form credentials
    */
-  loginCitizen(value) {
+  async loginCitizen(value) {
+    const loading = await this.loadingController.create({
+      message: "Logging in...",
+    });
+    await loading.present();
     this.authService.loginCitizen(value).then(
-      (res) => {
+      async (res) => {
         // console.log(res);
-        this.errorMessage = "";
-        this.navCtrl.navigateForward("account");
+        loading.dismiss();
+
+        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        const eAdministration = this.firestore
+          .collection("eAdministration")
+          .doc("eServices")
+          .collection("SystemLogs")
+          .doc(date);
+        await eAdministration.set(
+          {
+            Login: firebase.default.firestore.FieldValue.arrayUnion(
+              "web login attempt from " + value.email + " at: " + new Date()
+            ),
+          },
+          { merge: true }
+        ),
+          this.navCtrl.navigateForward("account");
       },
-      (err) => {
+      async (err) => {
         this.errorMessage = err.message;
+        loading.dismiss();
+
+        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        const eAdministration = this.firestore
+          .collection("eAdministration")
+          .doc("eServices")
+          .collection("SystemLogs")
+          .doc(date);
+        await eAdministration.set(
+          {
+            Login: firebase.default.firestore.FieldValue.arrayUnion(
+              "web failed login attempt from " +
+                value.email +
+                " at: " +
+                new Date()
+            ),
+          },
+          { merge: true }
+        );
       }
     );
   }

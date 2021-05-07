@@ -9,8 +9,12 @@ import {
   ToastController,
   AlertController,
   NavController,
+  LoadingController,
 } from "@ionic/angular";
 import { AccessService } from "../service/access.service";
+import * as firebase from "firebase/app";
+import * as dateFormat from "dateformat";
+import { AngularFirestore } from "@angular/fire/firestore";
 
 @Component({
   selector: "app-access",
@@ -24,6 +28,8 @@ export class AccessPage implements OnInit {
   constructor(
     public toastController: ToastController,
     public alertController: AlertController,
+    private firestore: AngularFirestore,
+    public loadingController: LoadingController,
     public formBuilder: FormBuilder,
     private navCtrl: NavController,
     private accessService: AccessService
@@ -77,12 +83,34 @@ export class AccessPage implements OnInit {
   /** Method for logging in Administrator
    * @param {form} get form crendentials for authenticating
    */
-  loginAdmin(value) {
+  async loginAdmin(value) {
+    const loading = await this.loadingController.create({
+      message: "Logging in...",
+    });
+    await loading.present();
     this.accessService.loginAdmin(value).then(
-      (res) => {
+      async (res) => {
         // console.log(res);
-        this.errorMessage = "";
-        this.navCtrl.navigateForward("admin");
+        loading.dismiss();
+
+        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        const eAdministration = this.firestore
+          .collection("eAdministration")
+          .doc("eServices")
+          .collection("SystemLogs")
+          .doc(date);
+        await eAdministration.set(
+          {
+            Login: firebase.default.firestore.FieldValue.arrayUnion(
+              "administrator login attempt from " +
+                value.email +
+                " at: " +
+                new Date()
+            ),
+          },
+          { merge: true }
+        ),
+          this.navCtrl.navigateForward("admin");
       },
       async (err) => {
         this.errorMessage = err.message;
@@ -93,6 +121,23 @@ export class AccessPage implements OnInit {
           buttons: ["Close"],
         });
         await alert.present();
+        loading.dismiss();
+
+        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        const eAdministration = this.firestore
+          .collection("eAdministration")
+          .doc("eServices")
+          .collection("SystemLogs")
+          .doc(date);
+        await eAdministration.set({
+          Login: firebase.default.firestore.FieldValue.arrayUnion(
+            "administrator failed login attempt from " +
+              value.email +
+              " at: " +
+              new Date()
+          ),
+        },
+        { merge: true });
       }
     );
   }

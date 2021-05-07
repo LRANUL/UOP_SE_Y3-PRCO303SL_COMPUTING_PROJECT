@@ -29,9 +29,6 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then( m => m.AdminPageModule),
     ...canActivate(redirectUnauthorizedToAccess)
-  },  {
-    path: 'activities',
-    loadChildren: () => import('./activities/activities.module').then( m => m.ActivitiesPageModule)
   },
 
 ];

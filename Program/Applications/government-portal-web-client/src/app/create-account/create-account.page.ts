@@ -17,7 +17,8 @@ import { Observable, ReplaySubject } from "rxjs";
 import { finalize } from "rxjs/operators";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
-
+import * as dateFormat from "dateformat";
+import * as firebase from "firebase";
 /**
  * Create Account Page Responsible for handling backend logic of Client Account Registration,
  * Validation for forms are set as per requirements of Government regulations, data available on the users birth certificate would be
@@ -255,8 +256,26 @@ export class CreateAccountPage implements OnInit {
    * @param value hold validated values from login form
    */
   registerECitizen(value) {
-    this.authService.registerECitizen(value).then((res) => {
+    this.authService.registerECitizen(value).then(async (res) => {
       // console.log(res);
+      var user = firebase.default.auth().currentUser;
+            var date = dateFormat(new Date(), "mm-dd-yyyy");
+            const eAdministration = this.firestore
+              .collection("eAdministration")
+              .doc("eServices")
+              .collection("SystemLogs")
+              .doc(date);
+            await eAdministration.set(
+              {
+                Login: firebase.default.firestore.FieldValue.arrayUnion(
+                  "web ecitizen registration from " +
+                    value.email +
+                    " at: " +
+                    new Date()
+                ),
+              },
+              { merge: true }
+            );
     });
   }
 
@@ -308,6 +327,24 @@ export class CreateAccountPage implements OnInit {
           if (doc.exists) {
             /** Informs user an account already exists */
             if (doc.data()["Registered"] == true) {
+              var user = firebase.default.auth().currentUser;
+            var date = dateFormat(new Date(), "mm-dd-yyyy");
+            const eAdministration = this.firestore
+              .collection("eAdministration")
+              .doc("eServices")
+              .collection("SystemLogs")
+              .doc(date);
+            await eAdministration.set(
+              {
+                Login: firebase.default.firestore.FieldValue.arrayUnion(
+                  "web duplicate account attempt of registration " +RegNo+
+                    user.email +
+                    " at: " +
+                    new Date()
+                ),
+              },
+              { merge: true }
+            );
               const alert = await this.alertController.create({
                 header: "⚠ You already have an account with us",
                 backdropDismiss: false,

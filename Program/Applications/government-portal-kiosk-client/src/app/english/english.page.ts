@@ -98,7 +98,22 @@ export class EnglishPage implements OnInit {
     this.portalScanner = false;
     // 15 Minutes and logout initiated
     this.kioskUserTimer();
-    setTimeout(() => {
+    setTimeout(async () => {
+      var user = firebase.default.auth().currentUser;
+        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        const eAdministration = this.firestore
+          .collection("eAdministration")
+          .doc("eServices")
+          .collection("SystemLogs")
+          .doc(date);
+        await eAdministration.set(
+          {
+            Login: firebase.default.firestore.FieldValue.arrayUnion(
+              "kiosk logout attempt from ID " + this.GovernmentID + " from "+ user.email +" at: " + new Date()
+            ),
+          },
+          { merge: true }
+        );
       localStorage.removeItem("GovernmentID");
       this.navCtrl.navigateForward("home");
     }, 900000);
@@ -1040,7 +1055,22 @@ export class EnglishPage implements OnInit {
   /**
    * Method for logging out temporary signined eCitizen
    */
-  Logout() {
+  async Logout() {
+    var user = firebase.default.auth().currentUser;
+        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        const eAdministration = this.firestore
+          .collection("eAdministration")
+          .doc("eServices")
+          .collection("SystemLogs")
+          .doc(date);
+        await eAdministration.set(
+          {
+            Login: firebase.default.firestore.FieldValue.arrayUnion(
+              "kiosk logout attempt from ID " + this.GovernmentID + " from "+ user.email +" at: " + new Date()
+            ),
+          },
+          { merge: true }
+        );
     localStorage.removeItem("GovernmentID");
     this.navCtrl.navigateForward("home");
   }

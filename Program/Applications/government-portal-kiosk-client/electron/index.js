@@ -30,17 +30,19 @@ app.whenReady().then(() => {
         title: "Government Portal Kiosk",
         message: "Software Information",
         detail:
-          "Version: " +
-          app.getVersion() +
-          "\nDeveloper: Ranul Ladduwahetty (Student ID: 10673986)\n" +
-          "Module Code: PRCO303SL\n" +
-          "Module Name: Computing Project\n" +
-          "Current OS: " +
-          OperatingSystem.type +
-          OperatingSystem.release +
-          "\n" +
-          "Credits: Special Thanks to my supervisor, without his supervision and guidance this work would not have been possible.\nAll authors where illustrations or dependencies were taken have been credited were possible." +
-          "\n\nAbout: Developed for module PRCO303SL coursework by Ranul Ladduwahetty, Student at University of Plymouth.\n",
+        "Version: " +
+        app.getVersion() +
+        "\nSupervisor: Prof Chaminda Rathnayake\n" +
+        "Developer: Ranul Ladduwahetty (Student ID: 10673986)\n" +
+        "Module Code: PRCO303SL\n" +
+        "Module Name: Computing Project\n" +
+        "Current OS: " +
+        OperatingSystem.type +
+        " " +
+        OperatingSystem.release +
+        "\n" +
+        "Credits: Special Thanks to my supervisor, without his supervision and guidance this work would not have been possible.\nAll authors where illustrations or dependencies were taken have been credited were possible." +
+        "\n\nAbout: Developed for module PRCO303SL coursework by Ranul Ladduwahetty, Student at University of Plymouth.\n",
       };
       dialog.showMessageBox(null, options);
     }

@@ -840,7 +840,7 @@
   <div *ngIf="statisticsPanel" style="width: 100%">
     <ion-grid>
       <ion-row>
-        <ion-col class="start" style="padding-left: 5%">
+        <ion-col class="start" style="padding-left: 5%;height: 30%;">
           <h2 style="font-size: x-large"><strong>System Management</strong></h2>
           <div>
             <ion-list class="ios">
@@ -886,6 +886,48 @@
               </ion-item>
             </ion-list>
           </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col color="dark" style="padding-left: 5%;height: 70%;">
+          <h2 style="font-size: x-large"><strong>System Logs</strong></h2>
+          <ion-row style="height: 200px">
+            <ion-col>
+              <h4 style="font-size: small"><strong>Account Events</strong></h4>
+              <div style="overflow: auto; height: 250px">
+                <ion-card
+                  color="dark"
+                  *ngFor="let login of Logins | filter:filterAccount"
+                >
+                  {{login}}
+                </ion-card>
+              </div>
+            </ion-col>
+            <ion-col>
+              <h4 style="font-size: small"><strong>Card Events</strong></h4>
+              <div style="overflow: auto; height: 250px">
+                <ion-card
+                  color="dark"
+                  *ngFor="let lock of Locks | filter:filterCard"
+                >
+                  {{lock}}
+                </ion-card>
+              </div>
+            </ion-col>
+            <ion-col>
+              <h4 style="font-size: small">
+                <strong>Application Events</strong>
+              </h4>
+              <div style="overflow: auto; height: 250px">
+                <ion-card
+                  color="dark"
+                  *ngFor="let application of Applications | filter:filterApplication"
+                >
+                  {{application}}
+                </ion-card>
+              </div>
+            </ion-col>
+          </ion-row>
         </ion-col>
       </ion-row>
     </ion-grid>

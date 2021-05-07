@@ -1,8 +1,12 @@
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { AlertController, NavController } from "@ionic/angular";
-import * as firebase from "firebase";
+import {
+  AlertController,
+  LoadingController,
+  NavController,
+} from "@ionic/angular";
+import * as firebase from "firebase/app";
 import * as dateFormat from "dateformat";
 import { HttpClient } from "@angular/common/http";
 
@@ -10,17 +14,17 @@ import { HttpClient } from "@angular/common/http";
   providedIn: "root",
 })
 export class AccessService {
-  
   private BASE_URL = "https://government-portal-firebase.herokuapp.com/";
 
   constructor(
     public http: HttpClient,
     private firestore: AngularFirestore,
     private auth: AngularFireAuth,
+    public loadingController: LoadingController,
     public alertController: AlertController,
     private navCtrl: NavController
   ) {}
-    /** Management of System via Remote Configuration - Allows management of all system clients */
+  /** Management of System via Remote Configuration - Allows management of all system clients */
   // Setting Maintenance Status Line 16-31
   setSystemMaintenance(value) {
     return this.http.get(this.BASE_URL + "system_maintenance?value=" + value);
@@ -110,6 +114,26 @@ export class AccessService {
             buttons: ["OK"],
           });
           await alert.present();
+          var user = firebase.default.auth().currentUser;
+          var date = dateFormat(new Date(), "mm-dd-yyyy");
+          const eAdministration = this.firestore
+            .collection("eAdministration")
+            .doc("eServices")
+            .collection("SystemLogs")
+            .doc(date);
+          const res = await eAdministration.set(
+            {
+              Lock: firebase.default.firestore.FieldValue.arrayUnion(
+                "administrator account create attempt to " +
+                  value.email +
+                  " from " +
+                  user.email +
+                  " at: " +
+                  new Date()
+              ),
+            },
+            { merge: true }
+          );
         },
         async (error) => {
           // console.log(error);
@@ -121,6 +145,26 @@ export class AccessService {
             buttons: ["OK"],
           });
           await alert.present();
+          var user = firebase.default.auth().currentUser;
+          var date = dateFormat(new Date(), "mm-dd-yyyy");
+          const eAdministration = this.firestore
+            .collection("eAdministration")
+            .doc("eServices")
+            .collection("SystemLogs")
+            .doc(date);
+          const res = await eAdministration.set(
+            {
+              Account: firebase.default.firestore.FieldValue.arrayUnion(
+                "administrator failed server contact on attempt to create " +
+                  value.email +
+                  " from " +
+                  user.email +
+                  " at: " +
+                  new Date()
+              ),
+            },
+            { merge: true }
+          );
         }
       );
   }
@@ -130,50 +174,121 @@ export class AccessService {
    * @returns unlock result
    */
   async PortalCardManage(Status: any, GovernmentID: any) {
+    const loading = await this.loadingController.create({
+      message: "Please wait...",
+    });
+    await loading.present();
     const eCitizen = this.firestore.collection("eCitizens").doc(GovernmentID);
-    const res = await eCitizen.set(
-      {
-        kioskLock: Status,
-      },
-      { merge: true }
-    ).then(
-      async (data) => {
-        if(Status == true){
+    const res = await eCitizen
+      .set(
+        {
+          kioskLock: Status,
+        },
+        { merge: true }
+      )
+      .then(
+        async (data) => {
+          if (Status == true) {
+            const alert = await this.alertController.create({
+              header: "Card Locked 🔓",
+              message: GovernmentID + " card has been locked.",
+              buttons: ["OK"],
+            });
+            await alert.present();
+            loading.dismiss();
+            var user = firebase.default.auth().currentUser;
+            var date = dateFormat(new Date(), "mm-dd-yyyy");
+            const eAdministration = this.firestore
+              .collection("eAdministration")
+              .doc("eServices")
+              .collection("SystemLogs")
+              .doc(date);
+            const res = await eAdministration.set(
+              {
+                Lock: firebase.default.firestore.FieldValue.arrayUnion(
+                  "administrator card lock attempt to " +
+                    GovernmentID +
+                    " from " +
+                    user.email +
+                    " at: " +
+                    new Date()
+                ),
+              },
+              { merge: true }
+            );
+          } else {
+            const alert = await this.alertController.create({
+              header: "Card UnLocked 🔓",
+              message: GovernmentID + " card has been unlocked.",
+              buttons: ["OK"],
+            });
+            await alert.present();
+            loading.dismiss();
+            var user = firebase.default.auth().currentUser;
+            var date = dateFormat(new Date(), "mm-dd-yyyy");
+            const eAdministration = this.firestore
+              .collection("eAdministration")
+              .doc("eServices")
+              .collection("SystemLogs")
+              .doc(date);
+            const res = await eAdministration.set(
+              {
+                Lock: firebase.default.firestore.FieldValue.arrayUnion(
+                  "administrator card unlock attempt to " +
+                    GovernmentID +
+                    " from " +
+                    user.email +
+                    " at: " +
+                    new Date()
+                ),
+              },
+              { merge: true }
+            );
+          }
+        },
+        async (error) => {
+          // console.log(error);
           const alert = await this.alertController.create({
-            header: "Card Locked 🔓",
-            message: GovernmentID + " card has been locked.",
+            header: "🚫 Out of Service",
+            subHeader: "Server Access Timeout",
+            message:
+              "Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later.",
             buttons: ["OK"],
           });
           await alert.present();
+          loading.dismiss();
+          var user = firebase.default.auth().currentUser;
+          var date = dateFormat(new Date(), "mm-dd-yyyy");
+          const eAdministration = this.firestore
+            .collection("eAdministration")
+            .doc("eServices")
+            .collection("SystemLogs")
+            .doc(date);
+          const res = await eAdministration.set(
+            {
+              Lock: firebase.default.firestore.FieldValue.arrayUnion(
+                "administrator failed server contact on attempt to manage card " +
+                  GovernmentID +
+                  " from " +
+                  user.email +
+                  " at: " +
+                  new Date()
+              ),
+            },
+            { merge: true }
+          );
         }
-        else{
-          const alert = await this.alertController.create({
-            header: "Card UnLocked 🔓",
-            message: GovernmentID + " card has been unlocked.",
-            buttons: ["OK"],
-          });
-          await alert.present();
-        }
-      },
-      async (error) => {
-        // console.log(error);
-        const alert = await this.alertController.create({
-          header: "🚫 Out of Service",
-          subHeader: "Server Access Timeout",
-          message:
-            "Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later.",
-          buttons: ["OK"],
-        });
-        await alert.present();
-      }
-    );
-
+      );
   }
   /**
    * Method for Kiosk Registration
    * @param {Form} contains form data
    * */
-  registerKiosk(value) {
+  async registerKiosk(value) {
+    const loading = await this.loadingController.create({
+      message: "Registering...",
+    });
+    await loading.present();
     this.http
       .post(
         // "http://localhost:5000/create-user", {
@@ -191,6 +306,27 @@ export class AccessService {
             buttons: ["OK"],
           });
           await alert.present();
+          loading.dismiss();
+          var user = firebase.default.auth().currentUser;
+          var date = dateFormat(new Date(), "mm-dd-yyyy");
+          const eAdministration = this.firestore
+            .collection("eAdministration")
+            .doc("eServices")
+            .collection("SystemLogs")
+            .doc(date);
+          const res = await eAdministration.set(
+            {
+              Lock: firebase.default.firestore.FieldValue.arrayUnion(
+                "administrator create kiosk attempt to " +
+                  value.email +
+                  " from " +
+                  user.email +
+                  " at: " +
+                  new Date()
+              ),
+            },
+            { merge: true }
+          );
         },
         async (error) => {
           // console.log(error);
@@ -202,15 +338,39 @@ export class AccessService {
             buttons: ["OK"],
           });
           await alert.present();
+          loading.dismiss();
+          var user = firebase.default.auth().currentUser;
+          var date = dateFormat(new Date(), "mm-dd-yyyy");
+          const eAdministration = this.firestore
+            .collection("eAdministration")
+            .doc("eServices")
+            .collection("SystemLogs")
+            .doc(date);
+          const res = await eAdministration.set(
+            {
+              Account: firebase.default.firestore.FieldValue.arrayUnion(
+                "administrator failed server contact on attempt to create " +
+                  value.email +
+                  " from " +
+                  user.email +
+                  " at: " +
+                  new Date()
+              ),
+            },
+            { merge: true }
+          );
         }
       );
   }
   /**
    * Method for Citizen Registration
    * @param {Form} contains form data*/
-  registerBirths(value) {
-    console.log(value);
-
+  async registerBirths(value) {
+    // console.log(value);
+    const loading = await this.loadingController.create({
+      message: "Storing record...",
+    });
+    await loading.present();
     var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
     /**
      * Data gets stored on Firebase for references
@@ -238,6 +398,27 @@ export class AccessService {
             buttons: ["OK"],
           });
           await alert.present();
+          loading.dismiss();
+          var user = firebase.default.auth().currentUser;
+          var date = dateFormat(new Date(), "mm-dd-yyyy");
+          const eAdministration = this.firestore
+            .collection("eAdministration")
+            .doc("eServices")
+            .collection("SystemLogs")
+            .doc(date);
+          const res = await eAdministration.set(
+            {
+              Application: firebase.default.firestore.FieldValue.arrayUnion(
+                "administrator add birth registration attempt to " +
+                  value.birthCertNo +
+                  " from " +
+                  user.email +
+                  " at: " +
+                  new Date()
+              ),
+            },
+            { merge: true }
+          );
         },
         async (error) => {
           // console.log(error);
@@ -249,6 +430,27 @@ export class AccessService {
             buttons: ["OK"],
           });
           await alert.present();
+          loading.dismiss();
+          var user = firebase.default.auth().currentUser;
+          var date = dateFormat(new Date(), "mm-dd-yyyy");
+          const eAdministration = this.firestore
+            .collection("eAdministration")
+            .doc("eServices")
+            .collection("SystemLogs")
+            .doc(date);
+          const res = await eAdministration.set(
+            {
+              Application: firebase.default.firestore.FieldValue.arrayUnion(
+                "administrator failed server contact on attempt to add " +
+                  value.birthCertNo +
+                  " from " +
+                  user.email +
+                  " at: " +
+                  new Date()
+              ),
+            },
+            { merge: true }
+          );
         }
       );
   }
@@ -256,7 +458,7 @@ export class AccessService {
    * Method for logging in user to system
    * @param value Holds data coming from Login form and invokes for verfication before allowing access
    */
-  loginAdmin(value) {
+  async loginAdmin(value) {
     return new Promise<any>(async (resolve, reject) => {
       const email = value.email;
       const address = email.split("@").pop();
@@ -273,11 +475,29 @@ export class AccessService {
           buttons: ["Close"],
         });
         await alert.present();
+        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        const eAdministration = this.firestore
+          .collection("eAdministration")
+          .doc("eServices")
+          .collection("SystemLogs")
+          .doc(date);
+        const res = await eAdministration.set(
+          {
+            Login: firebase.default.firestore.FieldValue.arrayUnion(
+              "administrator failed login attempt " +
+                " using " +
+                value.email +
+                " at: " +
+                new Date()
+            ),
+          },
+          { merge: true }
+        );
       }
     });
   }
-   /** Method for retrieving active new eCitizen users*/
-   getECitizens() {
+  /** Method for retrieving active new eCitizen users*/
+  getECitizens() {
     return this.firestore
       .collection("eCitizens", (ref) =>
         ref.limit(50).where("status", "!=", "Deleted")
@@ -298,21 +518,36 @@ export class AccessService {
   /**
    * Method for logging out user to system
    */
-  logoutAdmin() {
-    return new Promise<void>((resolve, reject) => {
-      if (this.auth.currentUser) {
-        this.auth
-          .signOut()
-          .then(() => {
-            // console.log("Signing out");
-            this.navCtrl.navigateForward("access");
-            resolve();
-          })
-          .catch((_error) => {
-            reject();
-          });
-      }
-    });
+  async logoutAdmin() {
+    if (this.auth.currentUser) {
+      this.auth
+        .signOut()
+        .then(async () => {
+          // console.log("Signing out");
+          var user = firebase.default.auth().currentUser;
+          var date = dateFormat(new Date(), "mm-dd-yyyy");
+          const eAdministration = this.firestore
+            .collection("eAdministration")
+            .doc("eServices")
+            .collection("SystemLogs")
+            .doc(date);
+          await eAdministration.set(
+            {
+              Login: firebase.default.firestore.FieldValue.arrayUnion(
+                "administrator logout attempt from " +
+                  user.email +
+                  " at: " +
+                  new Date()
+              ),
+            },
+            { merge: true }
+          );
+          this.navCtrl.navigateForward("access");
+        })
+        .catch(async (_error) => {
+          // console.log(_error);
+        });
+    }
   }
   /** Method for retrieving eSupport messages */
   getETechSupportMessages() {
@@ -333,6 +568,23 @@ export class AccessService {
         },
         { merge: true }
       );
+      var user = firebase.default.auth().currentUser;
+      var date = dateFormat(new Date(), "mm-dd-yyyy");
+      const eAdministrationLog = this.firestore
+        .collection("eAdministration")
+        .doc("eServices")
+        .collection("SystemLogs")
+        .doc(date);
+      const resLog = await eAdministrationLog.update({
+        Lock: firebase.default.firestore.FieldValue.arrayUnion(
+          "administrator technical support attempt to " +
+            ID +
+            " from " +
+            user.email +
+            " at: " +
+            new Date()
+        ),
+      });
       var user = firebase.default.auth().currentUser;
       var supportNo = firebase.default.firestore.FieldValue.increment(1);
       var date = dateFormat(new Date(), "mm-dd-yyyy");

@@ -1,9 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { NavController } from "@ionic/angular";
+import { LoadingController, NavController } from "@ionic/angular";
 import { AccessService } from "../Service/access.service";
 import * as CryptoJS from "crypto-js";
 import { AlertController } from "@ionic/angular";
+import * as firebase from "firebase/app";
+import * as dateFormat from "dateformat";
 var qrResultString: string;
 let securityCount = 0;
 let lastScannedID: string;
@@ -30,6 +32,7 @@ export class HomePage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private service: AccessService,
+    public loadingController: LoadingController,
     private firestore: AngularFirestore,
     public alertController: AlertController
   ) {}
@@ -83,16 +86,36 @@ export class HomePage implements OnInit {
                     },
                     {
                       text: "OK",
-                      handler: (data) => {
+                      handler: async (data) => {
                         qrResultString = null;
                         lastScannedID = GovernmentID;
                         if (Access_PIN == data.Access_PIN) {
                           welcome.play();
                           lastScannedID = null;
                           securityCount = 0;
-                          this.navCtrl.navigateForward(
-                            "english?id=" + GovernmentID
-                          );
+                          var user = firebase.default.auth().currentUser;
+                          var date = dateFormat(new Date(), "mm-dd-yyyy");
+                          const eAdministration = this.firestore
+                            .collection("eAdministration")
+                            .doc("eServices")
+                            .collection("SystemLogs")
+                            .doc(date);
+                          await eAdministration.set(
+                            {
+                              Login: firebase.default.firestore.FieldValue.arrayUnion(
+                                "kiosk login attempt from " +
+                                  user.email +
+                                  "using ID" +
+                                  GovernmentID +
+                                  " at: " +
+                                  new Date()
+                              ),
+                            },
+                            { merge: true }
+                          ),
+                            this.navCtrl.navigateForward(
+                              "english?id=" + GovernmentID
+                            );
                         } else {
                           // Lock Account if PIN is Wrong
                           if (lastScannedID == GovernmentID) {
@@ -100,8 +123,28 @@ export class HomePage implements OnInit {
                           }
                           if (securityCount == 3) {
                             this.service.lockAccount(GovernmentID);
-                            securityCount=0;
+                            securityCount = 0;
                           }
+                          var user = firebase.default.auth().currentUser;
+                          var date = dateFormat(new Date(), "mm-dd-yyyy");
+                          const eAdministration = this.firestore
+                            .collection("eAdministration")
+                            .doc("eServices")
+                            .collection("SystemLogs")
+                            .doc(date);
+                          await eAdministration.set(
+                            {
+                              Login: firebase.default.firestore.FieldValue.arrayUnion(
+                                "kiosk failed login attempt from " +
+                                  user.email +
+                                  "using ID" +
+                                  GovernmentID +
+                                  " at: " +
+                                  new Date()
+                              ),
+                            },
+                            { merge: true }
+                          )
                           let invalidCard = new Audio();
                           invalidCard.src = "assets/audio/wrong-pin-en.mp3";
                           invalidCard.load();
@@ -121,6 +164,26 @@ export class HomePage implements OnInit {
                     "Contact your nearest Divisional Officer to get your account unlocked.",
                 });
                 await alertLock.present();
+                var user = firebase.default.auth().currentUser;
+                var date = dateFormat(new Date(), "mm-dd-yyyy");
+                const eAdministration = this.firestore
+                  .collection("eAdministration")
+                  .doc("eServices")
+                  .collection("SystemLogs")
+                  .doc(date);
+                await eAdministration.set(
+                  {
+                    Lock: firebase.default.firestore.FieldValue.arrayUnion(
+                      "citizen card locked from " +
+                        user.email +
+                        "using ID" +
+                        GovernmentID +
+                        " at: " +
+                        new Date()
+                    ),
+                  },
+                  { merge: true }
+                )
               } else if (MatchID != GovernmentID) {
                 let invalidCard = new Audio();
                 invalidCard.src = "assets/audio/invalid-card-en.mp3";
@@ -184,13 +247,35 @@ export class HomePage implements OnInit {
                     },
                     {
                       text: "හරි",
-                      handler: (data) => {
+                      handler: async (data) => {
                         qrResultString = null;
                         lastScannedID = GovernmentID;
                         if (Access_PIN == data.Access_PIN) {
                           welcome.play();
                           lastScannedID = null;
                           securityCount = 0;
+
+                          var user = firebase.default.auth().currentUser;
+                          var date = dateFormat(new Date(), "mm-dd-yyyy");
+                          const eAdministration = this.firestore
+                            .collection("eAdministration")
+                            .doc("eServices")
+                            .collection("SystemLogs")
+                            .doc(date);
+                          await eAdministration.set(
+                            {
+                              Login: firebase.default.firestore.FieldValue.arrayUnion(
+                                "kiosk login attempt from " +
+                                  user.email +
+                                  "using ID" +
+                                  GovernmentID +
+                                  " at: " +
+                                  new Date()
+                              ),
+                            },
+                            { merge: true }
+                          ),
+                          
                           this.navCtrl.navigateForward(
                             "sinhala?id=" + GovernmentID
                           );
@@ -201,8 +286,28 @@ export class HomePage implements OnInit {
                           }
                           if (securityCount == 3) {
                             this.service.lockAccount(GovernmentID);
-                            securityCount=0;
+                            securityCount = 0;
                           }
+                          var user = firebase.default.auth().currentUser;
+                          var date = dateFormat(new Date(), "mm-dd-yyyy");
+                          const eAdministration = this.firestore
+                            .collection("eAdministration")
+                            .doc("eServices")
+                            .collection("SystemLogs")
+                            .doc(date);
+                          await eAdministration.set(
+                            {
+                              Login: firebase.default.firestore.FieldValue.arrayUnion(
+                                "kiosk failed login attempt from " +
+                                  user.email +
+                                  "using ID" +
+                                  GovernmentID +
+                                  " at: " +
+                                  new Date()
+                              ),
+                            },
+                            { merge: true }
+                          )
                           let invalidCard = new Audio();
                           invalidCard.src = "assets/audio/wrong-pin-si.mp3";
                           invalidCard.load();
@@ -222,6 +327,26 @@ export class HomePage implements OnInit {
                     "ඔබගේ ගිණුම අගුළු ඇරීමට ඔබගේ ළඟම ප්‍රාදේශීය නිලධාරියා අමතන්න.",
                 });
                 await alertLock.present();
+                var user = firebase.default.auth().currentUser;
+                var date = dateFormat(new Date(), "mm-dd-yyyy");
+                const eAdministration = this.firestore
+                  .collection("eAdministration")
+                  .doc("eServices")
+                  .collection("SystemLogs")
+                  .doc(date);
+                await eAdministration.set(
+                  {
+                    Lock: firebase.default.firestore.FieldValue.arrayUnion(
+                      "citizen card locked from " +
+                        user.email +
+                        "using ID" +
+                        GovernmentID +
+                        " at: " +
+                        new Date()
+                    ),
+                  },
+                  { merge: true }
+                )
               } else if (MatchID != GovernmentID) {
                 let invalidCard = new Audio();
                 invalidCard.src = "assets/audio/invalid-card-si.mp3";
@@ -285,13 +410,35 @@ export class HomePage implements OnInit {
                     },
                     {
                       text: "சரி",
-                      handler: (data) => {
+                      handler: async (data) => {
                         qrResultString = null;
                         lastScannedID = GovernmentID;
                         if (Access_PIN == data.Access_PIN) {
                           welcome.play();
                           lastScannedID = null;
                           securityCount = 0;
+
+                          var user = firebase.default.auth().currentUser;
+                          var date = dateFormat(new Date(), "mm-dd-yyyy");
+                          const eAdministration = this.firestore
+                            .collection("eAdministration")
+                            .doc("eServices")
+                            .collection("SystemLogs")
+                            .doc(date);
+                          await eAdministration.set(
+                            {
+                              Login: firebase.default.firestore.FieldValue.arrayUnion(
+                                "kiosk login attempt from " +
+                                  user.email +
+                                  "using ID" +
+                                  GovernmentID +
+                                  " at: " +
+                                  new Date()
+                              ),
+                            },
+                            { merge: true }
+                          ),
+                          
                           this.navCtrl.navigateForward(
                             "tamil?id=" + GovernmentID
                           );
@@ -302,12 +449,32 @@ export class HomePage implements OnInit {
                           }
                           if (securityCount == 3) {
                             this.service.lockAccount(GovernmentID);
-                            securityCount=0;
+                            securityCount = 0;
                           }
                           let invalidCard = new Audio();
                           invalidCard.src = "assets/audio/wrong-pin-ta.mp3";
                           invalidCard.load();
                           invalidCard.play();
+                          var user = firebase.default.auth().currentUser;
+                          var date = dateFormat(new Date(), "mm-dd-yyyy");
+                          const eAdministration = this.firestore
+                            .collection("eAdministration")
+                            .doc("eServices")
+                            .collection("SystemLogs")
+                            .doc(date);
+                          await eAdministration.set(
+                            {
+                              Login: firebase.default.firestore.FieldValue.arrayUnion(
+                                "kiosk failed login attempt from " +
+                                  user.email +
+                                  "using ID" +
+                                  GovernmentID +
+                                  " at: " +
+                                  new Date()
+                              ),
+                            },
+                            { merge: true }
+                          )
                         }
                       },
                     },
@@ -323,6 +490,26 @@ export class HomePage implements OnInit {
                     "உங்கள் கணக்கைத் திறக்க உங்கள் அருகிலுள்ள பிரதேச அதிகாரியைத் தொடர்பு கொள்ளுங்கள்.",
                 });
                 await alertLock.present();
+                var user = firebase.default.auth().currentUser;
+                var date = dateFormat(new Date(), "mm-dd-yyyy");
+                const eAdministration = this.firestore
+                  .collection("eAdministration")
+                  .doc("eServices")
+                  .collection("SystemLogs")
+                  .doc(date);
+                await eAdministration.set(
+                  {
+                    Lock: firebase.default.firestore.FieldValue.arrayUnion(
+                      "citizen card locked from " +
+                        user.email +
+                        "using ID" +
+                        GovernmentID +
+                        " at: " +
+                        new Date()
+                    ),
+                  },
+                  { merge: true }
+                )
               } else if (MatchID != GovernmentID) {
                 let invalidCard = new Audio();
                 invalidCard.src = "assets/audio/invalid-card-ta.mp3";

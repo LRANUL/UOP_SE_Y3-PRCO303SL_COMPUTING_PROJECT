@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { AccessService } from "src/app/service/access.service";
 import { HttpClient } from "@angular/common/http";
 import {
@@ -22,13 +22,15 @@ import {
 } from "@angular/fire/storage";
 import { Observable, ReplaySubject } from "rxjs";
 import { finalize } from "rxjs/operators";
-
+import * as dateFormat from "dateformat";
+import { IonInfiniteScroll } from "@ionic/angular";
 @Component({
   selector: "app-admin",
   templateUrl: "./admin.page.html",
   styleUrls: ["./admin.page.scss"],
 })
 export class AdminPage implements OnInit {
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   accountPanel: boolean;
   userFilter: string;
   userRecords: any;
@@ -86,7 +88,9 @@ export class AdminPage implements OnInit {
   kioskCardUnlocker: boolean;
   ECitizens: any;
   listLoaded: any;
-
+  Logins: any;
+  Locks: any;
+  Applications: any;
   constructor(
     public storage: AngularFireStorage,
     private accessService: AccessService,
@@ -130,6 +134,9 @@ export class AdminPage implements OnInit {
           this.Email = user.email;
         }
       });
+
+    this.getSystemLogs();
+
     /**
      * Validation Form receives input data sent by the user to Support service
      */
@@ -259,6 +266,23 @@ export class AdminPage implements OnInit {
       officeAddress: new FormControl("", Validators.compose([])),
       downloadURL: new FormControl("", Validators.compose([])),
     });
+  }
+  async getSystemLogs() {
+    /** Get logs for Administrator */
+    var date = dateFormat(new Date(), "mm-dd-yyyy");
+    await this.firestore
+      .collection("eAdministration")
+      .doc("eServices")
+      .collection("SystemLogs")
+      .doc(date)
+      .ref.get()
+      .then((doc) => {
+        if (doc.exists) {
+          this.Logins = doc.data()["Login"];
+          this.Locks = doc.data()["Lock"];
+          this.Applications = doc.data()["Application"];
+        }
+      });
   }
   validation_form = {
     email: [
@@ -453,6 +477,7 @@ export class AdminPage implements OnInit {
     this.registrationPanel = false;
     this.supportPanel = false;
     this.statisticsPanel = true;
+    this.getSystemLogs();
   }
   openSettings() {
     this.accountPanel = false;
@@ -794,7 +819,7 @@ export class AdminPage implements OnInit {
           ECitizenGovernmentID: e.payload.doc.data()["GovernmentID"],
         };
       });
-        this.listLoaded = true;
+      this.listLoaded = true;
     });
   }
 
@@ -1014,6 +1039,7 @@ export class AdminPage implements OnInit {
       }
     );
   }
+
   /**Method reponsible for working tracking of active hours */
   getWorkLogs() {
     this.activityLog = true;
@@ -1055,7 +1081,37 @@ export class AdminPage implements OnInit {
   }
   /**Logs out Officer */
   async logoutAdmin() {
-    this.accessService.logoutAdmin();
+    const loading = await this.loadingController.create({
+      message: "Logging out...",
+    });
+    await loading.present();
+    this.accessService.logoutAdmin().then(
+      async (res) => {
+        // console.log(res);
+        loading.dismiss();
+      },
+      async (err) => {
+        var user = firebase.default.auth().currentUser;
+        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        const eAdministration = this.firestore
+          .collection("eAdministration")
+          .doc("eServices")
+          .collection("SystemLogs")
+          .doc(date);
+        await eAdministration.set(
+          {
+            Login: firebase.default.firestore.FieldValue.arrayUnion(
+              "administrator failed logout attempt from " +
+                user.email +
+                " at: " +
+                new Date()
+            ),
+          },
+          { merge: true }
+        );
+      }
+    );
+
     // Clear cache variables
     this.prefix = null;
     this.fullName = null;
