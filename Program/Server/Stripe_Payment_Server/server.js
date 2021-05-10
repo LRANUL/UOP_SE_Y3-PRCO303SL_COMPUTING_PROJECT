@@ -69,7 +69,7 @@ app.get("/validate", async (req, res) => {
   const validate = await stripe.checkout.sessions
     .retrieve(session)
     .then((data) => {
-      console.log(JSON.stringify(data.payment_status));
+      
       res.send(JSON.stringify(data.payment_status)); // If no error occurs
     })
     .catch((err) => {
@@ -77,4 +77,4 @@ app.get("/validate", async (req, res) => {
     });
 });
 
-app.listen(4242, () => console.log("Running on port 4242"));
+app.listen(4242, () => );
