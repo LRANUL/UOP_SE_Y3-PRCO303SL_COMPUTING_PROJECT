@@ -48,7 +48,7 @@ app.whenReady().then(() => {
 
     dialog.showMessageBox(options).then((choice) => {
 
-      console.log(choice.response);
+      
       if (choice.response == 1) {
         app.relaunch();
         app.quit();

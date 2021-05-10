@@ -81,7 +81,7 @@ app.post("/create-user", async (req, res) => {
       res.send(JSON.stringify("Created User Successfully"));
     })
     .catch((error) => {
-      console.log("Error creating new user:", error);
+      
     });
 });
 /**
@@ -101,7 +101,7 @@ app.post("/create-kiosk", async (req, res) => {
       res.send(JSON.stringify("Created Kiosk Successfully"));
     })
     .catch((error) => {
-      console.log("Error creating new user:", error);
+      
     });
 });
 
@@ -170,16 +170,16 @@ app.get("/system_maintenance_status", async (req, res) => {
   config
     .getTemplate()
     .then(function (template) {
-      console.log("ETag from server: " + template.etag);
+      
       var templateStr = JSON.stringify(
         template.parameters["system_maintenance"].defaultValue["value"]
       );
-      console.log(templateStr);
+      
       res.send(templateStr);
     })
     .catch(function (err) {
       res.send(JSON.stringify("Unable to get Status"));
-      console.error(err);
+      
     });
 });
 /**
@@ -190,16 +190,16 @@ app.get("/web_system_maintenance_status", async (req, res) => {
   config
     .getTemplate()
     .then(function (template) {
-      console.log("ETag from server: " + template.etag);
+      
       var templateStr = JSON.stringify(
         template.parameters["web_system_maintenance"].defaultValue["value"]
       );
-      console.log(templateStr);
+      
       res.send(templateStr);
     })
     .catch(function (err) {
       res.send(JSON.stringify("Unable to get Status"));
-      console.error(err);
+      
     });
 });
 /**
@@ -210,16 +210,16 @@ app.get("/kiosk_system_maintenance_status", async (req, res) => {
   config
     .getTemplate()
     .then(function (template) {
-      console.log("ETag from server: " + template.etag);
+      
       var templateStr = JSON.stringify(
         template.parameters["kiosk_system_maintenance"].defaultValue["value"]
       );
-      console.log(templateStr);
+      
       res.send(templateStr);
     })
     .catch(function (err) {
       res.send(JSON.stringify("Unable to get Status"));
-      console.error(err);
+      
     });
 });
 /**
@@ -230,16 +230,16 @@ app.get("/office_system_maintenance_status", async (req, res) => {
   config
     .getTemplate()
     .then(function (template) {
-      console.log("ETag from server: " + template.etag);
+      
       var templateStr = JSON.stringify(
         template.parameters["office_system_maintenance"].defaultValue["value"]
       );
-      console.log(templateStr);
+      
       res.send(templateStr);
     })
     .catch(function (err) {
       res.send(JSON.stringify("Unable to get Status"));
-      console.error(err);
+      
     });
 });
 /**
@@ -250,18 +250,18 @@ app.get("/secretary_system_maintenance_status", async (req, res) => {
   config
     .getTemplate()
     .then(function (template) {
-      console.log("ETag from server: " + template.etag);
+      
       var templateStr = JSON.stringify(
         template.parameters["secretary_system_maintenance"].defaultValue[
           "value"
         ]
       );
-      console.log(templateStr);
+      
       res.send(templateStr);
     })
     .catch(function (err) {
       res.send(JSON.stringify("Unable to get Status"));
-      console.error(err);
+      
     });
 });
 
@@ -273,7 +273,7 @@ app.get("/system_maintenance", async (req, res) => {
   config
     .getTemplate()
     .then(function (template) {
-      console.log("ETag from server: " + template.etag);
+      
       var templateStr = JSON.stringify(template);
       template.parameters["system_maintenance"] = {
         defaultValue: {
@@ -286,19 +286,19 @@ app.get("/system_maintenance", async (req, res) => {
         .publishTemplate(template)
         .then(function (updatedTemplate) {
           res.send(JSON.stringify("Updated Settings"));
-          console.log("ETag from server: " + updatedTemplate.etag);
+          
         })
         .catch(function (err) {
-          console.error("Unable to publish template.");
+          
           res.send(JSON.stringify("Unable to publish template."));
 
-          console.error(err);
+          
         });
     })
     .catch(function (err) {
       res.send(JSON.stringify("Unable to Update"));
 
-      console.error(err);
+      
     });
 });
 /** Web Maintenance Update*/
@@ -308,7 +308,7 @@ app.get("/web_system_maintenance", async (req, res) => {
   config
     .getTemplate()
     .then(function (template) {
-      console.log("ETag from server: " + template.etag);
+      
       var templateStr = JSON.stringify(template);
       template.parameters["web_system_maintenance"] = {
         defaultValue: {
@@ -321,19 +321,19 @@ app.get("/web_system_maintenance", async (req, res) => {
         .publishTemplate(template)
         .then(function (updatedTemplate) {
           res.send(JSON.stringify("Updated Settings"));
-          console.log("ETag from server: " + updatedTemplate.etag);
+          
         })
         .catch(function (err) {
-          console.error("Unable to publish template.");
+          
           res.send(JSON.stringify("Unable to publish template."));
 
-          console.error(err);
+          
         });
     })
     .catch(function (err) {
       res.send(JSON.stringify("Unable to Update"));
 
-      console.error(err);
+      
     });
 });
 /** Kiosk Maintenance Update*/
@@ -343,7 +343,7 @@ app.get("/kiosk_system_maintenance", async (req, res) => {
   config
     .getTemplate()
     .then(function (template) {
-      console.log("ETag from server: " + template.etag);
+      
       var templateStr = JSON.stringify(template);
       template.parameters["kiosk_system_maintenance"] = {
         defaultValue: {
@@ -356,19 +356,19 @@ app.get("/kiosk_system_maintenance", async (req, res) => {
         .publishTemplate(template)
         .then(function (updatedTemplate) {
           res.send(JSON.stringify("Updated Settings"));
-          console.log("ETag from server: " + updatedTemplate.etag);
+          
         })
         .catch(function (err) {
-          console.error("Unable to publish template.");
+          
           res.send(JSON.stringify("Unable to publish template."));
 
-          console.error(err);
+          
         });
     })
     .catch(function (err) {
       res.send(JSON.stringify("Unable to Update"));
 
-      console.error(err);
+      
     });
 });
 /** Office Maintenance Update*/
@@ -378,7 +378,7 @@ app.get("/office_system_maintenance", async (req, res) => {
   config
     .getTemplate()
     .then(function (template) {
-      console.log("ETag from server: " + template.etag);
+      
       var templateStr = JSON.stringify(template);
       template.parameters["office_system_maintenance"] = {
         defaultValue: {
@@ -391,19 +391,19 @@ app.get("/office_system_maintenance", async (req, res) => {
         .publishTemplate(template)
         .then(function (updatedTemplate) {
           res.send(JSON.stringify("Updated Settings"));
-          console.log("ETag from server: " + updatedTemplate.etag);
+          
         })
         .catch(function (err) {
-          console.error("Unable to publish template.");
+          
           res.send(JSON.stringify("Unable to publish template."));
 
-          console.error(err);
+          
         });
     })
     .catch(function (err) {
       res.send(JSON.stringify("Unable to Update"));
 
-      console.error(err);
+      
     });
 });
 /** Secretary Maintenance Update*/
@@ -413,7 +413,7 @@ app.get("/secretary_system_maintenance", async (req, res) => {
   config
     .getTemplate()
     .then(function (template) {
-      console.log("ETag from server: " + template.etag);
+      
       var templateStr = JSON.stringify(template);
       template.parameters["secretary_system_maintenance"] = {
         defaultValue: {
@@ -426,19 +426,19 @@ app.get("/secretary_system_maintenance", async (req, res) => {
         .publishTemplate(template)
         .then(function (updatedTemplate) {
           res.send(JSON.stringify("Updated Settings"));
-          console.log("ETag from server: " + updatedTemplate.etag);
+          
         })
         .catch(function (err) {
-          console.error("Unable to publish template.");
+          
           res.send(JSON.stringify("Unable to publish template."));
 
-          console.error(err);
+          
         });
     })
     .catch(function (err) {
       res.send(JSON.stringify("Unable to Update"));
 
-      console.error(err);
+      
     });
 });
-app.listen(5000, () => console.log("Running on port 5000"));
+app.listen(5000, () => );
