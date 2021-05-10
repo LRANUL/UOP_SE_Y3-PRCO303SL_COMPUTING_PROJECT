@@ -1,0 +1,1251 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>governmentportal-kiosk documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">governmentportal-kiosk documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li>AccessService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/service/access.service.ts</code>
+        </p>
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#alertController">alertController</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#getEApplication">getEApplication</a>
+                            </li>
+                            <li>
+                                <a href="#getECitizen">getECitizen</a>
+                            </li>
+                            <li>
+                                <a href="#getECitizensPhoto">getECitizensPhoto</a>
+                            </li>
+                            <li>
+                                <a href="#getESupportMessages">getESupportMessages</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#lockAccount">lockAccount</a>
+                            </li>
+                            <li>
+                                <a href="#loginKiosk">loginKiosk</a>
+                            </li>
+                            <li>
+                                <a href="#sendNICApplication">sendNICApplication</a>
+                            </li>
+                            <li>
+                                <a href="#sendSupportMessage">sendSupportMessage</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(firestore: AngularFirestore, auth: AngularFireAuth, alertController: AlertController, navCtrl: NavController)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/app/service/access.service.ts:10</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>firestore</td>
+                                                  
+                                                        <td>
+                                                                    <code>AngularFirestore</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>auth</td>
+                                                  
+                                                        <td>
+                                                                    <code>AngularFireAuth</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>alertController</td>
+                                                  
+                                                        <td>
+                                                                    <code>AlertController</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>navCtrl</td>
+                                                  
+                                                        <td>
+                                                                    <code>NavController</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getEApplication"></a>
+                    <span class="name">
+                        <b>
+                            getEApplication
+                        </b>
+                        <a href="#getEApplication"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getEApplication(GovernmentID)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="127"
+                            class="link-to-prism">src/app/service/access.service.ts:127</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method for getting eapplications</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>GovernmentID</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>application documents</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getECitizen"></a>
+                    <span class="name">
+                        <b>
+                            getECitizen
+                        </b>
+                        <a href="#getECitizen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getECitizen(Access_Key)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="253"
+                            class="link-to-prism">src/app/service/access.service.ts:253</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method for getting eCitizen data for Access key using scanner </p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Access_Key</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getECitizensPhoto"></a>
+                    <span class="name">
+                        <b>
+                            getECitizensPhoto
+                        </b>
+                        <a href="#getECitizensPhoto"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getECitizensPhoto(GovernmentID)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="139"
+                            class="link-to-prism">src/app/service/access.service.ts:139</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method for getting Government eCitizen before sending eApplication (NIC)</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>GovernmentID</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>Profile Photo</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getESupportMessages"></a>
+                    <span class="name">
+                        <b>
+                            getESupportMessages
+                        </b>
+                        <a href="#getESupportMessages"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getESupportMessages(GovernmentID)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="115"
+                            class="link-to-prism">src/app/service/access.service.ts:115</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method for getting all support messages</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>GovernmentID</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>messages documents</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="lockAccount"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            lockAccount
+                        </b>
+                        <a href="#lockAccount"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>lockAccount(GovernmentID: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="81"
+                            class="link-to-prism">src/app/service/access.service.ts:81</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method for locking theft cards</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>GovernmentID</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>eCitizen ID</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>lock result</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loginKiosk"></a>
+                    <span class="name">
+                        <b>
+                            loginKiosk
+                        </b>
+                        <a href="#loginKiosk"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loginKiosk(value)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="264"
+                            class="link-to-prism">src/app/service/access.service.ts:264</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method for logging in user to system</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Holds data coming from Login form and invokes for verfication before allowing access</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendNICApplication"></a>
+                    <span class="name">
+                        <b>
+                            sendNICApplication
+                        </b>
+                        <a href="#sendNICApplication"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>sendNICApplication(value, photoURL)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="154"
+                            class="link-to-prism">src/app/service/access.service.ts:154</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method reponsible for sending NIC applications via Government Portal
+To prevent third party usage of Government Resources secondary validation takes place to validate entered data before submitting application
+This restricts that only the personal account holder to apply / Any form of Joint/Enterprise/Partner accounts are available at this time</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>This holds NIC application data send by registered user via forms available on the Account Portal</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>photoURL</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendSupportMessage"></a>
+                    <span class="name">
+                        <b>
+                            sendSupportMessage
+                        </b>
+                        <a href="#sendSupportMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>sendSupportMessage(value, name, GovernmentID)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="23"
+                            class="link-to-prism">src/app/service/access.service.ts:23</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method reponsible for sending Support messages via Government Portal</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>This holds Support message data send by registered user via forms available on the Account Portal</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>name</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>GovernmentID</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="alertController"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            alertController</b>
+                            <a href="#alertController"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>AlertController</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/service/access.service.ts:14</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &quot;@angular/core&quot;;
+import { AngularFireAuth } from &quot;@angular/fire/auth&quot;;
+import { AngularFirestore } from &quot;@angular/fire/firestore&quot;;
+import { AlertController, NavController } from &quot;@ionic/angular&quot;;
+import * as dateFormat from &quot;dateformat&quot;;
+import * as firebase from &quot;firebase&quot;;
+@Injectable({
+  providedIn: &quot;root&quot;,
+})
+export class AccessService {
+  constructor(
+    private firestore: AngularFirestore,
+    private auth: AngularFireAuth,
+    public alertController: AlertController,
+    private navCtrl: NavController
+  ) {}
+  /**
+   * Method reponsible for sending Support messages via Government Portal
+   *
+   * @param value This holds Support message data send by registered user via forms available on the Account Portal
+   *
+   */
+  sendSupportMessage(value, name, GovernmentID) {
+    return new Promise&lt;any&gt;(async (_resolve, _reject) &#x3D;&gt; {
+      return new Promise&lt;any&gt;(async (resolve, reject) &#x3D;&gt; {
+        /**
+         * Data gets stored on firebase, used for message tracking and references
+         */
+        const alert &#x3D; await this.alertController.create({
+          header: &quot;✅ Support Requested|සහාය ඉල්ලා ඇත|ஆதரவு கோரப்பட்டது&quot;,
+          subHeader: &quot;Message Sent|පණිවිඩය යැව්වා|தகவல் அனுப்பப்பட்டது&quot;,
+          message:
+            &quot;Your message has been sent, wait for a reponse from support.| ඔබගේ පණිවිඩය යවා ඇත, සහාය දක්වන ප්‍රතිචාරයක් බලාපොරොත්තුවෙන් සිටින්න.|உங்கள் செய்தி அனுப்பப்பட்டது, ஆதரவிலிருந்து பதிலுக்காக காத்திருங்கள்.&quot;,
+          buttons: [&quot;OK&quot;],
+        });
+        await alert.present();
+        var user &#x3D; firebase.default.auth().currentUser;
+        var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+        const eAdministrationLog &#x3D; this.firestore
+          .collection(&quot;eAdministration&quot;)
+          .doc(&quot;eServices&quot;)
+          .collection(&quot;SystemLogs&quot;)
+          .doc(date);
+        await eAdministrationLog.set(
+          {
+            Account: firebase.default.firestore.FieldValue.arrayUnion(
+              &quot;kiosk support request of &quot; +
+                GovernmentID +
+                &quot; from &quot; +
+                user.email +
+                &quot; at: &quot; +
+                new Date()
+            ),
+          },
+          { merge: true }
+        );
+        this.firestore
+          .collection(&quot;/eSupport/&quot;)
+          .doc()
+          .set({
+            Description: value.message,
+            FullName: name,
+            GovernmentID: GovernmentID,
+            Status: &quot;New&quot;,
+            Subject: value.subject,
+            Response:
+              &quot;Message Sent | Wait for Response/පණිවිඩය යවන ලදි | ප්‍රතිචාරය සඳහා රැඳී සිටින්න/செய்தி அனுப்பப்பட்டது | பதிலுக்காக காத்திருங்கள்&quot;,
+          })
+          .then(
+            (response) &#x3D;&gt; resolve(response),
+            (error) &#x3D;&gt; reject(error)
+          );
+      });
+    });
+  }
+  /**
+   * Method for locking theft cards
+   * @param GovernmentID eCitizen ID
+   * @returns lock result
+   */
+  async lockAccount(GovernmentID: any) {
+    const eCitizen &#x3D; this.firestore.collection(&quot;eCitizens&quot;).doc(GovernmentID);
+    const res &#x3D; await eCitizen.set(
+      {
+        kioskLock: true,
+      },
+      { merge: true }
+    );
+    var user &#x3D; firebase.default.auth().currentUser;
+    var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+    const eAdministrationLog &#x3D; this.firestore
+      .collection(&quot;eAdministration&quot;)
+      .doc(&quot;eServices&quot;)
+      .collection(&quot;SystemLogs&quot;)
+      .doc(date);
+    await eAdministrationLog.set(
+      {
+        Account: firebase.default.firestore.FieldValue.arrayUnion(
+          &quot;kiosk card locked of &quot; +
+            GovernmentID +
+            &quot; from &quot; +
+            user.email +
+            &quot; at: &quot; +
+            new Date()
+        ),
+      },
+      { merge: true }
+    );
+  }
+  /**
+   * Method for getting all support messages
+   * @param GovernmentID
+   * @returns messages documents
+   */
+  getESupportMessages(GovernmentID) {
+    return this.firestore
+      .collection(&quot;eSupport&quot;, (ref) &#x3D;&gt;
+        ref.where(&quot;GovernmentID&quot;, &quot;&#x3D;&#x3D;&quot;, GovernmentID)
+      )
+      .snapshotChanges();
+  }
+  /**
+   * Method for getting eapplications
+   * @param GovernmentID
+   * @returns application documents
+   */
+  getEApplication(GovernmentID) {
+    return this.firestore
+      .collection(&quot;eApplications&quot;, (ref) &#x3D;&gt;
+        ref.where(&quot;GovernmentID&quot;, &quot;&#x3D;&#x3D;&quot;, GovernmentID)
+      )
+      .snapshotChanges();
+  }
+  /**
+   * Method for getting Government eCitizen before sending eApplication (NIC)
+   * @param GovernmentID
+   * @returns Profile Photo
+   */
+  getECitizensPhoto(GovernmentID) {
+    return this.firestore
+      .collection(&quot;eCitizens&quot;, (ref) &#x3D;&gt;
+        ref.where(&quot;GovernmentID&quot;, &quot;&#x3D;&#x3D;&quot;, GovernmentID)
+      )
+      .snapshotChanges();
+  }
+  /**
+   * Method reponsible for sending NIC applications via Government Portal
+   * To prevent third party usage of Government Resources secondary validation takes place to validate entered data before submitting application
+   * This restricts that only the personal account holder to apply / Any form of Joint/Enterprise/Partner accounts are available at this time
+   *
+   * @param value This holds NIC application data send by registered user via forms available on the Account Portal
+   *
+   */
+  sendNICApplication(value, photoURL) {
+    var dateBirth &#x3D; dateFormat(value.dateOfBirth, &quot;mm/dd/yyyy&quot;);
+    return new Promise&lt;any&gt;(async (resolve, reject) &#x3D;&gt; {
+      /**
+       * Data gets stored on firebase, used for application tracking and references
+       */
+      this.firestore
+        .collection(&quot;/eApplications/&quot;)
+        .doc()
+        .set({
+          type: &quot;NIC-Application&quot;,
+          status: &quot;New&quot;,
+          GovernmentID: value.GovernmentID,
+          payment_status: &quot;paid&quot;,
+          description:
+            &quot;Application sent for Department | දෙපාර්තමේන්තුව සඳහා අයදුම්පත යවා ඇත| துறைக்கு விண்ணப்பம் அனுப்பப்பட்டது&quot;,
+          email: value.email,
+          familyName: value.familyName,
+          name: value.name,
+          surname: value.surname,
+          engFamilyName: value.engFamilyName,
+          engName: value.engName,
+          engSurname: value.engSurname,
+          nicFamilyName: value.nicFamilyName,
+          nicName: value.nicName,
+          nicSurname: value.nicSurname,
+          gender: value.gender,
+          civilStatus: value.civilStatus,
+          profession: value.profession,
+          dateOfBirth: dateBirth,
+          birthCertNo: value.birthCertNo,
+          placeOfBirth: value.placeOfBirth,
+          division: value.division,
+          district: value.district,
+          birthRegNo: value.birthRegNo,
+          countryOfBirth: value.countryOfBirth,
+          foreignCertNo: value.foreignCertNo,
+          city: value.city,
+          houseNo: value.houseNo,
+          houseName: value.houseName,
+          streetName: value.streetName,
+          postalcode: value.postalcode,
+          postcity: value.postcity,
+          posthouseNo: value.posthouseNo,
+          posthouseName: value.posthouseName,
+          poststreetName: value.poststreetName,
+          postpostalcode: value.postpostalcode,
+          certDate: dateFormat(value.certDate, &quot;mm/dd/yyyy&quot;),
+          cardNo: value.cardNo,
+          nicDate: dateFormat(value.nicDate, &quot;mm/dd/yyyy&quot;),
+          policeName: value.policeName,
+          policeReportDate: dateFormat(value.policeReportDate, &quot;mm/dd/yyyy&quot;),
+          homePhone: value.homePhone,
+          mobilePhone: value.mobilePhone,
+          requestType: value.NICType,
+          TimeStamp: new Date(),
+          photoURL: photoURL,
+          sentTimeStamp: &quot;&quot; + new Date(),
+          processedTimeStamp: &quot;&quot;,
+          approvedTimeStamp: &quot;&quot;,
+        })
+        .then(
+          (response) &#x3D;&gt; resolve(response),
+          (error) &#x3D;&gt; reject(error)
+        );
+      const alert &#x3D; await this.alertController.create({
+        header:
+          &quot;✅ Application Requested|අයදුම්පත ඉල්ලා ඇත|விண்ணப்பம் கோரப்பட்டது&quot;,
+        subHeader:
+          &quot;Application Sent|අයදුම්පත යවන ලදි|விண்ணப்பம் அனுப்பப்பட்டது&quot;,
+        message:
+          &quot;Your application has been sent, check Services page for process tracking.|ඔබගේ අයදුම්පත යවා ඇත, ක්‍රියාවලි ලුහුබැඳීම සඳහා සේවා පිටුව පරීක්ෂා කරන්න.|உங்கள் விண்ணப்பம் அனுப்பப்பட்டுள்ளது, செயல்முறை கண்காணிப்புக்கு சேவைகள் பக்கத்தை சரிபார்க்கவும்.&quot;,
+        buttons: [&quot;OK&quot;],
+      });
+      await alert.present();
+
+      var user &#x3D; firebase.default.auth().currentUser;
+      var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+      const eAdministrationLog &#x3D; this.firestore
+        .collection(&quot;eAdministration&quot;)
+        .doc(&quot;eServices&quot;)
+        .collection(&quot;SystemLogs&quot;)
+        .doc(date);
+      await eAdministrationLog.set(
+        {
+          Application: firebase.default.firestore.FieldValue.arrayUnion(
+            &quot;kiosk NIC application attempt to &quot; +
+              value.GovernmentID +
+              &quot; from &quot; +
+              user.email +
+              &quot; at: &quot; +
+              new Date()
+          ),
+        },
+        { merge: true }
+      );
+    });
+  }
+  /**Method for getting eCitizen data for Access key using scanner */
+  getECitizen(Access_Key) {
+    return this.firestore
+      .collection(&quot;eCitizens&quot;, (ref) &#x3D;&gt;
+        ref.where(&quot;Access_Key&quot;, &quot;&#x3D;&#x3D;&quot;, Access_Key)
+      )
+      .snapshotChanges();
+  }
+  /**
+   * Method for logging in user to system
+   * @param value Holds data coming from Login form and invokes for verfication before allowing access
+   */
+  loginKiosk(value) {
+    return new Promise&lt;any&gt;(async (resolve, reject) &#x3D;&gt; {
+      const email &#x3D; value.email;
+      const address &#x3D; email.split(&quot;@&quot;).pop();
+      if (address &#x3D;&#x3D; &quot;kiosk.gov.lk&quot;) {
+        this.auth.signInWithEmailAndPassword(value.email, value.password).then(
+          (res) &#x3D;&gt; resolve(res),
+          (err) &#x3D;&gt; reject(err)
+        );
+        var user &#x3D; firebase.default.auth().currentUser;
+        var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+        const eAdministration &#x3D; this.firestore
+          .collection(&quot;eAdministration&quot;)
+          .doc(&quot;eServices&quot;)
+          .collection(&quot;SystemLogs&quot;)
+          .doc(date);
+        await eAdministration.set(
+          {
+            Login: firebase.default.firestore.FieldValue.arrayUnion(
+              &quot;kiosk login attempt from &quot; + value.email + &quot; at: &quot; + new Date()
+            ),
+          },
+          { merge: true }
+        );
+        this.navCtrl.navigateForward(&quot;home&quot;);
+      } else {
+        const alert &#x3D; await this.alertController.create({
+          header: &quot;⚠ Unauthorized Access&quot;,
+          message: &quot;Login attempt failed, service not registered.&quot;,
+          buttons: [&quot;Close&quot;],
+        });
+        await alert.present();
+        var user &#x3D; firebase.default.auth().currentUser;
+        var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+        const eAdministration &#x3D; this.firestore
+          .collection(&quot;eAdministration&quot;)
+          .doc(&quot;eServices&quot;)
+          .collection(&quot;SystemLogs&quot;)
+          .doc(date);
+        await eAdministration.set(
+          {
+            Login: firebase.default.firestore.FieldValue.arrayUnion(
+              &quot;kiosk failed login attempt from &quot; +
+                value.email +
+                &quot; at: &quot; +
+                new Date()
+            ),
+          },
+          { merge: true }
+        );
+      }
+    });
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'AccessService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

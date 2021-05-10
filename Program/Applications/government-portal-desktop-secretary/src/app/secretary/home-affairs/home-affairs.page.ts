@@ -1,3 +1,6 @@
+/**
+ * CONTAINS CORE CLASS CODE FOR SECRETARY FUNCTIONALITY
+ */
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { switchMap } from "rxjs/operators";
 import {
@@ -25,7 +28,7 @@ import {
 import { Observable } from "rxjs";
 import * as dateFormat from "dateformat";
 
-var qrResultString: string;
+let qrResultString: string;
 @Component({
   selector: "app-home-affairs",
   templateUrl: "./home-affairs.page.html",
@@ -55,37 +58,37 @@ export class HomeAffairsPage implements OnInit {
   NICApplicantStatus: boolean;
   NICApplicationStatus: {
     id: string;
-    GovernmentID: any;
-    requestType: any;
-    name: any;
-    familyName: any;
-    assigneeName: any;
-    applicationDescription: any;
-    applicationStatus: any;
-    receivedTime: any;
-    processedTime: any;
-    approvedTime: any;
-    PhotoURL: any;
+    GovernmentID: string;
+    requestType: string;
+    name: string;
+    familyName: string;
+    assigneeName: string;
+    applicationDescription: string;
+    applicationStatus: string;
+    receivedTime: string;
+    processedTime: string;
+    approvedTime: string;
+    PhotoURL: string;
   }[];
 
   NICApplications: {
     id: string;
-    GovernmentID: any;
+    GovernmentID: string;
     fullName: string;
-    requestType: any;
-    applicationDescription: any;
-    applicationStatus: any;
+    requestType: string;
+    applicationDescription: string;
+    applicationStatus: string;
   }[];
-  userFilter: any;
-  userRecords: any;
-  applicationFilter: any;
+  userFilter: object;
+  userRecords: object;
+  applicationFilter: object;
   ESupportMessages: {
     id: string;
-    GovernmentID: any;
-    Subject: any;
-    Description: any;
-    Status: any;
-    Count: any;
+    GovernmentID: string;
+    Subject: string;
+    Description: string;
+    Status: string;
+    Count: string;
   }[];
 
   newMessage: boolean;
@@ -98,11 +101,11 @@ export class HomeAffairsPage implements OnInit {
   settingsPanel: boolean;
   EWorkLogs: {
     id: string;
-    signIn: any;
-    signOff: any;
-    messagesHandled: any;
-    documentsHandled: any;
-    date: any;
+    signIn: string;
+    signOff: string;
+    messagesHandled: number;
+    documentsHandled: number;
+    date: string;
   }[];
   activityLog: boolean;
   message_form: FormGroup;
@@ -114,26 +117,26 @@ export class HomeAffairsPage implements OnInit {
   handler: any;
   accountManage: boolean;
   Secretary: any;
-  Division: any;
-  prefix: any;
-  fullName: any;
-  officeAddress: any;
-  mobile: any;
-  landLine: any;
+  Division: string;
+  prefix: string;
+  fullName: string;
+  officeAddress: string;
+  mobile: string;
+  landLine: string;
   ECitizens: {
     id: string;
-    Prefix: any;
-    Full_Name: any;
-    homeAddress: any;
-    officeAddress: any;
-    ECitizenIMG: any;
-    landLine: any;
-    mobile: any;
-    status: any;
-    email: any;
-    ECitizenGovernmentID: any;
+    Prefix: string;
+    Full_Name: string;
+    homeAddress: string;
+    officeAddress: string;
+    ECitizenIMG: string;
+    landLine: string;
+    mobile: string;
+    status: string;
+    email: string;
+    ECitizenGovernmentID: string;
   }[];
-  Email: any;
+  Email: string;
   constructor(
     public formBuilder: FormBuilder,
     private accessService: AccessService,
@@ -157,7 +160,7 @@ export class HomeAffairsPage implements OnInit {
         }
       });
     });
-    var user = firebase.default.auth().currentUser;
+    let user = firebase.default.auth().currentUser;
 
     await this.firestore
       .collection("eAdministration")
@@ -724,7 +727,7 @@ export class HomeAffairsPage implements OnInit {
     ],
   };
   supportCitizen(value, ID) {
-    var message = value.messageBody;
+    let message = value.messageBody;
     this.message_form.reset();
     this.accessService.sendMessage(ID, message).then(
       async (res) => {
@@ -1028,7 +1031,7 @@ export class HomeAffairsPage implements OnInit {
   // KEPT FOR FUTURE USE
   // /** Method for account PIN update */
   // async updateAccessPIN(governmentID) {
-  //   var Access_PIN = Math.floor(Math.random() * 9000000 + 1000000);
+  //   let Access_PIN = Math.floor(Math.random() * 9000000 + 1000000);
   //   this.accessService.updateECitizenAccessPIN(Access_PIN, governmentID);
   //   const alert = await this.alertController.create({
   //     header: "Access PIN Updated ✔",
@@ -1115,7 +1118,7 @@ export class HomeAffairsPage implements OnInit {
         .then(async (doc) => {
           // console.log(doc.data());
           if (doc.exists) {
-            var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
+            let dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
             // console.log(value);
             if (
               doc.data()["birthRegNo"] == value.birthCertNo &&
@@ -1164,7 +1167,7 @@ export class HomeAffairsPage implements OnInit {
                       .getECitizensPhoto(value.GovernmentID)
                       .subscribe((data) => {
                         data.map(async (e) => {
-                          var photoURL =
+                          let photoURL =
                             "" + e.payload.doc.data()["downloadURL"];
                           console.log(photoURL);
                           this.accessService
@@ -1341,8 +1344,8 @@ export class HomeAffairsPage implements OnInit {
   getWorkLogs() {
     this.activityLog = true;
     setTimeout(async () => {
-      var user = firebase.default.auth().currentUser;
-      var Email = user.email;
+      let user = firebase.default.auth().currentUser;
+      let Email = user.email;
       (await this.accessService.getEWorkLogs(Email)).subscribe((data) => {
         // console.log(data);
         this.EWorkLogs = data.map((e) => {

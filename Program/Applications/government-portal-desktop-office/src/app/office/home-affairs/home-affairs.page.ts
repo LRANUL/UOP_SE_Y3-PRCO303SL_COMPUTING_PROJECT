@@ -1,3 +1,6 @@
+/**
+ * CONTAINS CORE CLASS CODE FOR OFFICER FUNCTIONALITY
+ */
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { switchMap } from "rxjs/operators";
 import {
@@ -27,7 +30,7 @@ import { GuidePage } from "../guide/guide.page";
 import * as CryptoJS from "crypto-js";
 import * as dateFormat from "dateformat";
 
-var qrResultString: string;
+let qrResultString: string;
 @Component({
   selector: "app-home-affairs",
   templateUrl: "./home-affairs.page.html",
@@ -62,52 +65,52 @@ export class HomeAffairsPage implements OnInit {
   eCitizenSearchData: boolean;
   scannedCardData: {
     id: string;
-    Prefix: any;
-    Full_Name: any;
-    homeAddress: any;
-    officeAddress: any;
-    scanECitizenIMG: any;
-    landLine: any;
-    mobile: any;
-    status: any;
-    email: any;
-    scanECitizenGovernmentID: any;
+    Prefix: string;
+    Full_Name: string;
+    homeAddress: string;
+    officeAddress: string;
+    scanECitizenIMG: string;
+    landLine: string;
+    mobile: string;
+    status: string;
+    email: string;
+    scanECitizenGovernmentID: string;
   }[];
   searchECitizenData: {
     id: string;
-    Prefix: any;
-    Full_Name: any;
-    homeAddress: any;
-    officeAddress: any;
-    scanECitizenIMG: any;
-    landLine: any;
-    mobile: any;
-    status: any;
-    email: any;
-    searchECitizenGovernmentID: any;
+    Prefix: string;
+    Full_Name: string;
+    homeAddress: string;
+    officeAddress: string;
+    scanECitizenIMG: string;
+    landLine: string;
+    mobile: string;
+    status: string;
+    email: string;
+    searchECitizenGovernmentID: string;
   }[];
   NICApplicantStatus: boolean;
   NICApplicationStatus: {
     id: string;
-    GovernmentID: any;
-    requestType: any;
-    name: any;
-    familyName: any;
-    assigneeName: any;
-    applicationDescription: any;
-    applicationStatus: any;
-    payment_status: any;
-    receivedTime: any;
-    processedTime: any;
-    approvedTime: any;
-    PhotoURL: any;
+    GovernmentID: string;
+    requestType: string;
+    name: string;
+    familyName: string;
+    assigneeName: string;
+    applicationDescription: string;
+    applicationStatus: string;
+    payment_status: string;
+    receivedTime: string;
+    processedTime: string;
+    approvedTime: string;
+    PhotoURL: string;
   }[];
   supportTechServices: boolean;
-  prefix: any;
-  fullName: any;
-  officeAddress: any;
-  mobile: any;
-  Division: any;
+  prefix: string;
+  fullName: string;
+  officeAddress: string;
+  mobile: string;
+  Division: string;
   Email: string;
   clearResult(): void {
     qrResultString = null;
@@ -118,31 +121,31 @@ export class HomeAffairsPage implements OnInit {
   }
   NICApplications: {
     id: string;
-    GovernmentID: any;
+    GovernmentID: string;
     fullName: string;
-    requestType: any;
-    applicationDescription: any;
-    applicationStatus: any;
+    requestType: string;
+    applicationDescription: string;
+    applicationStatus: string;
   }[];
-  userFilter: any;
-  userRecords: any;
-  applicationFilter: any;
+  userFilter: object;
+  userRecords: object;
+  applicationFilter: object;
   ESupportMessages: {
     id: string;
-    GovernmentID: any;
-    Subject: any;
-    Description: any;
-    Status: any;
-    Count: any;
+    GovernmentID: string;
+    Subject: string;
+    Description: string;
+    Status: string;
+    Count: number;
   }[];
   ETechSupportMessages: {
     Techid: string;
-    TechEmail: any;
-    TechSubject: any;
-    TechDescription: any;
-    TechStatus: any;
-    TechResponse: any;
-    TechCount: any;
+    TechEmail: string;
+    TechSubject: string;
+    TechDescription: string;
+    TechStatus: string;
+    TechResponse: string;
+    TechCount: number;
   }[];
   newMessage: boolean;
   accountPanel: boolean;
@@ -154,11 +157,11 @@ export class HomeAffairsPage implements OnInit {
   settingsPanel: boolean;
   EWorkLogs: {
     id: string;
-    signIn: any;
-    signOff: any;
-    messagesHandled: any;
-    documentsHandled: any;
-    date: any;
+    signIn: string;
+    signOff: string;
+    messagesHandled: number;
+    documentsHandled: number;
+    date: string;
   }[];
   activityLog: boolean;
   message_form: FormGroup;
@@ -169,11 +172,11 @@ export class HomeAffairsPage implements OnInit {
   foreignCitizen: boolean;
   handler: any;
   ECitizens: {
-    uid: any;
-    name: any;
-    photo: any;
-    governmentID: any;
-    dateofBirth: any;
+    uid: string;
+    name: string;
+    photo: string;
+    governmentID: string;
+    dateofBirth: string;
   }[];
   accountManage: boolean;
   verifyPanel: boolean;
@@ -210,7 +213,7 @@ export class HomeAffairsPage implements OnInit {
         }
       });
     });
-    var user = firebase.default.auth().currentUser;
+    let user = firebase.default.auth().currentUser;
 
     await this.firestore
       .collection("eAdministration")
@@ -784,7 +787,7 @@ export class HomeAffairsPage implements OnInit {
    * @param ID Government ID
    */
   supportCitizen(value, ID) {
-    var message = value.messageBody;
+    let message = value.messageBody;
     this.message_form.reset();
     this.accessService.sendMessage(ID, message).then(
       async (res) => {
@@ -849,9 +852,9 @@ export class HomeAffairsPage implements OnInit {
                 toast.present();
               }
               data.map(async (e) => {
-                var bioData = e.payload.doc.data()["Biometric_Data"];
-                var GovernmentID = e.payload.doc.data()["GovernmentID"];
-                var MatchID = CryptoJS.AES.decrypt(
+                let bioData = e.payload.doc.data()["Biometric_Data"];
+                let GovernmentID = e.payload.doc.data()["GovernmentID"];
+                let MatchID = CryptoJS.AES.decrypt(
                   qrResultString,
                   bioData
                 ).toString(CryptoJS.enc.Utf8);
@@ -1246,7 +1249,7 @@ export class HomeAffairsPage implements OnInit {
           text: "Check",
           handler: async (alertData) => {
             if (citizenDateofBirth === alertData.dateOfBirth) {
-              var Access_PIN = Math.floor(Math.random() * 9000000 + 1000000);
+              let Access_PIN = Math.floor(Math.random() * 9000000 + 1000000);
               this.accessService.updateECitizenAccessPIN(
                 Access_PIN,
                 governmentID
@@ -1394,7 +1397,7 @@ export class HomeAffairsPage implements OnInit {
         .then(async (doc) => {
           // console.log(doc.data());
           if (doc.exists) {
-            var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
+            let dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
             // console.log(value);
             if (
               doc.data()["birthRegNo"] == value.birthCertNo &&
@@ -1443,7 +1446,7 @@ export class HomeAffairsPage implements OnInit {
                       .getECitizensPhoto(value.GovernmentID)
                       .subscribe((data) => {
                         data.map(async (e) => {
-                          var photoURL =
+                          let photoURL =
                             "" + e.payload.doc.data()["downloadURL"];
                           console.log(photoURL);
                           this.accessService
@@ -1647,8 +1650,8 @@ export class HomeAffairsPage implements OnInit {
   getWorkLogs() {
     this.activityLog = true;
     setTimeout(async () => {
-      var user = firebase.default.auth().currentUser;
-      var Email = user.email;
+      let user = firebase.default.auth().currentUser;
+      let Email = user.email;
       (await this.accessService.getEWorkLogs(Email)).subscribe((data) => {
         // console.log(data);
         this.EWorkLogs = data.map((e) => {
@@ -1707,8 +1710,8 @@ export class HomeAffairsPage implements OnInit {
       },
       async (err) => {
         loading.dismiss();
-        var user = firebase.default.auth().currentUser;
-        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        let user = firebase.default.auth().currentUser;
+        let date = dateFormat(new Date(), "mm-dd-yyyy");
         const eAdministration = this.firestore
           .collection("eAdministration")
           .doc("eServices")

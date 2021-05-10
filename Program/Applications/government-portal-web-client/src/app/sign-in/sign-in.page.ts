@@ -126,7 +126,7 @@ export class SignInPage implements OnInit {
         {
           text: "Change",
           handler: async (alertData) => {
-            var auth = firebase.default.auth();
+            let auth = firebase.default.auth();
             auth
               .sendPasswordResetEmail(alertData.email)
               .then(async (res) => {
@@ -189,7 +189,7 @@ export class SignInPage implements OnInit {
         // console.log(res);
         loading.dismiss();
 
-        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        let date = dateFormat(new Date(), "mm-dd-yyyy");
         const eAdministration = this.firestore
           .collection("eAdministration")
           .doc("eServices")
@@ -209,7 +209,7 @@ export class SignInPage implements OnInit {
         this.errorMessage = err.message;
         loading.dismiss();
 
-        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        let date = dateFormat(new Date(), "mm-dd-yyyy");
         const eAdministration = this.firestore
           .collection("eAdministration")
           .doc("eServices")

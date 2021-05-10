@@ -1,3 +1,6 @@
+/**
+ * CONTAINS CORE CLASS CODE FOR ADMINISTRATOR FUNCTIONALITY
+ */
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { AccessService } from "src/app/service/access.service";
 import { HttpClient } from "@angular/common/http";
@@ -33,39 +36,38 @@ export class AdminPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   accountPanel: boolean;
   userFilter: string;
-  userRecords: any;
+  userRecords: object;
   accountManage: boolean;
-  user: any;
   statisticsPanel: boolean;
   settingsPanel: boolean;
   activityLog: boolean;
   EWorkLogs: {
     id: string;
-    signIn: any;
-    signOff: any;
-    messagesHandled: any;
-    accountsHandled: any;
-    date: any;
+    signIn: string;
+    signOff: string;
+    messagesHandled: number;
+    accountsHandled: number;
+    date: string;
   }[];
-  message_form: any;
+  message_form: FormGroup;
   newMessage: boolean;
   supportPanel: boolean;
   supportServices: boolean;
   loadingData: boolean;
   ETechSupportMessages: {
     id: string;
-    Email: any;
-    Subject: any;
-    Description: any;
-    Status: any;
-    Type: any;
-    Count: any;
+    Email: string;
+    Subject: string;
+    Description: string;
+    Status: string;
+    Type: string;
+    Count: number;
   }[];
-  prefix: any;
-  fullName: any;
-  officeAddress: any;
-  mobile: any;
-  Division: any;
+  prefix: string;
+  fullName: string;
+  officeAddress: string;
+  mobile: string;
+  Division: string;
   Email: string;
   imageURL = "";
   CollectionPath = "/Users/eAdministrators";
@@ -81,16 +83,16 @@ export class AdminPage implements OnInit {
   office_system_maintenance: boolean;
   secretary_system_maintenance: boolean;
   registrationPanel: boolean;
-  citizenRegistration_form: any;
+  citizenRegistration_form: FormGroup;
   kiosk_registration_form: FormGroup;
   kioskAccount: boolean;
   citizenBirthRegistration: boolean;
   kioskCardUnlocker: boolean;
-  ECitizens: any;
-  listLoaded: any;
-  Logins: any;
-  Locks: any;
-  Applications: any;
+  ECitizens: object;
+  listLoaded: boolean;
+  Logins: object;
+  Locks: object;
+  Applications: object;
   constructor(
     public storage: AngularFireStorage,
     private accessService: AccessService,
@@ -118,7 +120,7 @@ export class AdminPage implements OnInit {
         }
       });
     });
-    var user = firebase.default.auth().currentUser;
+    let user = firebase.default.auth().currentUser;
 
     await this.firestore
       .collection("eAdministration")
@@ -269,7 +271,7 @@ export class AdminPage implements OnInit {
   }
   async getSystemLogs() {
     /** Get logs for Administrator */
-    var date = dateFormat(new Date(), "mm-dd-yyyy");
+    let date = dateFormat(new Date(), "mm-dd-yyyy");
     await this.firestore
       .collection("eAdministration")
       .doc("eServices")
@@ -524,7 +526,7 @@ export class AdminPage implements OnInit {
    * @param {file} event getting image data for uploading
    */
   async onFileChange(event) {
-    var NIC = this.registration_form.value.nic;
+    let NIC = this.registration_form.value.nic;
     const file = event.target.files[0];
     if (file) {
       const filePath = `${this.CollectionPath}/${NIC}/ProfilePhoto`;
@@ -653,6 +655,8 @@ export class AdminPage implements OnInit {
           buttons: ["OK"],
         });
         await alert.present();
+        loading.dismiss()
+        value ? this.system_maintenance = false : this.system_maintenance = true
       }
     );
     const loading = await this.loadingController.create({
@@ -680,6 +684,8 @@ export class AdminPage implements OnInit {
           buttons: ["OK"],
         });
         await alert.present();
+        loading.dismiss();
+        value ? this.kiosk_system_maintenance = false : this.kiosk_system_maintenance = true
       }
     );
     const loading = await this.loadingController.create({
@@ -707,6 +713,8 @@ export class AdminPage implements OnInit {
           buttons: ["OK"],
         });
         await alert.present();
+        loading.dismiss();
+        value ? this.web_system_maintenance = false : this.web_system_maintenance = true
       }
     );
     const loading = await this.loadingController.create({
@@ -734,6 +742,8 @@ export class AdminPage implements OnInit {
           buttons: ["OK"],
         });
         await alert.present();
+        loading.dismiss();
+        value ? this.office_system_maintenance = false : this.office_system_maintenance = true
       }
     );
     const loading = await this.loadingController.create({
@@ -762,6 +772,8 @@ export class AdminPage implements OnInit {
           buttons: ["OK"],
         });
         await alert.present();
+        loading.dismiss();
+        value ? this.secretary_system_maintenance = false  : this.secretary_system_maintenance = true
       }
     );
     const loading = await this.loadingController.create({
@@ -901,7 +913,7 @@ export class AdminPage implements OnInit {
           (data) => {
             // console.log(data);
             this.userFilter = JSON.stringify(data);
-            var user = JSON.parse(this.userFilter);
+            let user = JSON.parse(this.userFilter);
             this.userRecords = [user];
           },
           async (error) => {
@@ -1020,7 +1032,7 @@ export class AdminPage implements OnInit {
    * @param ID officer email
    */
   supportOfficer(value, ID) {
-    var message = value.messageBody;
+    let message = value.messageBody;
     this.message_form.reset();
     this.accessService.sendMessage(ID, message).then(
       async (res) => {
@@ -1029,6 +1041,24 @@ export class AdminPage implements OnInit {
           duration: 2000,
         });
         toast.present();
+        let user = firebase.default.auth().currentUser;
+        let date = dateFormat(new Date(), "mm-dd-yyyy");
+        const eAdministration = this.firestore
+          .collection("eAdministration")
+          .doc("eServices")
+          .collection("SystemLogs")
+          .doc(date);
+        await eAdministration.set(
+          {
+            Login: firebase.default.firestore.FieldValue.arrayUnion(
+              "administrator message sent from " +
+                user.email + "to "+ ID +
+                " at: " +
+                new Date()
+            ),
+          },
+          { merge: true }
+        );
       },
       async (err) => {
         const toast = await this.toastController.create({
@@ -1044,8 +1074,8 @@ export class AdminPage implements OnInit {
   getWorkLogs() {
     this.activityLog = true;
     setTimeout(async () => {
-      var user = firebase.default.auth().currentUser;
-      var Email = user.email;
+      let user = firebase.default.auth().currentUser;
+      let Email = user.email;
       (await this.accessService.getEWorkLogs(Email)).subscribe((data) => {
         // console.log(data);
         this.EWorkLogs = data.map((e) => {
@@ -1091,8 +1121,8 @@ export class AdminPage implements OnInit {
         loading.dismiss();
       },
       async (err) => {
-        var user = firebase.default.auth().currentUser;
-        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        let user = firebase.default.auth().currentUser;
+        let date = dateFormat(new Date(), "mm-dd-yyyy");
         const eAdministration = this.firestore
           .collection("eAdministration")
           .doc("eServices")

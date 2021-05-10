@@ -71,7 +71,7 @@ export class GoogleAuthService {
               });
               await alert.present();
             } else {
-              var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
+              let dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
               if (
                 doc.data()["birthRegNo"] == value.birthRegNo &&
                 doc.data()["gender"] == value.gender.toUpperCase() &&
@@ -94,12 +94,12 @@ export class GoogleAuthService {
                       });
                     }
                     // Access PIN for Users via Portal Card
-                    var Access_PIN = Math.floor(
+                    let Access_PIN = Math.floor(
                       Math.random() * 9000000 + 1000000
                     );
                     // https://code.google.com/archive/p/crypto-js/
 
-                    var Access_Key = CryptoJS.AES.encrypt(
+                    let Access_Key = CryptoJS.AES.encrypt(
                       value.GovernmentID,
                       value.bioData
                     ).toString();
@@ -167,8 +167,8 @@ export class GoogleAuthService {
                     duration: 2000,
                   });
                   toast.present();
-                  var user = firebase.default.auth().currentUser;
-                  var date = dateFormat(new Date(), "mm-dd-yyyy");
+                  let user = firebase.default.auth().currentUser;
+                  let date = dateFormat(new Date(), "mm-dd-yyyy");
                   const eAdministration = this.firestore
                     .collection("eAdministration")
                     .doc("eServices")
@@ -238,7 +238,7 @@ export class GoogleAuthService {
         .then(async (doc) => {
           // console.log(doc.data());
           if (doc.exists) {
-            var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
+            let dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
             // console.log(value);
             if (
               doc.data()["birthRegNo"] == value.birthCertNo &&
@@ -246,8 +246,8 @@ export class GoogleAuthService {
               doc.data()["dateOfBirth"] == dateBirth
             ) {
               return new Promise<any>(async (resolve, reject) => {
-                var user = firebase.default.auth().currentUser;
-                var date = dateFormat(new Date(), "mm-dd-yyyy");
+                let user = firebase.default.auth().currentUser;
+                let date = dateFormat(new Date(), "mm-dd-yyyy");
                 const eAdministration = this.firestore
                   .collection("eAdministration")
                   .doc("eServices")
@@ -264,7 +264,6 @@ export class GoogleAuthService {
                   },
                   { merge: true }
                 );
-                var user = firebase.default.auth().currentUser;
                 this.firestore
                   .collection("/eApplications/")
                   .doc(token)
@@ -377,8 +376,8 @@ export class GoogleAuthService {
           buttons: ["OK"],
         });
         await alert.present();
-        var user = firebase.default.auth().currentUser;
-        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        let user = firebase.default.auth().currentUser;
+        let date = dateFormat(new Date(), "mm-dd-yyyy");
         const eAdministration = this.firestore
           .collection("eAdministration")
           .doc("eServices")
@@ -392,7 +391,6 @@ export class GoogleAuthService {
           },
           { merge: true }
         );
-        var user = firebase.default.auth().currentUser;
         this.firestore
           .collection("/eSupport/")
           .doc()
@@ -413,7 +411,7 @@ export class GoogleAuthService {
     });
   }
   getESupportMessages() {
-    var user = firebase.default.auth().currentUser;
+    let user = firebase.default.auth().currentUser;
 
     return this.firestore
       .collection("eSupport", (ref) =>
@@ -423,7 +421,7 @@ export class GoogleAuthService {
   }
 
   getEApplications() {
-    var user = firebase.default.auth().currentUser;
+    let user = firebase.default.auth().currentUser;
     return this.firestore
       .collection("eApplications", (ref) =>
         ref.where("GovernmentID", "==", user.displayName)
@@ -450,8 +448,8 @@ export class GoogleAuthService {
           buttons: ["Close"],
         });
         await alert.present();
-        var user = firebase.default.auth().currentUser;
-        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        let user = firebase.default.auth().currentUser;
+        let date = dateFormat(new Date(), "mm-dd-yyyy");
         const eAdministration = this.firestore
           .collection("eAdministration")
           .doc("eServices")
@@ -482,8 +480,8 @@ export class GoogleAuthService {
    */
   logoutCitizen() {
     return new Promise<void>((resolve, reject) => {
-      var user = firebase.default.auth().currentUser;
-      var date = dateFormat(new Date(), "mm-dd-yyyy");
+      let user = firebase.default.auth().currentUser;
+      let date = dateFormat(new Date(), "mm-dd-yyyy");
       if (this.gAuth.currentUser) {
         this.gAuth
           .signOut()

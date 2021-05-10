@@ -258,29 +258,29 @@ export class CreateAccountPage implements OnInit {
   registerECitizen(value) {
     this.authService.registerECitizen(value).then(async (res) => {
       // console.log(res);
-      var user = firebase.default.auth().currentUser;
-            var date = dateFormat(new Date(), "mm-dd-yyyy");
-            const eAdministration = this.firestore
-              .collection("eAdministration")
-              .doc("eServices")
-              .collection("SystemLogs")
-              .doc(date);
-            await eAdministration.set(
-              {
-                Login: firebase.default.firestore.FieldValue.arrayUnion(
-                  "web ecitizen registration from " +
-                    value.email +
-                    " at: " +
-                    new Date()
-                ),
-              },
-              { merge: true }
-            );
+      let user = firebase.default.auth().currentUser;
+      let date = dateFormat(new Date(), "mm-dd-yyyy");
+      const eAdministration = this.firestore
+        .collection("eAdministration")
+        .doc("eServices")
+        .collection("SystemLogs")
+        .doc(date);
+      await eAdministration.set(
+        {
+          Login: firebase.default.firestore.FieldValue.arrayUnion(
+            "web ecitizen registration from " +
+              user.email +
+              " at: " +
+              new Date()
+          ),
+        },
+        { merge: true }
+      );
     });
   }
 
   async onFileChange(event) {
-    var GovernmentID;
+    let GovernmentID;
     GovernmentID = "A" + Math.floor(Math.random() * 9000000000 + 1000000000);
     this.validations_form.patchValue({ GovernmentID: GovernmentID });
     const file = event.target.files[0];
@@ -327,24 +327,6 @@ export class CreateAccountPage implements OnInit {
           if (doc.exists) {
             /** Informs user an account already exists */
             if (doc.data()["Registered"] == true) {
-              var user = firebase.default.auth().currentUser;
-            var date = dateFormat(new Date(), "mm-dd-yyyy");
-            const eAdministration = this.firestore
-              .collection("eAdministration")
-              .doc("eServices")
-              .collection("SystemLogs")
-              .doc(date);
-            await eAdministration.set(
-              {
-                Login: firebase.default.firestore.FieldValue.arrayUnion(
-                  "web duplicate account attempt of registration " +RegNo+
-                    user.email +
-                    " at: " +
-                    new Date()
-                ),
-              },
-              { merge: true }
-            );
               const alert = await this.alertController.create({
                 header: "⚠ You already have an account with us",
                 backdropDismiss: false,
@@ -360,6 +342,25 @@ export class CreateAccountPage implements OnInit {
                 ],
               });
               await alert.present();
+              let user = firebase.default.auth().currentUser;
+              let date = dateFormat(new Date(), "mm-dd-yyyy");
+              const eAdministration = this.firestore
+                .collection("eAdministration")
+                .doc("eServices")
+                .collection("SystemLogs")
+                .doc(date);
+              await eAdministration.set(
+                {
+                  Login: firebase.default.firestore.FieldValue.arrayUnion(
+                    "web duplicate account attempt of registration " +
+                      RegNo +
+                      user.email +
+                      " at: " +
+                      new Date()
+                  ),
+                },
+                { merge: true }
+              );
             }
           }
         });

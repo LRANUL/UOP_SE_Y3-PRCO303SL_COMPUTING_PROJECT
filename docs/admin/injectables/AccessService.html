@@ -1,0 +1,2504 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>government-portal-admin documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">government-portal-admin documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li>AccessService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/service/access.service.ts</code>
+        </p>
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#alertController">alertController</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#BASE_URL">BASE_URL</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#http">http</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#loadingController">loadingController</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#getECitizen">getECitizen</a>
+                            </li>
+                            <li>
+                                <a href="#getECitizens">getECitizens</a>
+                            </li>
+                            <li>
+                                <a href="#getETechSupportMessages">getETechSupportMessages</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getEWorkLogs">getEWorkLogs</a>
+                            </li>
+                            <li>
+                                <a href="#getKioskSystemMaintenanceStatus">getKioskSystemMaintenanceStatus</a>
+                            </li>
+                            <li>
+                                <a href="#getOfficeSystemMaintenanceStatus">getOfficeSystemMaintenanceStatus</a>
+                            </li>
+                            <li>
+                                <a href="#getSecretarySystemMaintenanceStatus">getSecretarySystemMaintenanceStatus</a>
+                            </li>
+                            <li>
+                                <a href="#getSystemMaintenanceStatus">getSystemMaintenanceStatus</a>
+                            </li>
+                            <li>
+                                <a href="#getWebSystemMaintenanceStatus">getWebSystemMaintenanceStatus</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#loginAdmin">loginAdmin</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#logoutAdmin">logoutAdmin</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#PortalCardManage">PortalCardManage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#registerBirths">registerBirths</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#registerKiosk">registerKiosk</a>
+                            </li>
+                            <li>
+                                <a href="#registerOfficer">registerOfficer</a>
+                            </li>
+                            <li>
+                                <a href="#sendMessage">sendMessage</a>
+                            </li>
+                            <li>
+                                <a href="#setKioskSystemMaintenance">setKioskSystemMaintenance</a>
+                            </li>
+                            <li>
+                                <a href="#setOfficeSystemMaintenance">setOfficeSystemMaintenance</a>
+                            </li>
+                            <li>
+                                <a href="#setSecretarySystemMaintenance">setSecretarySystemMaintenance</a>
+                            </li>
+                            <li>
+                                <a href="#setSystemMaintenance">setSystemMaintenance</a>
+                            </li>
+                            <li>
+                                <a href="#setWebSystemMaintenance">setWebSystemMaintenance</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#signIn">signIn</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#signOff">signOff</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(http: <a href="https://angular.io/api/common/http/HttpClient" target="_blank">HttpClient</a>, firestore: AngularFirestore, auth: AngularFireAuth, loadingController: LoadingController, alertController: AlertController, navCtrl: NavController)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/service/access.service.ts:17</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/common/http/HttpClient" target="_blank" >HttpClient</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>firestore</td>
+                                                  
+                                                        <td>
+                                                                    <code>AngularFirestore</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>auth</td>
+                                                  
+                                                        <td>
+                                                                    <code>AngularFireAuth</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>loadingController</td>
+                                                  
+                                                        <td>
+                                                                    <code>LoadingController</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>alertController</td>
+                                                  
+                                                        <td>
+                                                                    <code>AlertController</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>navCtrl</td>
+                                                  
+                                                        <td>
+                                                                    <code>NavController</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getECitizen"></a>
+                    <span class="name">
+                        <b>
+                            getECitizen
+                        </b>
+                        <a href="#getECitizen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getECitizen(GovernmentID)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="509"
+                            class="link-to-prism">src/app/service/access.service.ts:509</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method for retrieving an active eCitizen</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>GovernmentID</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getECitizens"></a>
+                    <span class="name">
+                        <b>
+                            getECitizens
+                        </b>
+                        <a href="#getECitizens"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getECitizens()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="500"
+                            class="link-to-prism">src/app/service/access.service.ts:500</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method for retrieving active new eCitizen users</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getETechSupportMessages"></a>
+                    <span class="name">
+                        <b>
+                            getETechSupportMessages
+                        </b>
+                        <a href="#getETechSupportMessages"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getETechSupportMessages()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="553"
+                            class="link-to-prism">src/app/service/access.service.ts:553</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method for retrieving eSupport messages </p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getEWorkLogs"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            getEWorkLogs
+                        </b>
+                        <a href="#getEWorkLogs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getEWorkLogs(Email)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="610"
+                            class="link-to-prism">src/app/service/access.service.ts:610</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method for getting Officer worklogs </p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Email</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getKioskSystemMaintenanceStatus"></a>
+                    <span class="name">
+                        <b>
+                            getKioskSystemMaintenanceStatus
+                        </b>
+                        <a href="#getKioskSystemMaintenanceStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getKioskSystemMaintenanceStatus()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="59"
+                            class="link-to-prism">src/app/service/access.service.ts:59</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOfficeSystemMaintenanceStatus"></a>
+                    <span class="name">
+                        <b>
+                            getOfficeSystemMaintenanceStatus
+                        </b>
+                        <a href="#getOfficeSystemMaintenanceStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getOfficeSystemMaintenanceStatus()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="62"
+                            class="link-to-prism">src/app/service/access.service.ts:62</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSecretarySystemMaintenanceStatus"></a>
+                    <span class="name">
+                        <b>
+                            getSecretarySystemMaintenanceStatus
+                        </b>
+                        <a href="#getSecretarySystemMaintenanceStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getSecretarySystemMaintenanceStatus()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="65"
+                            class="link-to-prism">src/app/service/access.service.ts:65</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSystemMaintenanceStatus"></a>
+                    <span class="name">
+                        <b>
+                            getSystemMaintenanceStatus
+                        </b>
+                        <a href="#getSystemMaintenanceStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getSystemMaintenanceStatus()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="53"
+                            class="link-to-prism">src/app/service/access.service.ts:53</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getWebSystemMaintenanceStatus"></a>
+                    <span class="name">
+                        <b>
+                            getWebSystemMaintenanceStatus
+                        </b>
+                        <a href="#getWebSystemMaintenanceStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getWebSystemMaintenanceStatus()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="56"
+                            class="link-to-prism">src/app/service/access.service.ts:56</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loginAdmin"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            loginAdmin
+                        </b>
+                        <a href="#loginAdmin"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loginAdmin(value)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="461"
+                            class="link-to-prism">src/app/service/access.service.ts:461</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method for logging in user to system</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>Holds data coming from Login form and invokes for verfication before allowing access</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logoutAdmin"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            logoutAdmin
+                        </b>
+                        <a href="#logoutAdmin"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>logoutAdmin()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="521"
+                            class="link-to-prism">src/app/service/access.service.ts:521</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method for logging out user to system</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="PortalCardManage"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            PortalCardManage
+                        </b>
+                        <a href="#PortalCardManage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>PortalCardManage(Status: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, GovernmentID: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="176"
+                            class="link-to-prism">src/app/service/access.service.ts:176</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method for unlocking theft cards</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Status</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>GovernmentID</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>eCitizen ID</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>unlock result</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="registerBirths"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            registerBirths
+                        </b>
+                        <a href="#registerBirths"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>registerBirths(value)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="368"
+                            class="link-to-prism">src/app/service/access.service.ts:368</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method for Citizen Registration</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="registerKiosk"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            registerKiosk
+                        </b>
+                        <a href="#registerKiosk"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>registerKiosk(value)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="287"
+                            class="link-to-prism">src/app/service/access.service.ts:287</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method for Kiosk Registration</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="registerOfficer"></a>
+                    <span class="name">
+                        <b>
+                            registerOfficer
+                        </b>
+                        <a href="#registerOfficer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>registerOfficer(value)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="72"
+                            class="link-to-prism">src/app/service/access.service.ts:72</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method for Officer Registration</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendMessage"></a>
+                    <span class="name">
+                        <b>
+                            sendMessage
+                        </b>
+                        <a href="#sendMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>sendMessage(ID, messageBody)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="561"
+                            class="link-to-prism">src/app/service/access.service.ts:561</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method for sending admin reponse to officer </p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ID</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>messageBody</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setKioskSystemMaintenance"></a>
+                    <span class="name">
+                        <b>
+                            setKioskSystemMaintenance
+                        </b>
+                        <a href="#setKioskSystemMaintenance"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setKioskSystemMaintenance(value: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="32"
+                            class="link-to-prism">src/app/service/access.service.ts:32</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setOfficeSystemMaintenance"></a>
+                    <span class="name">
+                        <b>
+                            setOfficeSystemMaintenance
+                        </b>
+                        <a href="#setOfficeSystemMaintenance"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setOfficeSystemMaintenance(value: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="42"
+                            class="link-to-prism">src/app/service/access.service.ts:42</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setSecretarySystemMaintenance"></a>
+                    <span class="name">
+                        <b>
+                            setSecretarySystemMaintenance
+                        </b>
+                        <a href="#setSecretarySystemMaintenance"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setSecretarySystemMaintenance(value: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="47"
+                            class="link-to-prism">src/app/service/access.service.ts:47</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setSystemMaintenance"></a>
+                    <span class="name">
+                        <b>
+                            setSystemMaintenance
+                        </b>
+                        <a href="#setSystemMaintenance"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setSystemMaintenance(value)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="29"
+                            class="link-to-prism">src/app/service/access.service.ts:29</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Management of System via Remote Configuration - Allows management of all system clients </p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setWebSystemMaintenance"></a>
+                    <span class="name">
+                        <b>
+                            setWebSystemMaintenance
+                        </b>
+                        <a href="#setWebSystemMaintenance"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setWebSystemMaintenance(value: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="37"
+                            class="link-to-prism">src/app/service/access.service.ts:37</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="signIn"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            signIn
+                        </b>
+                        <a href="#signIn"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>signIn()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="619"
+                            class="link-to-prism">src/app/service/access.service.ts:619</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method for officer signin activity </p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="signOff"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            signOff
+                        </b>
+                        <a href="#signOff"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>signOff()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="639"
+                            class="link-to-prism">src/app/service/access.service.ts:639</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method for officer signoff activity </p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="alertController"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            alertController</b>
+                            <a href="#alertController"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>AlertController</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/service/access.service.ts:24</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="BASE_URL"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            BASE_URL</b>
+                            <a href="#BASE_URL"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&quot;https://government-portal-firebase.herokuapp.com/&quot;</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/service/access.service.ts:17</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="http"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            http</b>
+                            <a href="#http"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://angular.io/api/common/http/HttpClient" target="_blank" >HttpClient</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/service/access.service.ts:20</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="loadingController"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            loadingController</b>
+                            <a href="#loadingController"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>LoadingController</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/service/access.service.ts:23</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &quot;@angular/core&quot;;
+import { AngularFireAuth } from &quot;@angular/fire/auth&quot;;
+import { AngularFirestore } from &quot;@angular/fire/firestore&quot;;
+import {
+  AlertController,
+  LoadingController,
+  NavController,
+} from &quot;@ionic/angular&quot;;
+import * as firebase from &quot;firebase/app&quot;;
+import * as dateFormat from &quot;dateformat&quot;;
+import { HttpClient } from &quot;@angular/common/http&quot;;
+
+@Injectable({
+  providedIn: &quot;root&quot;,
+})
+export class AccessService {
+  private BASE_URL &#x3D; &quot;https://government-portal-firebase.herokuapp.com/&quot;;
+
+  constructor(
+    public http: HttpClient,
+    private firestore: AngularFirestore,
+    private auth: AngularFireAuth,
+    public loadingController: LoadingController,
+    public alertController: AlertController,
+    private navCtrl: NavController
+  ) {}
+  /** Management of System via Remote Configuration - Allows management of all system clients */
+  // Setting Maintenance Status Line 16-31
+  setSystemMaintenance(value) {
+    return this.http.get(this.BASE_URL + &quot;system_maintenance?value&#x3D;&quot; + value);
+  }
+  setKioskSystemMaintenance(value: any) {
+    return this.http.get(
+      this.BASE_URL + &quot;kiosk_system_maintenance?value&#x3D;&quot; + value
+    );
+  }
+  setWebSystemMaintenance(value: any) {
+    return this.http.get(
+      this.BASE_URL + &quot;web_system_maintenance?value&#x3D;&quot; + value
+    );
+  }
+  setOfficeSystemMaintenance(value: any) {
+    return this.http.get(
+      this.BASE_URL + &quot;office_system_maintenance?value&#x3D;&quot; + value
+    );
+  }
+  setSecretarySystemMaintenance(value: any) {
+    return this.http.get(
+      this.BASE_URL + &quot;secretary_system_maintenance?value&#x3D;&quot; + value
+    );
+  }
+  // Checking Maintenance Status Line 33-47
+  getSystemMaintenanceStatus() {
+    return this.http.get(this.BASE_URL + &quot;system_maintenance_status&quot;);
+  }
+  getWebSystemMaintenanceStatus() {
+    return this.http.get(this.BASE_URL + &quot;web_system_maintenance_status&quot;);
+  }
+  getKioskSystemMaintenanceStatus() {
+    return this.http.get(this.BASE_URL + &quot;kiosk_system_maintenance_status&quot;);
+  }
+  getOfficeSystemMaintenanceStatus() {
+    return this.http.get(this.BASE_URL + &quot;office_system_maintenance_status&quot;);
+  }
+  getSecretarySystemMaintenanceStatus() {
+    return this.http.get(this.BASE_URL + &quot;secretary_system_maintenance_status&quot;);
+  }
+  /**
+   *  Method for Officer Registration
+   * @param {Form} contains form data
+   * */
+  registerOfficer(value) {
+    var dateBirth &#x3D; dateFormat(value.dateOfBirth, &quot;mm/dd/yyyy&quot;);
+    /**
+     * Data gets stored on Firebase for references
+     */
+    this.firestore
+      .collection(&quot;eAdministration&quot;)
+      .doc(value.email + &quot;@homeaffairs.gov.lk&quot;)
+      .set({
+        Type: value.type,
+        Full_Name: value.fullName,
+        Gender: value.gender,
+        Date_Of_Birth: dateBirth,
+        Division: value.division.toUpperCase(),
+        NIC: value.nic,
+        downloadURL: value.downloadURL,
+        Prefix: value.prefix,
+        homeAddress: value.homeAddress,
+        officeAddress: value.officeAddress,
+        mobile: value.mobile,
+        landLine: value.landLine,
+        Email: value.email + &quot;@homeaffairs.gov.lk&quot;,
+        createdDateTime: new Date(),
+        status: &quot;Active&quot;,
+      });
+
+    this.http
+      .post(
+        // &quot;http://localhost:5000/create-user&quot;, {
+        &quot;https://government-portal-firebase.herokuapp.com/create-user&quot;,
+        {
+          email: value.email + &quot;@homeaffairs.gov.lk&quot;,
+          password: value.password,
+          downloadURL: value.downloadURL,
+          Full_Name: value.fullName,
+        }
+      )
+      .subscribe(
+        async (data) &#x3D;&gt; {
+          const alert &#x3D; await this.alertController.create({
+            header: &quot;Account Created ✔&quot;,
+            message: value.type + &quot; Account has been created.&quot;,
+            buttons: [&quot;OK&quot;],
+          });
+          await alert.present();
+          var user &#x3D; firebase.default.auth().currentUser;
+          var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+          const eAdministration &#x3D; this.firestore
+            .collection(&quot;eAdministration&quot;)
+            .doc(&quot;eServices&quot;)
+            .collection(&quot;SystemLogs&quot;)
+            .doc(date);
+          const res &#x3D; await eAdministration.set(
+            {
+              Lock: firebase.default.firestore.FieldValue.arrayUnion(
+                &quot;administrator account create attempt to &quot; +
+                  value.email +
+                  &quot; from &quot; +
+                  user.email +
+                  &quot; at: &quot; +
+                  new Date()
+              ),
+            },
+            { merge: true }
+          );
+        },
+        async (error) &#x3D;&gt; {
+          // console.log(error);
+          const alert &#x3D; await this.alertController.create({
+            header: &quot;🚫 Out of Service&quot;,
+            subHeader: &quot;Server Access Timeout&quot;,
+            message:
+              &quot;Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later.&quot;,
+            buttons: [&quot;OK&quot;],
+          });
+          await alert.present();
+          var user &#x3D; firebase.default.auth().currentUser;
+          var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+          const eAdministration &#x3D; this.firestore
+            .collection(&quot;eAdministration&quot;)
+            .doc(&quot;eServices&quot;)
+            .collection(&quot;SystemLogs&quot;)
+            .doc(date);
+          const res &#x3D; await eAdministration.set(
+            {
+              Account: firebase.default.firestore.FieldValue.arrayUnion(
+                &quot;administrator failed server contact on attempt to create &quot; +
+                  value.email +
+                  &quot; from &quot; +
+                  user.email +
+                  &quot; at: &quot; +
+                  new Date()
+              ),
+            },
+            { merge: true }
+          );
+        }
+      );
+  }
+  /**
+   * Method for unlocking theft cards
+   * @param GovernmentID eCitizen ID
+   * @returns unlock result
+   */
+  async PortalCardManage(Status: any, GovernmentID: any) {
+    const loading &#x3D; await this.loadingController.create({
+      message: &quot;Please wait...&quot;,
+    });
+    await loading.present();
+    const eCitizen &#x3D; this.firestore.collection(&quot;eCitizens&quot;).doc(GovernmentID);
+    const res &#x3D; await eCitizen
+      .set(
+        {
+          kioskLock: Status,
+        },
+        { merge: true }
+      )
+      .then(
+        async (data) &#x3D;&gt; {
+          if (Status &#x3D;&#x3D; true) {
+            const alert &#x3D; await this.alertController.create({
+              header: &quot;Card Locked 🔓&quot;,
+              message: GovernmentID + &quot; card has been locked.&quot;,
+              buttons: [&quot;OK&quot;],
+            });
+            await alert.present();
+            loading.dismiss();
+            var user &#x3D; firebase.default.auth().currentUser;
+            var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+            const eAdministration &#x3D; this.firestore
+              .collection(&quot;eAdministration&quot;)
+              .doc(&quot;eServices&quot;)
+              .collection(&quot;SystemLogs&quot;)
+              .doc(date);
+            const res &#x3D; await eAdministration.set(
+              {
+                Lock: firebase.default.firestore.FieldValue.arrayUnion(
+                  &quot;administrator card lock attempt to &quot; +
+                    GovernmentID +
+                    &quot; from &quot; +
+                    user.email +
+                    &quot; at: &quot; +
+                    new Date()
+                ),
+              },
+              { merge: true }
+            );
+          } else {
+            const alert &#x3D; await this.alertController.create({
+              header: &quot;Card UnLocked 🔓&quot;,
+              message: GovernmentID + &quot; card has been unlocked.&quot;,
+              buttons: [&quot;OK&quot;],
+            });
+            await alert.present();
+            loading.dismiss();
+            var user &#x3D; firebase.default.auth().currentUser;
+            var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+            const eAdministration &#x3D; this.firestore
+              .collection(&quot;eAdministration&quot;)
+              .doc(&quot;eServices&quot;)
+              .collection(&quot;SystemLogs&quot;)
+              .doc(date);
+            const res &#x3D; await eAdministration.set(
+              {
+                Lock: firebase.default.firestore.FieldValue.arrayUnion(
+                  &quot;administrator card unlock attempt to &quot; +
+                    GovernmentID +
+                    &quot; from &quot; +
+                    user.email +
+                    &quot; at: &quot; +
+                    new Date()
+                ),
+              },
+              { merge: true }
+            );
+          }
+        },
+        async (error) &#x3D;&gt; {
+          // console.log(error);
+          const alert &#x3D; await this.alertController.create({
+            header: &quot;🚫 Out of Service&quot;,
+            subHeader: &quot;Server Access Timeout&quot;,
+            message:
+              &quot;Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later.&quot;,
+            buttons: [&quot;OK&quot;],
+          });
+          await alert.present();
+          loading.dismiss();
+          var user &#x3D; firebase.default.auth().currentUser;
+          var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+          const eAdministration &#x3D; this.firestore
+            .collection(&quot;eAdministration&quot;)
+            .doc(&quot;eServices&quot;)
+            .collection(&quot;SystemLogs&quot;)
+            .doc(date);
+          const res &#x3D; await eAdministration.set(
+            {
+              Lock: firebase.default.firestore.FieldValue.arrayUnion(
+                &quot;administrator failed server contact on attempt to manage card &quot; +
+                  GovernmentID +
+                  &quot; from &quot; +
+                  user.email +
+                  &quot; at: &quot; +
+                  new Date()
+              ),
+            },
+            { merge: true }
+          );
+        }
+      );
+  }
+  /**
+   * Method for Kiosk Registration
+   * @param {Form} contains form data
+   * */
+  async registerKiosk(value) {
+    const loading &#x3D; await this.loadingController.create({
+      message: &quot;Registering...&quot;,
+    });
+    await loading.present();
+    this.http
+      .post(
+        // &quot;http://localhost:5000/create-user&quot;, {
+        &quot;https://government-portal-firebase.herokuapp.com/create-kiosk&quot;,
+        {
+          email: value.email + &quot;@kiosk.gov.lk&quot;,
+          password: value.password,
+        }
+      )
+      .subscribe(
+        async (data) &#x3D;&gt; {
+          const alert &#x3D; await this.alertController.create({
+            header: &quot;Kiosk Account Created ✔&quot;,
+            message: value.email + &quot; Kiosk account has been created.&quot;,
+            buttons: [&quot;OK&quot;],
+          });
+          await alert.present();
+          loading.dismiss();
+          var user &#x3D; firebase.default.auth().currentUser;
+          var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+          const eAdministration &#x3D; this.firestore
+            .collection(&quot;eAdministration&quot;)
+            .doc(&quot;eServices&quot;)
+            .collection(&quot;SystemLogs&quot;)
+            .doc(date);
+          const res &#x3D; await eAdministration.set(
+            {
+              Lock: firebase.default.firestore.FieldValue.arrayUnion(
+                &quot;administrator create kiosk attempt to &quot; +
+                  value.email +
+                  &quot; from &quot; +
+                  user.email +
+                  &quot; at: &quot; +
+                  new Date()
+              ),
+            },
+            { merge: true }
+          );
+        },
+        async (error) &#x3D;&gt; {
+          // console.log(error);
+          const alert &#x3D; await this.alertController.create({
+            header: &quot;🚫 Out of Service&quot;,
+            subHeader: &quot;Server Access Timeout&quot;,
+            message:
+              &quot;Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later.&quot;,
+            buttons: [&quot;OK&quot;],
+          });
+          await alert.present();
+          loading.dismiss();
+          var user &#x3D; firebase.default.auth().currentUser;
+          var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+          const eAdministration &#x3D; this.firestore
+            .collection(&quot;eAdministration&quot;)
+            .doc(&quot;eServices&quot;)
+            .collection(&quot;SystemLogs&quot;)
+            .doc(date);
+          const res &#x3D; await eAdministration.set(
+            {
+              Account: firebase.default.firestore.FieldValue.arrayUnion(
+                &quot;administrator failed server contact on attempt to create &quot; +
+                  value.email +
+                  &quot; from &quot; +
+                  user.email +
+                  &quot; at: &quot; +
+                  new Date()
+              ),
+            },
+            { merge: true }
+          );
+        }
+      );
+  }
+  /**
+   * Method for Citizen Registration
+   * @param {Form} contains form data*/
+  async registerBirths(value) {
+    // console.log(value);
+    const loading &#x3D; await this.loadingController.create({
+      message: &quot;Storing record...&quot;,
+    });
+    await loading.present();
+    var dateBirth &#x3D; dateFormat(value.dateOfBirth, &quot;mm/dd/yyyy&quot;);
+    /**
+     * Data gets stored on Firebase for references
+     */
+    this.firestore
+      .collection(&quot;BirthRegistrations&quot;)
+      .doc(value.birthCertNo.toString())
+      .set({
+        FatherName: value.fatherFullName.toUpperCase(),
+        Full_Name: value.fullName.toUpperCase(),
+        MotherName: value.motherFullName.toUpperCase(),
+        birthRegNo: value.birthCertNo.toString(),
+        dateOfBirth: dateBirth,
+        gender: value.gender.toUpperCase(),
+        placeOfBirth: value.placeOfBirth.toUpperCase(),
+      })
+      .then(
+        async (data) &#x3D;&gt; {
+          const alert &#x3D; await this.alertController.create({
+            header: &quot;Birth Registration Added&quot;,
+            message:
+              &quot;Record with Birth Registration No: &quot; +
+              value.birthCertNo.toString() +
+              &quot; has been added to Government Portal.&quot;,
+            buttons: [&quot;OK&quot;],
+          });
+          await alert.present();
+          loading.dismiss();
+          var user &#x3D; firebase.default.auth().currentUser;
+          var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+          const eAdministration &#x3D; this.firestore
+            .collection(&quot;eAdministration&quot;)
+            .doc(&quot;eServices&quot;)
+            .collection(&quot;SystemLogs&quot;)
+            .doc(date);
+          const res &#x3D; await eAdministration.set(
+            {
+              Application: firebase.default.firestore.FieldValue.arrayUnion(
+                &quot;administrator add birth registration attempt to &quot; +
+                  value.birthCertNo +
+                  &quot; from &quot; +
+                  user.email +
+                  &quot; at: &quot; +
+                  new Date()
+              ),
+            },
+            { merge: true }
+          );
+        },
+        async (error) &#x3D;&gt; {
+          // console.log(error);
+          const alert &#x3D; await this.alertController.create({
+            header: &quot;🚫 Out of Service&quot;,
+            subHeader: &quot;Server Access Timeout&quot;,
+            message:
+              &quot;Request cannot be sent Government Portal Data Center Server is down to maintenance or high traffic, try again later.&quot;,
+            buttons: [&quot;OK&quot;],
+          });
+          await alert.present();
+          loading.dismiss();
+          var user &#x3D; firebase.default.auth().currentUser;
+          var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+          const eAdministration &#x3D; this.firestore
+            .collection(&quot;eAdministration&quot;)
+            .doc(&quot;eServices&quot;)
+            .collection(&quot;SystemLogs&quot;)
+            .doc(date);
+          const res &#x3D; await eAdministration.set(
+            {
+              Application: firebase.default.firestore.FieldValue.arrayUnion(
+                &quot;administrator failed server contact on attempt to add &quot; +
+                  value.birthCertNo +
+                  &quot; from &quot; +
+                  user.email +
+                  &quot; at: &quot; +
+                  new Date()
+              ),
+            },
+            { merge: true }
+          );
+        }
+      );
+  }
+  /**
+   * Method for logging in user to system
+   * @param value Holds data coming from Login form and invokes for verfication before allowing access
+   */
+  async loginAdmin(value) {
+    return new Promise&lt;any&gt;(async (resolve, reject) &#x3D;&gt; {
+      const email &#x3D; value.email;
+      const address &#x3D; email.split(&quot;@&quot;).pop();
+      if (address &#x3D;&#x3D; &quot;admin.gov.lk&quot;) {
+        this.auth.signInWithEmailAndPassword(value.email, value.password).then(
+          (res) &#x3D;&gt; resolve(res),
+          (err) &#x3D;&gt; reject(err)
+        );
+        this.navCtrl.navigateForward(&quot;admin&quot;);
+      } else {
+        const alert &#x3D; await this.alertController.create({
+          header: &quot;⚠ Unauthorized Access&quot;,
+          message: &quot;Login attempt failed, service not registered.&quot;,
+          buttons: [&quot;Close&quot;],
+        });
+        await alert.present();
+        var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+        const eAdministration &#x3D; this.firestore
+          .collection(&quot;eAdministration&quot;)
+          .doc(&quot;eServices&quot;)
+          .collection(&quot;SystemLogs&quot;)
+          .doc(date);
+        const res &#x3D; await eAdministration.set(
+          {
+            Login: firebase.default.firestore.FieldValue.arrayUnion(
+              &quot;administrator failed login attempt &quot; +
+                &quot; using &quot; +
+                value.email +
+                &quot; at: &quot; +
+                new Date()
+            ),
+          },
+          { merge: true }
+        );
+      }
+    });
+  }
+  /** Method for retrieving active new eCitizen users*/
+  getECitizens() {
+    return this.firestore
+      .collection(&quot;eCitizens&quot;, (ref) &#x3D;&gt;
+        ref.limit(50).where(&quot;status&quot;, &quot;!&#x3D;&quot;, &quot;Deleted&quot;)
+      )
+      .snapshotChanges();
+  }
+
+  /** Method for retrieving an active eCitizen*/
+  getECitizen(GovernmentID) {
+    return this.firestore
+      .collection(&quot;eCitizens&quot;, (ref) &#x3D;&gt;
+        ref
+          .where(&quot;GovernmentID&quot;, &quot;&#x3D;&#x3D;&quot;, GovernmentID)
+          .where(&quot;status&quot;, &quot;!&#x3D;&quot;, &quot;Deleted&quot;)
+      )
+      .snapshotChanges();
+  }
+  /**
+   * Method for logging out user to system
+   */
+  async logoutAdmin() {
+    if (this.auth.currentUser) {
+      this.auth
+        .signOut()
+        .then(async () &#x3D;&gt; {
+          // console.log(&quot;Signing out&quot;);
+          var user &#x3D; firebase.default.auth().currentUser;
+          var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+          const eAdministration &#x3D; this.firestore
+            .collection(&quot;eAdministration&quot;)
+            .doc(&quot;eServices&quot;)
+            .collection(&quot;SystemLogs&quot;)
+            .doc(date);
+          await eAdministration.set(
+            {
+              Login: firebase.default.firestore.FieldValue.arrayUnion(
+                &quot;administrator logout attempt from &quot; +
+                  user.email +
+                  &quot; at: &quot; +
+                  new Date()
+              ),
+            },
+            { merge: true }
+          );
+          this.navCtrl.navigateForward(&quot;access&quot;);
+        })
+        .catch(async (_error) &#x3D;&gt; {
+          // console.log(_error);
+        });
+    }
+  }
+  /** Method for retrieving eSupport messages */
+  getETechSupportMessages() {
+    return this.firestore
+      .collection(&quot;eSupport&quot;, (ref) &#x3D;&gt;
+        ref.limit(10).where(&quot;Status&quot;, &quot;&#x3D;&#x3D;&quot;, &quot;New&quot;).where(&quot;Type&quot;, &quot;&#x3D;&#x3D;&quot;, &quot;Admin&quot;)
+      )
+      .snapshotChanges();
+  }
+  /** Method for sending admin reponse to officer */
+  sendMessage(ID, messageBody) {
+    return new Promise&lt;any&gt;(async (resolve, reject) &#x3D;&gt; {
+      const eSupport &#x3D; this.firestore.collection(&quot;eSupport&quot;).doc(ID);
+      const res &#x3D; await eSupport.set(
+        {
+          Status: &quot;Completed&quot;,
+          Response: messageBody,
+        },
+        { merge: true }
+      );
+      var user &#x3D; firebase.default.auth().currentUser;
+      var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+      const eAdministrationLog &#x3D; this.firestore
+        .collection(&quot;eAdministration&quot;)
+        .doc(&quot;eServices&quot;)
+        .collection(&quot;SystemLogs&quot;)
+        .doc(date);
+      const resLog &#x3D; await eAdministrationLog.update({
+        Lock: firebase.default.firestore.FieldValue.arrayUnion(
+          &quot;administrator technical support attempt to &quot; +
+            ID +
+            &quot; from &quot; +
+            user.email +
+            &quot; at: &quot; +
+            new Date()
+        ),
+      });
+      var user &#x3D; firebase.default.auth().currentUser;
+      var supportNo &#x3D; firebase.default.firestore.FieldValue.increment(1);
+      var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+      const eAdministration &#x3D; this.firestore
+        .collection(&quot;eAdministration&quot;)
+        .doc(user.email)
+        .collection(&quot;WorkLogs&quot;)
+        .doc(date);
+      await eAdministration
+        .set(
+          {
+            messagesHandled: supportNo,
+          },
+          { merge: true }
+        )
+        .then(
+          (response) &#x3D;&gt; resolve(response),
+          (error) &#x3D;&gt; reject(error)
+        );
+    });
+  }
+  /** Method for getting Officer worklogs */
+  async getEWorkLogs(Email) {
+    return this.firestore
+      .collection(&quot;eAdministration&quot;)
+      .doc(Email)
+      .collection(&quot;WorkLogs&quot;)
+      .snapshotChanges();
+  }
+
+  /** Method for officer signin activity */
+  async signIn() {
+    var user &#x3D; firebase.default.auth().currentUser;
+    var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+    var time &#x3D; dateFormat(new Date(), &quot;h:MM:ss TT&quot;);
+    const eAdministration &#x3D; this.firestore
+      .collection(&quot;eAdministration&quot;)
+      .doc(user.email)
+      .collection(&quot;WorkLogs&quot;)
+      .doc(date);
+    const res &#x3D; await eAdministration.set(
+      {
+        signIn: time,
+        date: date,
+        messagesHandled: 0,
+        accountsHandled: 0,
+      },
+      { merge: true }
+    );
+  }
+  /** Method for officer signoff activity */
+  async signOff() {
+    var user &#x3D; firebase.default.auth().currentUser;
+    let date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+    var time &#x3D; dateFormat(new Date(), &quot;h:MM:ss TT&quot;);
+    const eAdministration &#x3D; this.firestore
+      .collection(&quot;eAdministration&quot;)
+      .doc(user.email)
+      .collection(&quot;WorkLogs&quot;)
+      .doc(date);
+    const res &#x3D; await eAdministration.set(
+      {
+        signOff: time,
+        date: date,
+      },
+      { merge: true }
+    );
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'AccessService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

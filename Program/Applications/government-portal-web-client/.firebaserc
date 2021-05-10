@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "prco303sl-3f1b2"
+  },
+  "targets": {
+    "prco303sl-3f1b2": {
+      "hosting": {
+        "public-site": [
+          "governmentportal"
+        ]
+      }
+    }
   }
 }
