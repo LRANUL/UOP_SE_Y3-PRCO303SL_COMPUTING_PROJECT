@@ -16,7 +16,7 @@ export class HomePage {
   loading: boolean;
   home: boolean;
   visitor: string;
-  Welcome: any;
+  Welcome: boolean;
   slideOpts = {
     initialSlide: 0,
     slidesPerView: 1,

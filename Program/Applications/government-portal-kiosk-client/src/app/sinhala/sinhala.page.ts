@@ -1,3 +1,6 @@
+/**
+ * CONTAINS CORE CLASS CODE FOR KIOSK FUNCTIONALITY - SINHALA LANGUAGE CITIZENS
+ */
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { switchMap } from "rxjs/operators";
 import {
@@ -63,12 +66,12 @@ export class SinhalaPage implements OnInit {
   NICApplicantStatus: boolean;
   EApplications: any;
   ESupportMessages: any;
-  prefix: any;
-  fullName: any;
-  GovernmentID: any;
-  email: any;
-  Applications: boolean = true;
-  isLoaded: boolean = false;
+  prefix: string;
+  fullName: string;
+  GovernmentID: string;
+  email: string;
+  Applications= true;
+  isLoaded = false;
 
   constructor(
     private navCtrl: NavController,
@@ -99,8 +102,8 @@ export class SinhalaPage implements OnInit {
     // 15 Minutes and logout initiated
     this.kioskUserTimer();
     setTimeout(async () => {
-      var user = firebase.default.auth().currentUser;
-        var date = dateFormat(new Date(), "mm-dd-yyyy");
+      let user = firebase.default.auth().currentUser;
+        let date = dateFormat(new Date(), "mm-dd-yyyy");
         const eAdministration = this.firestore
           .collection("eAdministration")
           .doc("eServices")
@@ -699,7 +702,7 @@ export class SinhalaPage implements OnInit {
         .then(async (doc) => {
           // console.log(doc.data());
           if (doc.exists) {
-            var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
+            let dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
             // console.log(value);
             if (
               doc.data()["birthRegNo"] == value.birthCertNo &&
@@ -748,7 +751,7 @@ export class SinhalaPage implements OnInit {
                       .getECitizensPhoto(value.GovernmentID)
                       .subscribe((data) => {
                         data.map(async (e) => {
-                          var photoURL =
+                          let photoURL =
                             "" + e.payload.doc.data()["downloadURL"];
                           console.log(photoURL);
                           this.accessService
@@ -937,7 +940,7 @@ export class SinhalaPage implements OnInit {
         },
         (err) => {
           // console.log(err);
-          this.failAlertMessage();
+          void this.failAlertMessage();
         }
       );
   }
@@ -993,7 +996,7 @@ export class SinhalaPage implements OnInit {
       });
   }
   async Refresh() {
-    this.ngOnInit
+    this.ngOnInit();
     const loading = await this.loadingController.create({
       message: "අන්තර්ගතය නැවුම් කරයි",
       backdropDismiss: false,
@@ -1027,7 +1030,7 @@ export class SinhalaPage implements OnInit {
     const setMinutes = (minutes) => {
       document.querySelector("#minutes").textContent = minutes + "m";
     };
-    var x = setInterval(() => {
+    let x = setInterval(() => {
       if (SetTime <= 0) {
         clearInterval(x);
       }
@@ -1041,8 +1044,8 @@ export class SinhalaPage implements OnInit {
    * Method for logging out temporary signined eCitizen
    */
   async Logout() {
-    var user = firebase.default.auth().currentUser;
-        var date = dateFormat(new Date(), "mm-dd-yyyy");
+    let user = firebase.default.auth().currentUser;
+        let date = dateFormat(new Date(), "mm-dd-yyyy");
         const eAdministration = this.firestore
           .collection("eAdministration")
           .doc("eServices")

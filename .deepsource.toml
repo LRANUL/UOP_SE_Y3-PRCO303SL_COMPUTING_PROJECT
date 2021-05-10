@@ -1,11 +1,18 @@
 version = 1
 
 exclude_patterns = [
-    "/dist",
-    "/Documentation",
-    "/"
+    "dist/**",
+    "docs/**",
+    "Documentation/**",
+    "*.spec.ts",
+    "test.ts",
+    "zone-flags.ts",
+    "/e2e",
 ]
-
+test_patterns = [
+  "*.spec.ts",
+    "test.ts",
+]
 [[analyzers]]
 name = "javascript"
 enabled = true

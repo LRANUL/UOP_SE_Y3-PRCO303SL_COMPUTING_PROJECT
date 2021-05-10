@@ -1,3 +1,6 @@
+/**
+ * CONTAINS REMOTE CONFIG CLASS CODE FOR KIOSK FUNCTIONALITY
+ */
 import { Injectable } from "@angular/core";
 import { Plugins } from "@capacitor/core";
 import "@capacitor-community/firebase-remote-config";

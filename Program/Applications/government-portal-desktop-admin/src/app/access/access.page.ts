@@ -1,3 +1,6 @@
+/**
+ * CONTAINS LOGIN/ACCESS CLASS CODE FOR ADMINISTRATOR FUNCTIONALITY
+ */
 import { Component, OnInit } from "@angular/core";
 import {
   FormGroup,
@@ -93,7 +96,7 @@ export class AccessPage implements OnInit {
         // console.log(res);
         loading.dismiss();
 
-        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        let date = dateFormat(new Date(), "mm-dd-yyyy");
         const eAdministration = this.firestore
           .collection("eAdministration")
           .doc("eServices")
@@ -123,7 +126,7 @@ export class AccessPage implements OnInit {
         await alert.present();
         loading.dismiss();
 
-        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        let date = dateFormat(new Date(), "mm-dd-yyyy");
         const eAdministration = this.firestore
           .collection("eAdministration")
           .doc("eServices")

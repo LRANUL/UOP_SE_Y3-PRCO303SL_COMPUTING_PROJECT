@@ -1,3 +1,6 @@
+/**
+ * CONTAINS SERVICE CLASS CODE FOR OFFICER FUNCTIONALITY
+ */
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore } from "@angular/fire/firestore";
@@ -54,7 +57,7 @@ export class AccessService {
   }
   /** Method for retrieving eSupport messages */
   getETechSupportMessages() {
-    var user = firebase.default.auth().currentUser;
+    let user = firebase.default.auth().currentUser;
     return this.firestore
       .collection("eSupport", (ref) =>
         ref
@@ -120,9 +123,9 @@ export class AccessService {
   }
   /** Method for officer signin activity */
   async signIn() {
-    var user = firebase.default.auth().currentUser;
-    var date = dateFormat(new Date(), "mm-dd-yyyy");
-    var time = dateFormat(new Date(), "h:MM:ss TT");
+    let user = firebase.default.auth().currentUser;
+    let date = dateFormat(new Date(), "mm-dd-yyyy");
+    let time = dateFormat(new Date(), "h:MM:ss TT");
     const eAdministration = this.firestore
       .collection("eAdministration")
       .doc(user.email)
@@ -140,9 +143,9 @@ export class AccessService {
   }
   /** Method for officer signoff activity */
   async signOff() {
-    var user = firebase.default.auth().currentUser;
+    let user = firebase.default.auth().currentUser;
     let date = dateFormat(new Date(), "mm-dd-yyyy");
-    var time = dateFormat(new Date(), "h:MM:ss TT");
+    let time = dateFormat(new Date(), "h:MM:ss TT");
     const eAdministration = this.firestore
       .collection("eAdministration")
       .doc(user.email)
@@ -166,8 +169,8 @@ export class AccessService {
       },
       { merge: true }
     );
-    var user = firebase.default.auth().currentUser;
-      var date = dateFormat(new Date(), "mm-dd-yyyy");
+    let user = firebase.default.auth().currentUser;
+      let date = dateFormat(new Date(), "mm-dd-yyyy");
       const eAdministrationLog = this.firestore
         .collection("eAdministration")
         .doc("eServices")
@@ -196,8 +199,8 @@ export class AccessService {
       },
       { merge: true }
     );
-    var user = firebase.default.auth().currentUser;
-      var date = dateFormat(new Date(), "mm-dd-yyyy");
+    let user = firebase.default.auth().currentUser;
+      let date = dateFormat(new Date(), "mm-dd-yyyy");
       const eAdministrationLog = this.firestore
         .collection("eAdministration")
         .doc("eServices")
@@ -226,8 +229,8 @@ export class AccessService {
       },
       { merge: true }
     );
-    var user = firebase.default.auth().currentUser;
-      var date = dateFormat(new Date(), "mm-dd-yyyy");
+    let user = firebase.default.auth().currentUser;
+      let date = dateFormat(new Date(), "mm-dd-yyyy");
       const eAdministrationLog = this.firestore
         .collection("eAdministration")
         .doc("eServices")
@@ -256,8 +259,8 @@ export class AccessService {
       },
       { merge: true }
     );
-    var user = firebase.default.auth().currentUser;
-      var date = dateFormat(new Date(), "mm-dd-yyyy");
+    let user = firebase.default.auth().currentUser;
+      let date = dateFormat(new Date(), "mm-dd-yyyy");
       const eAdministrationLog = this.firestore
         .collection("eAdministration")
         .doc("eServices")
@@ -292,9 +295,9 @@ export class AccessService {
       },
       { merge: true }
     );
-    var user = firebase.default.auth().currentUser;
-    var documentNo = firebase.default.firestore.FieldValue.increment(1);
-    var date = dateFormat(new Date(), "mm-dd-yyyy");
+    let user = firebase.default.auth().currentUser;
+    let documentNo = firebase.default.firestore.FieldValue.increment(1);
+    let date = dateFormat(new Date(), "mm-dd-yyyy");
     const eAdministration = this.firestore
       .collection("eAdministration")
       .doc(user.email)
@@ -306,8 +309,6 @@ export class AccessService {
       },
       { merge: true }
     );
-    var user = firebase.default.auth().currentUser;
-    var date = dateFormat(new Date(), "mm-dd-yyyy");
     const eAdministrationLog = this.firestore
       .collection("eAdministration")
       .doc("eServices")
@@ -342,9 +343,9 @@ export class AccessService {
       },
       { merge: true }
     );
-    var user = firebase.default.auth().currentUser;
-    var documentNo = firebase.default.firestore.FieldValue.increment(1);
-    var date = dateFormat(new Date(), "mm-dd-yyyy");
+    let user = firebase.default.auth().currentUser;
+    let documentNo = firebase.default.firestore.FieldValue.increment(1);
+    let date = dateFormat(new Date(), "mm-dd-yyyy");
     const eAdministration = this.firestore
       .collection("eAdministration")
       .doc(user.email)
@@ -356,8 +357,6 @@ export class AccessService {
       },
       { merge: true }
     );
-    var user = firebase.default.auth().currentUser;
-    var date = dateFormat(new Date(), "mm-dd-yyyy");
     const eAdministrationLog = this.firestore
       .collection("eAdministration")
       .doc("eServices")
@@ -390,9 +389,9 @@ export class AccessService {
       },
       { merge: true }
     );
-    var user = firebase.default.auth().currentUser;
-    var documentNo = firebase.default.firestore.FieldValue.increment(1);
-    var date = dateFormat(new Date(), "mm-dd-yyyy");
+    let user = firebase.default.auth().currentUser;
+    let documentNo = firebase.default.firestore.FieldValue.increment(1);
+    let date = dateFormat(new Date(), "mm-dd-yyyy");
     const eAdministration = this.firestore
       .collection("eAdministration")
       .doc(user.email)
@@ -404,8 +403,6 @@ export class AccessService {
       },
       { merge: true }
     );
-    var user = firebase.default.auth().currentUser;
-    var date = dateFormat(new Date(), "mm-dd-yyyy");
     const eAdministrationLog = this.firestore
       .collection("eAdministration")
       .doc("eServices")
@@ -435,7 +432,7 @@ export class AccessService {
    *
    */
   sendNICApplication(value, photoURL) {
-    var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
+    let dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
     return new Promise<any>(async (resolve, reject) => {
       /**
        * Data gets stored on firebase, used for application tracking and references
@@ -507,8 +504,8 @@ export class AccessService {
         buttons: ["OK"],
       });
       await alert.present();
-      var user = firebase.default.auth().currentUser;
-      var date = dateFormat(new Date(), "mm-dd-yyyy");
+      let user = firebase.default.auth().currentUser;
+      let date = dateFormat(new Date(), "mm-dd-yyyy");
       const eAdministrationLog = this.firestore
         .collection("eAdministration")
         .doc("eServices")
@@ -534,7 +531,7 @@ export class AccessService {
     /**
      * Data gets stored on firebase, used for message tracking and references
      */
-    var user = firebase.default.auth().currentUser;
+    let user = firebase.default.auth().currentUser;
     console.log(value);
     this.firestore.collection("/eSupport/").doc().set({
       Description: value.message,
@@ -544,8 +541,7 @@ export class AccessService {
       Subject: value.subject,
       Response: "Support Request Sent | Wait for Response",
     });
-    var user = firebase.default.auth().currentUser;
-      var date = dateFormat(new Date(), "mm-dd-yyyy");
+      let date = dateFormat(new Date(), "mm-dd-yyyy");
       const eAdministrationLog = this.firestore
         .collection("eAdministration")
         .doc("eServices")
@@ -589,8 +585,8 @@ export class AccessService {
         },
         { merge: true }
       );
-      var user = firebase.default.auth().currentUser;
-      var date = dateFormat(new Date(), "mm-dd-yyyy");
+      let user = firebase.default.auth().currentUser;
+      let date = dateFormat(new Date(), "mm-dd-yyyy");
       const eAdministrationLog = this.firestore
         .collection("eAdministration")
         .doc("eServices")
@@ -609,8 +605,7 @@ export class AccessService {
         },
         { merge: true }
       );
-      var supportNo = firebase.default.firestore.FieldValue.increment(1);
-      var date = dateFormat(new Date(), "mm-dd-yyyy");
+      let supportNo = firebase.default.firestore.FieldValue.increment(1);
       const eAdministration = this.firestore
         .collection("eAdministration")
         .doc(user.email)
@@ -651,7 +646,7 @@ export class AccessService {
           buttons: ["Close"],
         });
         await alert.present();
-        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        let date = dateFormat(new Date(), "mm-dd-yyyy");
         const eAdministration = this.firestore
           .collection("eAdministration")
           .doc("eServices")
@@ -675,8 +670,8 @@ export class AccessService {
   /**Method for logging user out */
   logoutOfficer() {
     return new Promise<void>((resolve, reject) => {
-      var user = firebase.default.auth().currentUser;
-            var date = dateFormat(new Date(), "mm-dd-yyyy");
+      let user = firebase.default.auth().currentUser;
+            let date = dateFormat(new Date(), "mm-dd-yyyy");
       if (this.auth.currentUser) {
         this.auth
           .signOut()

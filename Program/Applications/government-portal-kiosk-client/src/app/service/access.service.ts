@@ -1,3 +1,6 @@
+/**
+ * CONTAINS SERVICE CLASS CODE FOR KIOSK FUNCTIONALITY
+ */
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore } from "@angular/fire/firestore";
@@ -34,8 +37,8 @@ export class AccessService {
           buttons: ["OK"],
         });
         await alert.present();
-        var user = firebase.default.auth().currentUser;
-        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        let user = firebase.default.auth().currentUser;
+        let date = dateFormat(new Date(), "mm-dd-yyyy");
         const eAdministrationLog = this.firestore
           .collection("eAdministration")
           .doc("eServices")
@@ -86,8 +89,8 @@ export class AccessService {
       },
       { merge: true }
     );
-    var user = firebase.default.auth().currentUser;
-    var date = dateFormat(new Date(), "mm-dd-yyyy");
+    let user = firebase.default.auth().currentUser;
+    let date = dateFormat(new Date(), "mm-dd-yyyy");
     const eAdministrationLog = this.firestore
       .collection("eAdministration")
       .doc("eServices")
@@ -152,7 +155,7 @@ export class AccessService {
    *
    */
   sendNICApplication(value, photoURL) {
-    var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
+    let dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
     return new Promise<any>(async (resolve, reject) => {
       /**
        * Data gets stored on firebase, used for application tracking and references
@@ -227,8 +230,8 @@ export class AccessService {
       });
       await alert.present();
 
-      var user = firebase.default.auth().currentUser;
-      var date = dateFormat(new Date(), "mm-dd-yyyy");
+      let user = firebase.default.auth().currentUser;
+      let date = dateFormat(new Date(), "mm-dd-yyyy");
       const eAdministrationLog = this.firestore
         .collection("eAdministration")
         .doc("eServices")
@@ -270,8 +273,8 @@ export class AccessService {
           (res) => resolve(res),
           (err) => reject(err)
         );
-        var user = firebase.default.auth().currentUser;
-        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        let user = firebase.default.auth().currentUser;
+        let date = dateFormat(new Date(), "mm-dd-yyyy");
         const eAdministration = this.firestore
           .collection("eAdministration")
           .doc("eServices")
@@ -293,8 +296,8 @@ export class AccessService {
           buttons: ["Close"],
         });
         await alert.present();
-        var user = firebase.default.auth().currentUser;
-        var date = dateFormat(new Date(), "mm-dd-yyyy");
+        let user = firebase.default.auth().currentUser;
+        let date = dateFormat(new Date(), "mm-dd-yyyy");
         const eAdministration = this.firestore
           .collection("eAdministration")
           .doc("eServices")

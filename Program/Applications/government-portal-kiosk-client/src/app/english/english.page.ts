@@ -25,7 +25,9 @@ import { AngularFirestore } from "@angular/fire/firestore";
 import { ActivatedRoute } from "@angular/router";
 import { LoadingController } from "@ionic/angular";
 import * as dateFormat from "dateformat";
-
+/**
+ * CONTAINS CORE CLASS CODE FOR KIOSK FUNCTIONALITY - ENGLISH LANGUAGE CITIZENS
+ */
 @Component({
   selector: "app-english",
   templateUrl: "./english.page.html",
@@ -63,12 +65,12 @@ export class EnglishPage implements OnInit {
   NICApplicantStatus: boolean;
   EApplications: any;
   ESupportMessages: any;
-  prefix: any;
-  fullName: any;
-  GovernmentID: any;
-  email: any;
-  Applications: boolean = true;
-  isLoaded: boolean = false;
+  prefix: string;
+  fullName: string;
+  GovernmentID: string;
+  email: string;
+  Applications= true;
+  isLoaded = false;
 
   constructor(
     private navCtrl: NavController,
@@ -99,8 +101,8 @@ export class EnglishPage implements OnInit {
     // 15 Minutes and logout initiated
     this.kioskUserTimer();
     setTimeout(async () => {
-      var user = firebase.default.auth().currentUser;
-        var date = dateFormat(new Date(), "mm-dd-yyyy");
+      let user = firebase.default.auth().currentUser;
+        let date = dateFormat(new Date(), "mm-dd-yyyy");
         const eAdministration = this.firestore
           .collection("eAdministration")
           .doc("eServices")
@@ -699,7 +701,7 @@ export class EnglishPage implements OnInit {
         .then(async (doc) => {
           // console.log(doc.data());
           if (doc.exists) {
-            var dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
+            let dateBirth = dateFormat(value.dateOfBirth, "mm/dd/yyyy");
             // console.log(value);
             if (
               doc.data()["birthRegNo"] == value.birthCertNo &&
@@ -750,7 +752,7 @@ export class EnglishPage implements OnInit {
                       .getECitizensPhoto(value.GovernmentID)
                       .subscribe((data) => {
                         data.map(async (e) => {
-                          var photoURL =
+                          let photoURL =
                             "" + e.payload.doc.data()["downloadURL"];
                           console.log(photoURL);
                           this.accessService
@@ -945,11 +947,11 @@ export class EnglishPage implements OnInit {
       .then(
         (res) => {
           // console.log(res);
-          this.passAlertMessage();
+           this.passAlertMessage();
         },
         (err) => {
           // console.log(err);
-          this.failAlertMessage();
+          void this.failAlertMessage();
         }
       );
   }
@@ -1008,7 +1010,7 @@ export class EnglishPage implements OnInit {
    * Method for in app refreshing
    */
   async Refresh() {
-    this.ngOnInit;
+    this.ngOnInit();
     const loading = await this.loadingController.create({
       message: "Refreshing",
       backdropDismiss: false,
@@ -1042,7 +1044,7 @@ export class EnglishPage implements OnInit {
     const setMinutes = (minutes) => {
       document.querySelector("#minutes").textContent = minutes + "m";
     };
-    var x = setInterval(() => {
+    let x = setInterval(() => {
       if (SetTime <= 0) {
         clearInterval(x);
       }
@@ -1056,8 +1058,8 @@ export class EnglishPage implements OnInit {
    * Method for logging out temporary signined eCitizen
    */
   async Logout() {
-    var user = firebase.default.auth().currentUser;
-        var date = dateFormat(new Date(), "mm-dd-yyyy");
+    let user = firebase.default.auth().currentUser;
+        let date = dateFormat(new Date(), "mm-dd-yyyy");
         const eAdministration = this.firestore
           .collection("eAdministration")
           .doc("eServices")

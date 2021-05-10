@@ -1,3 +1,6 @@
+/**
+ * CONTAINS REMOTECONFIG CLASS CODE FOR OFFICER FUNCTIONALITY
+ */
 import { Injectable } from "@angular/core";
 import { Plugins } from "@capacitor/core";
 import "@capacitor-community/firebase-remote-config";

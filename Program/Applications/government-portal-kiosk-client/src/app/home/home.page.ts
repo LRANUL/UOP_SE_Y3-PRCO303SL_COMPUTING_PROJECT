@@ -1,3 +1,6 @@
+/**
+ * CONTAINS CITIZEN LOGIN CLASS CODE FOR KIOSK FUNCTIONALITY - FOR CARD BASED LOGIN
+ */
 import { Component, OnInit } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { LoadingController, NavController } from "@ionic/angular";
@@ -6,7 +9,7 @@ import * as CryptoJS from "crypto-js";
 import { AlertController } from "@ionic/angular";
 import * as firebase from "firebase/app";
 import * as dateFormat from "dateformat";
-var qrResultString: string;
+let qrResultString: string;
 let securityCount = 0;
 let lastScannedID: string;
 @Component({
@@ -37,7 +40,9 @@ export class HomePage implements OnInit {
     public alertController: AlertController
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log("AfterContentChecked");
+  }
   /**
    * Card scanner method for english citizens
    */
@@ -55,11 +60,11 @@ export class HomePage implements OnInit {
         if (qrResultString) {
           this.service.getECitizen(qrResultString).subscribe((data) => {
             data.map(async (e) => {
-              var Access_PIN = e.payload.doc.data()["Access_PIN"];
-              var bioData = e.payload.doc.data()["Biometric_Data"];
-              var GovernmentID = e.payload.doc.data()["GovernmentID"];
-              var kioskLock = e.payload.doc.data()["kioskLock"];
-              var MatchID = CryptoJS.AES.decrypt(
+              let Access_PIN = e.payload.doc.data()["Access_PIN"];
+              let bioData = e.payload.doc.data()["Biometric_Data"];
+              let GovernmentID = e.payload.doc.data()["GovernmentID"];
+              let kioskLock = e.payload.doc.data()["kioskLock"];
+              let MatchID = CryptoJS.AES.decrypt(
                 qrResultString,
                 bioData
               ).toString(CryptoJS.enc.Utf8);
@@ -93,8 +98,8 @@ export class HomePage implements OnInit {
                           welcome.play();
                           lastScannedID = null;
                           securityCount = 0;
-                          var user = firebase.default.auth().currentUser;
-                          var date = dateFormat(new Date(), "mm-dd-yyyy");
+                          let user = firebase.default.auth().currentUser;
+                          let date = dateFormat(new Date(), "mm-dd-yyyy");
                           const eAdministration = this.firestore
                             .collection("eAdministration")
                             .doc("eServices")
@@ -125,8 +130,8 @@ export class HomePage implements OnInit {
                             this.service.lockAccount(GovernmentID);
                             securityCount = 0;
                           }
-                          var user = firebase.default.auth().currentUser;
-                          var date = dateFormat(new Date(), "mm-dd-yyyy");
+                          let user = firebase.default.auth().currentUser;
+                          let date = dateFormat(new Date(), "mm-dd-yyyy");
                           const eAdministration = this.firestore
                             .collection("eAdministration")
                             .doc("eServices")
@@ -144,7 +149,7 @@ export class HomePage implements OnInit {
                               ),
                             },
                             { merge: true }
-                          )
+                          );
                           let invalidCard = new Audio();
                           invalidCard.src = "assets/audio/wrong-pin-en.mp3";
                           invalidCard.load();
@@ -164,8 +169,8 @@ export class HomePage implements OnInit {
                     "Contact your nearest Divisional Officer to get your account unlocked.",
                 });
                 await alertLock.present();
-                var user = firebase.default.auth().currentUser;
-                var date = dateFormat(new Date(), "mm-dd-yyyy");
+                let user = firebase.default.auth().currentUser;
+                let date = dateFormat(new Date(), "mm-dd-yyyy");
                 const eAdministration = this.firestore
                   .collection("eAdministration")
                   .doc("eServices")
@@ -183,7 +188,7 @@ export class HomePage implements OnInit {
                     ),
                   },
                   { merge: true }
-                )
+                );
               } else if (MatchID != GovernmentID) {
                 let invalidCard = new Audio();
                 invalidCard.src = "assets/audio/invalid-card-en.mp3";
@@ -217,11 +222,11 @@ export class HomePage implements OnInit {
         if (qrResultString) {
           this.service.getECitizen(qrResultString).subscribe((data) => {
             data.map(async (e) => {
-              var Access_PIN = e.payload.doc.data()["Access_PIN"];
-              var bioData = e.payload.doc.data()["Biometric_Data"];
-              var GovernmentID = e.payload.doc.data()["GovernmentID"];
-              var kioskLock = e.payload.doc.data()["kioskLock"];
-              var MatchID = CryptoJS.AES.decrypt(
+              let Access_PIN = e.payload.doc.data()["Access_PIN"];
+              let bioData = e.payload.doc.data()["Biometric_Data"];
+              let GovernmentID = e.payload.doc.data()["GovernmentID"];
+              let kioskLock = e.payload.doc.data()["kioskLock"];
+              let MatchID = CryptoJS.AES.decrypt(
                 qrResultString,
                 bioData
               ).toString(CryptoJS.enc.Utf8);
@@ -255,8 +260,8 @@ export class HomePage implements OnInit {
                           lastScannedID = null;
                           securityCount = 0;
 
-                          var user = firebase.default.auth().currentUser;
-                          var date = dateFormat(new Date(), "mm-dd-yyyy");
+                          let user = firebase.default.auth().currentUser;
+                          let date = dateFormat(new Date(), "mm-dd-yyyy");
                           const eAdministration = this.firestore
                             .collection("eAdministration")
                             .doc("eServices")
@@ -275,10 +280,9 @@ export class HomePage implements OnInit {
                             },
                             { merge: true }
                           ),
-                          
-                          this.navCtrl.navigateForward(
-                            "sinhala?id=" + GovernmentID
-                          );
+                            this.navCtrl.navigateForward(
+                              "sinhala?id=" + GovernmentID
+                            );
                         } else {
                           // Lock Account if PIN is Wrong
                           if (lastScannedID == GovernmentID) {
@@ -288,8 +292,8 @@ export class HomePage implements OnInit {
                             this.service.lockAccount(GovernmentID);
                             securityCount = 0;
                           }
-                          var user = firebase.default.auth().currentUser;
-                          var date = dateFormat(new Date(), "mm-dd-yyyy");
+                          let user = firebase.default.auth().currentUser;
+                          let date = dateFormat(new Date(), "mm-dd-yyyy");
                           const eAdministration = this.firestore
                             .collection("eAdministration")
                             .doc("eServices")
@@ -307,7 +311,7 @@ export class HomePage implements OnInit {
                               ),
                             },
                             { merge: true }
-                          )
+                          );
                           let invalidCard = new Audio();
                           invalidCard.src = "assets/audio/wrong-pin-si.mp3";
                           invalidCard.load();
@@ -327,8 +331,8 @@ export class HomePage implements OnInit {
                     "ඔබගේ ගිණුම අගුළු ඇරීමට ඔබගේ ළඟම ප්‍රාදේශීය නිලධාරියා අමතන්න.",
                 });
                 await alertLock.present();
-                var user = firebase.default.auth().currentUser;
-                var date = dateFormat(new Date(), "mm-dd-yyyy");
+                let user = firebase.default.auth().currentUser;
+                let date = dateFormat(new Date(), "mm-dd-yyyy");
                 const eAdministration = this.firestore
                   .collection("eAdministration")
                   .doc("eServices")
@@ -346,7 +350,7 @@ export class HomePage implements OnInit {
                     ),
                   },
                   { merge: true }
-                )
+                );
               } else if (MatchID != GovernmentID) {
                 let invalidCard = new Audio();
                 invalidCard.src = "assets/audio/invalid-card-si.mp3";
@@ -380,11 +384,11 @@ export class HomePage implements OnInit {
         if (qrResultString) {
           this.service.getECitizen(qrResultString).subscribe((data) => {
             data.map(async (e) => {
-              var Access_PIN = e.payload.doc.data()["Access_PIN"];
-              var bioData = e.payload.doc.data()["Biometric_Data"];
-              var GovernmentID = e.payload.doc.data()["GovernmentID"];
-              var kioskLock = e.payload.doc.data()["kioskLock"];
-              var MatchID = CryptoJS.AES.decrypt(
+              let Access_PIN = e.payload.doc.data()["Access_PIN"];
+              let bioData = e.payload.doc.data()["Biometric_Data"];
+              let GovernmentID = e.payload.doc.data()["GovernmentID"];
+              let kioskLock = e.payload.doc.data()["kioskLock"];
+              let MatchID = CryptoJS.AES.decrypt(
                 qrResultString,
                 bioData
               ).toString(CryptoJS.enc.Utf8);
@@ -418,8 +422,8 @@ export class HomePage implements OnInit {
                           lastScannedID = null;
                           securityCount = 0;
 
-                          var user = firebase.default.auth().currentUser;
-                          var date = dateFormat(new Date(), "mm-dd-yyyy");
+                          let user = firebase.default.auth().currentUser;
+                          let date = dateFormat(new Date(), "mm-dd-yyyy");
                           const eAdministration = this.firestore
                             .collection("eAdministration")
                             .doc("eServices")
@@ -438,10 +442,9 @@ export class HomePage implements OnInit {
                             },
                             { merge: true }
                           ),
-                          
-                          this.navCtrl.navigateForward(
-                            "tamil?id=" + GovernmentID
-                          );
+                            this.navCtrl.navigateForward(
+                              "tamil?id=" + GovernmentID
+                            );
                         } else {
                           // Lock Account if PIN is Wrong
                           if (lastScannedID == GovernmentID) {
@@ -455,8 +458,8 @@ export class HomePage implements OnInit {
                           invalidCard.src = "assets/audio/wrong-pin-ta.mp3";
                           invalidCard.load();
                           invalidCard.play();
-                          var user = firebase.default.auth().currentUser;
-                          var date = dateFormat(new Date(), "mm-dd-yyyy");
+                          let user = firebase.default.auth().currentUser;
+                          let date = dateFormat(new Date(), "mm-dd-yyyy");
                           const eAdministration = this.firestore
                             .collection("eAdministration")
                             .doc("eServices")
@@ -474,7 +477,7 @@ export class HomePage implements OnInit {
                               ),
                             },
                             { merge: true }
-                          )
+                          );
                         }
                       },
                     },
@@ -490,8 +493,8 @@ export class HomePage implements OnInit {
                     "உங்கள் கணக்கைத் திறக்க உங்கள் அருகிலுள்ள பிரதேச அதிகாரியைத் தொடர்பு கொள்ளுங்கள்.",
                 });
                 await alertLock.present();
-                var user = firebase.default.auth().currentUser;
-                var date = dateFormat(new Date(), "mm-dd-yyyy");
+                let user = firebase.default.auth().currentUser;
+                let date = dateFormat(new Date(), "mm-dd-yyyy");
                 const eAdministration = this.firestore
                   .collection("eAdministration")
                   .doc("eServices")
@@ -509,7 +512,7 @@ export class HomePage implements OnInit {
                     ),
                   },
                   { merge: true }
-                )
+                );
               } else if (MatchID != GovernmentID) {
                 let invalidCard = new Audio();
                 invalidCard.src = "assets/audio/invalid-card-ta.mp3";

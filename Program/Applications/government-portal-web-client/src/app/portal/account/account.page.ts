@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import {
   AngularFirestore,
   validateEventsArray,
@@ -48,12 +48,12 @@ export class AccountPage implements OnInit {
   Displayname: string;
   photoUrl: string;
   email: string;
-  prefix: any;
-  homeAddress: any;
-  officeAddress: any;
+  prefix: string;
+  homeAddress: string;
+  officeAddress: string;
   mobile: any;
-  landLine: any;
-  portalIDPIN: any;
+  landLine: string;
+  portalIDPIN: string;
   fullName: any;
   QRCode = "https://www.gov.lk";
   elementType: "img";
@@ -67,6 +67,7 @@ export class AccountPage implements OnInit {
     public alertController: AlertController,
     public formBuilder: FormBuilder,
     public menu: MenuController,
+    protected router: Router,
     public navCtrl: NavController,
     public gAuth: AngularFireAuth,
     public authService: GoogleAuthService,
@@ -85,6 +86,7 @@ export class AccountPage implements OnInit {
     // AUTHENTICATION MANAGER
     this.gAuth.authState.subscribe(async (user) => {
       if (user) {
+        let user = firebase.default.auth().currentUser;
         this.userEmail = user.email;
         // User is signed in, auto login intiated.
         // console.log("SIGNED IN");
@@ -99,7 +101,6 @@ export class AccountPage implements OnInit {
           backdropDismiss: true,
         });
         await loading.present();
-        var user = firebase.default.auth().currentUser;
 
         if (user != null) {
           this.Displayname = user.displayName;
@@ -137,8 +138,8 @@ export class AccountPage implements OnInit {
     });
 
     /** Payment Validator */
-    var sessionID;
-    var token;
+    let sessionID;
+    let token;
     sessionID = this.route.snapshot.queryParams.id;
     token = this.route.snapshot.queryParams.token;
 
@@ -684,7 +685,7 @@ export class AccountPage implements OnInit {
    * @param sessionID contains server send token ID used for validation on pending payments
    */
   validate(sessionID, token) {
-    var user = firebase.default.auth().currentUser;
+    let user = firebase.default.auth().currentUser;
     this.http
       .get(
         "https://government-portal-stripe.herokuapp.com/validate?id=" +
@@ -707,8 +708,8 @@ export class AccountPage implements OnInit {
               buttons: ["OK"],
             });
             await alert.present();
-            var user = firebase.default.auth().currentUser;
-            var date = dateFormat(new Date(), "mm-dd-yyyy");
+            let user = firebase.default.auth().currentUser;
+            let date = dateFormat(new Date(), "mm-dd-yyyy");
             const eAdministration = this.firestore
               .collection("eAdministration")
               .doc("eServices")
@@ -743,8 +744,8 @@ export class AccountPage implements OnInit {
               buttons: ["OK"],
             });
             await alert.present();
-            var user = firebase.default.auth().currentUser;
-            var date = dateFormat(new Date(), "mm-dd-yyyy");
+            let user = firebase.default.auth().currentUser;
+            let date = dateFormat(new Date(), "mm-dd-yyyy");
             const eAdministration = this.firestore
               .collection("eAdministration")
               .doc("eServices")
@@ -753,10 +754,7 @@ export class AccountPage implements OnInit {
             await eAdministration.set(
               {
                 Account: firebase.default.firestore.FieldValue.arrayUnion(
-                  "web failed payment " +
-                    user.email +
-                    " at: " +
-                    new Date()
+                  "web failed payment " + user.email + " at: " + new Date()
                 ),
               },
               { merge: true }
@@ -765,6 +763,9 @@ export class AccountPage implements OnInit {
               .collection("eApplications")
               .doc(token);
             const res = await eApplication.delete();
+            setTimeout(() => {
+              this.router.navigate(["payment-note-made"]);
+            }, 3000);
           }
         },
         (error) => {
@@ -785,8 +786,8 @@ export class AccountPage implements OnInit {
       backdropDismiss: true,
     });
     await loading.present();
-    var user = firebase.default.auth().currentUser;
-    var date = dateFormat(new Date(), "mm-dd-yyyy");
+    let user = firebase.default.auth().currentUser;
+    let date = dateFormat(new Date(), "mm-dd-yyyy");
     const eAdministration = this.firestore
       .collection("eAdministration")
       .doc("eServices")
@@ -932,7 +933,7 @@ export class AccountPage implements OnInit {
     this.foreignCitizen = false;
   }
   async getPortalPIN() {
-    var user = firebase.default.auth().currentUser;
+    let user = firebase.default.auth().currentUser;
     await this.firestore
       .collection("eCitizens/")
       .doc(user.displayName)
@@ -949,7 +950,7 @@ export class AccountPage implements OnInit {
    * Depending the data sent, verification would inform user of the process whther whether thier data was accepts and sent or rejected.
    */
   async sendApplication(value) {
-    var token = `${Math.floor(
+    let token = `${Math.floor(
       Math.random() * 100000000000000 + 100000000000000
     )}`;
     this.authService.sendNICApplication(value, token).then(
@@ -1104,7 +1105,7 @@ export class AccountPage implements OnInit {
         {
           text: "Change",
           handler: async (alertData) => {
-            var user = firebase.default.auth().currentUser;
+            let user = firebase.default.auth().currentUser;
             user
               .updatePassword(alertData.password)
               .then(async (res) => {
@@ -1159,7 +1160,7 @@ export class AccountPage implements OnInit {
         {
           text: "Change",
           handler: async (alertData) => {
-            var user = firebase.default.auth().currentUser;
+            let user = firebase.default.auth().currentUser;
             user
               .updateEmail(alertData.email)
               .then(async (res) => {
@@ -1168,8 +1169,8 @@ export class AccountPage implements OnInit {
                   duration: 2000,
                 });
                 toast.present();
-                var user = firebase.default.auth().currentUser;
-                var date = dateFormat(new Date(), "mm-dd-yyyy");
+                let user = firebase.default.auth().currentUser;
+                let date = dateFormat(new Date(), "mm-dd-yyyy");
                 const eAdministration = this.firestore
                   .collection("eAdministration")
                   .doc("eServices")

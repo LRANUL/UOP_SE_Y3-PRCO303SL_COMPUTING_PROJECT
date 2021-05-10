@@ -1,0 +1,1993 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>government-portal-web documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">government-portal-web documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>CreateAccountPage</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/create-account/create-account.page.ts</code>
+</p>
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Create Account Page Responsible for handling backend logic of Client Account Registration,
+Validation for forms are set as per requirements of Government regulations, data available on the users birth certificate would be
+required for registration</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-create-account</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./create-account.page.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./create-account.page.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#alertController">alertController</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#authService">authService</a>
+                            </li>
+                            <li>
+                                <a href="#CollectionPath">CollectionPath</a>
+                            </li>
+                            <li>
+                                <a href="#downloadURL">downloadURL</a>
+                            </li>
+                            <li>
+                                <a href="#errorMessage">errorMessage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#formBuilder">formBuilder</a>
+                            </li>
+                            <li>
+                                <a href="#imageURL">imageURL</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#loadingController">loadingController</a>
+                            </li>
+                            <li>
+                                <a href="#progress">progress</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#storage">storage</a>
+                            </li>
+                            <li>
+                                <a href="#task">task</a>
+                            </li>
+                            <li>
+                                <a href="#validation_form">validation_form</a>
+                            </li>
+                            <li>
+                                <a href="#validations_form">validations_form</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#accountDuplicateCheck">accountDuplicateCheck</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#onFileChange">onFileChange</a>
+                            </li>
+                            <li>
+                                <a href="#registerECitizen">registerECitizen</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(formBuilder: <a href="https://angular.io/api/forms/FormBuilder" target="_blank">FormBuilder</a>, authService: <a href="../injectables/GoogleAuthService.html">GoogleAuthService</a>, storage: AngularFireStorage, route: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, firestore: AngularFirestore, alertController: AlertController, loadingController: LoadingController)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/create-account/create-account.page.ts:39</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>formBuilder</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/GoogleAuthService.html" target="_self" >GoogleAuthService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>storage</td>
+                                                  
+                                                        <td>
+                                                                    <code>AngularFireStorage</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>route</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>firestore</td>
+                                                  
+                                                        <td>
+                                                                    <code>AngularFirestore</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>alertController</td>
+                                                  
+                                                        <td>
+                                                                    <code>AlertController</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>loadingController</td>
+                                                  
+                                                        <td>
+                                                                    <code>LoadingController</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="accountDuplicateCheck"></a>
+                    <span class="name">
+                        <b>
+                            accountDuplicateCheck
+                        </b>
+                        <a href="#accountDuplicateCheck"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>accountDuplicateCheck()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="319"
+                            class="link-to-prism">src/app/create-account/create-account.page.ts:319</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method to prevent multiple accounts </p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="50"
+                            class="link-to-prism">src/app/create-account/create-account.page.ts:50</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onFileChange"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            onFileChange
+                        </b>
+                        <a href="#onFileChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onFileChange(event)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="282"
+                            class="link-to-prism">src/app/create-account/create-account.page.ts:282</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="registerECitizen"></a>
+                    <span class="name">
+                        <b>
+                            registerECitizen
+                        </b>
+                        <a href="#registerECitizen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>registerECitizen(value)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="258"
+                            class="link-to-prism">src/app/create-account/create-account.page.ts:258</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Method reposible for fetching data from login form and sending to google-auth services page for registration after verification
+and for uploading applicants Photograph to cloud and generating a Government Portal ID, captures image upload event and uploads image to firebase storage
+(This method was recently updated to improve scalability from Email Key to Portal ID)
+This method is encodeing data for biometrics usage</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>value</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>hold validated values from login form</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="alertController"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            alertController</b>
+                            <a href="#alertController"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>AlertController</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/create-account/create-account.page.ts:46</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="authService"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            authService</b>
+                            <a href="#authService"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../injectables/GoogleAuthService.html" target="_self" >GoogleAuthService</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/create-account/create-account.page.ts:42</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="CollectionPath"></a>
+                        <span class="name">
+                            <b>
+                            CollectionPath</b>
+                            <a href="#CollectionPath"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&quot;/Users/eCitizens&quot;</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/create-account/create-account.page.ts:34</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="downloadURL"></a>
+                        <span class="name">
+                            <b>
+                            downloadURL</b>
+                            <a href="#downloadURL"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Observable&lt;string&gt;</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/create-account/create-account.page.ts:35</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="errorMessage"></a>
+                        <span class="name">
+                            <b>
+                            errorMessage</b>
+                            <a href="#errorMessage"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/create-account/create-account.page.ts:39</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="formBuilder"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            formBuilder</b>
+                            <a href="#formBuilder"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://angular.io/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/create-account/create-account.page.ts:41</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="imageURL"></a>
+                        <span class="name">
+                            <b>
+                            imageURL</b>
+                            <a href="#imageURL"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&quot;&quot;</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/create-account/create-account.page.ts:33</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="loadingController"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            loadingController</b>
+                            <a href="#loadingController"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>LoadingController</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/create-account/create-account.page.ts:47</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="progress"></a>
+                        <span class="name">
+                            <b>
+                            progress</b>
+                            <a href="#progress"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Observable&lt;number&gt;</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/create-account/create-account.page.ts:37</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="storage"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            storage</b>
+                            <a href="#storage"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>AngularFireStorage</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/create-account/create-account.page.ts:43</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="task"></a>
+                        <span class="name">
+                            <b>
+                            task</b>
+                            <a href="#task"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>AngularFireUploadTask</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/create-account/create-account.page.ts:36</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="validation_form"></a>
+                        <span class="name">
+                            <b>
+                            validation_form</b>
+                            <a href="#validation_form"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>{
+    email: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Your Government Portal registered email is required.&quot;,
+      },
+      {
+        type: &quot;pattern&quot;,
+        message: &quot;Invalid email.&quot;,
+      },
+    ],
+    password: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Password is required.&quot;,
+      },
+      {
+        type: &quot;minlength&quot;,
+        message: &quot;Password must be at least 15 characters long.&quot;,
+      },
+      {
+        type: &quot;maxlength&quot;,
+        message: &quot;Password cannot be longer than 30 characters long.&quot;,
+      },
+    ],
+    prefix: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Name prefix is required.&quot;,
+      },
+    ],
+    fullName: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Full Name is required.&quot;,
+      },
+    ],
+    gender: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Gender is required.&quot;,
+      },
+    ],
+    dateOfBirth: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Date of Birth is required.&quot;,
+      },
+    ],
+    placeOfBirth: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Place of birth is required.&quot;,
+      },
+    ],
+    registarDivision: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Registar&#x27;s division is required.&quot;,
+      },
+    ],
+    birthRegNo: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Birth Registration number is required.&quot;,
+      },
+    ],
+    fatherName: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Father&#x27;s name is required.&quot;,
+      },
+    ],
+    motherName: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Mother&#x27;s name is required.&quot;,
+      },
+    ],
+    homeAddress: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Home Address is required.&quot;,
+      },
+    ],
+    officeAddress: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Office Address is required.&quot;,
+      },
+    ],
+    mobile: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Mobile number is required.&quot;,
+      },
+    ],
+    landLine: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Landline number is required.&quot;,
+      },
+    ],
+  }</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="147" class="link-to-prism">src/app/create-account/create-account.page.ts:147</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Validation messages to user</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="validations_form"></a>
+                        <span class="name">
+                            <b>
+                            validations_form</b>
+                            <a href="#validations_form"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://angular.io/api/forms/FormGroup" target="_blank" >FormGroup</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/create-account/create-account.page.ts:38</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &quot;@angular/core&quot;;
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from &quot;@angular/forms&quot;;
+import { AlertController, LoadingController } from &quot;@ionic/angular&quot;;
+
+import { GoogleAuthService } from &quot;../service/google-auth.service&quot;;
+import {
+  AngularFireStorage,
+  AngularFireUploadTask,
+  AngularFireStorageReference,
+} from &quot;@angular/fire/storage&quot;;
+import { Observable, ReplaySubject } from &quot;rxjs&quot;;
+import { finalize } from &quot;rxjs/operators&quot;;
+import { AngularFirestore } from &quot;@angular/fire/firestore&quot;;
+import { Router } from &quot;@angular/router&quot;;
+import * as dateFormat from &quot;dateformat&quot;;
+import * as firebase from &quot;firebase&quot;;
+/**
+ * Create Account Page Responsible for handling backend logic of Client Account Registration,
+ * Validation for forms are set as per requirements of Government regulations, data available on the users birth certificate would be
+ * required for registration
+ */
+@Component({
+  selector: &quot;app-create-account&quot;,
+  templateUrl: &quot;./create-account.page.html&quot;,
+  styleUrls: [&quot;./create-account.page.scss&quot;],
+})
+export class CreateAccountPage implements OnInit {
+  imageURL &#x3D; &quot;&quot;;
+  CollectionPath &#x3D; &quot;/Users/eCitizens&quot;;
+  downloadURL: Observable&lt;string&gt;;
+  task: AngularFireUploadTask;
+  progress: Observable&lt;number&gt;;
+  validations_form: FormGroup;
+  errorMessage: string;
+  constructor(
+    public formBuilder: FormBuilder,
+    public authService: GoogleAuthService,
+    public storage: AngularFireStorage,
+    protected route: Router,
+    protected firestore: AngularFirestore,
+    public alertController: AlertController,
+    public loadingController: LoadingController
+  ) {}
+
+  ngOnInit() {
+    /**
+     * Mandatory form validators for registration process, applicant has to fill all data which is usally present on their
+     * birth certificate
+     */
+    this.validations_form &#x3D; this.formBuilder.group({
+      email: new FormControl(
+        &quot;&quot;,
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(
+            &quot;^[a-zA-Z0-9_!#$%&amp;’*+/&#x3D;?&#x60;{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&amp;’*+/&#x3D;?&#x60;{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$&quot;
+          ),
+        ])
+      ),
+      password: new FormControl(
+        &quot;&quot;,
+        Validators.compose([
+          Validators.minLength(15),
+          Validators.maxLength(30),
+          Validators.required,
+        ])
+      ),
+      fullName: new FormControl(
+        &quot;&quot;,
+        Validators.compose([
+          Validators.minLength(15),
+          Validators.required,
+          Validators.pattern(&quot;^([ a-zA-Z])+$&quot;),
+        ])
+      ),
+      gender: new FormControl(&quot;&quot;, Validators.compose([Validators.required])),
+      prefix: new FormControl(&quot;&quot;, Validators.compose([Validators.required])),
+      dateOfBirth: new FormControl(
+        &quot;&quot;,
+        Validators.compose([Validators.required])
+      ),
+      placeOfBirth: new FormControl(
+        &quot;&quot;,
+        Validators.compose([Validators.minLength(5), Validators.required])
+      ),
+      registarDivision: new FormControl(
+        &quot;&quot;,
+        Validators.compose([Validators.minLength(10), Validators.required])
+      ),
+      birthRegNo: new FormControl(
+        &quot;&quot;,
+        Validators.compose([
+          Validators.pattern(&quot;^[0-9]{4}$&quot;),
+          Validators.required,
+        ])
+      ),
+      fatherName: new FormControl(
+        &quot;&quot;,
+        Validators.compose([
+          Validators.minLength(1),
+          Validators.required,
+          Validators.pattern(&quot;^([ a-zA-Z])+$&quot;),
+        ])
+      ),
+      motherName: new FormControl(
+        &quot;&quot;,
+        Validators.compose([
+          Validators.minLength(1),
+          Validators.required,
+          Validators.pattern(&quot;^([ a-zA-Z])+$&quot;),
+        ])
+      ),
+      landLine: new FormControl(
+        &quot;&quot;,
+        Validators.compose([
+          Validators.pattern(&quot;^[0-9]{10}$&quot;),
+          Validators.minLength(10),
+          Validators.required,
+        ])
+      ),
+      mobile: new FormControl(
+        &quot;&quot;,
+        Validators.compose([
+          Validators.pattern(&quot;^[0-9]{10}$&quot;),
+          Validators.minLength(10),
+          Validators.required,
+        ])
+      ),
+      homeAddress: new FormControl(
+        &quot;&quot;,
+        Validators.compose([Validators.minLength(20), Validators.required])
+      ),
+      officeAddress: new FormControl(&quot;&quot;, Validators.compose([])),
+      GovernmentID: new FormControl(&quot;&quot;, Validators.compose([])),
+      downloadURL: new FormControl(&quot;&quot;, Validators.compose([])),
+      bioData: new FormControl(&quot;&quot;, Validators.compose([])),
+    });
+  }
+  /**
+   * Validation messages to user
+   */
+  validation_form &#x3D; {
+    email: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Your Government Portal registered email is required.&quot;,
+      },
+      {
+        type: &quot;pattern&quot;,
+        message: &quot;Invalid email.&quot;,
+      },
+    ],
+    password: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Password is required.&quot;,
+      },
+      {
+        type: &quot;minlength&quot;,
+        message: &quot;Password must be at least 15 characters long.&quot;,
+      },
+      {
+        type: &quot;maxlength&quot;,
+        message: &quot;Password cannot be longer than 30 characters long.&quot;,
+      },
+    ],
+    prefix: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Name prefix is required.&quot;,
+      },
+    ],
+    fullName: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Full Name is required.&quot;,
+      },
+    ],
+    gender: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Gender is required.&quot;,
+      },
+    ],
+    dateOfBirth: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Date of Birth is required.&quot;,
+      },
+    ],
+    placeOfBirth: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Place of birth is required.&quot;,
+      },
+    ],
+    registarDivision: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Registar&#x27;s division is required.&quot;,
+      },
+    ],
+    birthRegNo: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Birth Registration number is required.&quot;,
+      },
+    ],
+    fatherName: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Father&#x27;s name is required.&quot;,
+      },
+    ],
+    motherName: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Mother&#x27;s name is required.&quot;,
+      },
+    ],
+    homeAddress: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Home Address is required.&quot;,
+      },
+    ],
+    officeAddress: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Office Address is required.&quot;,
+      },
+    ],
+    mobile: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Mobile number is required.&quot;,
+      },
+    ],
+    landLine: [
+      {
+        type: &quot;required&quot;,
+        message: &quot;Landline number is required.&quot;,
+      },
+    ],
+  };
+  /**
+   * Method reposible for fetching data from login form and sending to google-auth services page for registration after verification
+   * and for uploading applicants Photograph to cloud and generating a Government Portal ID, captures image upload event and uploads image to firebase storage
+   * (This method was recently updated to improve scalability from Email Key to Portal ID)
+   * This method is encodeing data for biometrics usage
+   * @param value hold validated values from login form
+   */
+  registerECitizen(value) {
+    this.authService.registerECitizen(value).then(async (res) &#x3D;&gt; {
+      // console.log(res);
+      var user &#x3D; firebase.default.auth().currentUser;
+            var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+            const eAdministration &#x3D; this.firestore
+              .collection(&quot;eAdministration&quot;)
+              .doc(&quot;eServices&quot;)
+              .collection(&quot;SystemLogs&quot;)
+              .doc(date);
+            await eAdministration.set(
+              {
+                Login: firebase.default.firestore.FieldValue.arrayUnion(
+                  &quot;web ecitizen registration from &quot; +
+                    value.email +
+                    &quot; at: &quot; +
+                    new Date()
+                ),
+              },
+              { merge: true }
+            );
+    });
+  }
+
+  async onFileChange(event) {
+    var GovernmentID;
+    GovernmentID &#x3D; &quot;A&quot; + Math.floor(Math.random() * 9000000000 + 1000000000);
+    this.validations_form.patchValue({ GovernmentID: GovernmentID });
+    const file &#x3D; event.target.files[0];
+    if (file) {
+      const filePath &#x3D; &#x60;${this.CollectionPath}/${GovernmentID}/ProfilePhoto&#x60;;
+      const fileRef: AngularFireStorageReference &#x3D; this.storage.ref(filePath);
+      this.task &#x3D; this.storage.upload(filePath, file);
+      this.progress &#x3D; this.task.percentageChanges();
+      const loading &#x3D; await this.loadingController.create({
+        message: &quot;Uploading ID Photo&quot;,
+      });
+      await loading.present();
+      this.task
+        .snapshotChanges()
+        .pipe(
+          finalize(() &#x3D;&gt; {
+            fileRef.getDownloadURL().subscribe(async (downloadURL) &#x3D;&gt; {
+              downloadURL &#x3D; &quot;&quot; + downloadURL;
+              await loading.dismiss();
+              this.validations_form.patchValue({ downloadURL: downloadURL });
+            });
+          })
+        )
+        .subscribe();
+    }
+    const photoData &#x3D; new ReplaySubject&lt;string&gt;(1);
+    const reader &#x3D; new FileReader();
+    reader.readAsBinaryString(file);
+    reader.onload &#x3D; (event) &#x3D;&gt;
+      photoData.next(btoa(event.target.result.toString()));
+    photoData.subscribe((encodedBioData) &#x3D;&gt; {
+      this.validations_form.patchValue({ bioData: encodedBioData });
+    });
+  }
+  /** Method to prevent multiple accounts */
+  accountDuplicateCheck() {
+    const RegNo &#x3D; this.validations_form.controls[&quot;birthRegNo&quot;].value;
+    if (RegNo.length &gt;&#x3D; 4 &amp;&amp; RegNo.length &lt;&#x3D; 10) {
+      this.firestore
+        .collection(&quot;BirthRegistrations&quot;)
+        .doc(&quot;&quot; + RegNo + &quot;&quot;)
+        .ref.get()
+        .then(async (doc) &#x3D;&gt; {
+          if (doc.exists) {
+            /** Informs user an account already exists */
+            if (doc.data()[&quot;Registered&quot;] &#x3D;&#x3D; true) {
+              var user &#x3D; firebase.default.auth().currentUser;
+            var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+            const eAdministration &#x3D; this.firestore
+              .collection(&quot;eAdministration&quot;)
+              .doc(&quot;eServices&quot;)
+              .collection(&quot;SystemLogs&quot;)
+              .doc(date);
+            await eAdministration.set(
+              {
+                Login: firebase.default.firestore.FieldValue.arrayUnion(
+                  &quot;web duplicate account attempt of registration &quot; +RegNo+
+                    user.email +
+                    &quot; at: &quot; +
+                    new Date()
+                ),
+              },
+              { merge: true }
+            );
+              const alert &#x3D; await this.alertController.create({
+                header: &quot;⚠ You already have an account with us&quot;,
+                backdropDismiss: false,
+                message:
+                  &quot;Your registration has failed, as the entered details show that you have account with us. Please recover it using the web portal or contact one of our officers.&quot;,
+                buttons: [
+                  {
+                    text: &quot;Sign in&quot;,
+                    handler: () &#x3D;&gt; {
+                      this.route.navigate([&quot;sign-in&quot;]);
+                    },
+                  },
+                ],
+              });
+              await alert.present();
+            }
+          }
+        });
+    }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;!-- 
+  
+  Contains frontend structure and design for Create Account page
+  Variables intialised here are related to the typescript page and used
+  for functionality.
+
+--&gt;
+&lt;!-- PAGE HEADER STARTS --&gt;
+&lt;ion-header&gt;
+  &lt;ion-toolbar color&#x3D;&quot;dark&quot;&gt;
+    &lt;ion-title&gt;
+      &lt;a href&#x3D;&quot;home&quot; color&#x3D;&quot;light&quot; style&#x3D;&quot;color: white; text-decoration: none&quot;&gt;
+        &lt;strong&gt;GOVERNMENT PORTAL&lt;/strong&gt;
+      &lt;/a&gt;
+    &lt;/ion-title&gt;
+  &lt;/ion-toolbar&gt;
+&lt;/ion-header&gt;
+&lt;!-- PAGE HEADER ENDS --&gt;
+&lt;ion-content [fullscreen]&#x3D;&quot;true&quot;&gt;
+  &lt;!-- PAGE CONTENT STARTS --&gt;
+
+  &lt;!-- PAGE SEARCH AND LINKED CONTENT --&gt;
+
+  &lt;!-- PAGE SEARCH AND LINKED CONTENT --&gt;
+  &lt;!-- PAGE LINKS AND INFORMATION --&gt;
+  &lt;ion-content&gt;
+    &lt;ion-toolbar&gt;
+      &lt;ion-buttons slot&#x3D;&quot;start&quot;&gt;
+        &lt;ion-back-button defaultHref&#x3D;&quot;sign-in&quot; text&#x3D;&quot;Back&quot;&gt;&lt;/ion-back-button&gt;
+      &lt;/ion-buttons&gt;
+    &lt;/ion-toolbar&gt;
+    &lt;ion-list style&#x3D;&quot;margin-left: 5%&quot;&gt;
+      &lt;h1 style&#x3D;&quot;font-size: xx-large&quot;&gt;
+        &lt;strong&gt;Register with Government Portal&lt;/strong&gt;
+      &lt;/h1&gt;
+      &lt;br /&gt;
+      &lt;form
+        class&#x3D;&quot;form&quot;
+        [formGroup]&#x3D;&quot;validations_form&quot;
+        (keydown.enter)&#x3D;&quot;registerECitizen(validations_form.value)&quot;
+        (ngSubmit)&#x3D;&quot;registerECitizen(validations_form.value)&quot;
+      &gt;
+        &lt;h5&gt;No. of Birth Registration Entry&lt;/h5&gt;
+        &lt;ion-item&gt;
+          &lt;ion-input
+            type&#x3D;&quot;tel&quot;
+            placeholder&#x3D;&quot;INSERT YOUR BRITH REGISTRATION ENTRY NO.&quot;
+            formControlName&#x3D;&quot;birthRegNo&quot;
+            type&#x3D;&quot;text&quot;
+            required
+            style&#x3D;&quot;text-transform: uppercase&quot;
+            maxlength&#x3D;&quot;10&quot;
+            (change)&#x3D;&quot;accountDuplicateCheck()&quot;
+          &gt;&lt;/ion-input&gt;
+        &lt;/ion-item&gt;
+        &lt;div class&#x3D;&quot;validation-errors&quot;&gt;
+          &lt;ng-container *ngFor&#x3D;&quot;let validation of validation_form.birthRegNo&quot;&gt;
+            &lt;div
+              class&#x3D;&quot;error-message&quot;
+              *ngIf&#x3D;&quot;validations_form.get(&#x27;birthRegNo&#x27;).hasError(validation.type) &amp;&amp; (validations_form.get(&#x27;birthRegNo&#x27;).dirty || validations_form.get(&#x27;birthRegNo&#x27;).touched)&quot;
+            &gt;
+              {{ validation.message }}
+            &lt;/div&gt;
+          &lt;/ng-container&gt;
+        &lt;/div&gt;
+        &lt;h5&gt;Prefix&lt;/h5&gt;
+        &lt;ion-select
+          formControlName&#x3D;&quot;prefix&quot;
+          type&#x3D;&quot;text&quot;
+          required
+          placeholder&#x3D;&quot;PREFIX&quot;
+        &gt;
+          &lt;ion-select-option value&#x3D;&quot;Mr.&quot;&gt;Mr.&lt;/ion-select-option&gt;
+          &lt;ion-select-option value&#x3D;&quot;Ms.&quot;&gt;Ms.&lt;/ion-select-option&gt;
+          &lt;ion-select-option value&#x3D;&quot;Mrs.&quot;&gt;Mrs.&lt;/ion-select-option&gt;
+          &lt;ion-select-option value&#x3D;&quot;Dr.&quot;&gt;Dr.&lt;/ion-select-option&gt;
+          &lt;ion-select-option value&#x3D;&quot;Prof.&quot;&gt;Prof.&lt;/ion-select-option&gt;
+          &lt;ion-select-option value&#x3D;&quot;Rev.&quot;&gt;Rev.&lt;/ion-select-option&gt;
+        &lt;/ion-select&gt;
+        &lt;div class&#x3D;&quot;validation-errors&quot;&gt;
+          &lt;ng-container *ngFor&#x3D;&quot;let validation of validation_form.prefix&quot;&gt;
+            &lt;div
+              class&#x3D;&quot;error-message&quot;
+              *ngIf&#x3D;&quot;validations_form.get(&#x27;prefix&#x27;).hasError(validation.type) &amp;&amp; (validations_form.get(&#x27;prefix&#x27;).dirty || validations_form.get(&#x27;prefix&#x27;).touched)&quot;
+            &gt;
+              {{ validation.message }}
+            &lt;/div&gt;
+          &lt;/ng-container&gt;
+        &lt;/div&gt;
+        &lt;h5&gt;Full Name of Applicant&lt;/h5&gt;
+        &lt;ion-item&gt;
+          &lt;ion-input
+            required&#x3D;&quot;true&quot;
+            type&#x3D;&quot;text&quot;
+            placeholder&#x3D;&quot;INSERT YOUR FULL NAME&quot;
+            formControlName&#x3D;&quot;fullName&quot;
+            type&#x3D;&quot;text&quot;
+            required
+            style&#x3D;&quot;text-transform: uppercase&quot;
+            maxlength&#x3D;&quot;512&quot;
+          &gt;&lt;/ion-input&gt;
+        &lt;/ion-item&gt;
+        &lt;div class&#x3D;&quot;validation-errors&quot;&gt;
+          &lt;ng-container *ngFor&#x3D;&quot;let validation of validation_form.fullName&quot;&gt;
+            &lt;div
+              class&#x3D;&quot;error-message&quot;
+              *ngIf&#x3D;&quot;validations_form.get(&#x27;fullName&#x27;).hasError(validation.type) &amp;&amp; (validations_form.get(&#x27;fullName&#x27;).dirty || validations_form.get(&#x27;fullName&#x27;).touched)&quot;
+            &gt;
+              {{ validation.message }}
+            &lt;/div&gt;
+          &lt;/ng-container&gt;
+        &lt;/div&gt;
+        &lt;h5&gt;Gender&lt;/h5&gt;
+        &lt;ion-item&gt;
+          &lt;ion-select placeholder&#x3D;&quot;SELECT YOUR GENDER&quot; formControlName&#x3D;&quot;gender&quot;&gt;
+            &lt;ion-select-option value&#x3D;&quot;Female&quot;&gt;FEMALE&lt;/ion-select-option&gt;
+            &lt;ion-select-option value&#x3D;&quot;Male&quot;&gt;MALE&lt;/ion-select-option&gt;
+          &lt;/ion-select&gt;
+        &lt;/ion-item&gt;
+        &lt;div class&#x3D;&quot;validation-errors&quot;&gt;
+          &lt;ng-container *ngFor&#x3D;&quot;let validation of validation_form.gender&quot;&gt;
+            &lt;div
+              class&#x3D;&quot;error-message&quot;
+              *ngIf&#x3D;&quot;validations_form.get(&#x27;gender&#x27;).hasError(validation.type) &amp;&amp; (validations_form.get(&#x27;gender&#x27;).dirty || validations_form.get(&#x27;gender&#x27;).touched)&quot;
+            &gt;
+              {{ validation.message }}
+            &lt;/div&gt;
+          &lt;/ng-container&gt;
+        &lt;/div&gt;
+        &lt;h5&gt;Date of Birth&lt;/h5&gt;
+        &lt;ion-item&gt;
+          &lt;ion-datetime
+            min&#x3D;&quot;1910-01-01&quot;
+            max&#x3D;&quot;2000-12-31&quot;
+            displayFormat&#x3D;&quot;MM DD YYYY&quot;
+            pickerFormat&#x3D;&quot;MM DD YYYY&quot;
+            placeholder&#x3D;&quot;SELECT DATE OF BIRTH&quot;
+            formControlName&#x3D;&quot;dateOfBirth&quot;
+            type&#x3D;&quot;text&quot;
+          &gt;&lt;/ion-datetime&gt;
+        &lt;/ion-item&gt;
+        &lt;div class&#x3D;&quot;validation-errors&quot;&gt;
+          &lt;ng-container *ngFor&#x3D;&quot;let validation of validation_form.dateOfBirth&quot;&gt;
+            &lt;div
+              class&#x3D;&quot;error-message&quot;
+              *ngIf&#x3D;&quot;validations_form.get(&#x27;dateOfBirth&#x27;).hasError(validation.type) &amp;&amp; (validations_form.get(&#x27;dateOfBirth&#x27;).dirty || validations_form.get(&#x27;dateOfBirth&#x27;).touched)&quot;
+            &gt;
+              {{ validation.message }}
+            &lt;/div&gt;
+          &lt;/ng-container&gt;
+        &lt;/div&gt;
+        &lt;h5&gt;
+          Place of Birth (Hospital, House No. and Street, Town or Village or
+          name of Estate)
+        &lt;/h5&gt;
+        &lt;ion-item&gt;
+          &lt;ion-input
+            required&#x3D;&quot;true&quot;
+            type&#x3D;&quot;text&quot;
+            placeholder&#x3D;&quot;INSERT YOUR PLACE OF BIRTH&quot;
+            formControlName&#x3D;&quot;placeOfBirth&quot;
+            type&#x3D;&quot;text&quot;
+            required
+            style&#x3D;&quot;text-transform: uppercase&quot;
+          &gt;&lt;/ion-input&gt;
+        &lt;/ion-item&gt;
+        &lt;div class&#x3D;&quot;validation-errors&quot;&gt;
+          &lt;ng-container *ngFor&#x3D;&quot;let validation of validation_form.placeOfBirth&quot;&gt;
+            &lt;div
+              class&#x3D;&quot;error-message&quot;
+              *ngIf&#x3D;&quot;validations_form.get(&#x27;placeOfBirth&#x27;).hasError(validation.type) &amp;&amp; (validations_form.get(&#x27;placeOfBirth&#x27;).dirty || validations_form.get(&#x27;placeOfBirth&#x27;).touched)&quot;
+            &gt;
+              {{ validation.message }}
+            &lt;/div&gt;
+          &lt;/ng-container&gt;
+        &lt;/div&gt;
+        &lt;h5&gt;Registar&#x27;s Division&lt;/h5&gt;
+        &lt;ion-item&gt;
+          &lt;ion-input
+            required&#x3D;&quot;true&quot;
+            type&#x3D;&quot;text&quot;
+            placeholder&#x3D;&quot;INSERT YOUR REGISTAR&#x27;S DIVISION&quot;
+            formControlName&#x3D;&quot;registarDivision&quot;
+            type&#x3D;&quot;text&quot;
+            required
+            style&#x3D;&quot;text-transform: uppercase&quot;
+          &gt;&lt;/ion-input&gt;
+        &lt;/ion-item&gt;
+        &lt;div class&#x3D;&quot;validation-errors&quot;&gt;
+          &lt;ng-container
+            *ngFor&#x3D;&quot;let validation of validation_form.registarDivision&quot;
+          &gt;
+            &lt;div
+              class&#x3D;&quot;error-message&quot;
+              *ngIf&#x3D;&quot;validations_form.get(&#x27;registarDivision&#x27;).hasError(validation.type) &amp;&amp; (validations_form.get(&#x27;registarDivision&#x27;).dirty || validations_form.get(&#x27;registarDivision&#x27;).touched)&quot;
+            &gt;
+              {{ validation.message }}
+            &lt;/div&gt;
+          &lt;/ng-container&gt;
+        &lt;/div&gt;
+        &lt;h5&gt;Father&#x27;s Name&lt;/h5&gt;
+        &lt;ion-item&gt;
+          &lt;ion-input
+            required&#x3D;&quot;true&quot;
+            type&#x3D;&quot;text&quot;
+            placeholder&#x3D;&quot;INSERT YOUR FATHER&#x27;S FULL NAME&quot;
+            formControlName&#x3D;&quot;fatherName&quot;
+            type&#x3D;&quot;text&quot;
+            required
+            style&#x3D;&quot;text-transform: uppercase&quot;
+          &gt;&lt;/ion-input&gt;
+        &lt;/ion-item&gt;
+        &lt;div class&#x3D;&quot;validation-errors&quot;&gt;
+          &lt;ng-container *ngFor&#x3D;&quot;let validation of validation_form.fatherName&quot;&gt;
+            &lt;div
+              class&#x3D;&quot;error-message&quot;
+              *ngIf&#x3D;&quot;validations_form.get(&#x27;fatherName&#x27;).hasError(validation.type) &amp;&amp; (validations_form.get(&#x27;fatherName&#x27;).dirty || validations_form.get(&#x27;fatherName&#x27;).touched)&quot;
+            &gt;
+              {{ validation.message }}
+            &lt;/div&gt;
+          &lt;/ng-container&gt;
+        &lt;/div&gt;
+        &lt;h5&gt;Mother&#x27;s Name&lt;/h5&gt;
+        &lt;ion-item&gt;
+          &lt;ion-input
+            required&#x3D;&quot;true&quot;
+            type&#x3D;&quot;text&quot;
+            placeholder&#x3D;&quot;INSERT YOUR MOTHER&#x27;S FULL NAME&quot;
+            formControlName&#x3D;&quot;motherName&quot;
+            type&#x3D;&quot;text&quot;
+            required
+            style&#x3D;&quot;text-transform: uppercase&quot;
+          &gt;&lt;/ion-input&gt;
+        &lt;/ion-item&gt;
+        &lt;div class&#x3D;&quot;validation-errors&quot;&gt;
+          &lt;ng-container *ngFor&#x3D;&quot;let validation of validation_form.motherName&quot;&gt;
+            &lt;div
+              class&#x3D;&quot;error-message&quot;
+              *ngIf&#x3D;&quot;validations_form.get(&#x27;motherName&#x27;).hasError(validation.type) &amp;&amp; (validations_form.get(&#x27;motherName&#x27;).dirty || validations_form.get(&#x27;motherName&#x27;).touched)&quot;
+            &gt;
+              {{ validation.message }}
+            &lt;/div&gt;
+          &lt;/ng-container&gt;
+        &lt;/div&gt;
+        &lt;h5&gt;ID Photo&lt;/h5&gt;
+        &lt;p&gt;
+          Insert a valid photograph that is clearly showing your facial
+          characteristics
+        &lt;/p&gt;
+        &lt;ion-item&gt;
+          &lt;div *ngIf&#x3D;&quot;progress | async as value&quot;&gt;
+            Progress: {{ value | number }}%
+            &lt;ion-progress-bar
+              color&#x3D;&quot;primary&quot;
+              value&#x3D;&quot;{{ value / 100 }}&quot;
+            &gt;&lt;/ion-progress-bar&gt;
+          &lt;/div&gt;
+          &lt;ion-input
+            required&#x3D;&quot;true&quot;
+            type&#x3D;&quot;file&quot;
+            (change)&#x3D;&quot;onFileChange($event)&quot;
+            accept&#x3D;&quot;.jpeg,.jpg,.png&quot;
+          &gt;&lt;/ion-input&gt;
+        &lt;/ion-item&gt;
+        &lt;h5&gt;Home Address (Current)&lt;/h5&gt;
+        &lt;ion-item&gt;
+          &lt;ion-input
+            required&#x3D;&quot;true&quot;
+            type&#x3D;&quot;text&quot;
+            placeholder&#x3D;&quot;INSERT YOUR HOME ADDRESS IN FULL&quot;
+            formControlName&#x3D;&quot;homeAddress&quot;
+            type&#x3D;&quot;text&quot;
+            required
+            style&#x3D;&quot;text-transform: uppercase&quot;
+          &gt;&lt;/ion-input&gt;
+        &lt;/ion-item&gt;
+        &lt;div class&#x3D;&quot;validation-errors&quot;&gt;
+          &lt;ng-container *ngFor&#x3D;&quot;let validation of validation_form.homeAddress&quot;&gt;
+            &lt;div
+              class&#x3D;&quot;error-message&quot;
+              *ngIf&#x3D;&quot;validations_form.get(&#x27;homeAddress&#x27;).hasError(validation.type) &amp;&amp; (validations_form.get(&#x27;homeAddress&#x27;).dirty || validations_form.get(&#x27;homeAddress&#x27;).touched)&quot;
+            &gt;
+              {{ validation.message }}
+            &lt;/div&gt;
+          &lt;/ng-container&gt;
+        &lt;/div&gt;
+        &lt;h5&gt;Office Address&lt;/h5&gt;
+        &lt;ion-item&gt;
+          &lt;ion-input
+            required&#x3D;&quot;true&quot;
+            type&#x3D;&quot;text&quot;
+            placeholder&#x3D;&quot;INSERT YOUR OFFICE ADDRESS IN FULL&quot;
+            formControlName&#x3D;&quot;officeAddress&quot;
+            type&#x3D;&quot;text&quot;
+            style&#x3D;&quot;text-transform: uppercase&quot;
+          &gt;&lt;/ion-input&gt;
+        &lt;/ion-item&gt;
+        &lt;div class&#x3D;&quot;validation-errors&quot;&gt;
+          &lt;ng-container
+            *ngFor&#x3D;&quot;let validation of validation_form.officeAddress&quot;
+          &gt;
+            &lt;div
+              class&#x3D;&quot;error-message&quot;
+              *ngIf&#x3D;&quot;validations_form.get(&#x27;officeAddress&#x27;).hasError(validation.type) &amp;&amp; (validations_form.get(&#x27;officeAddress&#x27;).dirty || validations_form.get(&#x27;officeAddress&#x27;).touched)&quot;
+            &gt;
+              {{ validation.message }}
+            &lt;/div&gt;
+          &lt;/ng-container&gt;
+        &lt;/div&gt;
+        &lt;h5&gt;Mobile Number&lt;/h5&gt;
+        &lt;ion-item&gt;
+          &lt;ion-input
+            required&#x3D;&quot;true&quot;
+            type&#x3D;&quot;tel&quot;
+            placeholder&#x3D;&quot;INSERT YOUR MOBILE NUMBER&quot;
+            formControlName&#x3D;&quot;mobile&quot;
+            type&#x3D;&quot;tel&quot;
+            required
+            style&#x3D;&quot;text-transform: uppercase&quot;
+            maxlength&#x3D;&quot;10&quot;
+          &gt;&lt;/ion-input&gt;
+        &lt;/ion-item&gt;
+        &lt;div class&#x3D;&quot;validation-errors&quot;&gt;
+          &lt;ng-container *ngFor&#x3D;&quot;let validation of validation_form.mobile&quot;&gt;
+            &lt;div
+              class&#x3D;&quot;error-message&quot;
+              *ngIf&#x3D;&quot;validations_form.get(&#x27;mobile&#x27;).hasError(validation.type) &amp;&amp; (validations_form.get(&#x27;mobile&#x27;).dirty || validations_form.get(&#x27;mobile&#x27;).touched)&quot;
+            &gt;
+              {{ validation.message }}
+            &lt;/div&gt;
+          &lt;/ng-container&gt;
+        &lt;/div&gt;
+        &lt;h5&gt;Landline Number&lt;/h5&gt;
+        &lt;ion-item&gt;
+          &lt;ion-input
+            required&#x3D;&quot;true&quot;
+            type&#x3D;&quot;tel&quot;
+            placeholder&#x3D;&quot;INSERT YOUR LANDLINE NUMBER&quot;
+            formControlName&#x3D;&quot;landLine&quot;
+            type&#x3D;&quot;tel&quot;
+            required
+            style&#x3D;&quot;text-transform: uppercase&quot;
+            maxlength&#x3D;&quot;10&quot;
+          &gt;&lt;/ion-input&gt;
+        &lt;/ion-item&gt;
+        &lt;div class&#x3D;&quot;validation-errors&quot;&gt;
+          &lt;ng-container *ngFor&#x3D;&quot;let validation of validation_form.landLine&quot;&gt;
+            &lt;div
+              class&#x3D;&quot;error-message&quot;
+              *ngIf&#x3D;&quot;validations_form.get(&#x27;landLine&#x27;).hasError(validation.type) &amp;&amp; (validations_form.get(&#x27;landLine&#x27;).dirty || validations_form.get(&#x27;landLine&#x27;).touched)&quot;
+            &gt;
+              {{ validation.message }}
+            &lt;/div&gt;
+          &lt;/ng-container&gt;
+        &lt;/div&gt;
+        &lt;h5&gt;Email address&lt;/h5&gt;
+        &lt;ion-text style&#x3D;&quot;font-style: italic; color: gray&quot;
+          &gt;This would be your Government Portal access email address
+        &lt;/ion-text&gt;
+        &lt;ion-item&gt;
+          &lt;ion-input
+            required&#x3D;&quot;true&quot;
+            type&#x3D;&quot;email&quot;
+            placeholder&#x3D;&quot;INSERT YOUR EMAIL&quot;
+            formControlName&#x3D;&quot;email&quot;
+            type&#x3D;&quot;email&quot;
+            required
+          &gt;&lt;/ion-input&gt;
+        &lt;/ion-item&gt;
+        &lt;div class&#x3D;&quot;validation-errors&quot;&gt;
+          &lt;ng-container *ngFor&#x3D;&quot;let validation of validation_form.email&quot;&gt;
+            &lt;div
+              class&#x3D;&quot;error-message&quot;
+              *ngIf&#x3D;&quot;validations_form.get(&#x27;email&#x27;).hasError(validation.type) &amp;&amp; (validations_form.get(&#x27;email&#x27;).dirty || validations_form.get(&#x27;email&#x27;).touched)&quot;
+            &gt;
+              {{ validation.message }}
+            &lt;/div&gt;
+          &lt;/ng-container&gt;
+        &lt;/div&gt;
+        &lt;h5&gt;Password&lt;/h5&gt;
+        &lt;ion-text style&#x3D;&quot;font-style: italic; color: gray&quot;
+          &gt;This would be your Government Portal access password
+        &lt;/ion-text&gt;
+        &lt;ion-item&gt;
+          &lt;ion-input
+            required&#x3D;&quot;true&quot;
+            inputmode&#x3D;&quot;text&quot;
+            type&#x3D;&quot;password&quot;
+            clear-on-edit&#x3D;&quot;true&quot;
+            placeholder&#x3D;&quot;PASSWORD&quot;
+            formControlName&#x3D;&quot;password&quot;
+            type&#x3D;&quot;password&quot;
+            required
+          &gt;&lt;/ion-input&gt;
+        &lt;/ion-item&gt;
+        &lt;div class&#x3D;&quot;validation-errors&quot;&gt;
+          &lt;ng-container *ngFor&#x3D;&quot;let validation of validation_form.password&quot;&gt;
+            &lt;div
+              class&#x3D;&quot;error-message&quot;
+              *ngIf&#x3D;&quot;validations_form.get(&#x27;password&#x27;).hasError(validation.type) &amp;&amp; (validations_form.get(&#x27;password&#x27;).dirty || validations_form.get(&#x27;password&#x27;).touched)&quot;
+            &gt;
+              {{ validation.message }}
+            &lt;/div&gt;
+          &lt;/ng-container&gt;
+          &lt;br /&gt;
+          &lt;ion-text style&#x3D;&quot;font-size: x-small; color: gray&quot;
+            &gt;By clicking Register information, you agree to our Terms, Data
+            Policy and Cookies Policy. Please note that only if your data
+            matches our records, the registration would be approved.&lt;/ion-text
+          &gt;
+          &lt;br /&gt;
+          &lt;ion-button
+            type&#x3D;&quot;submit&quot;
+            color&#x3D;&quot;signin&quot;
+            [disabled]&#x3D;&quot;!validations_form.valid&quot;
+            &gt;Register information&lt;ion-icon name&#x3D;&quot;key-outline&quot;&gt;&lt;/ion-icon&gt;
+          &lt;/ion-button&gt;
+          &lt;label class&#x3D;&quot;error-message&quot;&gt;{{errorMessage}}&lt;/label&gt;
+        &lt;/div&gt;
+        &lt;br /&gt;
+      &lt;/form&gt;
+    &lt;/ion-list&gt;
+    &lt;br /&gt;
+    &lt;ion-grid style&#x3D;&quot;margin-left: 5%&quot;&gt;
+      &lt;ion-row&gt;
+        &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;underline&quot;&gt;Get help&lt;/a&gt;
+      &lt;/ion-row&gt;
+    &lt;/ion-grid&gt;
+  &lt;/ion-content&gt;
+
+  &lt;!-- PAGE LINKS AND INFORMATION --&gt;
+
+  &lt;!-- PAGE CONTENT ENDS --&gt;
+&lt;/ion-content&gt;
+&lt;!-- PAGE FOOTER STARTS --&gt;
+&lt;ion-footer class&#x3D;&quot;ion-no-border&quot; align&#x3D;&quot;center&quot;&gt;
+  &lt;ion-toolbar color&#x3D;&quot;light&quot;&gt;
+    &lt;ion-text&gt;
+      Government Portal&lt;br /&gt;
+      Ministry of Home Affairs
+    &lt;/ion-text&gt;
+  &lt;/ion-toolbar&gt;
+&lt;/ion-footer&gt;
+&lt;!-- PAGE FOOTER ENDS --&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./create-account.page.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">// Style sheet for create account page
+.underline {
+    text-decoration: underline;
+    color: blue;
+  }</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><!--     Contains frontend structure and design for Create Account page  Variables intialised here are related to the typescript page and used  for functionality.--><!-- PAGE HEADER STARTS --><ion-header>  <ion-toolbar color="dark">    <ion-title>      <a href="home" color="light" style="color: white; text-decoration: none">        <strong>GOVERNMENT PORTAL</strong>      </a>    </ion-title>  </ion-toolbar></ion-header><!-- PAGE HEADER ENDS --><ion-content [fullscreen]="true">  <!-- PAGE CONTENT STARTS -->  <!-- PAGE SEARCH AND LINKED CONTENT -->  <!-- PAGE SEARCH AND LINKED CONTENT -->  <!-- PAGE LINKS AND INFORMATION -->  <ion-content>    <ion-toolbar>      <ion-buttons slot="start">        <ion-back-button defaultHref="sign-in" text="Back"></ion-back-button>      </ion-buttons>    </ion-toolbar>    <ion-list style="margin-left: 5%">      <h1 style="font-size: xx-large">        <strong>Register with Government Portal</strong>      </h1>      <br />      <form        class="form"        [formGroup]="validations_form"        (keydown.enter)="registerECitizen(validations_form.value)"        (ngSubmit)="registerECitizen(validations_form.value)"      >        <h5>No. of Birth Registration Entry</h5>        <ion-item>          <ion-input            type="tel"            placeholder="INSERT YOUR BRITH REGISTRATION ENTRY NO."            formControlName="birthRegNo"            type="text"            required            style="text-transform: uppercase"            maxlength="10"            (change)="accountDuplicateCheck()"          ></ion-input>        </ion-item>        <div class="validation-errors">          <ng-container *ngFor="let validation of validation_form.birthRegNo">            <div              class="error-message"              *ngIf="validations_form.get(\'birthRegNo\').hasError(validation.type) && (validations_form.get(\'birthRegNo\').dirty || validations_form.get(\'birthRegNo\').touched)"            >              {{ validation.message }}            </div>          </ng-container>        </div>        <h5>Prefix</h5>        <ion-select          formControlName="prefix"          type="text"          required          placeholder="PREFIX"        >          <ion-select-option value="Mr.">Mr.</ion-select-option>          <ion-select-option value="Ms.">Ms.</ion-select-option>          <ion-select-option value="Mrs.">Mrs.</ion-select-option>          <ion-select-option value="Dr.">Dr.</ion-select-option>          <ion-select-option value="Prof.">Prof.</ion-select-option>          <ion-select-option value="Rev.">Rev.</ion-select-option>        </ion-select>        <div class="validation-errors">          <ng-container *ngFor="let validation of validation_form.prefix">            <div              class="error-message"              *ngIf="validations_form.get(\'prefix\').hasError(validation.type) && (validations_form.get(\'prefix\').dirty || validations_form.get(\'prefix\').touched)"            >              {{ validation.message }}            </div>          </ng-container>        </div>        <h5>Full Name of Applicant</h5>        <ion-item>          <ion-input            required="true"            type="text"            placeholder="INSERT YOUR FULL NAME"            formControlName="fullName"            type="text"            required            style="text-transform: uppercase"            maxlength="512"          ></ion-input>        </ion-item>        <div class="validation-errors">          <ng-container *ngFor="let validation of validation_form.fullName">            <div              class="error-message"              *ngIf="validations_form.get(\'fullName\').hasError(validation.type) && (validations_form.get(\'fullName\').dirty || validations_form.get(\'fullName\').touched)"            >              {{ validation.message }}            </div>          </ng-container>        </div>        <h5>Gender</h5>        <ion-item>          <ion-select placeholder="SELECT YOUR GENDER" formControlName="gender">            <ion-select-option value="Female">FEMALE</ion-select-option>            <ion-select-option value="Male">MALE</ion-select-option>          </ion-select>        </ion-item>        <div class="validation-errors">          <ng-container *ngFor="let validation of validation_form.gender">            <div              class="error-message"              *ngIf="validations_form.get(\'gender\').hasError(validation.type) && (validations_form.get(\'gender\').dirty || validations_form.get(\'gender\').touched)"            >              {{ validation.message }}            </div>          </ng-container>        </div>        <h5>Date of Birth</h5>        <ion-item>          <ion-datetime            min="1910-01-01"            max="2000-12-31"            displayFormat="MM DD YYYY"            pickerFormat="MM DD YYYY"            placeholder="SELECT DATE OF BIRTH"            formControlName="dateOfBirth"            type="text"          ></ion-datetime>        </ion-item>        <div class="validation-errors">          <ng-container *ngFor="let validation of validation_form.dateOfBirth">            <div              class="error-message"              *ngIf="validations_form.get(\'dateOfBirth\').hasError(validation.type) && (validations_form.get(\'dateOfBirth\').dirty || validations_form.get(\'dateOfBirth\').touched)"            >              {{ validation.message }}            </div>          </ng-container>        </div>        <h5>          Place of Birth (Hospital, House No. and Street, Town or Village or          name of Estate)        </h5>        <ion-item>          <ion-input            required="true"            type="text"            placeholder="INSERT YOUR PLACE OF BIRTH"            formControlName="placeOfBirth"            type="text"            required            style="text-transform: uppercase"          ></ion-input>        </ion-item>        <div class="validation-errors">          <ng-container *ngFor="let validation of validation_form.placeOfBirth">            <div              class="error-message"              *ngIf="validations_form.get(\'placeOfBirth\').hasError(validation.type) && (validations_form.get(\'placeOfBirth\').dirty || validations_form.get(\'placeOfBirth\').touched)"            >              {{ validation.message }}            </div>          </ng-container>        </div>        <h5>Registar\'s Division</h5>        <ion-item>          <ion-input            required="true"            type="text"            placeholder="INSERT YOUR REGISTAR\'S DIVISION"            formControlName="registarDivision"            type="text"            required            style="text-transform: uppercase"          ></ion-input>        </ion-item>        <div class="validation-errors">          <ng-container            *ngFor="let validation of validation_form.registarDivision"          >            <div              class="error-message"              *ngIf="validations_form.get(\'registarDivision\').hasError(validation.type) && (validations_form.get(\'registarDivision\').dirty || validations_form.get(\'registarDivision\').touched)"            >              {{ validation.message }}            </div>          </ng-container>        </div>        <h5>Father\'s Name</h5>        <ion-item>          <ion-input            required="true"            type="text"            placeholder="INSERT YOUR FATHER\'S FULL NAME"            formControlName="fatherName"            type="text"            required            style="text-transform: uppercase"          ></ion-input>        </ion-item>        <div class="validation-errors">          <ng-container *ngFor="let validation of validation_form.fatherName">            <div              class="error-message"              *ngIf="validations_form.get(\'fatherName\').hasError(validation.type) && (validations_form.get(\'fatherName\').dirty || validations_form.get(\'fatherName\').touched)"            >              {{ validation.message }}            </div>          </ng-container>        </div>        <h5>Mother\'s Name</h5>        <ion-item>          <ion-input            required="true"            type="text"            placeholder="INSERT YOUR MOTHER\'S FULL NAME"            formControlName="motherName"            type="text"            required            style="text-transform: uppercase"          ></ion-input>        </ion-item>        <div class="validation-errors">          <ng-container *ngFor="let validation of validation_form.motherName">            <div              class="error-message"              *ngIf="validations_form.get(\'motherName\').hasError(validation.type) && (validations_form.get(\'motherName\').dirty || validations_form.get(\'motherName\').touched)"            >              {{ validation.message }}            </div>          </ng-container>        </div>        <h5>ID Photo</h5>        <p>          Insert a valid photograph that is clearly showing your facial          characteristics        </p>        <ion-item>          <div *ngIf="progress | async as value">            Progress: {{ value | number }}%            <ion-progress-bar              color="primary"              value="{{ value / 100 }}"            ></ion-progress-bar>          </div>          <ion-input            required="true"            type="file"            (change)="onFileChange($event)"            accept=".jpeg,.jpg,.png"          ></ion-input>        </ion-item>        <h5>Home Address (Current)</h5>        <ion-item>          <ion-input            required="true"            type="text"            placeholder="INSERT YOUR HOME ADDRESS IN FULL"            formControlName="homeAddress"            type="text"            required            style="text-transform: uppercase"          ></ion-input>        </ion-item>        <div class="validation-errors">          <ng-container *ngFor="let validation of validation_form.homeAddress">            <div              class="error-message"              *ngIf="validations_form.get(\'homeAddress\').hasError(validation.type) && (validations_form.get(\'homeAddress\').dirty || validations_form.get(\'homeAddress\').touched)"            >              {{ validation.message }}            </div>          </ng-container>        </div>        <h5>Office Address</h5>        <ion-item>          <ion-input            required="true"            type="text"            placeholder="INSERT YOUR OFFICE ADDRESS IN FULL"            formControlName="officeAddress"            type="text"            style="text-transform: uppercase"          ></ion-input>        </ion-item>        <div class="validation-errors">          <ng-container            *ngFor="let validation of validation_form.officeAddress"          >            <div              class="error-message"              *ngIf="validations_form.get(\'officeAddress\').hasError(validation.type) && (validations_form.get(\'officeAddress\').dirty || validations_form.get(\'officeAddress\').touched)"            >              {{ validation.message }}            </div>          </ng-container>        </div>        <h5>Mobile Number</h5>        <ion-item>          <ion-input            required="true"            type="tel"            placeholder="INSERT YOUR MOBILE NUMBER"            formControlName="mobile"            type="tel"            required            style="text-transform: uppercase"            maxlength="10"          ></ion-input>        </ion-item>        <div class="validation-errors">          <ng-container *ngFor="let validation of validation_form.mobile">            <div              class="error-message"              *ngIf="validations_form.get(\'mobile\').hasError(validation.type) && (validations_form.get(\'mobile\').dirty || validations_form.get(\'mobile\').touched)"            >              {{ validation.message }}            </div>          </ng-container>        </div>        <h5>Landline Number</h5>        <ion-item>          <ion-input            required="true"            type="tel"            placeholder="INSERT YOUR LANDLINE NUMBER"            formControlName="landLine"            type="tel"            required            style="text-transform: uppercase"            maxlength="10"          ></ion-input>        </ion-item>        <div class="validation-errors">          <ng-container *ngFor="let validation of validation_form.landLine">            <div              class="error-message"              *ngIf="validations_form.get(\'landLine\').hasError(validation.type) && (validations_form.get(\'landLine\').dirty || validations_form.get(\'landLine\').touched)"            >              {{ validation.message }}            </div>          </ng-container>        </div>        <h5>Email address</h5>        <ion-text style="font-style: italic; color: gray"          >This would be your Government Portal access email address        </ion-text>        <ion-item>          <ion-input            required="true"            type="email"            placeholder="INSERT YOUR EMAIL"            formControlName="email"            type="email"            required          ></ion-input>        </ion-item>        <div class="validation-errors">          <ng-container *ngFor="let validation of validation_form.email">            <div              class="error-message"              *ngIf="validations_form.get(\'email\').hasError(validation.type) && (validations_form.get(\'email\').dirty || validations_form.get(\'email\').touched)"            >              {{ validation.message }}            </div>          </ng-container>        </div>        <h5>Password</h5>        <ion-text style="font-style: italic; color: gray"          >This would be your Government Portal access password        </ion-text>        <ion-item>          <ion-input            required="true"            inputmode="text"            type="password"            clear-on-edit="true"            placeholder="PASSWORD"            formControlName="password"            type="password"            required          ></ion-input>        </ion-item>        <div class="validation-errors">          <ng-container *ngFor="let validation of validation_form.password">            <div              class="error-message"              *ngIf="validations_form.get(\'password\').hasError(validation.type) && (validations_form.get(\'password\').dirty || validations_form.get(\'password\').touched)"            >              {{ validation.message }}            </div>          </ng-container>          <br />          <ion-text style="font-size: x-small; color: gray"            >By clicking Register information, you agree to our Terms, Data            Policy and Cookies Policy. Please note that only if your data            matches our records, the registration would be approved.</ion-text          >          <br />          <ion-button            type="submit"            color="signin"            [disabled]="!validations_form.valid"            >Register information<ion-icon name="key-outline"></ion-icon>          </ion-button>          <label class="error-message">{{errorMessage}}</label>        </div>        <br />      </form>    </ion-list>    <br />    <ion-grid style="margin-left: 5%">      <ion-row>        <a href="#" class="underline">Get help</a>      </ion-row>    </ion-grid>  </ion-content>  <!-- PAGE LINKS AND INFORMATION -->  <!-- PAGE CONTENT ENDS --></ion-content><!-- PAGE FOOTER STARTS --><ion-footer class="ion-no-border" align="center">  <ion-toolbar color="light">    <ion-text>      Government Portal<br />      Ministry of Home Affairs    </ion-text>  </ion-toolbar></ion-footer><!-- PAGE FOOTER ENDS --></div>'
+    var COMPONENTS = [{'name': 'AccountPage', 'selector': 'app-account'},{'name': 'AgriculturePage', 'selector': 'app-agriculture'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BankingPage', 'selector': 'app-banking'},{'name': 'CreateAccountPage', 'selector': 'app-create-account'},{'name': 'EducationPage', 'selector': 'app-education'},{'name': 'EmploymentPage', 'selector': 'app-employment'},{'name': 'EnvironmentPage', 'selector': 'app-environment'},{'name': 'HealthcarePage', 'selector': 'app-healthcare'},{'name': 'HomePage', 'selector': 'app-home'},{'name': 'HousingPage', 'selector': 'app-housing'},{'name': 'JusticePage', 'selector': 'app-justice'},{'name': 'MediaPage', 'selector': 'app-media'},{'name': 'PageNotFoundPage', 'selector': 'app-page-not-found'},{'name': 'PageUnderConstructionPage', 'selector': 'app-page-under-construction'},{'name': 'PaymentNotMadePage', 'selector': 'app-payment-not-made'},{'name': 'RegistrationsPage', 'selector': 'app-registrations'},{'name': 'SignInPage', 'selector': 'app-sign-in'},{'name': 'TradingPage', 'selector': 'app-trading'},{'name': 'TravelPage', 'selector': 'app-travel'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'CreateAccountPage'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'CreateAccountPage.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
