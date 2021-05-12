@@ -527,24 +527,6 @@ export class AccessService {
         .signOut()
         .then(async () => {
           // console.log("Signing out");
-          let user = firebase.default.auth().currentUser;
-          let date = dateFormat(new Date(), "mm-dd-yyyy");
-          const eAdministration = this.firestore
-            .collection("eAdministration")
-            .doc("eServices")
-            .collection("SystemLogs")
-            .doc(date);
-          await eAdministration.set(
-            {
-              Login: firebase.default.firestore.FieldValue.arrayUnion(
-                "administrator logout attempt from " +
-                  user.email +
-                  " at: " +
-                  new Date()
-              ),
-            },
-            { merge: true }
-          );
           this.navCtrl.navigateForward("access");
         })
         .catch(async (_error) => {

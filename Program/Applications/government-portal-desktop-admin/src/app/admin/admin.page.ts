@@ -555,7 +555,7 @@ export class AdminPage implements OnInit {
    * @param value form data for citizen registrations
    */
   citizenRegistration(value) {
-    console.log(value);
+    // console.log(value);
     this.accessService.registerBirths(value);
   }
   /** Checking System Status */
@@ -570,7 +570,7 @@ export class AdminPage implements OnInit {
         }
       },
       async (error) => {
-        console.log(error);
+        // console.log(error);
         const alert = await this.alertController.create({
           header: "🚫 Out of Service",
           subHeader: "Server Access Timeout",
@@ -590,8 +590,8 @@ export class AdminPage implements OnInit {
           this.web_system_maintenance = false;
         }
       },
-      (error) => {
-        console.log(error);
+      async (error) => {
+        // console.log(error);
       }
     );
     // Kiosk System
@@ -603,8 +603,8 @@ export class AdminPage implements OnInit {
           this.kiosk_system_maintenance = false;
         }
       },
-      (error) => {
-        console.log(error);
+      async (error) => {
+        // console.log(error);
       }
     );
     // Office System
@@ -616,8 +616,8 @@ export class AdminPage implements OnInit {
           this.office_system_maintenance = false;
         }
       },
-      (error) => {
-        console.log(error);
+      async (error) => {
+        // console.log(error);
       }
     );
     // Secretary System
@@ -629,8 +629,8 @@ export class AdminPage implements OnInit {
           this.secretary_system_maintenance = false;
         }
       },
-      (error) => {
-        console.log(error);
+      async (error) => {
+        // console.log(error);
       }
     );
   }
@@ -763,7 +763,7 @@ export class AdminPage implements OnInit {
         }
       },
       async (error) => {
-        console.log(error);
+        // console.log(error);
         const alert = await this.alertController.create({
           header: "🚫 Out of Service",
           subHeader: "Server Access Timeout",

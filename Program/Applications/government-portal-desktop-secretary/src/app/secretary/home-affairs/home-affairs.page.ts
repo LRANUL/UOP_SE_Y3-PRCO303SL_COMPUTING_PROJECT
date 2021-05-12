@@ -726,6 +726,7 @@ export class HomeAffairsPage implements OnInit {
       },
     ],
   };
+  /** Send message to citizen */
   supportCitizen(value, ID) {
     let message = value.messageBody;
     this.message_form.reset();
@@ -746,7 +747,24 @@ export class HomeAffairsPage implements OnInit {
       }
     );
   }
-
+  forwardOfficer(ID, Subject){
+    this.accessService.forwardMessage(ID, Subject).then(
+      async (res) => {
+        const toast = await this.toastController.create({
+          message: "Message Forwared to Officer",
+          duration: 2000,
+        });
+        toast.present();
+      },
+      async (err) => {
+        const toast = await this.toastController.create({
+          message: "Reponse not forwarded, try again.",
+          duration: 2000,
+        });
+        toast.present();
+      }
+    );
+  }
   openService() {
     this.servicesPanel = true;
     this.supportPanel = false;

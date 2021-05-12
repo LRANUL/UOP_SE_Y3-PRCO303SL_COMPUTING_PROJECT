@@ -104,6 +104,7 @@ export class AccessService {
     return this.firestore
       .collection("eSupport", (ref) =>
         ref.limit(10).where("Status", "==", "New")
+        .where("Type", "==", "eCitizen")
       )
       .snapshotChanges();
   }
@@ -394,8 +395,64 @@ export class AccessService {
       );
     });
   }
-
-  /** Method for sedning officer reponse to ecitizen */
+  /**
+   * Method for forwarding messages
+   * @param ID Message ID
+   * @returns resolve
+   */
+  forwardMessage(ID, Subject) {
+    return new Promise<any>(async (resolve, reject) => {
+      /**
+       * Data gets stored on firebase, used for message tracking and references
+       */
+      const eSupport = this.firestore.collection("eSupport").doc(ID);
+      const res = await eSupport.set(
+        {
+          Subject: "Fw: "+ Subject,
+          Type: "Secretary",
+        },
+        { merge: true }
+      );
+      let user = firebase.default.auth().currentUser;
+      let date = dateFormat(new Date(), "mm-dd-yyyy");
+      const eAdministrationLog = this.firestore
+        .collection("eAdministration")
+        .doc("eServices")
+        .collection("SystemLogs")
+        .doc(date);
+      await eAdministrationLog.set(
+        {
+          Account: firebase.default.firestore.FieldValue.arrayUnion(
+            "secretary forwarded support message of " +
+              ID +
+              " from " +
+              user.email +
+              " at: " +
+              new Date()
+          ),
+        },
+        { merge: true }
+      );
+      let supportNo = firebase.default.firestore.FieldValue.increment(1);
+      const eAdministration = this.firestore
+        .collection("eAdministration")
+        .doc(user.email)
+        .collection("WorkLogs")
+        .doc(date);
+      await eAdministration
+        .set(
+          {
+            messagesHandled: supportNo,
+          },
+          { merge: true }
+        )
+        .then(
+          (response) => resolve(response),
+          (error) => reject(error)
+        );
+    });
+  }
+  /** Method for sending officer reponse to ecitizen */
   sendMessage(ID, messageBody) {
     return new Promise<any>(async (resolve, reject) => {
       /**

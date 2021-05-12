@@ -1,6 +1,6 @@
 {
   "name": "government-portal-desktop-admin",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "Government Portal Admin",
   "main": "index.js",
   "scripts": {

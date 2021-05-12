@@ -65,6 +65,7 @@ export class AccessService {
             FullName: name,
             GovernmentID: GovernmentID,
             Status: "New",
+            Type: "eCitizen",
             Subject: value.subject,
             Response:
               "Message Sent | Wait for Response/පණිවිඩය යවන ලදි | ප්‍රතිචාරය සඳහා රැඳී සිටින්න/செய்தி அனுப்பப்பட்டது | பதிலுக்காக காத்திருங்கள்",

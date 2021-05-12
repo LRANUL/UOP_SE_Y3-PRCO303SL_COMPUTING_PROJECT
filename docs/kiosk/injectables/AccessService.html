@@ -138,7 +138,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/app/service/access.service.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/service/access.service.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -239,8 +239,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="127"
-                            class="link-to-prism">src/app/service/access.service.ts:127</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="131"
+                            class="link-to-prism">src/app/service/access.service.ts:131</a></div>
                 </td>
             </tr>
 
@@ -308,8 +308,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="253"
-                            class="link-to-prism">src/app/service/access.service.ts:253</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="257"
+                            class="link-to-prism">src/app/service/access.service.ts:257</a></div>
                 </td>
             </tr>
 
@@ -376,8 +376,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="139"
-                            class="link-to-prism">src/app/service/access.service.ts:139</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="143"
+                            class="link-to-prism">src/app/service/access.service.ts:143</a></div>
                 </td>
             </tr>
 
@@ -445,8 +445,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="115"
-                            class="link-to-prism">src/app/service/access.service.ts:115</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="119"
+                            class="link-to-prism">src/app/service/access.service.ts:119</a></div>
                 </td>
             </tr>
 
@@ -516,8 +516,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="81"
-                            class="link-to-prism">src/app/service/access.service.ts:81</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="85"
+                            class="link-to-prism">src/app/service/access.service.ts:85</a></div>
                 </td>
             </tr>
 
@@ -594,8 +594,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="264"
-                            class="link-to-prism">src/app/service/access.service.ts:264</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="268"
+                            class="link-to-prism">src/app/service/access.service.ts:268</a></div>
                 </td>
             </tr>
 
@@ -667,8 +667,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="154"
-                            class="link-to-prism">src/app/service/access.service.ts:154</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="158"
+                            class="link-to-prism">src/app/service/access.service.ts:158</a></div>
                 </td>
             </tr>
 
@@ -753,8 +753,8 @@ This restricts that only the personal account holder to apply / Any form of Join
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="23"
-                            class="link-to-prism">src/app/service/access.service.ts:23</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="26"
+                            class="link-to-prism">src/app/service/access.service.ts:26</a></div>
                 </td>
             </tr>
 
@@ -853,7 +853,7 @@ This restricts that only the personal account holder to apply / Any form of Join
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/service/access.service.ts:14</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/service/access.service.ts:17</a></div>
                             </td>
                         </tr>
 
@@ -902,8 +902,8 @@ export class AccessService {
           buttons: [&quot;OK&quot;],
         });
         await alert.present();
-        var user &#x3D; firebase.default.auth().currentUser;
-        var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+        let user &#x3D; firebase.default.auth().currentUser;
+        let date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
         const eAdministrationLog &#x3D; this.firestore
           .collection(&quot;eAdministration&quot;)
           .doc(&quot;eServices&quot;)
@@ -930,6 +930,7 @@ export class AccessService {
             FullName: name,
             GovernmentID: GovernmentID,
             Status: &quot;New&quot;,
+            Type: &quot;eCitizen&quot;,
             Subject: value.subject,
             Response:
               &quot;Message Sent | Wait for Response/පණිවිඩය යවන ලදි | ප්‍රතිචාරය සඳහා රැඳී සිටින්න/செய்தி அனுப்பப்பட்டது | பதிலுக்காக காத்திருங்கள்&quot;,
@@ -954,8 +955,8 @@ export class AccessService {
       },
       { merge: true }
     );
-    var user &#x3D; firebase.default.auth().currentUser;
-    var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+    let user &#x3D; firebase.default.auth().currentUser;
+    let date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
     const eAdministrationLog &#x3D; this.firestore
       .collection(&quot;eAdministration&quot;)
       .doc(&quot;eServices&quot;)
@@ -1020,7 +1021,7 @@ export class AccessService {
    *
    */
   sendNICApplication(value, photoURL) {
-    var dateBirth &#x3D; dateFormat(value.dateOfBirth, &quot;mm/dd/yyyy&quot;);
+    let dateBirth &#x3D; dateFormat(value.dateOfBirth, &quot;mm/dd/yyyy&quot;);
     return new Promise&lt;any&gt;(async (resolve, reject) &#x3D;&gt; {
       /**
        * Data gets stored on firebase, used for application tracking and references
@@ -1095,8 +1096,8 @@ export class AccessService {
       });
       await alert.present();
 
-      var user &#x3D; firebase.default.auth().currentUser;
-      var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+      let user &#x3D; firebase.default.auth().currentUser;
+      let date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
       const eAdministrationLog &#x3D; this.firestore
         .collection(&quot;eAdministration&quot;)
         .doc(&quot;eServices&quot;)
@@ -1138,8 +1139,8 @@ export class AccessService {
           (res) &#x3D;&gt; resolve(res),
           (err) &#x3D;&gt; reject(err)
         );
-        var user &#x3D; firebase.default.auth().currentUser;
-        var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+        let user &#x3D; firebase.default.auth().currentUser;
+        let date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
         const eAdministration &#x3D; this.firestore
           .collection(&quot;eAdministration&quot;)
           .doc(&quot;eServices&quot;)
@@ -1161,8 +1162,8 @@ export class AccessService {
           buttons: [&quot;Close&quot;],
         });
         await alert.present();
-        var user &#x3D; firebase.default.auth().currentUser;
-        var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+        let user &#x3D; firebase.default.auth().currentUser;
+        let date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
         const eAdministration &#x3D; this.firestore
           .collection(&quot;eAdministration&quot;)
           .doc(&quot;eServices&quot;)

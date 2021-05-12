@@ -843,7 +843,7 @@ export class HomeAffairsPage implements OnInit {
           this.accessService
             .getECitizenByCard(qrResultString)
             .subscribe(async (data) => {
-              console.log(data);
+              // console.log(data);
               if (data.length == 0) {
                 const toast = await this.toastController.create({
                   message: "Card Fraud | Invalid Card",
@@ -933,7 +933,7 @@ export class HomeAffairsPage implements OnInit {
     } else {
       this.accessService.getECitizenbyID(value).subscribe((data) => {
         this.searchECitizenData = data.map((e) => {
-          console.log(e.payload.doc.data());
+          // console.log(e.payload.doc.data());
           return {
             id: e.payload.doc.id,
             Prefix: e.payload.doc.data()["Prefix"],
@@ -1448,7 +1448,7 @@ export class HomeAffairsPage implements OnInit {
                         data.map(async (e) => {
                           let photoURL =
                             "" + e.payload.doc.data()["downloadURL"];
-                          console.log(photoURL);
+                          // console.log(photoURL);
                           this.accessService
                             .sendNICApplication(value, photoURL)
                             .then(

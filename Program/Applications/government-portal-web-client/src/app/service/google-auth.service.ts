@@ -167,7 +167,6 @@ export class GoogleAuthService {
                     duration: 2000,
                   });
                   toast.present();
-                  let user = firebase.default.auth().currentUser;
                   let date = dateFormat(new Date(), "mm-dd-yyyy");
                   const eAdministration = this.firestore
                     .collection("eAdministration")
@@ -178,7 +177,7 @@ export class GoogleAuthService {
                     {
                       Account: firebase.default.firestore.FieldValue.arrayUnion(
                         "web eCitizen registered" +
-                          user.email +
+                        value.email +
                           " at: " +
                           new Date()
                       ),

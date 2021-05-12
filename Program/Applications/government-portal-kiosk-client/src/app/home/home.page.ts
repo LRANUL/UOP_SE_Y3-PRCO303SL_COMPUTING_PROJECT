@@ -41,7 +41,7 @@ export class HomePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log("AfterContentChecked");
+    // console.log("AfterContentChecked");
   }
   /**
    * Card scanner method for english citizens
@@ -56,7 +56,7 @@ export class HomePage implements OnInit {
       this.scanner_en = false;
       this.portalScanner = false;
       setTimeout(async () => {
-        console.log(qrResultString);
+        // console.log(qrResultString);
         if (qrResultString) {
           this.service.getECitizen(qrResultString).subscribe((data) => {
             data.map(async (e) => {

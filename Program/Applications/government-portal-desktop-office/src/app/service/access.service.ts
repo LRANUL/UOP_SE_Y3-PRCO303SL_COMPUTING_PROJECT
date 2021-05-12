@@ -109,7 +109,7 @@ export class AccessService {
         ref
           .limit(10)
           .where("Status", "==", "New")
-          .where("Type", "==", "eCitizen")
+          .where("Type", "==", "Secretary")
       )
       .snapshotChanges();
   }
@@ -532,7 +532,7 @@ export class AccessService {
      * Data gets stored on firebase, used for message tracking and references
      */
     let user = firebase.default.auth().currentUser;
-    console.log(value);
+    // console.log(value);
     this.firestore.collection("/eSupport/").doc().set({
       Description: value.message,
       Email: user.email,

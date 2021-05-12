@@ -177,6 +177,7 @@
           <ion-card *ngFor="let message of ESupportMessages | slice:0:10;; let i = index">
             <form class="form" [formGroup]="message_form" (ngSubmit)="supportCitizen(message_form.value,message.id)">
               <ion-card-header>
+                <p class="underline" (click)="forwardOfficer(message.id, message.Subject)"><i>Forward to Officer</i></p>
                 <ion-card-title>Government ID: {{ message.GovernmentID }}</ion-card-title>
                 <ion-card-subtitle>Name: {{ message.FullName }}</ion-card-subtitle>
                 <ion-card-subtitle>Subject: {{ message.Subject }}</ion-card-subtitle>

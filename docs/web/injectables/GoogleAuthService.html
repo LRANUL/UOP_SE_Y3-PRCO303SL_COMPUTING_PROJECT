@@ -264,8 +264,8 @@ Update with care, certains methods are used in more than in onr place. Updates c
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="518"
-                            class="link-to-prism">src/app/service/google-auth.service.ts:518</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="516"
+                            class="link-to-prism">src/app/service/google-auth.service.ts:516</a></div>
                 </td>
             </tr>
 
@@ -306,8 +306,8 @@ Used for displaying data at required functions</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="425"
-                            class="link-to-prism">src/app/service/google-auth.service.ts:425</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="423"
+                            class="link-to-prism">src/app/service/google-auth.service.ts:423</a></div>
                 </td>
             </tr>
 
@@ -345,8 +345,8 @@ Used for displaying data at required functions</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="415"
-                            class="link-to-prism">src/app/service/google-auth.service.ts:415</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="413"
+                            class="link-to-prism">src/app/service/google-auth.service.ts:413</a></div>
                 </td>
             </tr>
 
@@ -384,8 +384,8 @@ Used for displaying data at required functions</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="437"
-                            class="link-to-prism">src/app/service/google-auth.service.ts:437</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="435"
+                            class="link-to-prism">src/app/service/google-auth.service.ts:435</a></div>
                 </td>
             </tr>
 
@@ -457,8 +457,8 @@ Used for displaying data at required functions</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="483"
-                            class="link-to-prism">src/app/service/google-auth.service.ts:483</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="481"
+                            class="link-to-prism">src/app/service/google-auth.service.ts:481</a></div>
                 </td>
             </tr>
 
@@ -663,8 +663,8 @@ This restricts that only the personal account holder to apply / Any form of Join
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="366"
-                            class="link-to-prism">src/app/service/google-auth.service.ts:366</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="365"
+                            class="link-to-prism">src/app/service/google-auth.service.ts:365</a></div>
                 </td>
             </tr>
 
@@ -866,7 +866,7 @@ export class GoogleAuthService {
               });
               await alert.present();
             } else {
-              var dateBirth &#x3D; dateFormat(value.dateOfBirth, &quot;mm/dd/yyyy&quot;);
+              let dateBirth &#x3D; dateFormat(value.dateOfBirth, &quot;mm/dd/yyyy&quot;);
               if (
                 doc.data()[&quot;birthRegNo&quot;] &#x3D;&#x3D; value.birthRegNo &amp;&amp;
                 doc.data()[&quot;gender&quot;] &#x3D;&#x3D; value.gender.toUpperCase() &amp;&amp;
@@ -889,12 +889,12 @@ export class GoogleAuthService {
                       });
                     }
                     // Access PIN for Users via Portal Card
-                    var Access_PIN &#x3D; Math.floor(
+                    let Access_PIN &#x3D; Math.floor(
                       Math.random() * 9000000 + 1000000
                     );
                     // https://code.google.com/archive/p/crypto-js/
 
-                    var Access_Key &#x3D; CryptoJS.AES.encrypt(
+                    let Access_Key &#x3D; CryptoJS.AES.encrypt(
                       value.GovernmentID,
                       value.bioData
                     ).toString();
@@ -962,8 +962,8 @@ export class GoogleAuthService {
                     duration: 2000,
                   });
                   toast.present();
-                  var user &#x3D; firebase.default.auth().currentUser;
-                  var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+                  let user &#x3D; firebase.default.auth().currentUser;
+                  let date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
                   const eAdministration &#x3D; this.firestore
                     .collection(&quot;eAdministration&quot;)
                     .doc(&quot;eServices&quot;)
@@ -1033,7 +1033,7 @@ export class GoogleAuthService {
         .then(async (doc) &#x3D;&gt; {
           // console.log(doc.data());
           if (doc.exists) {
-            var dateBirth &#x3D; dateFormat(value.dateOfBirth, &quot;mm/dd/yyyy&quot;);
+            let dateBirth &#x3D; dateFormat(value.dateOfBirth, &quot;mm/dd/yyyy&quot;);
             // console.log(value);
             if (
               doc.data()[&quot;birthRegNo&quot;] &#x3D;&#x3D; value.birthCertNo &amp;&amp;
@@ -1041,8 +1041,8 @@ export class GoogleAuthService {
               doc.data()[&quot;dateOfBirth&quot;] &#x3D;&#x3D; dateBirth
             ) {
               return new Promise&lt;any&gt;(async (resolve, reject) &#x3D;&gt; {
-                var user &#x3D; firebase.default.auth().currentUser;
-                var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+                let user &#x3D; firebase.default.auth().currentUser;
+                let date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
                 const eAdministration &#x3D; this.firestore
                   .collection(&quot;eAdministration&quot;)
                   .doc(&quot;eServices&quot;)
@@ -1059,7 +1059,6 @@ export class GoogleAuthService {
                   },
                   { merge: true }
                 );
-                var user &#x3D; firebase.default.auth().currentUser;
                 this.firestore
                   .collection(&quot;/eApplications/&quot;)
                   .doc(token)
@@ -1172,8 +1171,8 @@ export class GoogleAuthService {
           buttons: [&quot;OK&quot;],
         });
         await alert.present();
-        var user &#x3D; firebase.default.auth().currentUser;
-        var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+        let user &#x3D; firebase.default.auth().currentUser;
+        let date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
         const eAdministration &#x3D; this.firestore
           .collection(&quot;eAdministration&quot;)
           .doc(&quot;eServices&quot;)
@@ -1187,7 +1186,6 @@ export class GoogleAuthService {
           },
           { merge: true }
         );
-        var user &#x3D; firebase.default.auth().currentUser;
         this.firestore
           .collection(&quot;/eSupport/&quot;)
           .doc()
@@ -1208,7 +1206,7 @@ export class GoogleAuthService {
     });
   }
   getESupportMessages() {
-    var user &#x3D; firebase.default.auth().currentUser;
+    let user &#x3D; firebase.default.auth().currentUser;
 
     return this.firestore
       .collection(&quot;eSupport&quot;, (ref) &#x3D;&gt;
@@ -1218,7 +1216,7 @@ export class GoogleAuthService {
   }
 
   getEApplications() {
-    var user &#x3D; firebase.default.auth().currentUser;
+    let user &#x3D; firebase.default.auth().currentUser;
     return this.firestore
       .collection(&quot;eApplications&quot;, (ref) &#x3D;&gt;
         ref.where(&quot;GovernmentID&quot;, &quot;&#x3D;&#x3D;&quot;, user.displayName)
@@ -1245,8 +1243,8 @@ export class GoogleAuthService {
           buttons: [&quot;Close&quot;],
         });
         await alert.present();
-        var user &#x3D; firebase.default.auth().currentUser;
-        var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+        let user &#x3D; firebase.default.auth().currentUser;
+        let date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
         const eAdministration &#x3D; this.firestore
           .collection(&quot;eAdministration&quot;)
           .doc(&quot;eServices&quot;)
@@ -1277,8 +1275,8 @@ export class GoogleAuthService {
    */
   logoutCitizen() {
     return new Promise&lt;void&gt;((resolve, reject) &#x3D;&gt; {
-      var user &#x3D; firebase.default.auth().currentUser;
-      var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+      let user &#x3D; firebase.default.auth().currentUser;
+      let date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
       if (this.gAuth.currentUser) {
         this.gAuth
           .signOut()

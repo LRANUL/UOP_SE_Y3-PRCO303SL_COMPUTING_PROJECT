@@ -1325,29 +1325,29 @@ export class CreateAccountPage implements OnInit {
   registerECitizen(value) {
     this.authService.registerECitizen(value).then(async (res) &#x3D;&gt; {
       // console.log(res);
-      var user &#x3D; firebase.default.auth().currentUser;
-            var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
-            const eAdministration &#x3D; this.firestore
-              .collection(&quot;eAdministration&quot;)
-              .doc(&quot;eServices&quot;)
-              .collection(&quot;SystemLogs&quot;)
-              .doc(date);
-            await eAdministration.set(
-              {
-                Login: firebase.default.firestore.FieldValue.arrayUnion(
-                  &quot;web ecitizen registration from &quot; +
-                    value.email +
-                    &quot; at: &quot; +
-                    new Date()
-                ),
-              },
-              { merge: true }
-            );
+      let user &#x3D; firebase.default.auth().currentUser;
+      let date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+      const eAdministration &#x3D; this.firestore
+        .collection(&quot;eAdministration&quot;)
+        .doc(&quot;eServices&quot;)
+        .collection(&quot;SystemLogs&quot;)
+        .doc(date);
+      await eAdministration.set(
+        {
+          Login: firebase.default.firestore.FieldValue.arrayUnion(
+            &quot;web ecitizen registration from &quot; +
+              user.email +
+              &quot; at: &quot; +
+              new Date()
+          ),
+        },
+        { merge: true }
+      );
     });
   }
 
   async onFileChange(event) {
-    var GovernmentID;
+    let GovernmentID;
     GovernmentID &#x3D; &quot;A&quot; + Math.floor(Math.random() * 9000000000 + 1000000000);
     this.validations_form.patchValue({ GovernmentID: GovernmentID });
     const file &#x3D; event.target.files[0];
@@ -1394,24 +1394,6 @@ export class CreateAccountPage implements OnInit {
           if (doc.exists) {
             /** Informs user an account already exists */
             if (doc.data()[&quot;Registered&quot;] &#x3D;&#x3D; true) {
-              var user &#x3D; firebase.default.auth().currentUser;
-            var date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
-            const eAdministration &#x3D; this.firestore
-              .collection(&quot;eAdministration&quot;)
-              .doc(&quot;eServices&quot;)
-              .collection(&quot;SystemLogs&quot;)
-              .doc(date);
-            await eAdministration.set(
-              {
-                Login: firebase.default.firestore.FieldValue.arrayUnion(
-                  &quot;web duplicate account attempt of registration &quot; +RegNo+
-                    user.email +
-                    &quot; at: &quot; +
-                    new Date()
-                ),
-              },
-              { merge: true }
-            );
               const alert &#x3D; await this.alertController.create({
                 header: &quot;⚠ You already have an account with us&quot;,
                 backdropDismiss: false,
@@ -1427,6 +1409,25 @@ export class CreateAccountPage implements OnInit {
                 ],
               });
               await alert.present();
+              let user &#x3D; firebase.default.auth().currentUser;
+              let date &#x3D; dateFormat(new Date(), &quot;mm-dd-yyyy&quot;);
+              const eAdministration &#x3D; this.firestore
+                .collection(&quot;eAdministration&quot;)
+                .doc(&quot;eServices&quot;)
+                .collection(&quot;SystemLogs&quot;)
+                .doc(date);
+              await eAdministration.set(
+                {
+                  Login: firebase.default.firestore.FieldValue.arrayUnion(
+                    &quot;web duplicate account attempt of registration &quot; +
+                      RegNo +
+                      user.email +
+                      &quot; at: &quot; +
+                      new Date()
+                  ),
+                },
+                { merge: true }
+              );
             }
           }
         });
